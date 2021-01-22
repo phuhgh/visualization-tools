@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "repository": {
+    "defaultBranch": "master",
+    "defaultRemote": "origin",
+    "url": "https://github.com/phuhgh/apptoolkit.git"
+  },
+  "rushVersion": "5.38.0",
+  "pnpmVersion": "5.16.0",
+  "nodeSupportedVersionRange": ">=14.0.0 <15.0.0",
+  "telemetryEnabled": false,
+  "projects": [
+    {
+      "packageName": "@visualization-tools/core",
+      "projectFolder": "packages/core",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@visualization-tools/cartesian-2d",
+      "projectFolder": "packages/cartesian-2d",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "sandbox",
+      "projectFolder": "sandbox",
+      "reviewCategory": "tools",
+      "shouldPublish": false
+    }
+  ]
+}

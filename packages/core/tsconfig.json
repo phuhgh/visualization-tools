@@ -1,0 +1,39 @@
+﻿{
+  "compilerOptions": {
+    "declaration": true,
+    "moduleResolution": "Node",
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "module": "commonjs",
+    "outDir": "bin/",
+    "noImplicitReturns": true,
+    "removeComments": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "target": "es6",
+    "sourceMap": true,
+    "typeRoots": [
+      "./node_modules/@webgpu/types",
+      "./node_modules/@types"
+    ],
+    "lib": [
+      "ES5",
+      "ES2015.Core",
+      "ES2015.Collection",
+      "ES2015.Promise",
+      "ES2015.Iterable",
+      "ES2017.SharedMemory",
+      "DOM"
+    ],
+    "types": [
+      "jasmine",
+      "@webgpu/types"
+    ]
+  },
+  "include": [
+    "src",
+  ]
+}

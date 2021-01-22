@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
+  <component name="CidrRootsConfiguration">
+    <excludeRoots>
+      <file path="$PROJECT_DIR$/cmake-build-debug" />
+      <file path="$PROJECT_DIR$/common/temp" />
+      <file path="$PROJECT_DIR$/docs" />
+      <file path="$PROJECT_DIR$/packages/cartesian-2d/.rush" />
+      <file path="$PROJECT_DIR$/packages/cartesian-2d/bin" />
+      <file path="$PROJECT_DIR$/packages/cartesian-2d/build" />
+      <file path="$PROJECT_DIR$/packages/cartesian-2d/dist" />
+      <file path="$PROJECT_DIR$/packages/cartesian-2d/docs" />
+      <file path="$PROJECT_DIR$/packages/cartesian-2d/tmp" />
+      <file path="$PROJECT_DIR$/packages/core/.rush" />
+      <file path="$PROJECT_DIR$/packages/core/bin" />
+      <file path="$PROJECT_DIR$/packages/core/build" />
+      <file path="$PROJECT_DIR$/packages/core/cmake-build-debug-mingw" />
+      <file path="$PROJECT_DIR$/packages/core/dist" />
+      <file path="$PROJECT_DIR$/packages/core/docs" />
+      <file path="$PROJECT_DIR$/packages/core/tmp" />
+      <file path="$PROJECT_DIR$/packages/graph-model/bin" />
+      <file path="$PROJECT_DIR$/sandbox/bin" />
+      <file path="$PROJECT_DIR$/sandbox/build" />
+      <file path="$PROJECT_DIR$/tmp" />
+    </excludeRoots>
+  </component>
+</project>

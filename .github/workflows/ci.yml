@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch: # manual run
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+
+      - name: Install ninja
+        run: sudo apt-get install ninja-build
+
+      - name: Install emsdk
+        uses: mymindstorm/setup-emsdk@v10
+        with:
+          version: 'latest'
+
+      - name: Install rush.js
+        run: npm install -g @microsoft/rush
+
+      - name: Echo versions
+        run: |
+          emcc -v
+          ninja --version
+          cmake --version
+
+      - name: Install and Build
+        run: |
+          rush install
+          rush ci-build --verbose

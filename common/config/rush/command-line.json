@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
+
+  "commands": [
+    {
+      "name": "ci-build",
+      "commandKind": "bulk",
+      "summary": "Slow rebuild all and run lint and tests, clearing everything before hand.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "name": "incremental-build",
+      "commandKind": "bulk",
+      "summary": "A minimal rebuild without clearing anything, good for fast iteration.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "name": "ci-test",
+      "commandKind": "bulk",
+      "summary": "Run the tests, useful in conjunction with incremental-build.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": false
+    },
+    {
+      "name": "generate-docs",
+      "commandKind": "bulk",
+      "summary": "Create per package documentation, requires build to have been run. Run rollup-docs after to get something readable.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": false,
+      "ignoreDependencyOrder": true
+    },
+    {
+      "name": "rollup-docs",
+      "shellCommand": "node scripts/copy-api-docs.js && api-documenter markdown --input-folder tmp --output-folder docs",
+      "commandKind": "global",
+      "summary": "To be run after ci-build or generate-docs, produces the human readable docs."
+    }
+  ]
+}

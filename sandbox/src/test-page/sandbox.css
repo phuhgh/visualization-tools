@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.component {
+    display: flex;
+    flex: 1 1 0px;
+}
+
+.minimal-component {
+    display: flex;
+    flex: 0 0 auto;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.ecs-chart {
+    flex: 1 1 0px;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ecs-canvas {
+    border: 1px solid;
+}
+
+#gl-chart, #canvas-chart {
+    /*background: red;*/
+}

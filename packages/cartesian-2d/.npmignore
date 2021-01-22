@@ -1,0 +1,10 @@
+*
+!bin/**/*
+!assets/**/*
+!bin/**/*
+!cpp/external/**/*
+!cpp/include/**/*
+!cpp/src/**/*
+!cpp/lib/**/*
+!CMakeLists.txt
+!cpp/exported-names.txt

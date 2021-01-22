@@ -1,0 +1,10 @@
+﻿{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": []
+  },
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/test-utils/jasmine-test-utilts.ts"
+  ]
+}
