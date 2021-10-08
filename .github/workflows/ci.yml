@@ -33,3 +33,18 @@ jobs:
         run: |
           rush install
           rush ci-build --verbose
+
+      - name: Rollup docs
+        run: |
+          npm install -g @microsoft/api-documenter@^7.13.54
+          rush rollup-docs
+
+      - name: Copy examples
+        run: |
+          rush copy-examples
+
+      - name: Deploy docs
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: documentation
+          folder: docs

@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 
-const projectsToPublish = require("../rush.json")
+const projectsToPublish = require("../../rush.json")
     .projects
     .filter(project => project.shouldPublish);
 const projectPaths = projectsToPublish
