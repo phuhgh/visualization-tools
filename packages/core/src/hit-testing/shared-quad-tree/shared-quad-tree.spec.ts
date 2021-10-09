@@ -65,6 +65,7 @@ debugDescribe("=> SharedQuadTree", () =>
         const tree = SharedQuadTree.createOneF32(emscriptenTestModule.wrapper, 4, 1);
         tree.setTopLevel(Range2d.f32.factory.createOne(0, 2, 0, 2));
 
+        tree.addBoundingBox(Range2d.f32.factory.createOne(-1, 0, 0, 1), 1, 1, 1);
         tree.addBoundingBox(Range2d.f32.factory.createOne(0, 1, 0, 1), 1, 1, 1);
         tree.addBoundingBox(Range2d.f32.factory.createOne(0, 0.5, 0, 0.5), 1, 2, 1);
         tree.addBoundingBox(Range2d.f32.factory.createOne(0, 0.5, 0.25, 0.5), 1, 3, 1);

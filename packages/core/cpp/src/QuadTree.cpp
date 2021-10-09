@@ -46,10 +46,7 @@ void VisualizationTools::QuadTree<T>::InsertRange(Range2d<T> & _aabb, QuadElemen
 
     JsUtil::Debug::OnBeforeAllocate();
 
-    if (!node->m_bounds.DoesRangeIntersect(_aabb))
-    {
-        return;
-    }
+    // no need to perform an initial bounds check, it happens in the loop
 
     if (_element.m_filterMask == 0)
     {
@@ -166,41 +163,16 @@ std::uint32_t VisualizationTools::QuadTree<T>::QueryPoint(Vec2<T> & _point, std:
 
     for (;;)
     {
+        outerLoopStart:
         appendElements(*node, _filterMask, foundElements, o_elements);
 
-        if (node->m_quads[0])
+        for (std::uint8_t i = 0; i < 4; ++i)
         {
-            if (isPointInRange(node->m_quads[0]->m_bounds, _point))
+            if (node->m_quads[i] && isPointInRange(node->m_quads[i]->m_bounds, _point))
             {
-                node = node->m_quads[0];
-                continue;
-            }
-        }
-
-        if (node->m_quads[1])
-        {
-            if (isPointInRange(node->m_quads[1]->m_bounds, _point))
-            {
-                node = node->m_quads[1];
-                continue;
-            }
-        }
-
-        if (node->m_quads[2])
-        {
-            if (isPointInRange(node->m_quads[2]->m_bounds, _point))
-            {
-                node = node->m_quads[2];
-                continue;
-            }
-        }
-
-        if (node->m_quads[3])
-        {
-            if (isPointInRange(node->m_quads[3]->m_bounds, _point))
-            {
-                node = node->m_quads[3];
-                continue;
+                node = node->m_quads[i];
+                // look away 🤮
+                goto outerLoopStart;
             }
         }
 
