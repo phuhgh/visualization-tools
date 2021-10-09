@@ -4,6 +4,7 @@ import { ICartesian2dUpdateArg } from "../update/cartesian2d-update-arg";
 import { TInterleavedPoint2dTrait } from "../traits/t-interleaved-point2d-trait";
 import { ICanvasEntityRenderer, IGraphicsComponentSpecification, IIndexedDataConnector } from "@visualization-tools/core";
 
+// todo jack: add highlighting
 /**
  * @public
  * Draws lines with or without segments of different colors and sizes.

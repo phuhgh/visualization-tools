@@ -34,6 +34,7 @@ export class Point2dSizeNormalizer<TArray extends TTypedArray>
     {
         this.tmpRange.update(min, max);
         this.sizeRange.unionRange(this.tmpRange, this.sizeRange);
+        this.requiresInitialization = true;
     }
 
     private readonly transform: IReadonlyMat2<TArray>;

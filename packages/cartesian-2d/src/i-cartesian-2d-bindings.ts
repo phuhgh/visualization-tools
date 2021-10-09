@@ -1,5 +1,6 @@
 import { IInterleavedLine2dQuadIndexerBindings } from "./indexed-point-2d/interleaved/hit-test/shared-interleaved-line-2d-quad-indexer-factory";
 import { IVisualizationToolBindings } from "@visualization-tools/core";
+import { IInterleavedCircle2dQuadIndexerBindings } from "./indexed-point-2d/interleaved/hit-test/shared-interleaved-circle-2d-quad-indexer-factory";
 
 /**
  * @public
@@ -7,7 +8,8 @@ import { IVisualizationToolBindings } from "@visualization-tools/core";
  */
 export interface ICartesian2dBindings
     extends IVisualizationToolBindings,
-            IInterleavedLine2dQuadIndexerBindings
+            IInterleavedLine2dQuadIndexerBindings,
+            IInterleavedCircle2dQuadIndexerBindings
 {
 }
 

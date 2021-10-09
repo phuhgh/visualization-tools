@@ -6,4 +6,6 @@ export const exportedFunctions: { [index in Exclude<keyof ICartesian2dBindings, 
     _f64Interleaved2dQuadIndexer_getOffsets: true,
     _f32Interleaved2dLineQuadIndexer_index: true,
     _f64Interleaved2dLineQuadIndexer_index: true,
+    _f32Interleaved2dCircleQuadIndexer_index: true,
+    _f64Interleaved2dCircleQuadIndexer_index: true,
 };
