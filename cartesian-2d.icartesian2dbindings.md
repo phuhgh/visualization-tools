@@ -9,7 +9,7 @@ Emscripten bindings exposed by cartesian 2d.
 <b>Signature:</b>
 
 ```typescript
-export interface ICartesian2dBindings extends IVisualizationToolBindings, IInterleavedLine2dQuadIndexerBindings 
+export interface ICartesian2dBindings extends IVisualizationToolBindings, IInterleavedLine2dQuadIndexerBindings, IInterleavedCircle2dQuadIndexerBindings 
 ```
-<b>Extends:</b> [IVisualizationToolBindings](./core.ivisualizationtoolbindings.md)<!-- -->, [IInterleavedLine2dQuadIndexerBindings](./cartesian-2d.iinterleavedline2dquadindexerbindings.md)
+<b>Extends:</b> [IVisualizationToolBindings](./core.ivisualizationtoolbindings.md)<!-- -->, [IInterleavedLine2dQuadIndexerBindings](./cartesian-2d.iinterleavedline2dquadindexerbindings.md)<!-- -->, [IInterleavedCircle2dQuadIndexerBindings](./cartesian-2d.iinterleavedcircle2dquadindexerbindings.md)
 
