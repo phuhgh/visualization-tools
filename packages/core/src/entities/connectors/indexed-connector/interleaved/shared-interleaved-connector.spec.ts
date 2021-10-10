@@ -1,4 +1,3 @@
-import { setDefaultUnitTestFlags } from "rc-js-util/bin/src/debug/impl/set-default-unit-test-flags";
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "rc-js-util/bin/src/web-assembly/emscripten/sanitized-emscripten-test-module";
 import { SharedInterleavedConnector } from "./shared-interleaved-connector";
 import { Emscripten, SharedArray, TF32SharedArray } from "rc-js-util";
@@ -20,7 +19,6 @@ debugDescribe("=> SharedInterleavedConnector", () =>
 
     beforeAll(async () =>
     {
-        setDefaultUnitTestFlags();
         await emscriptenTestModule.initialize();
     });
 

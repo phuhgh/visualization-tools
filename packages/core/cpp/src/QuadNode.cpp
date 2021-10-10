@@ -79,7 +79,7 @@ void VisualizationTools::QuadNode<T>::PushElement(VisualizationTools::QuadElemen
 }
 
 template<typename T>
-const std::vector<VisualizationTools::QuadElement> & VisualizationTools::QuadNode<T>::GetElements() const
+const std::vector <VisualizationTools::QuadElement> & VisualizationTools::QuadNode<T>::GetElements() const
 {
     return m_elements;
 }

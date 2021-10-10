@@ -1,4 +1,4 @@
-#include "Mat3.h"
+#include "../include/Mat3.h"
 
 template<typename T>
 VisualizationTools::Mat3<T>::Mat3(std::array<T, 9> && _elements)

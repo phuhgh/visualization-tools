@@ -20,8 +20,8 @@ dependencies:
   karma-jasmine: 4.0.1_karma@6.3.4
   karma-webpack: 5.0.0_webpack@5.50.0
   raw-loader: 4.0.2_webpack@5.50.0
-  rc-js-test-util: 2.0.0_rc-js-util@8.3.1
-  rc-js-util: 8.3.1
+  rc-js-test-util: 2.0.0_rc-js-util@8.4.0
+  rc-js-util: 8.4.0
   rc-lint-rules: 5.3.0_typescript@4.4.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -4303,9 +4303,9 @@ packages:
       webpack: ^4.0.0 || ^5.0.0
     resolution:
       integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==
-  /rc-js-test-util/2.0.0_rc-js-util@8.3.1:
+  /rc-js-test-util/2.0.0_rc-js-util@8.4.0:
     dependencies:
-      rc-js-util: 8.3.1
+      rc-js-util: 8.4.0
     dev: false
     peerDependencies:
       rc-js-util: ^8.3.1
@@ -4315,14 +4315,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-f+xU8DylX6biGe/zSxbl+0nqcF+9Xa978EVpWo7hHaSpOX8vlBnEgzv7pYKl7lQZrDTUhyG85o3+m1bh3d2uWw==
-  /rc-js-util/8.3.1:
+  /rc-js-util/8.4.0:
     dependencies:
       rc-js-util-globals: 6.0.1
       tslib: 2.3.1
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-G/PjRIRIVjeY+egYqvzEZbSXX0oPFGefUsFlZzNtjs+C9TzWVdgMXHw7iAEqqvOAeubufGG8qaqAGepspLT28w==
+      integrity: sha512-8KiYXFbDplX7U/xLCu+47a48S+N38djeFwcau11es0KNT6ZsGIIpqlwy4wGpt5UNN0R+ITAUISDhtWVndBN05g==
   /rc-lint-rules/5.3.0_typescript@4.4.2:
     dependencies:
       '@typescript-eslint/eslint-plugin': 4.29.1_fbdb47d0f80be665f7c749749c0a112d
@@ -5909,8 +5909,8 @@ packages:
       karma-chrome-launcher: 3.1.0
       karma-jasmine: 4.0.1_karma@6.3.4
       karma-webpack: 5.0.0_webpack@5.50.0
-      rc-js-test-util: 2.0.0_rc-js-util@8.3.1
-      rc-js-util: 8.3.1
+      rc-js-test-util: 2.0.0_rc-js-util@8.4.0
+      rc-js-util: 8.4.0
       rc-lint-rules: 5.3.0_typescript@4.4.2
       rimraf: 3.0.2
       ts-loader: 9.2.5_typescript@4.4.2+webpack@5.50.0
@@ -5923,7 +5923,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-Jzv809DWc7zophKCMGaJl9XOQKDb/eTvCiNmpl7G92jaFTQ8/q9xn9dewqbguPOFtXFrjPWpsnWXd+tBVbycNg==
+      integrity: sha512-M8oPvi4WYHJBFQQQSx+Xs8ehah+zYE/wfItAnLE4e2+ot0XT2vPFsajUAQJBvkrcTLpBqONsTJ5DYbsC5S8w1g==
       tarball: file:projects/cartesian-2d.tgz
     version: 0.0.0
   file:projects/core.tgz_webpack-cli@4.7.2:
@@ -5942,8 +5942,8 @@ packages:
       karma-chrome-launcher: 3.1.0
       karma-jasmine: 4.0.1_karma@6.3.4
       karma-webpack: 5.0.0_webpack@5.50.0
-      rc-js-test-util: 2.0.0_rc-js-util@8.3.1
-      rc-js-util: 8.3.1
+      rc-js-test-util: 2.0.0_rc-js-util@8.4.0
+      rc-js-util: 8.4.0
       rc-lint-rules: 5.3.0_typescript@4.4.2
       rimraf: 3.0.2
       ts-loader: 9.2.5_typescript@4.4.2+webpack@5.50.0
@@ -5956,7 +5956,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-oKZ7xcApn1IAT1GxKb6kntrOXuVmDMLhHsU3QaRJ8qkp/GvB+mQz/hVUNItVihcTJnMuqBvG6BqKF8LC+kR4AA==
+      integrity: sha512-viZPR75Srlqu+4aEMJ3S9eECl2CNOhr/0cRMLXBY12q40TDesBg33VlCCIhWPy/OZj50coy4dnrHbcH4DUk86w==
       tarball: file:projects/core.tgz
     version: 0.0.0
   file:projects/sandbox.tgz:
@@ -5966,8 +5966,8 @@ packages:
       html-loader: 1.3.2_webpack@5.50.0
       html-webpack-plugin: 4.5.2_webpack@5.50.0
       raw-loader: 4.0.2_webpack@5.50.0
-      rc-js-test-util: 2.0.0_rc-js-util@8.3.1
-      rc-js-util: 8.3.1
+      rc-js-test-util: 2.0.0_rc-js-util@8.4.0
+      rc-js-util: 8.4.0
       rc-lint-rules: 5.3.0_typescript@4.4.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -5983,7 +5983,7 @@ packages:
     dev: false
     name: '@rush-temp/sandbox'
     resolution:
-      integrity: sha512-rjiXBB5L2SFpkOCxS9Nwvz66AVOvt0u8uqHcfR6+OAHpJDFbcEkzwGrnhuup4CdsmPZn9NjHcgIrGX1tv0Jnlw==
+      integrity: sha512-7H3peInMVMdSi5dZqNmizgll9ra/GALnLtpjRTVlkgVnNQrIF4jYbMdsF9B0bNJXqN02n77ulGhMpRtT0c1ktA==
       tarball: file:projects/sandbox.tgz
     version: 0.0.0
 registry: ''
@@ -6010,7 +6010,7 @@ specifiers:
   karma-webpack: ^5.0.0
   raw-loader: ^4.0.2
   rc-js-test-util: ^2.0.0
-  rc-js-util: 8.3.1
+  rc-js-util: 8.4.0
   rc-lint-rules: ^5.3.0
   react: ^17.0.2
   react-dom: ^17.0.2

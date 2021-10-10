@@ -48,6 +48,7 @@ debugDescribe("=> SharedQuadTree", () =>
     it("| queries point without triggering the asan", () =>
     {
         const tree = SharedQuadTree.createOneF32(emscriptenTestModule.wrapper, 4, 1);
+        tree.setTopLevel(Range2d.f32.factory.createOne(0, 1, 0, 1));
         tree.queryPoint(Vec2.f32.factory.createOne(1, 1), 0xF);
         tree.sharedObject.release();
     });

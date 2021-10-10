@@ -23,7 +23,7 @@ namespace VisualizationTools
         std::uint32_t GetTotalElementCount() const;
 
     private:
-        QuadNode<T> m_root;
+        QuadNode<T> * m_root = nullptr;
         std::uint32_t m_maxDepth;
         std::uint32_t m_maxElementsPerNode;
     };
