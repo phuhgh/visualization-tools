@@ -7,7 +7,7 @@ import { IChartPointerEvent } from "../internal-events/chart-pointer-event";
 import { EMouseEventType } from "../internal-events/e-mouse-event-type";
 import { EPointerEventButton } from "../internal-events/e-pointer-event-button";
 import { IPlotInteractionProviders } from "../plot-interaction-providers";
-import { IDefaultTargets } from "../hit-test/i-default-targets";
+import { IDefaultTargets } from "../i-default-targets";
 import { IInteractionSharedState } from "../i-interaction-shared-state";
 import { IDraggableTrait } from "../../../entities/traits/i-draggable-trait";
 

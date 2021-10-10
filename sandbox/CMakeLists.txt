@@ -27,7 +27,7 @@ set(SOURCE_FILES cpp/src/dummy.cpp)
 
 string(SUBSTRING "${RC_JS_EXPORTED_NAMES}" 1 -1 EXPORTED_NAMES)
 string(REPLACE ";" "','" EXPORTED_NAMES "${EXPORTED_NAMES}")
-set(CommonLinkFlags "-s EXPORTED_FUNCTIONS=['${EXPORTED_NAMES}'] -s ENVIRONMENT=web -s ALLOW_MEMORY_GROWTH -s IMPORTED_MEMORY -s MODULARIZE=1 -s LLD_REPORT_UNDEFINED --no-entry -gsource-map --source-map-base=./")
+set(CommonLinkFlags "-s EXPORTED_FUNCTIONS=['${EXPORTED_NAMES}'] -s ENVIRONMENT=web -s ALLOW_MEMORY_GROWTH -s IMPORTED_MEMORY -s MODULARIZE=1 -s LLD_REPORT_UNDEFINED --no-entry")
 set(CommonCompileFlags "")
 
 # sandbox test module
@@ -38,8 +38,8 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     set(CommonCompileFlags "-O3 ${OPTIMIZATION_FLAGS}")
     set_property(TARGET sandbox-module PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 else ()
-    set(CommonLinkFlags " -O0 -g3 ${CommonLinkFlags} -s ASSERTIONS=2 -s SAFE_HEAP -fsanitize=undefined")
-    set(CommonCompileFlags " -O0 -g3 -fsanitize=undefined")
+    set(CommonLinkFlags " -O0 -g3 ${CommonLinkFlags} -s ASSERTIONS=2 -s SAFE_HEAP -fsanitize=undefined -fno-inline")
+    set(CommonCompileFlags " -O0 -g3 -fsanitize=undefined -fno-inline")
 endif ()
 
 set_target_properties(sandbox-module PROPERTIES

@@ -1,6 +1,6 @@
 import { AGlUniformArray } from "./a-gl-uniform-array";
-import { _Debug, IReadonlyMat4 } from "rc-js-util";
-import { TGlBasicEntityRenderer } from "../entity-renderer/t-gl-basic-entity-renderer";
+import { IReadonlyMat4 } from "rc-js-util";
+import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 
 /**
  * @public
@@ -10,19 +10,17 @@ export class GlMat4Uniform extends AGlUniformArray<IReadonlyMat4<Float32Array>>
 {
     public bind
     (
-        renderer: TGlBasicEntityRenderer,
+        renderer: TGlBasicComponentRenderer,
     )
         : void
     {
-        DEBUG_MODE && _Debug.runBlock(() =>
+        if (!this.isDirty)
         {
-            if (this.uniformLocation == null)
-            {
-                console.debug(`failed to bind uniform: ${this.name}`);
-            }
-        });
+            return;
+        }
 
         const data = this.data as unknown as Float32Array;
         renderer.context.uniformMatrix4fv(this.uniformLocation, this.transpose, data);
+        this.isDirty = false;
     }
 }

@@ -3,11 +3,11 @@ import { _Debug, AOnDestroy, IDictionary, Range2d } from "rc-js-util";
 import { EMouseEventType } from "../eventing/user-interaction/internal-events/e-mouse-event-type";
 import { EPointerEventType } from "../eventing/user-interaction/internal-events/e-pointer-event-type";
 import { CanvasDimensions, ICanvasDimensions } from "./canvas-dimensions";
-import { EventService } from "../eventing/chart-event-service";
-import { OnCanvasPointerEvent } from "../eventing/events/on-canvas-pointer-event";
-import { OnCanvasMouseEvent } from "../eventing/events/on-canvas-mouse-event";
+import { EventService } from "../eventing/event-service";
+import { OnCanvasPointerEvent } from "./events/on-canvas-pointer-event";
+import { OnCanvasMouseEvent } from "./events/on-canvas-mouse-event";
 import { IChartConfig } from "../chart/chart-config";
-import { OnDprChanged } from "../eventing/events/on-dpr-changed";
+import { OnDprChanged } from "./events/on-dpr-changed";
 
 /**
  * @public

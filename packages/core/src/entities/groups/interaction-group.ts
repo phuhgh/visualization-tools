@@ -2,7 +2,7 @@ import { AEntityGroup, IEntityGroup } from "./a-entity-group";
 import { HitTestableGroup, IHitTestableGroupOptions } from "./hit-testable-group";
 import { EntityComponentStore, IEntityComponentStore } from "../entity-component-store";
 import { TEntityTrait } from "../traits/t-entity-trait";
-import { IHitAllowedComponent } from "../../eventing/user-interaction/hit-test/i-hit-allowed-component";
+import { IHitAllowedComponent } from "../../eventing/hit-testing/i-hit-allowed-component";
 import { IWritablePlot } from "../../plot/i-plot";
 import { IHitTestableTrait } from "./i-hit-testable-trait";
 

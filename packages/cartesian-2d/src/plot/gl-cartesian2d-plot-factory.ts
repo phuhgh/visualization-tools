@@ -1,18 +1,19 @@
-import { ChartDataEntity, CompositeGraphicsComponent, dummyGlProgramSpecification, IChartComponent, TGlContext, TGlEntityRenderer, TGlInstancedEntityRenderer } from "@visualization-tools/core";
+import { ChartDataEntity, CompositeGraphicsComponent, IChartComponent, IGlRenderer, TGlComponentRenderer, TGlContext, TGlInstancedComponentRenderer } from "@visualization-tools/core";
 import { ICartesian2dPlotConstructionOptions } from "./options/cartesian2d-plot-construction-options";
 import { Cartesian2dPlotCtorArg } from "./cartesian2d-plot-ctor-arg";
 import { ICartesian2dPlotCtor } from "./i-cartesian2d-plot-ctor";
-import { GlCartesian2dTraceBinder, TGlTraceEntity } from "../axis/traces/gl-cartesian-2d-trace-binder";
+import { GlCartesian2dTraceBinder } from "../axis/traces/gl-cartesian-2d-trace-binder";
 import { Cartesian2dTraceEntityConnector } from "../axis/cartesian-2d-trace-entity-connector";
 import { createCartesianPlotCtor } from "./create-cartesian-plot-ctor";
 import { GlCartesian2dCameraBinder } from "../camera/gl-cartesian2d-camera-binder";
 import { GlCartesian2dTraceGraphicsComponent } from "../axis/traces/gl-cartesian-2d-trace-graphics-component";
 import { populateCartesian2dTraceBindings } from "../axis/populate-cartesian-2d-trace-bindings";
 import { GlCartesian2dAxisGraphicsComponent } from "../axis/labels/gl-cartesian-2d-axis-graphics-component";
-import { GlCartesianUpdateHooks } from "../update/gl-cartesian-update-hooks";
-import { ICartesian2dUpdateArg } from "../update/cartesian2d-update-arg";
+import { GlCartesianUpdateHooks } from "../update/update-arg/gl-cartesian-update-hooks";
+import { ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-arg";
 import { ICartesian2dPlot } from "./i-cartesian2d-plot";
 import { T2dZIndexesTrait } from "../traits/t2d-z-indexes-trait";
+import { TGlTraceEntity } from "../axis/traces/t-gl-trace-entity";
 
 /**
  * @public
@@ -20,38 +21,34 @@ import { T2dZIndexesTrait } from "../traits/t2d-z-indexes-trait";
  */
 export class GlCartesian2dPlotFactory
 {
-    public static createOne<TEntityRenderer extends TGlEntityRenderer<TGlContext, never>, TRequiredTraits>
+    public static createOne<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>, TRequiredTraits>
     (
-        chart: IChartComponent<TEntityRenderer>,
+        chart: IChartComponent<IGlRenderer<TComponentRenderer>>,
         options: ICartesian2dPlotConstructionOptions<Float32Array, TRequiredTraits>,
     )
-        : TGlCartesianPlot<TEntityRenderer, TRequiredTraits>
+        : TGlCartesianPlot<TComponentRenderer, TRequiredTraits>
     {
         const plotArea = options.getPlotArea(chart.attachPoint);
         const arg = new Cartesian2dPlotCtorArg<Float32Array, TRequiredTraits>(chart, options, plotArea);
 
-        return new (GlCartesianPlot as TGlCartesianPlotCtor<TEntityRenderer, TRequiredTraits>)(arg);
+        return new (GlCartesianPlot as TGlCartesianPlotCtor<TComponentRenderer, TRequiredTraits>)(arg);
     }
 
     public static setDefaultAxis
     (
-        plot: ICartesian2dPlot<TGlInstancedEntityRenderer, Float32Array, T2dZIndexesTrait>,
+        plot: ICartesian2dPlot<TGlInstancedComponentRenderer, Float32Array, T2dZIndexesTrait>,
         options: ICartesian2dPlotConstructionOptions<Float32Array, T2dZIndexesTrait>,
     )
         : void
     {
-        const traceBinderTrace = new GlCartesian2dTraceBinder();
-        const traceBinderAxis = new GlCartesian2dTraceBinder();
-        traceBinderTrace.mergeBuffers([traceBinderAxis]);
-        const traceConnector = new Cartesian2dTraceEntityConnector(Float32Array, options.traceOptions.maxTraceCount, plot.changeIdFactory);
-
         const axisComponents = CompositeGraphicsComponent
-            .createOne(dummyGlProgramSpecification, new GlCartesian2dTraceGraphicsComponent(traceBinderTrace, new GlCartesian2dCameraBinder()))
-            .addComponent(new GlCartesian2dAxisGraphicsComponent(plot.attachPoint, traceBinderAxis, new GlCartesian2dCameraBinder()));
+            .createOneLinked(new GlCartesian2dTraceGraphicsComponent(new GlCartesian2dTraceBinder(), new GlCartesian2dCameraBinder()))
+            .addComponent(new GlCartesian2dAxisGraphicsComponent(plot.attachPoint, new GlCartesian2dTraceBinder(), new GlCartesian2dCameraBinder()))
+            .build();
 
         plot.metaCategory.addEntity(
             new ChartDataEntity(
-                traceConnector,
+                new Cartesian2dTraceEntityConnector(Float32Array, options.traceOptions.maxTraceCount, plot.changeIdFactory),
                 {
                     traceColor: options.traceOptions.traceColor,
                     traceLinePixelSize: options.traceOptions.traceLinePixelSize,
@@ -61,7 +58,7 @@ export class GlCartesian2dPlotFactory
                     traces: new Float32Array(2 * 4 * (options.traceOptions.maxTraceCount + 3)),
                 },
                 plot.changeIdFactory,
-                function
+                function onBeforeUpdate
                 (
                     this: TGlTraceEntity,
                     arg: ICartesian2dUpdateArg<Float32Array>,
@@ -80,12 +77,12 @@ export class GlCartesian2dPlotFactory
 /**
  * @public
  */
-export type TGlCartesianPlot<TEntityRenderer extends TGlEntityRenderer<TGlContext, never>, TRequiredTraits> =
-    ICartesian2dPlot<TEntityRenderer, Float32Array, TRequiredTraits>
+export type TGlCartesianPlot<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>, TRequiredTraits> =
+    ICartesian2dPlot<TComponentRenderer, Float32Array, TRequiredTraits>
     ;
 
-type TGlCartesianPlotCtor<TEntityRenderer extends TGlEntityRenderer<TGlContext, never>, TRequiredTraits> =
-    ICartesian2dPlotCtor<TEntityRenderer, Float32Array, TRequiredTraits>
+type TGlCartesianPlotCtor<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>, TRequiredTraits> =
+    ICartesian2dPlotCtor<TComponentRenderer, Float32Array, TRequiredTraits>
     ;
 
 const GlCartesianPlot = createCartesianPlotCtor(

@@ -1,6 +1,6 @@
 import { CanvasDimensions, ICanvasDimensions, PlotArea, PlotDimensions } from "@visualization-tools/core";
 import { Range2d, TF32Vec2, TTypedArrayCtor } from "rc-js-util";
-import { Cartesian2dUpdateArg, ICartesian2dUpdateArg } from "../update/cartesian2d-update-arg";
+import { Cartesian2dUpdateArg, ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-arg";
 
 /**
  * @internal

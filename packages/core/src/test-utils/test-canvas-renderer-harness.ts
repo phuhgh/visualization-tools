@@ -1,9 +1,9 @@
 import { GraphAttachPoint, IGraphAttachPoint } from "../templating/graph-attach-point";
 import { IRenderer } from "../rendering/i-renderer";
-import { ICanvasEntityRenderer } from "../rendering/canvas/canvas-entity-renderer";
+import { ICanvasComponentRenderer } from "../rendering/canvas/canvas-component-renderer";
 import { TF32Vec2 } from "rc-js-util";
 import { GraphAttachPointProvider } from "../templating/graph-attach-point-provider";
-import { EventService } from "../eventing/chart-event-service";
+import { EventService } from "../eventing/event-service";
 import { ChartConfig } from "../chart/chart-config";
 import { CanvasContextAdapter } from "../rendering/canvas/canvas-context-adapter";
 import { CanvasRenderer } from "../rendering/canvas/canvas-renderer";
@@ -14,7 +14,7 @@ import { CanvasRenderer } from "../rendering/canvas/canvas-renderer";
 export class TestCanvasRendererHarness
 {
     public attachPoint: IGraphAttachPoint;
-    public renderer: IRenderer<ICanvasEntityRenderer>;
+    public renderer: IRenderer<ICanvasComponentRenderer>;
 
     public constructor
     (

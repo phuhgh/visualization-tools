@@ -1,26 +1,26 @@
 import { TemporaryListener, TTypedArray } from "rc-js-util";
 import { ICartesian2dPlotConstructionOptions } from "./options/cartesian2d-plot-construction-options";
-import { ICartesian2dPlotRange } from "../update/cartesian2d-plot-range";
-import { ICartesian2dUpdateArgProvider } from "../update/i-cartesian2d-update-arg-provider";
-import { ICartesian2dUpdateArg } from "../update/cartesian2d-update-arg";
-import { EntityCategory2d } from "../update/entity-category2d";
+import { ICartesian2dPlotRange } from "../update/update-arg/cartesian2d-plot-range";
+import { ICartesian2dUpdateArgProvider } from "../update/update-arg/i-cartesian2d-update-arg-provider";
+import { ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-arg";
+import { EntityCategory2d } from "../update/update-group/entity-category2d";
 import { ICartesian2dPlotCtor } from "./i-cartesian2d-plot-ctor";
 import { ICartesian2dPlotCtorArg } from "./cartesian2d-plot-ctor-arg";
-import { ICategoryUpdateHooks, IEntityCategory, IGraphAttachPoint, IRenderer, OnCanvasResized, OnDprChanged, OnPlotDetached, Plot, TUnknownEntityRenderer } from "@visualization-tools/core";
+import { ICategoryUpdateHooks, IChartComponent, IEntityCategory, IRenderer, OnCanvasResized, OnDprChanged, OnPlotDetached, Plot, TUnknownComponentRenderer, TUnknownRenderer } from "@visualization-tools/core";
 import { ICartesian2dPlot } from "./i-cartesian2d-plot";
 
 /**
  * @public
  */
-export interface ICartesian2dAxisFactory<TEntityRenderer extends TUnknownEntityRenderer
+export interface ICartesian2dAxisFactory<TComponentRenderer extends TUnknownComponentRenderer
     , TArray extends TTypedArray
     , TRequiredTraits>
 {
     setDefaultAxis
     (
-        plot: ICartesian2dPlot<TEntityRenderer, TArray, TRequiredTraits>,
+        plot: ICartesian2dPlot<TComponentRenderer, TArray, TRequiredTraits>,
         options: ICartesian2dPlotConstructionOptions<TArray, TRequiredTraits>,
-        attachPoint: IGraphAttachPoint,
+        chartComponent: IChartComponent<TUnknownRenderer>,
     )
         : void;
 }
@@ -30,21 +30,21 @@ export interface ICartesian2dAxisFactory<TEntityRenderer extends TUnknownEntityR
  * Generates the constructor of {@link ICartesian2dPlot}. Use a factory to create an instance ({@link CanvasCartesian2dPlotFactory},
  * {@link GlCartesian2dPlotFactory} etc) unless extending.
  */
-export function createCartesianPlotCtor<TEntityRenderer extends TUnknownEntityRenderer, TArray extends TTypedArray>
+export function createCartesianPlotCtor<TComponentRenderer extends TUnknownComponentRenderer, TArray extends TTypedArray>
 (
-    axisFactory: ICartesian2dAxisFactory<TEntityRenderer, TArray, unknown>,
-    metaUpdateHooks: ICategoryUpdateHooks<IRenderer<TEntityRenderer>, ICartesian2dUpdateArg<TArray>>,
-    dataUpdateHooks: ICategoryUpdateHooks<IRenderer<TEntityRenderer>, ICartesian2dUpdateArg<TArray>>,
+    axisFactory: ICartesian2dAxisFactory<TComponentRenderer, TArray, unknown>,
+    metaUpdateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, ICartesian2dUpdateArg<TArray>>,
+    dataUpdateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, ICartesian2dUpdateArg<TArray>>,
 )
-    : ICartesian2dPlotCtor<TEntityRenderer, TArray, unknown>
+    : ICartesian2dPlotCtor<TComponentRenderer, TArray, unknown>
 {
     return class CartesianPlot<TRequiredTraits>
         extends Plot<ICartesian2dPlotRange<TArray>, TRequiredTraits>
-        implements ICartesian2dPlot<TEntityRenderer, TArray, TRequiredTraits>
+        implements ICartesian2dPlot<TComponentRenderer, TArray, TRequiredTraits>
     {
         public updateArgProvider: ICartesian2dUpdateArgProvider<TArray, TRequiredTraits>;
-        public metaCategory: IEntityCategory<TEntityRenderer, ICartesian2dUpdateArg<TArray>, TRequiredTraits>;
-        public dataCategory: IEntityCategory<TEntityRenderer, ICartesian2dUpdateArg<TArray>, TRequiredTraits>;
+        public metaCategory: IEntityCategory<TComponentRenderer, ICartesian2dUpdateArg<TArray>, TRequiredTraits>;
+        public dataCategory: IEntityCategory<TComponentRenderer, ICartesian2dUpdateArg<TArray>, TRequiredTraits>;
 
         public constructor
         (
@@ -55,23 +55,23 @@ export function createCartesianPlotCtor<TEntityRenderer extends TUnknownEntityRe
             const ctor = this.constructor as typeof CartesianPlot;
 
             this.updateArgProvider = arg.plotOptions.updateGroup.updateArgProvider;
-            this.metaCategory = new EntityCategory2d(this, arg.chart.renderer, arg.plotOptions.updateGroup, ctor.metaUpdateHooks);
-            this.dataCategory = new EntityCategory2d(this, arg.chart.renderer, arg.plotOptions.updateGroup, ctor.dataUpdateHooks);
+            this.metaCategory = new EntityCategory2d(this, arg.chart.renderer as IRenderer<TComponentRenderer>, arg.plotOptions.updateGroup, ctor.metaUpdateHooks);
+            this.dataCategory = new EntityCategory2d(this, arg.chart.renderer as IRenderer<TComponentRenderer>, arg.plotOptions.updateGroup, ctor.dataUpdateHooks);
 
-            this.configureDefaults(arg.plotOptions, arg.chart.attachPoint);
+            this.configureDefaults(arg.plotOptions, arg.chart);
             this.registerEventHandlers(arg.plotOptions);
         }
 
         private configureDefaults
         (
             options: ICartesian2dPlotConstructionOptions<TArray, TRequiredTraits>,
-            attachPoint: IGraphAttachPoint,
+            chartComponent: IChartComponent<TUnknownRenderer>,
         )
             : void
         {
             if (options.useDefaultAxis)
             {
-                (this.constructor as typeof CartesianPlot).axisFactory.setDefaultAxis(this, options, attachPoint);
+                (this.constructor as typeof CartesianPlot).axisFactory.setDefaultAxis(this, options, chartComponent);
             }
         }
 
@@ -91,8 +91,8 @@ export function createCartesianPlotCtor<TEntityRenderer extends TUnknownEntityRe
         }
 
         private plotListeners = new TemporaryListener<[]>();
-        private static axisFactory: ICartesian2dAxisFactory<TEntityRenderer, TArray, unknown> = axisFactory;
-        private static metaUpdateHooks: ICategoryUpdateHooks<IRenderer<TEntityRenderer>, ICartesian2dUpdateArg<TArray>> = metaUpdateHooks;
-        private static dataUpdateHooks: ICategoryUpdateHooks<IRenderer<TEntityRenderer>, ICartesian2dUpdateArg<TArray>> = dataUpdateHooks;
+        private static axisFactory: ICartesian2dAxisFactory<TComponentRenderer, TArray, unknown> = axisFactory;
+        private static metaUpdateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, ICartesian2dUpdateArg<TArray>> = metaUpdateHooks;
+        private static dataUpdateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, ICartesian2dUpdateArg<TArray>> = dataUpdateHooks;
     };
 }

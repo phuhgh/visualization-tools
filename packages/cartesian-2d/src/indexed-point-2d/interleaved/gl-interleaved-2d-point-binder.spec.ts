@@ -8,15 +8,17 @@ import { Point2dDisplaySettings } from "../../traits/t-point2d-display-settings-
 import { Point2dSizeNormalizer } from "../../traits/t-point2d-size-normalizer-trait";
 import { debugDescribe, ExpectColor } from "rc-js-test-util";
 import { TestGl2RendererHarness } from "@visualization-tools/core/bin/test-utils/test-gl2-renderer-harness";
-import { ChartDataEntity, GlProgramSpecification, GlShader, IGlInstancedBinder, IGraphicsComponentSpecification, InterleavedConnector, TGlInstancedEntityRenderer } from "@visualization-tools/core";
+import { updateTestGc } from "@visualization-tools/core/bin/test-utils/update-test-gc";
+import { ChartDataEntity, EGraphicsComponentType, GlProgramSpecification, GlShader, IGlInstancedBinder, IGraphicsComponent, InterleavedConnector, NoTransformProvider, TGlInstancedComponentRenderer } from "@visualization-tools/core";
 import { debugFragmentShader } from "@visualization-tools/core/bin/test-utils/debug-fragment-shader";
+
+const changeIdFactory = new IncrementingIdentifierFactory();
 
 debugDescribe("=> GlInterleavedPointBinder", () =>
 {
-    const changeIdFactory = new IncrementingIdentifierFactory();
     let connector: InterleavedConnector<Float32Array, IPoint2dOffsets>;
     let binder: GlInterleaved2dPointBinder;
-    let testRendererHarness: TestGl2RendererHarness<never>;
+    let testRendererHarness: TestGl2RendererHarness;
 
     beforeEach(() =>
     {
@@ -115,9 +117,6 @@ debugDescribe("=> GlInterleavedPointBinder", () =>
         function draw(displayConfig: Point2dDisplaySettings, normalizationConfig: Point2dSizeNormalizer<Float32Array>)
         {
             const testGraphicsComponent = new SinglePointTestGraphicsComponent(binder);
-            const entityRenderer = testRendererHarness.renderer.entityRendererFactory.createRenderer(testGraphicsComponent.specification);
-            entityRenderer.useProgram();
-            testGraphicsComponent.initialize(entityRenderer);
             const testEntity = new ChartDataEntity(
                 connector,
                 {
@@ -128,7 +127,7 @@ debugDescribe("=> GlInterleavedPointBinder", () =>
                 },
                 changeIdFactory,
             );
-            testGraphicsComponent.update(testEntity, entityRenderer);
+            updateTestGc(testRendererHarness, testGraphicsComponent, testEntity, undefined);
         }
     });
 
@@ -146,7 +145,7 @@ debugDescribe("=> GlInterleavedPointBinder", () =>
                     -0.25, -0.25,
                     -0.25, 0.25,
                 ]), { offsets: { x: 0, y: 1 }, blockElementCount: 2 });
-                binder = new GlInterleaved2dPointBinder(connector.getDescriptor(), { pointsToBind: 2, byteStride: connector.getBlockByteSize() * 2 });
+                binder = new GlInterleaved2dPointBinder(connector.getDescriptor(), { pointsToBind: 2 });
             });
 
             it("| draws a red rectangle", () =>
@@ -178,9 +177,7 @@ debugDescribe("=> GlInterleavedPointBinder", () =>
             const normalization = new Point2dSizeNormalizer(Range1d.f32.factory.createOne(10, 20));
             normalization.extendDataRange(0, 1);
             const testGraphicsComponent = new TwoPointTestGraphicsComponent(binder, useSecondPoint);
-            const entityRenderer = testRendererHarness.renderer.entityRendererFactory.createRenderer(testGraphicsComponent.specification);
-            entityRenderer.useProgram();
-            testGraphicsComponent.initialize(entityRenderer);
+
             const testEntity = new ChartDataEntity(
                 connector,
                 {
@@ -191,14 +188,17 @@ debugDescribe("=> GlInterleavedPointBinder", () =>
                 },
                 changeIdFactory,
             );
-            testGraphicsComponent.update(testEntity, entityRenderer);
+
+            updateTestGc(testRendererHarness, testGraphicsComponent, testEntity, undefined);
         }
     });
 });
 
 class SinglePointTestGraphicsComponent
-    implements IGraphicsComponentSpecification<TGlInstancedEntityRenderer, void, TInterleavedPoint2dTrait<Float32Array>>
+    implements IGraphicsComponent<TGlInstancedComponentRenderer, void, TInterleavedPoint2dTrait<Float32Array>>
 {
+    public readonly type = EGraphicsComponentType.Entity;
+    public transform = new NoTransformProvider();
     public specification = GlProgramSpecification.mergeProgramSpecifications([
         this.dataBinder.specification,
         new GlProgramSpecification(
@@ -220,19 +220,19 @@ class SinglePointTestGraphicsComponent
 
     public constructor
     (
-        private readonly dataBinder: IGlInstancedBinder<TInterleavedPoint2dTrait<Float32Array>, TGlInstancedEntityRenderer>,
+        private readonly dataBinder: IGlInstancedBinder<TGlInstancedComponentRenderer, TInterleavedPoint2dTrait<Float32Array>>,
     )
     {
     }
 
     public getCacheId(): string
     {
-        return "GlTestSpec";
+        return "GlTestSpec1";
     }
 
-    public initialize(entityRenderer: TGlInstancedEntityRenderer): void
+    public initialize(componentRenderer: TGlInstancedComponentRenderer): void
     {
-        this.dataBinder.initialize(entityRenderer);
+        this.dataBinder.initialize(componentRenderer);
     }
 
     public onBeforeUpdate(): void
@@ -240,17 +240,19 @@ class SinglePointTestGraphicsComponent
         // no action needed
     }
 
-    public update(entity: TInterleavedPoint2dTrait<Float32Array>, entityRenderer: TGlInstancedEntityRenderer): void
+    public update(entity: TInterleavedPoint2dTrait<Float32Array>, componentRenderer: TGlInstancedComponentRenderer): void
     {
-        this.dataBinder.update(entity, entityRenderer);
-        const ctx = entityRenderer.context;
+        this.dataBinder.update(entity, componentRenderer, changeIdFactory.getNextId());
+        const ctx = componentRenderer.context;
         ctx.drawArrays(ctx.TRIANGLES, 0, entity.data.getLength());
     }
 }
 
 class TwoPointTestGraphicsComponent
-    implements IGraphicsComponentSpecification<TGlInstancedEntityRenderer, void, TIndexedPointTrait<Float32Array, IDrawablePoint2dOffsets>>
+    implements IGraphicsComponent<TGlInstancedComponentRenderer, void, TIndexedPointTrait<Float32Array, IDrawablePoint2dOffsets>>
 {
+    public readonly type = EGraphicsComponentType.Entity;
+    public transform = new NoTransformProvider();
     public specification = GlProgramSpecification.mergeProgramSpecifications([
         this.dataBinder.specification,
         new GlProgramSpecification(
@@ -281,7 +283,7 @@ class TwoPointTestGraphicsComponent
 
     public constructor
     (
-        private readonly dataBinder: IGlInstancedBinder<TIndexedPointTrait<Float32Array, IDrawablePoint2dOffsets>, TGlInstancedEntityRenderer>,
+        private readonly dataBinder: IGlInstancedBinder<TGlInstancedComponentRenderer, TIndexedPointTrait<Float32Array, IDrawablePoint2dOffsets>>,
         private useSecondPoint: boolean,
     )
     {
@@ -289,12 +291,12 @@ class TwoPointTestGraphicsComponent
 
     public getCacheId(): string
     {
-        return "GlTestSpec";
+        return "GlTestSpec2";
     }
 
-    public initialize(entityRenderer: TGlInstancedEntityRenderer): void
+    public initialize(componentRenderer: TGlInstancedComponentRenderer): void
     {
-        this.dataBinder.initialize(entityRenderer);
+        this.dataBinder.initialize(componentRenderer);
     }
 
     public onBeforeUpdate(): void
@@ -302,12 +304,12 @@ class TwoPointTestGraphicsComponent
         // no action needed
     }
 
-    public update(entity: TIndexedPointTrait<Float32Array, IDrawablePoint2dOffsets>, entityRenderer: TGlInstancedEntityRenderer): void
+    public update(entity: TIndexedPointTrait<Float32Array, IDrawablePoint2dOffsets>, componentRenderer: TGlInstancedComponentRenderer): void
     {
-        this.dataBinder.update(entity, entityRenderer);
-        const ctx = entityRenderer.context;
-        const loc = entityRenderer.context.getUniformLocation(entityRenderer.program, "test_useSecond");
-        entityRenderer.context.uniform1i(loc, this.useSecondPoint ? 1 : 0);
+        this.dataBinder.update(entity, componentRenderer, changeIdFactory.getNextId());
+        const ctx = componentRenderer.context;
+        const loc = componentRenderer.context.getUniformLocation(componentRenderer.program, "test_useSecond");
+        componentRenderer.context.uniform1i(loc, this.useSecondPoint ? 1 : 0);
 
         ctx.drawArrays(ctx.TRIANGLES, 0, entity.data.getLength() / 2);
     }

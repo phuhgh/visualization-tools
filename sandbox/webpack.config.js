@@ -83,10 +83,6 @@ module.exports = {
                     to: ""
                 },
                 {
-                    from: "build/sandbox-module.wasm.map",
-                    to: ""
-                },
-                {
                     from: "cpp/**/*",
                     to: "",
                 }
@@ -94,7 +90,7 @@ module.exports = {
         }),
     ],
     devServer: {
-        contentBase: path.join(__dirname, "bin", "pack"),
+        contentBase: [path.join(__dirname, "bin", "pack"), __dirname],
         port: 3000,
     }
 };

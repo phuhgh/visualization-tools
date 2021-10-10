@@ -1,13 +1,16 @@
-import { TGlBasicEntityRenderer } from "../entity-renderer/t-gl-basic-entity-renderer";
+import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 import { TTypedArray } from "rc-js-util";
-import { TGlInstancedEntityRenderer } from "../entity-renderer/t-gl-instanced-entity-renderer";
+import { TGlInstancedComponentRenderer } from "../component-renderer/t-gl-instanced-component-renderer";
+import { TGl2ComponentRenderer } from "../component-renderer/t-gl2-component-renderer";
+import { IGlBuffer } from "./i-gl-buffer";
+import { IAttributeState } from "./attribute-state";
 
 /**
  * @public
  * Wrapper for dirty checked GL attributes with VAO and shared mutable buffer support. `ChangeId`s must be generated
  * program wide to avoid collisions `IncrementingIdentifierFactory` (rc-js-util) is a suitable implementation.
  */
-export interface IGlAttribute
+export interface IGlAttribute<TArray extends TTypedArray>
 {
     /**
      * The name of the attribute, must match the shader name exactly.
@@ -19,48 +22,94 @@ export interface IGlAttribute
      */
     readonly componentsPerVertex: number;
 
+    getBuffer(): IGlBuffer<TArray>;
+    setBuffer(buffer: IGlBuffer<TArray>): void;
+
     /**
      * Set the byte offset into the buffer.
      */
     setOffset(byteOffset: number): void;
 
     /**
-     * Copy new data into the buffer.
+     * Set the number of bytes to the start of the next attribute.
      */
-    setData(data: TTypedArray, changeId: number): void;
+    setStride(byteStride: number): void;
 
     /**
-     * Overwrite data in the buffer. The argument `updateId` is provided to allow multiple writes per draw, if the
-     * `updateId` is larger than the previous call's `updateId` then the modification is allowed. This resets whenever
-     * `changeId` changes.
+     * Copy new data into the buffer.
      */
-    overrideValues
+    setData(data: TArray, changeId: number): void;
+
+    /**
+     * Resizes the buffer ready as a copy target. Clears the current data / dirty state.
+     */
+    setSize
     (
-        entityRenderer: TGlBasicEntityRenderer,
-        byteOffset: number,
-        data: TTypedArray,
+        context: WebGL2RenderingContext,
+        byteSize: number,
+        usage: GLenum,
         changeId: number,
-        updateId: number,
     )
         : void;
 
     /**
-     * Called once on creation or context restored.
+     * Transfer this attribute's buffer to the argument and vice versa.
      */
-    initialize(entityRenderer: TGlBasicEntityRenderer): void;
+    swapBuffer(attribute: IGlAttribute<TArray>): void;
 
     /**
-     * Wrapper of vertexAttribPointer.
+     * Overwrite data in the buffer. The argument `modificationId` is provided to allow multiple writes per draw, if the
+     * `modificationId` is larger than the previous call's `modificationId` then the modification is allowed. This resets whenever
+     * `changeId` changes.
      */
-    bind(entityRenderer: TGlBasicEntityRenderer, usage?: GLenum): void;
+    setSubBufferData
+    (
+        componentRenderer: TGlBasicComponentRenderer,
+        byteOffset: number,
+        data: TArray,
+        changeId: number,
+        modificationId: number,
+    )
+        : void;
+
+    /**
+     * Called once on context loss.
+     */
+    onContextLost(): void;
+
+    /**
+     * Called once on creation or context restored.
+     */
+    initialize(componentRenderer: TGlBasicComponentRenderer): void;
+
+    /**
+     * Binds the current buffer to `TRANSFORM_FEEDBACK_BUFFER`.
+     */
+    bindTransform(componentRenderer: TGl2ComponentRenderer, index: number): void;
+
+    /**
+     * Binds the current buffer to `ARRAY_BUFFER`.
+     */
+    bindArray(componentRenderer: TGlBasicComponentRenderer, usage?: GLenum): void;
+
     /**
      * Like `bind` but with instancing enabled for this attribute.
      */
-    bindInstanced(entityRenderer: TGlInstancedEntityRenderer, divisor: number, usage?: GLenum): void;
+    bindArrayInstanced(componentRenderer: TGlInstancedComponentRenderer, divisor: number, usage?: GLenum): void;
 
     /**
      * Reset the state of this attribute. If `OES_vertex_array_object` is enabled or the context is webgl2 this is a no-op.
      * Called after update as part of the update strategy.
      */
-    reset(entityRenderer: TGlBasicEntityRenderer): void;
+    reset(componentRenderer: TGlBasicComponentRenderer): void;
+
+    /**
+     * Links this attribute to shared state, such that a change to one attribute results in a change to all attributes.
+     */
+    link(sharedState: IAttributeState<TArray>): void;
+
+    /**
+     * The internal state of the attribute that can be shared, namely the buffer that the attribute points to.
+     */
+    getSharableState(): IAttributeState<TArray>;
 }

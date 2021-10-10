@@ -1,20 +1,16 @@
-import { _Debug, Mat2, Mat4, Once } from "rc-js-util";
+import { _Array, _Debug, Mat2, Mat4, Once, Vec4 } from "rc-js-util";
 import { IDrawablePoint2dOffsets } from "../../series/i-drawable-point2d-offsets";
 import { TInterleavedPoint2dTrait } from "../../traits/t-interleaved-point2d-trait";
-import { IGlIndexedPoint2dBinder } from "../i-gl-indexed-point2d-binder";
-import { AGlInstancedBinder, emptyShader, GlBuffer, GlFloatAttribute, GlMat2Uniform, GlMat4Uniform, GlProgramSpecification, GlShader, IGlAttribute, IGlProgramSpec, IGlShader, IInterleavedBindingDescriptor, mat2MultiplyValueShader, TGl2EntityRenderer, unpackColorShader } from "@visualization-tools/core";
+import { IGlIndexedPoint2dBinder, IndexedPoint2dIdentifier } from "../i-gl-indexed-point2d-binder";
+import { AGlInstancedBinder, emptyShader, GlFloatAttribute, GlFloatBuffer, GlIVec4Uniform, GlMat2Uniform, GlMat4Uniform, GlProgramSpecification, GlShader, IGlAttribute, IGlProgramSpec, IGlShader, IInterleavedBindingDescriptor, mat2MultiplyValueShader, TGl2ComponentRenderer, unpackColorShader } from "@visualization-tools/core";
 
 /**
  * @public
  */
-export interface IGlInterleavedPointBinderConfig
-{
-    byteStride?: number;
-    /**
-     * Each point added adds an attribute.
-     */
-    pointsToBind: number;
-}
+export type TGlInterleavedPointBinderConfig =
+    | { pointsToBind: number; }
+    | { bindsOutput: boolean; }
+    ;
 
 /**
  * @public
@@ -25,44 +21,49 @@ export interface IGlInterleavedPointBinderConfig
  * will be supplied in instead. The type of buffer may not be changed after creation (e.g. adding size).
  **/
 export class GlInterleaved2dPointBinder
-    extends AGlInstancedBinder<TInterleavedPoint2dTrait<Float32Array>, TGl2EntityRenderer>
+    extends AGlInstancedBinder<TGl2ComponentRenderer, TInterleavedPoint2dTrait<Float32Array>>
     implements IGlIndexedPoint2dBinder<Float32Array>
 {
     public specification: IGlProgramSpec;
     public readonly pointsBound: number;
+    public readonly binderClassificationId = IndexedPoint2dIdentifier;
+    public readonly linkId = linkId;
 
     public constructor
     (
         private readonly bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>,
-        protected readonly binderConfig: IGlInterleavedPointBinderConfig = { pointsToBind: 1 },
+        protected readonly binderConfig: TGlInterleavedPointBinderConfig = { pointsToBind: 1, bindsOutput: false },
     )
     {
         super();
         this.uniformsToBind = GlInterleaved2dPointBinder.getUniformsToBind(bindingDescriptor.offsets);
         this.bindings = this.getBindings(bindingDescriptor, binderConfig);
         this.specification = GlInterleaved2dPointBinder.generateProgram(bindingDescriptor, binderConfig);
-        this.pointsBound = binderConfig.pointsToBind;
+        this.pointsBound = GlInterleaved2dPointBinder.isTransformConfig(binderConfig) ? 1 : binderConfig.pointsToBind;
+    }
+
+    public getTransformId(): string
+    {
+        // a vec4 is always used and copied before hand, so it's safe to share the transform regardless
+        return "interleavedPoint2d";
     }
 
     @Once
-    public getCacheId(): string
+    public getBinderId(): string
     {
         const preprocessorStatements = [
-            "PC",
-            this.binderConfig.pointsToBind,
-            "interleavedPoint",
-            this.bindingDescriptor.offsets.x,
-            this.bindingDescriptor.offsets.y,
-            this.bindingDescriptor.offsets.color ?? "nco",
-            this.bindingDescriptor.offsets.size ?? "nso",
+            "interleavedPoint2d",
+            this.pointsBound,
+            this.bindingDescriptor.offsets.color == null ? "noColor" : "color",
+            this.bindingDescriptor.offsets.size == null ? "size" : "noSize",
         ];
 
         return preprocessorStatements.join("_");
     }
 
-    public mergeTracePositionBuffers(binders: GlInterleaved2dPointBinder[]): void
+    public link(binders: GlInterleaved2dPointBinder[]): void
     {
-        const pointBuffer = GlFloatAttribute.extractBuffer(this.bindings.pointAttributes[0]);
+        const attributeState = this.bindings.pointAttributes[0].getSharableState();
 
         for (let i = 0, iEnd = binders.length; i < iEnd; ++i)
         {
@@ -70,75 +71,122 @@ export class GlInterleaved2dPointBinder
 
             for (let j = 0, jEnd = pointAttributes.length; j < jEnd; ++j)
             {
-                GlFloatAttribute.setBuffer(pointAttributes[j], pointBuffer);
+                pointAttributes[j].link(attributeState);
             }
         }
     }
 
-    public initialize(entityRenderer: TGl2EntityRenderer): void
+    public swapBuffers(binder: GlInterleaved2dPointBinder): void
+    {
+        // all attributes share the same buffer, only 1 swap is required
+        this.bindings.pointAttributes[0].swapBuffer(binder.bindings.pointAttributes[0]);
+    }
+
+    public setResultBuffers
+    (
+        entity: TInterleavedPoint2dTrait<Float32Array>,
+        binder: GlInterleaved2dPointBinder,
+        componentRenderer: TGl2ComponentRenderer,
+        usage: GLenum,
+    )
+        : void
+    {
+        const theirAttributes = binder.bindings.pointAttributes;
+        const bufferByteSize = entity.data.getBlockByteSize() * entity.data.getLength();
+        const changeId = entity.changeId;
+
+        // only 1 buffer used during transform as the buffer is shared
+        theirAttributes[0].setSize(componentRenderer.context, bufferByteSize, usage, changeId);
+        theirAttributes[0].bindTransform(componentRenderer, 0);
+    }
+
+    public getTransformBinder(): IGlIndexedPoint2dBinder<Float32Array>
+    {
+        return new GlInterleaved2dPointBinder(this.bindingDescriptor, { ...this.binderConfig, bindsOutput: true });
+    }
+
+    public clearResultBuffers(componentRenderer: TGl2ComponentRenderer): void
+    {
+        componentRenderer.context.bindBufferBase(componentRenderer.context.TRANSFORM_FEEDBACK_BUFFER, 0, null);
+    }
+
+    public initialize(componentRenderer: TGl2ComponentRenderer): void
     {
         const pointAttributes = this.bindings.pointAttributes;
 
         for (let i = 0, iEnd = pointAttributes.length; i < iEnd; ++i)
         {
-            pointAttributes[i].initialize(entityRenderer);
+            pointAttributes[i].initialize(componentRenderer);
         }
 
         if (this.uniformsToBind & EUniformBinding.BindDisplaySettings)
         {
-            this.bindings.displayConfigUniform.initialize(entityRenderer);
+            this.bindings.displayConfigUniform.initialize(componentRenderer);
         }
 
         if (this.uniformsToBind & EUniformBinding.BindSizeTransform)
         {
-            this.bindings.sizeTransformUniform.initialize(entityRenderer);
+            this.bindings.sizeTransformUniform.initialize(componentRenderer);
         }
+
+        this.bindings.offsetUniform.initialize(componentRenderer);
     }
 
-    public updateData(entity: TInterleavedPoint2dTrait<Float32Array>): void
+    public updateData(entity: TInterleavedPoint2dTrait<Float32Array>, changeId: number): void
     {
-        DEBUG_MODE && _Debug.runBlock(() =>
-        {
-            _Debug.assert(entity.data.offsets.x === this.bindingDescriptor.offsets.x, "connector does not match");
-            _Debug.assert(entity.data.offsets.y === this.bindingDescriptor.offsets.y, "connector does not match");
-            _Debug.assert(entity.data.offsets.color === this.bindingDescriptor.offsets.color, "connector does not match");
-            _Debug.assert(entity.data.offsets.size === this.bindingDescriptor.offsets.size, "connector does not match");
-            _Debug.assert(entity.data.getBlockElementCount() === this.bindingDescriptor.blockElementCount, "connector does not match");
-        });
-
-        // setting one sets all as they share the same buffer
-        this.bindings.pointAttributes[0].setData(entity.data.getInterleavedBuffer(), entity.changeId);
+        const data = entity.data;
+        this.bindings.pointAttributes[0].setData(data.getInterleavedBuffer(), changeId);
 
         if (this.uniformsToBind & EUniformBinding.BindDisplaySettings)
         {
-            this.bindings.displayConfigUniform.setData(entity.graphicsSettings.pointDisplay);
+            this.bindings.displayConfigUniform.setData(entity.graphicsSettings.pointDisplay, changeId);
         }
 
         if (this.uniformsToBind & EUniformBinding.BindSizeTransform)
         {
-            this.bindings.sizeTransformUniform.setData(entity.graphicsSettings.pointSizeNormalizer.getSizeToPixelTransform());
+            const transform = entity.graphicsSettings.pointSizeNormalizer.getSizeToPixelTransform();
+            this.bindings.sizeTransformUniform.setData(transform, changeId);
+        }
+
+        this.offsets[0] = data.offsets.x;
+        this.offsets[1] = data.offsets.y;
+
+        if (data.offsets.size != null)
+        {
+            this.offsets[2] = data.offsets.size;
+        }
+
+        if (data.offsets.color != null)
+        {
+            this.offsets[3] = data.offsets.color;
         }
     }
 
-    public overrideColors(entityRenderer: TGl2EntityRenderer, entity: TInterleavedPoint2dTrait<Float32Array>): void
+    public overrideColors
+    (
+        componentRenderer: TGl2ComponentRenderer,
+        entity: TInterleavedPoint2dTrait<Float32Array>,
+        changeId: number,
+    )
+        : void
     {
-        const overrides = entity.graphicsSettings.pointDisplay.colorOverrides;
+        const highlightedSegments = entity.graphicsSettings.pointDisplay.highlightedSegments;
         const colorOffset = entity.data.offsets.color;
 
-        if (overrides == null || colorOffset == null)
+        if (highlightedSegments == null || colorOffset == null)
         {
             return;
         }
 
         const pointAttribute = this.bindings.pointAttributes[0];
-        const changeId = entity.changeId;
         const blockByteSize = entity.data.getBlockByteSize();
         const byteOffset = colorOffset * Float32Array.BYTES_PER_ELEMENT;
+        const overrides = GlInterleaved2dPointBinder.generateOverrides(entity, highlightedSegments);
 
         for (let i = 0, iEnd = overrides.length; i < iEnd; ++i)
         {
             const override = overrides[i];
-            pointAttribute.overrideValues(entityRenderer, override[0] * blockByteSize + byteOffset, override[1], changeId, i);
+            pointAttribute.setSubBufferData(componentRenderer, override[0] * blockByteSize + byteOffset, override[1], changeId, i);
         }
     }
 
@@ -151,39 +199,44 @@ export class GlInterleaved2dPointBinder
     {
         const pointAttributes = this.bindings.pointAttributes;
         const byteOffsetToStart = startIndex * blockByteSize;
+        const byteStride = this.pointsBound * blockByteSize;
 
         for (let i = 0, iEnd = pointAttributes.length; i < iEnd; ++i)
         {
-            pointAttributes[i].setOffset(byteOffsetToStart + blockByteSize * i);
+            const attribute = pointAttributes[i];
+            attribute.setOffset(byteOffsetToStart + blockByteSize * i);
+            attribute.setStride(byteStride);
         }
     }
 
-    public bindUniforms(entityRenderer: TGl2EntityRenderer): void
+    public bindUniforms(componentRenderer: TGl2ComponentRenderer): void
     {
+        this.bindings.offsetUniform.bind(componentRenderer);
+
         if (this.uniformsToBind & EUniformBinding.BindDisplaySettings)
         {
-            this.bindings.displayConfigUniform.bind(entityRenderer);
+            this.bindings.displayConfigUniform.bind(componentRenderer);
         }
 
         if (this.uniformsToBind & EUniformBinding.BindSizeTransform)
         {
-            this.bindings.sizeTransformUniform.bind(entityRenderer);
+            this.bindings.sizeTransformUniform.bind(componentRenderer);
         }
     }
 
-    public bindAttributes(entityRenderer: TGl2EntityRenderer): void
+    public bindAttributes(componentRenderer: TGl2ComponentRenderer): void
     {
         const pointAttributes = this.bindings.pointAttributes;
 
         for (let i = 0, iEnd = pointAttributes.length; i < iEnd; ++i)
         {
-            pointAttributes[i].bind(entityRenderer);
+            pointAttributes[i].bindArray(componentRenderer);
         }
     }
 
     public bindInstanced
     (
-        entityRenderer: TGl2EntityRenderer,
+        componentRenderer: TGl2ComponentRenderer,
         divisor: number,
         usage?: GLenum,
     )
@@ -193,79 +246,91 @@ export class GlInterleaved2dPointBinder
 
         for (let i = 0, iEnd = pointAttributes.length; i < iEnd; ++i)
         {
-            pointAttributes[i].bindInstanced(entityRenderer, divisor, usage);
+            pointAttributes[i].bindArrayInstanced(componentRenderer, divisor, usage);
         }
     }
 
     private getBindings
     (
         bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>,
-        bindConfig: IGlInterleavedPointBinderConfig,
+        binderConfig: TGlInterleavedPointBinderConfig,
     )
         : IInterleavedPointGlBindings
     {
         const blockElementCount = bindingDescriptor.blockElementCount;
         const byteOffset = bindingDescriptor.byteOffset;
-        const byteStride = this.binderConfig.byteStride;
-        const pointBuffer = new GlBuffer(null);
 
         const pointAttributes = [
-            new GlFloatAttribute("interleavedPoint_point", pointBuffer, blockElementCount, byteOffset, byteStride),
+            new GlFloatAttribute("interleavedPoint_point", new GlFloatBuffer(null), blockElementCount, byteOffset),
         ];
+        const sharedPointState = pointAttributes[0].getSharableState();
 
-        for (let i = 1, iEnd = bindConfig.pointsToBind; i < iEnd; ++i)
+        if (!GlInterleaved2dPointBinder.isTransformConfig(binderConfig))
         {
-            pointAttributes.push(new GlFloatAttribute(`interleavedPoint_point${i}`, pointBuffer, blockElementCount, byteOffset * i, byteStride));
+            DEBUG_MODE && _Debug.assert(binderConfig.pointsToBind > 0, "expected to bind points");
+
+            for (let i = 1, iEnd = binderConfig.pointsToBind; i < iEnd; ++i)
+            {
+                const attribute = new GlFloatAttribute(`interleavedPoint_point${i}`, new GlFloatBuffer(null), blockElementCount, byteOffset * i);
+                attribute.link(sharedPointState);
+                pointAttributes.push(attribute);
+            }
         }
 
         return {
             pointAttributes: pointAttributes,
             displayConfigUniform: new GlMat4Uniform("interleavedPoint_config", Mat4.f32.factory.createOneEmpty()),
             sizeTransformUniform: new GlMat2Uniform("interleavedPoint_sizeTransform", Mat2.f32.factory.createOneEmpty()),
+            offsetUniform: new GlIVec4Uniform("interleavedPoint_offsets", this.offsets),
         };
     }
 
     private static generateProgram
     (
         bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>,
-        binderConfig: IGlInterleavedPointBinderConfig,
+        binderConfig: TGlInterleavedPointBinderConfig,
     )
         : IGlProgramSpec
     {
-        DEBUG_MODE && _Debug.assert(binderConfig.pointsToBind > 0, "expected to bind points");
-
+        const isTransformConfig = GlInterleaved2dPointBinder.isTransformConfig(binderConfig);
         const vertexShaders = [
-            GlInterleaved2dPointBinder.getPreprocessorConstants(bindingDescriptor),
+            GlInterleaved2dPointBinder.getPreprocessorConstants(bindingDescriptor, isTransformConfig),
             unpackColorShader,
             mat2MultiplyValueShader,
             pointConnectorShader,
             generateAccessor(undefined),
+            outputShader,
         ];
 
-        for (let i = 1, iEnd = binderConfig.pointsToBind; i < iEnd; ++i)
+        if (!isTransformConfig)
         {
-            vertexShaders.push(generateAccessor(i));
+            for (let i = 1, iEnd = binderConfig.pointsToBind; i < iEnd; ++i)
+            {
+                vertexShaders.push(generateAccessor(i));
+            }
         }
 
-        return new GlProgramSpecification(GlShader.combineShaders(vertexShaders), emptyShader);
+        return new GlProgramSpecification(
+            GlShader.combineShaders(vertexShaders),
+            emptyShader,
+            _Array.emptyArray,
+            _Array.emptyArray,
+            isTransformConfig ? ["interleavedPoint_outPoint"] : _Array.emptyArray,
+        );
     }
 
-    private static getPreprocessorConstants(bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>): IGlShader
+    private static getPreprocessorConstants
+    (
+        bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>,
+        bindsOutput: boolean,
+    )
+        : IGlShader
     {
         const preprocessorStatements = [
-            GlShader.getShaderInt("X_OFFSET", bindingDescriptor.offsets.x),
-            GlShader.getShaderInt("Y_OFFSET", bindingDescriptor.offsets.y),
+            GlShader.getShaderFlag("INTERLEAVED_BINDS_OUTPUT", bindsOutput),
+            GlShader.getShaderFlag("HAS_COLOR_OFFSET", bindingDescriptor.offsets.color != null),
+            GlShader.getShaderFlag("HAS_SIZE_OFFSET", bindingDescriptor.offsets.size != null),
         ];
-
-        if (bindingDescriptor.offsets.color != null)
-        {
-            preprocessorStatements.push(GlShader.getShaderInt("COLOR_OFFSET", bindingDescriptor.offsets.color));
-        }
-
-        if (bindingDescriptor.offsets.size != null)
-        {
-            preprocessorStatements.push(GlShader.getShaderInt("SIZE_OFFSET", bindingDescriptor.offsets.size));
-        }
 
         return new GlShader(preprocessorStatements.join("\n"));
     }
@@ -283,29 +348,58 @@ export class GlInterleaved2dPointBinder
         return shouldBindDisplaySettings | shouldBindSizeTransform;
     }
 
+    private static isTransformConfig(config: TGlInterleavedPointBinderConfig): config is { bindsOutput: boolean; }
+    {
+        return Boolean((config as { bindsOutput: boolean; }).bindsOutput);
+    }
+
+    private static generateOverrides(entity: TInterleavedPoint2dTrait<Float32Array>, segments: ReadonlySet<number>)
+    {
+        const color = entity.graphicsSettings.pointDisplay.packedHighlightColor;
+        const colorOverrides = new Array(segments.size * 2);
+        let index = 0;
+
+        for (const segmentId of segments)
+        {
+            // FIXME generate less garbage?
+            colorOverrides[index] = [segmentId, new Float32Array([color])];
+            colorOverrides[index + 1] = [segmentId + 1, new Float32Array([color])];
+            index += 2;
+        }
+
+        return colorOverrides;
+    }
+
     private readonly bindings: IInterleavedPointGlBindings;
     private readonly uniformsToBind: EUniformBinding;
+    private readonly offsets = Vec4.i32.factory.createOneEmpty();
 }
 
 interface IInterleavedPointGlBindings
 {
-    pointAttributes: IGlAttribute[];
+    pointAttributes: IGlAttribute<Float32Array>[];
     displayConfigUniform: GlMat4Uniform;
     sizeTransformUniform: GlMat2Uniform;
+    offsetUniform: GlIVec4Uniform;
 }
 
 const pointConnectorShader = new GlShader
 (
     // @formatter:off
-    // language=GLSL prefix="#if __VERSION__ >=300 && __VERSION__ < 400 \n #define ATTRIBUTE in \n #define VARYING out \n #else \n #define ATTRIBUTE attribute \n #define VARYING varying \n #endif"
     `
 /* === interleaved point connector === */
 uniform highp mat4 interleavedPoint_config;
 uniform highp mat2 interleavedPoint_sizeTransform;
+uniform lowp ivec4 interleavedPoint_offsets;
 
 #define GET_POSITION(NAME, SOURCE) vec2 NAME (void) \\
 { \\
-    return vec2( SOURCE [X_OFFSET], SOURCE [Y_OFFSET]); \\
+    return vec2( SOURCE [interleavedPoint_offsets.x], SOURCE [interleavedPoint_offsets.y]); \\
+}
+#define SET_POSITION(NAME, DESTINATION) void NAME (vec2 position) \\
+{ \\
+    DESTINATION[interleavedPoint_offsets.x] = position.x; \\
+    DESTINATION[interleavedPoint_offsets.y] = position.y; \\
 }
 #define GET_SIZE_FROM_UNIFORM(NAME) float NAME (void) \\
 { \\
@@ -313,7 +407,7 @@ uniform highp mat2 interleavedPoint_sizeTransform;
 }
 #define GET_SIZE_FROM_ATTRIBUTE(NAME, SOURCE) float NAME (void) \\
 { \\
-    return mat2MultiplyValue(interleavedPoint_sizeTransform, SOURCE [SIZE_OFFSET]); \\
+    return mat2MultiplyValue(interleavedPoint_sizeTransform, SOURCE [interleavedPoint_offsets.z]); \\
 }
 # define GET_COLOR_FROM_UNIFORM(NAME) vec4 NAME (void) \\
 { \\
@@ -321,7 +415,7 @@ uniform highp mat2 interleavedPoint_sizeTransform;
 }
 # define GET_COLOR_FROM_ATTRIBUTE(NAME, SOURCE) vec4 NAME (void) \\
 { \\
- return unpackColor( SOURCE [COLOR_OFFSET]); \\
+ return unpackColor( SOURCE [interleavedPoint_offsets.w]); \\
 }
 `,
     // @formatter:on
@@ -336,13 +430,13 @@ ATTRIBUTE highp vec4 interleavedPoint_point${postfix};
 
 GET_POSITION(pointConnector_getPosition${postfix}, interleavedPoint_point${postfix})
 
-#ifdef SIZE_OFFSET
+#if HAS_SIZE_OFFSET
 GET_SIZE_FROM_ATTRIBUTE(pointConnector_getSize${postfix}, interleavedPoint_point${postfix})
 #else
 GET_SIZE_FROM_UNIFORM(pointConnector_getSize${postfix})
 #endif
 
-#ifdef COLOR_OFFSET
+#if HAS_COLOR_OFFSET
 GET_COLOR_FROM_ATTRIBUTE(pointConnector_getColor${postfix}, interleavedPoint_point${postfix})
 #else
 GET_COLOR_FROM_UNIFORM(pointConnector_getColor${postfix})
@@ -350,8 +444,21 @@ GET_COLOR_FROM_UNIFORM(pointConnector_getColor${postfix})
 `);
 }
 
+const outputShader = new GlShader(`
+#if INTERLEAVED_BINDS_OUTPUT
+VARYING vec4 interleavedPoint_outPoint;
+void pointConnector_copyAllOutputs()
+{
+    interleavedPoint_outPoint = interleavedPoint_point;
+}
+SET_POSITION(pointConnector_setPosition, interleavedPoint_outPoint)
+#endif
+`);
+
 enum EUniformBinding
 {
     BindDisplaySettings = 1 << 0,
     BindSizeTransform = 1 << 1,
 }
+
+const linkId = Symbol("cart-trace-2d");

@@ -1,11 +1,21 @@
-import { TGlBasicEntityRenderer } from "../entity-renderer/t-gl-basic-entity-renderer";
+import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 import { _Production } from "rc-js-util";
 
 /**
  * @public
  * Currently only supports canvas as texture.
  */
-export class GlTexture2d
+export interface IGlTexture2d
+{
+    initialize(componentRenderer: TGlBasicComponentRenderer): void;
+    onContextLost(): void;
+}
+
+/**
+ * @public
+ * {@inheritDoc IGlTexture2d}
+ */
+export class GlTexture2d implements IGlTexture2d
 {
     public constructor
     (
@@ -15,13 +25,14 @@ export class GlTexture2d
     {
     }
 
-    public initialize(entityRenderer: TGlBasicEntityRenderer): void
+    public initialize(componentRenderer: TGlBasicComponentRenderer): void
     {
+        componentRenderer.addTexture(this);
         // FIXME this doesn't allow sharing of units where we need more than the max units
-        this.textureUnit = entityRenderer.sharedState.claimTextureUnit();
-        const context = entityRenderer.context;
+        this.textureUnit = componentRenderer.sharedState.claimTextureUnit();
+        const context = componentRenderer.context;
         context.activeTexture(context.TEXTURE0 + this.textureUnit);
-        this.uniformLocation = context.getUniformLocation(entityRenderer.program, this.name);
+        this.uniformLocation = context.getUniformLocation(componentRenderer.program, this.name);
         this.texture = context.createTexture();
         context.bindTexture(context.TEXTURE_2D, this.texture);
         // FIXME this should be configurable
@@ -38,20 +49,28 @@ export class GlTexture2d
         this.isDirty = true;
     }
 
-    public bind(entityRenderer: TGlBasicEntityRenderer): void
+    public bind(componentRenderer: TGlBasicComponentRenderer): void
     {
         if (this.data == null || this.textureUnit == null)
         {
-            _Production.error("expected data to be initialized");
+            throw _Production.createError("expected data to be initialized");
         }
 
         if (this.isDirty)
         {
-            const context = entityRenderer.context;
+            const context = componentRenderer.context;
             context.activeTexture(context.TEXTURE0 + this.textureUnit);
             context.texImage2D(context.TEXTURE_2D, 0, context.RGBA, context.RGBA, context.UNSIGNED_BYTE, this.data);
             this.isDirty = false;
         }
+    }
+
+    public onContextLost(): void
+    {
+        this.uniformLocation = null;
+        this.texture = null;
+        this.isDirty = true;
+        this.textureUnit = null;
     }
 
     protected uniformLocation: WebGLUniformLocation | null = null;

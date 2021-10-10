@@ -1,19 +1,14 @@
-import { IEntityRendererProvider } from "./i-entity-renderer-provider";
-import { IEntityRendererFactory } from "./i-entity-renderer-factory";
+import { IComponentRendererProvider } from "./component-renderer/i-component-renderer-provider";
+import { IComponentRendererFactory } from "./component-renderer/i-component-renderer-factory";
 import { ICanvasDimensions } from "../templating/canvas-dimensions";
 import { IPlotDimensions } from "../plot/plot-dimensions";
-import { IGraphicsComponentSpecification } from "./i-graphics-component-specification";
 import { IReadonlyPlot } from "../plot/i-plot";
-import { TUnknownEntityRenderer } from "./t-unknown-entity-renderer";
-import { CompositeGraphicsComponent } from "../entities/components/composite-graphics-component";
+import { TUnknownComponentRenderer } from "./t-unknown-component-renderer";
 import { IRendererSharedState } from "./i-renderer-shared-state";
-import { TExtractGcSpec } from "./t-extract-gc-spec";
-import { TExtractGcContext } from "./t-extract-gc-context";
-
-/**
- * @public
- */
-export type TUnknownRenderer = IRenderer<TUnknownEntityRenderer>;
+import { TExtractGcSpec } from "./component-renderer/t-extract-gc-spec";
+import { TExtractGcContext } from "./component-renderer/t-extract-gc-context";
+import { ITransformComponentStore } from "./transform-components/transform-component-store";
+import { IGraphicsComponentStore } from "./graphics-component-store";
 
 /**
  * @public
@@ -30,35 +25,26 @@ export interface IRendererCallbacks<TCtx>
     onAfterPlotDraw(context: TCtx): void;
 }
 
-/**
- * @public
- */
-export type TChartGraphicsComponents<TEntityRenderer extends TUnknownEntityRenderer> =
-    Map<string, IGraphicsComponentSpecification<TEntityRenderer, unknown, unknown>>
-    ;
 
 /**
  * @public
  * Base wrapper for the underlying drawing technology, use to get specific drawing programs. Implementations provide
  * hooks ({@link IRendererCallbacks}) on plot draw.
  */
-export interface IRenderer<TEntityRenderer extends TUnknownEntityRenderer>
+export interface IRenderer<TComponentRenderer extends TUnknownComponentRenderer>
 {
-    readonly context: TExtractGcContext<TEntityRenderer>;
-    readonly entityRendererProvider: IEntityRendererProvider<TEntityRenderer>;
-    readonly entityRendererFactory: IEntityRendererFactory<TExtractGcSpec<TEntityRenderer>, TEntityRenderer>;
-    readonly graphicsComponents: TChartGraphicsComponents<TEntityRenderer>;
+    readonly context: TExtractGcContext<TComponentRenderer>;
+    readonly componentRendererProvider: IComponentRendererProvider<TComponentRenderer>;
+    readonly componentRendererFactory: IComponentRendererFactory<TExtractGcSpec<TComponentRenderer>, TComponentRenderer>;
+    readonly graphicsComponents: IGraphicsComponentStore<TComponentRenderer>;
+    readonly transformComponents: ITransformComponentStore<TUnknownComponentRenderer>;
     readonly sharedState: IRendererSharedState;
 
-    onContextRegained(context: TExtractGcContext<TEntityRenderer>): void;
-
-    createCompositeGraphicsComponent<TUpdateArg, TTraits>
-    (
-        graphicsComp: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TTraits>,
-        plot: IReadonlyPlot<unknown, TTraits>,
-    )
-        : CompositeGraphicsComponent<TEntityRenderer, TUpdateArg, TTraits>;
+    onContextLost(): void;
+    onContextRegained(context: TExtractGcContext<TComponentRenderer>): void;
 
     onBeforePlotDraw(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void;
     onAfterPlotDraw(): void;
+
+    TComponentRenderer: TComponentRenderer;
 }

@@ -1,121 +1,185 @@
 import { IGlAttribute } from "./i-gl-attribute";
 import { _Debug, TTypedArray } from "rc-js-util";
-import { TGlInstancedEntityRenderer } from "../entity-renderer/t-gl-instanced-entity-renderer";
-import { TGlBasicEntityRenderer } from "../entity-renderer/t-gl-basic-entity-renderer";
+import { TGlInstancedComponentRenderer } from "../component-renderer/t-gl-instanced-component-renderer";
+import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 import { TGlContext } from "../t-gl-context";
-import { GlBuffer } from "./gl-buffer";
+import { TGl2ComponentRenderer } from "../component-renderer/t-gl2-component-renderer";
+import { IGlBuffer } from "./i-gl-buffer";
+import { AttributeState, IAttributeState } from "./attribute-state";
 
 /**
  * @public
  * {@inheritDoc IGlAttribute}
  */
-export abstract class AGlAttribute implements IGlAttribute
+export abstract class AGlAttribute<TArray extends TTypedArray>
+    implements IGlAttribute<TArray>
 {
-    public static extractBuffer(attribute: IGlAttribute): GlBuffer
-    {
-        return (attribute as AGlAttribute).buffer;
-    }
-
-    public static setBuffer(attribute: IGlAttribute, buffer: GlBuffer): void
-    {
-        (attribute as AGlAttribute).buffer = buffer;
-    }
-
+    /**
+     * DO NOT MANUALLY SHARE BUFFERS, **USE LINK**!
+     */
     public constructor
     (
         public readonly name: string,
-        private buffer: GlBuffer,
+        buffer: IGlBuffer<TArray>,
         public readonly componentsPerVertex: number,
         private byteOffset: number = 0,
-        private readonly byteStride: number = 0,
+        private byteStride: number = 0,
         private readonly normalized: boolean = false,
     )
     {
+        this.sharableState = new AttributeState<TArray>(this, buffer);
+    }
+
+    public onContextLost(): void
+    {
+        this.ptrRequiresSetting = true;
+        this.sharableState.buffer.onContextLost();
+        this.attributeLocation = null;
+        this.type = null;
+        this.divisor = null;
     }
 
     public initialize
     (
-        entityRenderer: TGlBasicEntityRenderer,
+        componentRenderer: TGlBasicComponentRenderer,
     )
         : void
     {
-        entityRenderer.addAttribute(this);
-        this.buffer.initialize(entityRenderer);
-        this.attributeLocation = entityRenderer.getAttributeLocation(this.name);
-        this.type = this.getGlType(entityRenderer.context);
+        componentRenderer.addAttribute(this);
+        this.sharableState.buffer.initialize(componentRenderer);
+        this.attributeLocation = componentRenderer.getAttributeLocation(this.name);
+        this.type = this.getGlType(componentRenderer.context);
 
-        if (entityRenderer.isVaoActive())
+        if (componentRenderer.isVaoActive())
         {
-            entityRenderer.context.enableVertexAttribArray(this.attributeLocation);
+            componentRenderer.context.enableVertexAttribArray(this.attributeLocation);
         }
     }
 
-    public setData(data: TTypedArray, changeId: number): void
+    public getBuffer(): IGlBuffer<TArray>
     {
-        this.buffer.setData(data, changeId);
+        return this.sharableState.buffer;
     }
 
-    public overrideValues
+    public setBuffer(buffer: IGlBuffer<TArray>): void
+    {
+        this.sharableState.buffer = buffer;
+        const linkedAttributes = this.sharableState.attributes;
+
+        for (let i = 0, iEnd = linkedAttributes.length; i < iEnd; ++i)
+        {
+            (linkedAttributes[i] as AGlAttribute<TArray>).ptrRequiresSetting = true;
+        }
+    }
+
+    public setData(data: TArray, changeId: number): void
+    {
+        this.sharableState.buffer.setData(data, changeId);
+    }
+
+    public setSize
     (
-        entityRenderer: TGlBasicEntityRenderer,
-        byteOffset: number,
-        data: TTypedArray,
+        context: WebGL2RenderingContext,
+        byteSize: number,
+        usage: GLenum,
         changeId: number,
-        updateId: number,
     )
         : void
     {
-        this.buffer.overrideValues(entityRenderer.context, byteOffset, data, changeId, updateId);
+        this.sharableState.buffer.setSize(context, byteSize, usage, changeId);
+    }
+
+    public swapBuffer(attribute: IGlAttribute<TArray>): void
+    {
+        DEBUG_MODE && _Debug.assert(this.sharableState.buffer !== attribute.getBuffer(), "attempted to swap buffer with itself");
+        const tmp = this.sharableState.buffer;
+        this.setBuffer(attribute.getBuffer());
+        attribute.setBuffer(tmp);
+    }
+
+    public setSubBufferData
+    (
+        componentRenderer: TGlBasicComponentRenderer,
+        byteOffset: number,
+        data: TArray,
+        changeId: number,
+        modificationId: number,
+    )
+        : void
+    {
+        this.sharableState.buffer.setSubBufferData(componentRenderer.context, byteOffset, data, changeId, modificationId);
     }
 
     public setOffset(byteOffset: number): void
     {
         if (this.byteOffset !== byteOffset)
         {
-            this.isOffsetDirty = true;
+            this.ptrRequiresSetting = true;
             this.byteOffset = byteOffset;
         }
     }
 
-    // FIXME this is missing bind constant / default, sub buffer updates & transforms
+    public setStride(byteStride: number): void
+    {
+        if (this.byteStride !== byteStride)
+        {
+            this.ptrRequiresSetting = true;
+            this.byteStride = byteStride;
+        }
+    }
 
-    public bind
+    // FIXME this is missing bind constant / default
+
+    public bindTransform
     (
-        entityRenderer: TGlBasicEntityRenderer,
-        usage: GLenum = entityRenderer.context.DYNAMIC_DRAW,
+        componentRenderer: TGl2ComponentRenderer,
+        index: number,
     )
         : void
     {
+        this.sharableState.buffer.bindTransform(componentRenderer.context, index);
+    }
+
+    public bindArray
+    (
+        componentRenderer: TGlBasicComponentRenderer,
+        usage: GLenum = componentRenderer.context.DYNAMIC_DRAW,
+    )
+        : void
+    {
+        const context = componentRenderer.context;
+
         if (this.attributeLocation == null || this.type == null)
         {
             DEBUG_MODE && _Debug.error(`expected attribute ${this.name} to be initialized`);
             return;
         }
 
-        if (entityRenderer.isVaoActive())
+        if (componentRenderer.isVaoActive())
         {
-            if (this.buffer.isDirty || this.isOffsetDirty)
+            if (this.sharableState.buffer.isDirty || this.ptrRequiresSetting)
             {
-                this.buffer.bindBuffer(entityRenderer.context, usage);
+                this.sharableState.buffer.bindArray(context, usage);
             }
 
-            if (this.isOffsetDirty)
+            if (this.ptrRequiresSetting)
             {
-                this.setAttributePtr(entityRenderer.context, this.attributeLocation, this.type);
+                this.setAttributePtr(context, this.attributeLocation, this.type);
             }
         }
         else
         {
-            this.buffer.bindBuffer(entityRenderer.context, usage);
-            this.setAttributePtr(entityRenderer.context, this.attributeLocation, this.type);
+            this.sharableState.buffer.bindArray(context, usage);
+            context.enableVertexAttribArray(this.attributeLocation);
+            this.setAttributePtr(context, this.attributeLocation, this.type);
         }
 
-        this.isOffsetDirty = false;
+        this.ptrRequiresSetting = false;
     }
 
-    public bindInstanced
+    public bindArrayInstanced
     (
-        entityRenderer: TGlInstancedEntityRenderer,
+        componentRenderer: TGlInstancedComponentRenderer,
         divisor: number,
         usage?: GLenum,
     )
@@ -127,9 +191,9 @@ export abstract class AGlAttribute implements IGlAttribute
             return;
         }
 
-        this.bind(entityRenderer, usage);
+        this.bindArray(componentRenderer, usage);
 
-        if (entityRenderer.isVaoActive())
+        if (componentRenderer.isVaoActive())
         {
             if (this.divisor === divisor)
             {
@@ -139,19 +203,19 @@ export abstract class AGlAttribute implements IGlAttribute
             this.divisor = divisor;
         }
 
-        if (entityRenderer.isGl2)
+        if (componentRenderer.isGl2)
         {
-            entityRenderer.context.vertexAttribDivisor(this.attributeLocation, divisor);
+            componentRenderer.context.vertexAttribDivisor(this.attributeLocation, divisor);
         }
         else
         {
-            entityRenderer.extensions.ANGLE_instanced_arrays.vertexAttribDivisorANGLE(this.attributeLocation, divisor);
+            componentRenderer.extensions.ANGLE_instanced_arrays.vertexAttribDivisorANGLE(this.attributeLocation, divisor);
         }
     }
 
-    public reset(entityRenderer: TGlBasicEntityRenderer): void
+    public reset(componentRenderer: TGlBasicComponentRenderer): void
     {
-        if (entityRenderer.isVaoActive())
+        if (componentRenderer.isVaoActive())
         {
             return;
         }
@@ -162,16 +226,29 @@ export abstract class AGlAttribute implements IGlAttribute
             return;
         }
 
-        if (entityRenderer.isGl2)
+        if (componentRenderer.isGl2)
         {
-            entityRenderer.context.vertexAttribDivisor(this.attributeLocation, 0);
+            componentRenderer.context.vertexAttribDivisor(this.attributeLocation, 0);
         }
-        else if (entityRenderer.extensions.ANGLE_instanced_arrays != null)
+        else if (componentRenderer.extensions.ANGLE_instanced_arrays != null)
         {
-            entityRenderer.extensions.ANGLE_instanced_arrays.vertexAttribDivisorANGLE(this.attributeLocation, 0);
+            componentRenderer.extensions.ANGLE_instanced_arrays.vertexAttribDivisorANGLE(this.attributeLocation, 0);
         }
 
-        entityRenderer.context.disableVertexAttribArray(this.attributeLocation);
+        componentRenderer.context.disableVertexAttribArray(this.attributeLocation);
+    }
+
+    public link(sharedState: IAttributeState<TArray>): void
+    {
+        DEBUG_MODE && _Debug.assert(this.attributeLocation == null, "link attributes before using programs");
+
+        this.sharableState = sharedState;
+        sharedState.addAttribute(this);
+    }
+
+    public getSharableState(): IAttributeState<TArray>
+    {
+        return this.sharableState;
     }
 
     private setAttributePtr
@@ -196,6 +273,7 @@ export abstract class AGlAttribute implements IGlAttribute
 
     private attributeLocation: number | null = null;
     private type: GLenum | null = null;
-    private isOffsetDirty: boolean = true;
+    private ptrRequiresSetting: boolean = true;
     private divisor: number | null = null;
+    private sharableState: IAttributeState<TArray>;
 }

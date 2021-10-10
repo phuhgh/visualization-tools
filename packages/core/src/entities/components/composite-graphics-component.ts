@@ -1,8 +1,55 @@
-import { IGraphicsComponentSpecification } from "../../rendering/i-graphics-component-specification";
-import { GraphicsSubComponents } from "../../rendering/graphics-sub-components";
-import { _Array, Once } from "rc-js-util";
-import { TUnknownEntityRenderer } from "../../rendering/t-unknown-entity-renderer";
-import { TExtractGcSpec } from "../../rendering/t-extract-gc-spec";
+import { GraphicsSubComponents, IGraphicsSubComponents } from "../../rendering/graphics-components/graphics-sub-components";
+import { TUnknownComponentRenderer } from "../../rendering/t-unknown-component-renderer";
+import { IGraphicsComponent } from "../../rendering/graphics-components/i-graphics-component";
+import { EGraphicsComponentType } from "../../rendering/graphics-components/e-graphics-component-type";
+import { _Production } from "rc-js-util";
+import { TGraphicsComponent } from "../../rendering/graphics-components/t-graphics-component";
+import { linkGraphicsComponents } from "../../rendering/graphics-components/link-graphics-components";
+import { ILinkableGraphicsComponent } from "../../rendering/graphics-components/i-linkable-graphics-component";
+
+/**
+ * @public
+ */
+export type TCompositeGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits> =
+    & ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>
+    & ICompositeGraphicsComponentFactory<TComponentRenderer, TUpdateArg, TTraits>
+    ;
+
+/**
+ * @public
+ */
+export type TLinkableCompositeGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits> =
+    & ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>
+    & ILinkableCompositeGraphicsComponentFactory<TComponentRenderer, TUpdateArg, TTraits>
+    ;
+
+/**
+ * @public
+ */
+export interface ICompositeGraphicsComponentFactory<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits>
+{
+    addComponent<TAddedComponentRenderer extends TUnknownComponentRenderer, TComponentTraits>
+    (
+        graphicsComp: IGraphicsComponent<TAddedComponentRenderer, TUpdateArg, TComponentTraits>,
+    )
+        : ICompositeGraphicsComponentFactory<TComponentRenderer & TAddedComponentRenderer, TUpdateArg, TTraits & TComponentTraits>;
+
+    build(): ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>;
+}
+
+/**
+ * @public
+ */
+export interface ILinkableCompositeGraphicsComponentFactory<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits>
+{
+    addComponent<TAddedComponentRenderer extends TUnknownComponentRenderer, TComponentTraits>
+    (
+        graphicsComp: ILinkableGraphicsComponent<TAddedComponentRenderer, TUpdateArg, TComponentTraits>,
+    )
+        : ILinkableCompositeGraphicsComponentFactory<TComponentRenderer & TAddedComponentRenderer, TUpdateArg, TTraits & TComponentTraits>;
+
+    build(): ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>;
+}
 
 /**
  * @public
@@ -10,70 +57,145 @@ import { TExtractGcSpec } from "../../rendering/t-extract-gc-spec";
  * documentation for draw call behavior.
  *
  * @remarks
- * An instance with the appropriate types can be obtained from the renderer (on ChartComponent).
+ * Any duplicate graphics components (by instance) will be eliminated, regardless of how nested they are.
+ *
  */
-export class CompositeGraphicsComponent<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TTraits>
-    implements IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TTraits>
+export interface ICompositeGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits>
 {
-    public readonly subComponents: GraphicsSubComponents<TEntityRenderer, TUpdateArg, TTraits>;
-    public groupUpdatesByEntity?: boolean;
+    readonly type: EGraphicsComponentType.Composite;
+    readonly subComponents: IGraphicsSubComponents<TComponentRenderer, TUpdateArg, TTraits>;
+    /**
+     * Instead of batching entities into update groups based on the subcomponents, update entities in turn cycling through
+     * the subcomponents. With large shared buffers and few entities this can significantly improve performance.
+     *
+     * @remarks
+     * When this is true it applies to any nested composite component as well. Graphics components should be linked
+     * using {@link linkGraphicsComponents} in this case.
+     */
+    readonly groupUpdatesByEntity: boolean;
 
-    public static createOne<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TTraits>
+    recurseIterate(callback: (component: TGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void): void;
+    recurseIterate(filter: EGraphicsComponentType.Entity, callback: (component: IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void): void;
+}
+
+/**
+ * @public
+ * {@inheritDoc ICompositeGraphicsComponent}
+ */
+export class CompositeGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits>
+    implements ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>,
+               ILinkableCompositeGraphicsComponentFactory<TComponentRenderer, TUpdateArg, TTraits>
+{
+    public readonly type = EGraphicsComponentType.Composite;
+    public readonly subComponents: GraphicsSubComponents<TComponentRenderer, TUpdateArg, TTraits>;
+    public readonly groupUpdatesByEntity: boolean;
+
+    public static createOne<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits>
     (
-        specification: TExtractGcSpec<TEntityRenderer>,
-        graphicsComp: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TTraits>,
+        graphicsComp: IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>,
     )
-        : CompositeGraphicsComponent<TEntityRenderer, TUpdateArg, TTraits>
+        : TCompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>
     {
-        return new CompositeGraphicsComponent(specification, graphicsComp);
+        return new CompositeGraphicsComponent(graphicsComp, false);
+    }
+
+    public static createOneLinked<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits>
+    (
+        graphicsComp: IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>,
+    )
+        : TLinkableCompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>
+    {
+        return new CompositeGraphicsComponent(graphicsComp, true);
     }
 
     public constructor
     (
-        public readonly specification: TExtractGcSpec<TEntityRenderer>,
-        graphicsComp: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TTraits>,
+        graphicsComp: IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>,
+        groupUpdatesByEntity: boolean,
     )
     {
-        this.graphicsComps = [graphicsComp];
-        this.subComponents = new GraphicsSubComponents(this.graphicsComps);
+        this.subComponents = new GraphicsSubComponents([graphicsComp]);
+        this.groupUpdatesByEntity = groupUpdatesByEntity;
+
     }
 
-    public addComponent<TComponentTraits>
+    public addComponent<TAddedComponentRenderer extends TUnknownComponentRenderer, TComponentTraits>
     (
-        graphicsComp: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TComponentTraits>,
+        graphicsComp: IGraphicsComponent<TAddedComponentRenderer, TUpdateArg, TComponentTraits>,
     )
-        : CompositeGraphicsComponent<TEntityRenderer, TUpdateArg, TTraits & TComponentTraits>
+        : CompositeGraphicsComponent<TComponentRenderer & TAddedComponentRenderer, TUpdateArg, TTraits & TComponentTraits>
     {
-        this.graphicsComps.push(graphicsComp as IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TComponentTraits & TTraits>);
-        return this as CompositeGraphicsComponent<TEntityRenderer, TUpdateArg, TTraits & TComponentTraits>;
+        this.subComponents.addComponent(graphicsComp as IGraphicsComponent<TComponentRenderer & TAddedComponentRenderer, TUpdateArg, TComponentTraits & TTraits>);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return this as CompositeGraphicsComponent<any, TUpdateArg, TTraits & TComponentTraits>;
     }
 
-    @Once
-    public getCacheId(): string
+    public build(): ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>
     {
-        return _Array.map(this.graphicsComps, comp => comp.getCacheId()).join("_");
-    }
-
-    public initialize(): void
-    {
-        const comps = this.graphicsComps;
-        const entityRenderers = this.subComponents.entityRenderers;
-
-        for (let i = 0, iEnd = comps.length; i < iEnd; ++i)
+        if (this.groupUpdatesByEntity)
         {
-            comps[i].initialize(entityRenderers[i] as TEntityRenderer);
+            linkGraphicsComponents(this.subComponents.getSubComponents() as ILinkableGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>[]);
+        }
+
+        return this;
+    }
+
+    public recurseIterate(callback: (component: TGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void): void;
+    public recurseIterate(filter: EGraphicsComponentType.Entity, callback: (component: IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void): void;
+    public recurseIterate(filter: number, callback: (component: TGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void): void
+    public recurseIterate
+    (
+        filterOrCallback: EGraphicsComponentType | ((component: TGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void),
+        callback?: (component: IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void,
+    )
+        : void
+    {
+        if (callback != null)
+        {
+            this.recurseIterateImpl(
+                callback as (component: TGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void,
+                filterOrCallback as EGraphicsComponentType,
+            );
+        }
+        else
+        {
+            this.recurseIterateImpl(filterOrCallback as () => void, undefined);
         }
     }
 
-    public onBeforeUpdate(): void
+    private recurseIterateImpl
+    (
+        callback: (component: TGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void,
+        filter: EGraphicsComponentType | undefined,
+    )
+        : void
     {
-        // updates are handled by the update strategy
-    }
+        const comps = this.subComponents.getSubComponents();
 
-    public update(): void
-    {
-        // updates are handled by the update strategy
-    }
+        for (let i = 0, iEnd = comps.length; i < iEnd; ++i)
+        {
+            const comp = comps[i];
 
-    private readonly graphicsComps: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TTraits>[];
+            if (filter != null && !(comp.type & filter))
+            {
+                continue;
+            }
+
+            switch (comp.type)
+            {
+                case EGraphicsComponentType.Entity:
+                {
+                    callback(comp);
+                    break;
+                }
+                case EGraphicsComponentType.Composite:
+                {
+                    callback(comp);
+                    break;
+                }
+                default:
+                    _Production.assertValueIsNever(comp);
+            }
+        }
+    }
 }

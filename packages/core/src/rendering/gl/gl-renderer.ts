@@ -1,33 +1,33 @@
 import { TGlContext } from "./t-gl-context";
 import { IRenderer, IRendererCallbacks } from "../i-renderer";
 import { _Array, _Dictionary, TF32Vec4 } from "rc-js-util";
-import { IEntityRendererProvider } from "../i-entity-renderer-provider";
-import { IEntityRendererFactory } from "../i-entity-renderer-factory";
-import { TGlEntityRenderer } from "./entity-renderer/gl-entity-renderer";
+import { IComponentRendererProvider } from "../component-renderer/i-component-renderer-provider";
+import { IComponentRendererFactory } from "../component-renderer/i-component-renderer-factory";
+import { TGlComponentRenderer } from "./component-renderer/gl-component-renderer";
 import { TGlExtensionKeys } from "./i-gl-extensions";
-import { GlEntityRendererProvider } from "./entity-renderer/gl-entity-renderer-provider";
-import { GlRendererFactory } from "./gl-renderer-factory";
+import { GlComponentRendererProvider } from "./component-renderer/gl-component-renderer-provider";
+import { GlComponentRendererFactory } from "./gl-component-renderer-factory";
 import { ICanvasDimensions } from "../../templating/canvas-dimensions";
 import { IErrorLocalization } from "../../errors/i-error-localization";
 import { developerErrorLocalization } from "../../errors/developer-error-localization";
 import { IGlProgramSpec } from "./gl-program-specification";
 import { IGlRendererOptions } from "./gl-renderer-options";
-import { IGraphicsComponentSpecification } from "../i-graphics-component-specification";
-import { CompositeGraphicsComponent } from "../../entities/components/composite-graphics-component";
-import { emptyGlProgramSpecification } from "./shaders/empty-gl-program-specification";
 import { IReadonlyPlot } from "../../plot/i-plot";
 import { GlRendererSharedState, IGlRendererSharedState } from "./gl-renderer-shared-state";
-import { TExtractGcSpec } from "../t-extract-gc-spec";
-import { TExtractGcContext } from "../t-extract-gc-context";
+import { TExtractGcContext } from "../component-renderer/t-extract-gc-context";
+import { TGl2ComponentRenderer } from "./component-renderer/t-gl2-component-renderer";
+import { ITransformComponentStore, TransformComponentStore } from "../transform-components/transform-component-store";
+import { GraphicsComponentStore } from "../graphics-component-store";
 
 /**
  * @public
  * WebGl system hooks and config (clearing bits, {@link TGlFeatureFlags} etc). Most WebGl state is handled at the
- * {@link TGlEntityRenderer} level.
+ * {@link TGlComponentRenderer} level.
  */
-export interface IGlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
-    extends IRenderer<TGlEntityRenderer<TCtx, TExts>>
+export interface IGlRenderer<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>>
+    extends IRenderer<TComponentRenderer>
 {
+    readonly transformComponents: ITransformComponentStore<TGl2ComponentRenderer>;
     readonly sharedState: IGlRendererSharedState;
 }
 
@@ -35,8 +35,8 @@ export interface IGlRenderer<TCtx extends TGlContext, TExts extends TGlExtension
  * @public
  * {@inheritDoc IGlRenderer}
  */
-export class GlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
-    implements IGlRenderer<TCtx, TExts>
+export class GlRenderer<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>>
+    implements IGlRenderer<TComponentRenderer>
 {
     public static createOne<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
     (
@@ -45,7 +45,7 @@ export class GlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
         localizations: IErrorLocalization<unknown> = developerErrorLocalization as IErrorLocalization<unknown>,
         callbacks?: Partial<IRendererCallbacks<TCtx>>,
     )
-        : IRenderer<TGlEntityRenderer<TCtx, TExts>> | null
+        : IGlRenderer<TGlComponentRenderer<TCtx, TExts>> | null
     {
         if (context == null)
         {
@@ -53,20 +53,21 @@ export class GlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
         }
 
         const sharedState = new GlRendererSharedState(context);
-        const factory = GlRendererFactory.createOne(context, options.onCreate.requiredExtensionsToGet, localizations, sharedState);
+        const factory = GlComponentRendererFactory.createOne(context, options.onCreate.requiredExtensionsToGet, localizations, sharedState);
 
         if (factory == null)
         {
             return null;
         }
 
-        return new GlRenderer<TCtx, TExts>(context as TCtx, options, factory, callbacks, sharedState);
+        return new GlRenderer(context, options, factory, callbacks, sharedState);
     }
 
-    public context: TExtractGcContext<TGlEntityRenderer<TCtx, TExts>>;
-    public readonly entityRendererProvider: IEntityRendererProvider<TGlEntityRenderer<TCtx, TExts>>;
-    public readonly entityRendererFactory: IEntityRendererFactory<IGlProgramSpec, TGlEntityRenderer<TCtx, TExts>>;
-    public readonly graphicsComponents = new Map<string, IGraphicsComponentSpecification<TGlEntityRenderer<TCtx, TExts>, unknown, unknown>>();
+    public context: TExtractGcContext<TComponentRenderer>;
+    public readonly componentRendererProvider: IComponentRendererProvider<TComponentRenderer>;
+    public readonly componentRendererFactory: IComponentRendererFactory<IGlProgramSpec, TComponentRenderer>;
+    public readonly graphicsComponents = new GraphicsComponentStore<TComponentRenderer>();
+    public readonly transformComponents: ITransformComponentStore<TGl2ComponentRenderer>;
     public readonly sharedState: IGlRendererSharedState;
 
     public onBeforePlotDraw(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void
@@ -80,30 +81,27 @@ export class GlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
         this.callbacks.onAfterPlotDraw(this.context);
     }
 
-    public createCompositeGraphicsComponent<TUpdateArg, TTraits>
-    (
-        graphicsComp: IGraphicsComponentSpecification<TGlEntityRenderer<TCtx, TExts>, TUpdateArg, TTraits>,
-    )
-        : CompositeGraphicsComponent<TGlEntityRenderer<TCtx, TExts>, TUpdateArg, TTraits>
+    public onContextLost(): void
     {
-        const spec = emptyGlProgramSpecification as TExtractGcSpec<TGlEntityRenderer<TCtx, TExts>>;
-        return new CompositeGraphicsComponent(spec, graphicsComp);
+        this.componentRendererProvider.onContextLost();
+        this.sharedState.onContextLost();
     }
 
-    public onContextRegained(context: TExtractGcContext<TGlEntityRenderer<TCtx, TExts>>): void
+    public onContextRegained(context: TExtractGcContext<TComponentRenderer>): void
     {
-        this.context = context as TExtractGcContext<TGlEntityRenderer<TCtx, TExts>>;
+        this.context = context as TExtractGcContext<TComponentRenderer>;
         this.sharedState.setContext(context);
-        (this.entityRendererFactory as GlRendererFactory<TCtx, TExts>).setContext(context);
-        this.entityRendererProvider.reinitializeRenderers(this.entityRendererFactory);
+        (this.componentRendererFactory as GlComponentRendererFactory<TComponentRenderer>).setContext(context);
+        this.componentRendererProvider.reinitializeRenderers(this.componentRendererFactory);
+        this.graphicsComponents.reinitializeGraphicsComponents(this);
     }
 
     protected constructor
     (
-        context: TCtx,
-        options: IGlRendererOptions<TExts>,
-        renderContextFactory: GlRendererFactory<TCtx, TExts>,
-        callbacks: Partial<IRendererCallbacks<TCtx>> | undefined,
+        context: TGlContext,
+        options: IGlRendererOptions<TGlExtensionKeys>,
+        renderContextFactory: GlComponentRendererFactory<TComponentRenderer>,
+        callbacks: Partial<IRendererCallbacks<TExtractGcContext<TComponentRenderer>>> | undefined,
         sharedState: IGlRendererSharedState,
     )
     {
@@ -113,9 +111,10 @@ export class GlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
         }
 
         this.sharedState = sharedState;
-        this.context = context as TExtractGcContext<TGlEntityRenderer<TCtx, TExts>>;
-        this.entityRendererProvider = new GlEntityRendererProvider();
-        this.entityRendererFactory = renderContextFactory;
+        this.context = context as TExtractGcContext<TComponentRenderer>;
+        this.componentRendererProvider = new GlComponentRendererProvider<TComponentRenderer>();
+        this.componentRendererFactory = renderContextFactory as IComponentRendererFactory<IGlProgramSpec, TComponentRenderer>;
+        this.transformComponents = new TransformComponentStore();
 
         _Array.forEach(options.onCreate.featuresToEnable, feature => this.context.enable(this.context[feature]));
         this.clearBit = options.onNewFrame.bufferBitsToClear.reduce((clearBit, flagName) => clearBit | this.context[flagName], 0);
@@ -124,7 +123,7 @@ export class GlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
 
     private readonly clearBit: number;
     private readonly clearColor: TF32Vec4;
-    private readonly callbacks: IRendererCallbacks<TCtx> = {
+    private readonly callbacks: IRendererCallbacks<TGlContext> = {
         onBeforePlotDraw: (context, plotDimensions) =>
         {
             this.sharedState.updateScissorRange(plotDimensions.pixelArea.wholeRange);
@@ -136,4 +135,6 @@ export class GlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
             // no action needed
         },
     };
+
+    public TComponentRenderer!: TComponentRenderer;
 }

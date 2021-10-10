@@ -1,9 +1,8 @@
-import { ICanvasEntityRenderer } from "../rendering/canvas/canvas-entity-renderer";
 import { GraphAttachPoint } from "../templating/graph-attach-point";
 import { GraphAttachPointProvider } from "../templating/graph-attach-point-provider";
 import { IChartConfig } from "./chart-config";
-import { CanvasRenderer } from "../rendering/canvas/canvas-renderer";
-import { EventService } from "../eventing/chart-event-service";
+import { CanvasRenderer, ICanvasRenderer } from "../rendering/canvas/canvas-renderer";
+import { EventService } from "../eventing/event-service";
 import { ChartComponent, IChartComponent } from "./chart-component";
 import { CanvasContextAdapter } from "../rendering/canvas/canvas-context-adapter";
 
@@ -11,7 +10,7 @@ import { CanvasContextAdapter } from "../rendering/canvas/canvas-context-adapter
  * @public
  * Canvas chart.
  */
-export type TCanvasChart = IChartComponent<ICanvasEntityRenderer>;
+export type TCanvasChart = IChartComponent<ICanvasRenderer>;
 
 /**
  * @public

@@ -1,6 +1,6 @@
-import { PlotStateFactories, IPlotStateFactories } from "./default-state-machine/plot-state-factories";
+import { IPlotStateFactories, PlotStateFactories } from "./default-state-machine/plot-state-factories";
 import { IInteractionStateChangeCallbacks } from "./i-interaction-state-change-callbacks";
-import { IPlotEventTargetProvider } from "./hit-test/i-plot-event-target-provider";
+import { IPlotEventTargetProvider } from "./i-plot-event-target-provider";
 import { IGraphAttachPoint } from "../../templating/graph-attach-point";
 
 /**

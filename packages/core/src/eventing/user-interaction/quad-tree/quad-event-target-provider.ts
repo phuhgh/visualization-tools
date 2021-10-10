@@ -1,9 +1,9 @@
-import { IPointerEventHitTargetProvider } from "../hit-test/i-pointer-event-hit-target-provider";
+import { IPointerEventHitTargetProvider } from "../i-pointer-event-hit-target-provider";
 import { IChartPointerEvent } from "../internal-events/chart-pointer-event";
 import { IInteractionGroup } from "../../../entities/groups/interaction-group";
-import { ISharedEntityQuadTree } from "../../../hit-testing/shared-quad-tree/shared-entity-quad-tree";
-import { HitTestResult } from "../hit-test/hit-test-result";
-import { QuadElementSharedObject } from "../../../hit-testing/shared-quad-tree/quad-element-shared-object";
+import { ISharedEntityQuadTree } from "../../hit-testing/shared-quad-tree/shared-entity-quad-tree";
+import { HitTestResult } from "../../hit-testing/hit-test-result";
+import { QuadElementSharedObject } from "../../hit-testing/shared-quad-tree/quad-element-shared-object";
 import { _Debug, _Map, _Production } from "rc-js-util";
 import { TEntityTrait } from "../../../entities/traits/t-entity-trait";
 import { IHitTestableTrait } from "../../../entities/groups/i-hit-testable-trait";

@@ -5,7 +5,9 @@ void interleaved2dCircleQuadIndexer_index
         (
                 VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T> * _arg,
                 std::uint32_t _entityId,
-                std::uint32_t _filterMask
+                std::uint32_t _filterMask,
+                VisualizationTools::Transforms::ICartesian2dUserTransform<T> * _transformX,
+                VisualizationTools::Transforms::ICartesian2dUserTransform<T> * _transformY
         )
 {
     auto & connector = *_arg->m_connector;
@@ -13,13 +15,16 @@ void interleaved2dCircleQuadIndexer_index
     auto & worldTransform = _arg->m_worldTransform;
     auto & offsets = _arg->m_offsets;
     auto & sizeTransform = _arg->m_sizeTransform;
-    auto & defaultSize = _arg->m_displayDefaults.m_pixelSize;
+    auto & defaultSize = _arg->m_displayOptions.m_pixelSize;
 
     if (offsets.m_size == -1)
     {
         for (size_t i = connector.GetStart(), iEnd = connector.GetEnd(); i < iEnd; ++i)
         {
             VisualizationTools::Vec2<T> point{ connector.GetValue(i, offsets.m_x), connector.GetValue(i, offsets.m_y) };
+
+            _transformX->ForwardTransformX(point);
+            _transformY->ForwardTransformY(point);
             point.Mat3Multiply(worldTransform);
 
             VisualizationTools::Range2d<float> range{
@@ -60,7 +65,10 @@ void f32Interleaved2dCircleQuadIndexer_index
                 std::uint32_t _filterMask
         )
 {
-    return interleaved2dCircleQuadIndexer_index<float>(_arg, _entityId, _filterMask);
+    auto transformX = VisualizationTools::Bindings::getUserTransform<float>(_arg->m_displayOptions.m_xTransform);
+    auto transformY = VisualizationTools::Bindings::getUserTransform<float>(_arg->m_displayOptions.m_yTransform);
+
+    return interleaved2dCircleQuadIndexer_index<float>(_arg, _entityId, _filterMask, transformX, transformY);
 }
 
 [[maybe_unused]]
@@ -71,5 +79,8 @@ void f64Interleaved2dCircleQuadIndexer_index
                 std::uint32_t _filterMask
         )
 {
-    return interleaved2dCircleQuadIndexer_index<double>(_arg, _entityId, _filterMask);
+    auto transformX = VisualizationTools::Bindings::getUserTransform<double>(_arg->m_displayOptions.m_xTransform);
+    auto transformY = VisualizationTools::Bindings::getUserTransform<double>(_arg->m_displayOptions.m_yTransform);
+
+    return interleaved2dCircleQuadIndexer_index<double>(_arg, _entityId, _filterMask, transformX, transformY);
 }

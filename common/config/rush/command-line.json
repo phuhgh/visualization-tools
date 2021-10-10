@@ -21,7 +21,8 @@
       "commandKind": "bulk",
       "summary": "Run the tests, useful in conjunction with incremental-build.",
       "enableParallelism": true,
-      "allowWarningsInSuccessfulBuild": false
+      "allowWarningsInSuccessfulBuild": false,
+      "ignoreDependencyOrder": true
     },
     {
       "name": "generate-docs",

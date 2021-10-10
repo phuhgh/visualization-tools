@@ -1,9 +1,9 @@
 import { IRandomNumberGenerator, Range2d, RgbaColorPacker, TTypedArray, Vec2 } from "rc-js-util";
 import { generateLinearPointSizes } from "./generate-linear-point-sizes";
 import { generateLinearRGBRange } from "./generate-linear-r-g-b-range";
-import { generateCircleGeometry } from "./generate-cricle-geometry";
 import { ISharedInterleavedConnector } from "@visualization-tools/core";
 import { IDrawablePoint2dOffsets } from "@visualization-tools/cartesian-2d";
+import { generateCircleGeometry } from "./generate-cricle-geometry";
 
 export function populateTestData
 (

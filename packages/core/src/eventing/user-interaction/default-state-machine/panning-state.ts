@@ -4,7 +4,7 @@ import { IChartState } from "./i-chart-state";
 import { IInteractionOptions } from "../i-interaction-options";
 import { IChartPointerEvent } from "../internal-events/chart-pointer-event";
 import { IPlotInteractionProviders } from "../plot-interaction-providers";
-import { IDefaultTargets } from "../hit-test/i-default-targets";
+import { IDefaultTargets } from "../i-default-targets";
 import { IInteractionSharedState } from "../i-interaction-shared-state";
 
 export class PanningState<TPlotRange> implements IChartState<TPlotRange>

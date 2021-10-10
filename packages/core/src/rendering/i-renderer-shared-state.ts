@@ -10,4 +10,5 @@ export interface IRendererSharedState
     readonly scissorRange: IReadonlyRange2d<TTypedArray> | null;
     onNewFrame(): void;
     updateScissorRange(scissorRange: IReadonlyRange2d<TTypedArray> | null): void;
+    onContextLost(): void;
 }

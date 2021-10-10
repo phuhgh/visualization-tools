@@ -1,4 +1,4 @@
-import { IPlotEventTargetProvider } from "../../eventing/user-interaction/hit-test/i-plot-event-target-provider";
+import { IPlotEventTargetProvider } from "../../eventing/user-interaction/i-plot-event-target-provider";
 
 /**
  * @public

@@ -37,6 +37,6 @@ export class SharedInterleavedLine2dQuadIndexerFactory
     )
         : ISharedInterleavedPoint2dQuadIndexer<Float64Array>
     {
-        return SharedInterleavedPoint2dQuadIndexer.createOne(wrapper, "f32Interleaved2dLineQuadIndexer", Float64Array);
+        return SharedInterleavedPoint2dQuadIndexer.createOne(wrapper, "f64Interleaved2dLineQuadIndexer", Float64Array);
     }
 }

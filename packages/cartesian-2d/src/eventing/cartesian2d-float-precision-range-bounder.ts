@@ -22,7 +22,14 @@ export class Cartesian2dFloatPrecisionRangeBounder<TArray extends Float32Array |
     )
     {
         DEBUG_MODE && _Debug.assert(rangeScaleFactor <= 1, "the range is already a maximum");
-        this.maxBounds = this.numberUtil.bounds.scaleRelativeTo(rangeScaleFactor, Vec2.u8.factory.createOne(0, 0)) as Range2d<TArray>;
+
+        const adjustedRange = this.numberUtil.bounds.slice() as Range2d<TArray>;
+        // the full range is twice float max
+        adjustedRange.scalarMultiply(0.5, adjustedRange);
+        adjustedRange.scaleRelativeTo(rangeScaleFactor, Cartesian2dFloatPrecisionRangeBounder.scaleOrigin, adjustedRange);
+        adjustedRange.scalarMultiply(2, adjustedRange);
+        this.maxBounds = adjustedRange;
+
         this.maxZoom = Math.pow(2, this.numberUtil.mantissaBits);
     }
 
@@ -40,4 +47,6 @@ export class Cartesian2dFloatPrecisionRangeBounder<TArray extends Float32Array |
         o_dataRange.ensureMinRange(xMinRange, yMinRange);
         o_dataRange.bound(maxBounds);
     }
+
+    private static scaleOrigin = Vec2.u8.factory.createOne(0, 0);
 }

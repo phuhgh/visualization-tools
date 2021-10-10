@@ -1,5 +1,5 @@
 import { IReadonlyVec2, TTypedArray, Vec2 } from "rc-js-util";
-import { ICartesian2dUpdateArg } from "../../update/cartesian2d-update-arg";
+import { ICartesian2dUpdateArg } from "../../update/update-arg/cartesian2d-update-arg";
 import { THitTestableIndexedPoint2dTrait } from "../../traits/t-hit-testable-indexed-point-2d-trait";
 import { TEntityTrait } from "@visualization-tools/core";
 
@@ -23,22 +23,21 @@ export class IndexablePointEntityLineHitTester
     {
         const xOffset = entity.data.offsets.x;
         const yOffset = entity.data.offsets.y;
-
         const dataTransform = updateArg.interactionTransforms.dataToInteractiveArea;
+
         IndexablePointEntityLineHitTester.a.update(
-            dataTransform.getVec3MultiplyX(entity.data.getValue(indexOfFirstPoint, xOffset)),
-            dataTransform.getVec3MultiplyY(entity.data.getValue(indexOfFirstPoint, yOffset)),
+            dataTransform.getVec3MultiplyX(updateArg.userTransform.forwardX(entity.data.getValue(indexOfFirstPoint, xOffset))),
+            dataTransform.getVec3MultiplyY(updateArg.userTransform.forwardY(entity.data.getValue(indexOfFirstPoint, yOffset))),
         );
         IndexablePointEntityLineHitTester.b.update(
-            dataTransform.getVec3MultiplyX(entity.data.getValue(indexOfFirstPoint + 1, xOffset)),
-            dataTransform.getVec3MultiplyY(entity.data.getValue(indexOfFirstPoint + 1, yOffset)),
+            dataTransform.getVec3MultiplyX(updateArg.userTransform.forwardX(entity.data.getValue(indexOfFirstPoint + 1, xOffset))),
+            dataTransform.getVec3MultiplyY(updateArg.userTransform.forwardY(entity.data.getValue(indexOfFirstPoint + 1, yOffset))),
         );
         const ap = cssPosition.subtract(IndexablePointEntityLineHitTester.a, IndexablePointEntityLineHitTester.ap);
         const bp = cssPosition.subtract(IndexablePointEntityLineHitTester.b, IndexablePointEntityLineHitTester.bp);
         const ab = IndexablePointEntityLineHitTester.b.subtract(IndexablePointEntityLineHitTester.a, IndexablePointEntityLineHitTester.ab);
 
         const distanceFromLine = IndexablePointEntityLineHitTester.getPerpendicularDistanceToLineSegment(ab, bp, ap);
-
         const sizeOffset = entity.data.offsets.size;
         let cssLineWidthAtJoin: number;
 

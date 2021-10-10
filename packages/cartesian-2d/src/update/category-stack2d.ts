@@ -1,6 +1,6 @@
 import { T2dZIndexesTrait } from "../traits/t2d-z-indexes-trait";
 import { DirtyCheckedUniqueCollection } from "rc-js-util";
-import { I2dEntityCategoryRead } from "./i2d-entity-category-read";
+import { I2dEntityCategoryRead } from "./update-group/i2d-entity-category-read";
 
 // todo jack26: update this on entity added or removed, generally add dirty checking flags
 /**

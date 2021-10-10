@@ -1,5 +1,5 @@
 import { IChartPointerEvent } from "./internal-events/chart-pointer-event";
-import { HitTestResult } from "./hit-test/hit-test-result";
+import { HitTestResult } from "../hit-testing/hit-test-result";
 import { IHitTestableTrait } from "../../entities/groups/i-hit-testable-trait";
 
 /**

@@ -1,10 +1,10 @@
 import { TGlExtensionKeys } from "../rendering/gl/i-gl-extensions";
 import { GraphAttachPoint, IGraphAttachPoint } from "../templating/graph-attach-point";
 import { IRenderer } from "../rendering/i-renderer";
-import { TGlEntityRenderer } from "../rendering/gl/entity-renderer/gl-entity-renderer";
+import { TGlComponentRenderer } from "../rendering/gl/component-renderer/gl-component-renderer";
 import { TF32Vec2 } from "rc-js-util";
 import { GraphAttachPointProvider } from "../templating/graph-attach-point-provider";
-import { EventService } from "../eventing/chart-event-service";
+import { EventService } from "../eventing/event-service";
 import { ChartConfig } from "../chart/chart-config";
 import { Gl2ContextAdapter } from "../rendering/gl/context/gl2-context-adapter";
 import { GlRenderer } from "../rendering/gl/gl-renderer";
@@ -14,10 +14,10 @@ import { TGlFeatureFlags } from "../rendering/gl/t-gl-feature-flags";
 /**
  * @internal
  **/
-export class TestGl2RendererHarness<TExts extends TGlExtensionKeys>
+export class TestGl2RendererHarness<TExts extends TGlExtensionKeys = never>
 {
     public attachPoint: IGraphAttachPoint;
-    public renderer: IRenderer<TGlEntityRenderer<WebGL2RenderingContext, TExts>>;
+    public renderer: IRenderer<TGlComponentRenderer<WebGL2RenderingContext, TExts>>;
 
     public constructor
     (

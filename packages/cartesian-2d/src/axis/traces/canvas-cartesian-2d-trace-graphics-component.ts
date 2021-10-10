@@ -1,7 +1,7 @@
 import { RgbaColorPacker } from "rc-js-util";
-import { ICartesian2dUpdateArg } from "../../update/cartesian2d-update-arg";
+import { ICartesian2dUpdateArg } from "../../update/update-arg/cartesian2d-update-arg";
 import { TTrace2dDisplaySettingsTrait } from "../../traits/t-trace2d-display-settings-trait";
-import { ICanvasEntityRenderer, IDataTrait, IGraphicsComponentSpecification } from "@visualization-tools/core";
+import { EGraphicsComponentType, ICanvasComponentRenderer, IDataTrait, IGraphicsComponent, NoTransformProvider } from "@visualization-tools/core";
 import { ICartesian2dTraceEntityConnector } from "../cartesian-2d-trace-entity-connector";
 
 /**
@@ -9,9 +9,11 @@ import { ICartesian2dTraceEntityConnector } from "../cartesian-2d-trace-entity-c
  * Draws traces for cartesian 2d plots.
  */
 export class CanvasCartesian2dTraceGraphicsComponent
-    implements IGraphicsComponentSpecification<ICanvasEntityRenderer, ICartesian2dUpdateArg<Float64Array>, TTrace2dDisplaySettingsTrait & IDataTrait<ICartesian2dTraceEntityConnector<Float64Array>>>
+    implements IGraphicsComponent<ICanvasComponentRenderer, ICartesian2dUpdateArg<Float64Array>, TTrace2dDisplaySettingsTrait & IDataTrait<ICartesian2dTraceEntityConnector<Float64Array>>>
 {
+    public readonly type = EGraphicsComponentType.Entity;
     public specification = {};
+    public transform = new NoTransformProvider();
 
     public getCacheId(): string
     {
@@ -31,37 +33,39 @@ export class CanvasCartesian2dTraceGraphicsComponent
     public update
     (
         entity: TTrace2dDisplaySettingsTrait & IDataTrait<ICartesian2dTraceEntityConnector<Float64Array>>,
-        renderer: ICanvasEntityRenderer,
+        renderer: ICanvasComponentRenderer,
         arg: ICartesian2dUpdateArg<Float64Array>,
     )
         : void
     {
+        renderer.context.save();
         renderer.context.beginPath();
-        const transform = arg.drawTransforms.dataToInteractiveArea;
+        const screenTransform = arg.drawTransforms.dataToInteractiveArea;
+        const userTransform = arg.userTransform;
         renderer.context.strokeStyle = RgbaColorPacker.getHexColorString(entity.graphicsSettings.traceColor);
         renderer.context.lineWidth = entity.graphicsSettings.traceLinePixelSize;
 
-        const yMin = transform.getVec3MultiplyY(arg.plotRange.getYMin());
-        const yMax = transform.getVec3MultiplyY(arg.plotRange.getYMax());
+        const yMin = screenTransform.getVec3MultiplyY(arg.transformedDataRange.getYMin());
+        const yMax = screenTransform.getVec3MultiplyY(arg.transformedDataRange.getYMax());
 
         for (let i = 0, iEnd = entity.data.getXTraceCount(); i < iEnd; ++i)
         {
-            const x = transform.getVec3MultiplyX(entity.data.getXTick(i));
+            const x = screenTransform.getVec3MultiplyX(userTransform.forwardX(entity.data.getXTick(i)));
             renderer.context.moveTo(x, yMin);
             renderer.context.lineTo(x, yMax);
         }
 
-        const xMin = transform.getVec3MultiplyX(arg.plotRange.getXMin());
-        const xMax = transform.getVec3MultiplyX(arg.plotRange.getXMax());
+        const xMin = screenTransform.getVec3MultiplyX(arg.transformedDataRange.getXMin());
+        const xMax = screenTransform.getVec3MultiplyX(arg.transformedDataRange.getXMax());
 
         for (let i = 0, iEnd = entity.data.getYTraceCount(); i < iEnd; ++i)
         {
-            const y = transform.getVec3MultiplyY(entity.data.getYTick(i));
+            const y = screenTransform.getVec3MultiplyY(userTransform.forwardY(entity.data.getYTick(i)));
             renderer.context.moveTo(xMin, y);
             renderer.context.lineTo(xMax, y);
         }
 
-        renderer.context.closePath();
         renderer.context.stroke();
+        renderer.context.restore();
     }
 }

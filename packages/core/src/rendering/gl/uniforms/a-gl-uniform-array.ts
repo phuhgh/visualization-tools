@@ -1,25 +1,15 @@
-import { IReadonlyMat2, IReadonlyMat3, IReadonlyMat4, IReadonlyVec2, IReadonlyVec3, IReadonlyVec4 } from "rc-js-util";
-import { TGlBasicEntityRenderer } from "../entity-renderer/t-gl-basic-entity-renderer";
-
-/**
- * @public
- * Supported uniform types.
- */
-export type TGlUniformArray =
-    | IReadonlyVec2<Float32Array>
-    | IReadonlyVec3<Float32Array>
-    | IReadonlyVec4<Float32Array>
-    | IReadonlyMat2<Float32Array>
-    | IReadonlyMat3<Float32Array>
-    | IReadonlyMat4<Float32Array>
-    ;
+import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
+import { TGlUniformArray } from "./t-gl-uniform-array";
+import { IGlUniform } from "./i-gl-uniform";
 
 /**
  * @public
  * Wrapper for webgl uniform.
  */
-export abstract class AGlUniformArray<TData extends TGlUniformArray>
+export abstract class AGlUniformArray<TData extends TGlUniformArray> implements IGlUniform
 {
+    public isDirty = true;
+
     public constructor
     (
         public name: string,
@@ -29,25 +19,32 @@ export abstract class AGlUniformArray<TData extends TGlUniformArray>
     {
     }
 
-    public abstract bind
-    (
-        renderer: TGlBasicEntityRenderer,
-    )
-        : void;
+    public abstract bind(renderer: TGlBasicComponentRenderer): void;
 
-    public initialize
-    (
-        entityRenderer: TGlBasicEntityRenderer,
-    )
-        : void
+    public onContextLost(): void
     {
-        this.uniformLocation = entityRenderer.context.getUniformLocation(entityRenderer.program, this.name);
+        this.isDirty = true;
+        this.uniformLocation = null;
     }
 
-    public setData(data: TData): void
+    public initialize(componentRenderer: TGlBasicComponentRenderer): void
     {
+        componentRenderer.addUniform(this);
+        this.uniformLocation = componentRenderer.context.getUniformLocation(componentRenderer.program, this.name);
+    }
+
+    public setData(data: TData, changeId: number): void
+    {
+        if (this.changeId === changeId)
+        {
+            return;
+        }
+
+        this.changeId = changeId;
         this.data = data;
+        this.isDirty = true;
     }
 
     protected uniformLocation: WebGLUniformLocation | null = null;
+    protected changeId: number = Number.MIN_SAFE_INTEGER;
 }

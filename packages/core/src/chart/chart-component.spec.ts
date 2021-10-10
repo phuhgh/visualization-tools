@@ -1,11 +1,11 @@
 import { TestCanvasChartHarness } from "../test-utils/test-canvas-chart-harness";
 import { OnPlotAttached } from "../plot/events/on-plot-attached";
 import { IChartComponent } from "./chart-component";
-import { TUnknownEntityRenderer } from "../rendering/t-unknown-entity-renderer";
 import { OnPlotDetached } from "../plot/events/on-plot-detached";
 import { Range2d } from "rc-js-util";
 import { debugDescribe } from "rc-js-test-util";
 import { CanvasTestPlotFactory } from "../test-utils/fakes/canvas-test-plot-factory";
+import { TUnknownRenderer } from "../rendering/t-unknown-renderer";
 
 debugDescribe("=> ChartComponent", () =>
 {
@@ -26,7 +26,7 @@ debugDescribe("=> ChartComponent", () =>
     {
         it("| emits a attach event if not already added", () =>
         {
-            let emittedChart: IChartComponent<TUnknownEntityRenderer> | undefined;
+            let emittedChart: IChartComponent<TUnknownRenderer> | undefined;
             const plot = CanvasTestPlotFactory.createOne(harness.chart);
             OnPlotAttached.registerListener(plot, chart => emittedChart = chart);
             harness.chart.addPlot(plot);
@@ -42,7 +42,7 @@ debugDescribe("=> ChartComponent", () =>
 
         it("| emits nothing if already added", () =>
         {
-            let emittedChart: IChartComponent<TUnknownEntityRenderer> | undefined;
+            let emittedChart: IChartComponent<TUnknownRenderer> | undefined;
             const plot = CanvasTestPlotFactory.createOne(harness.chart);
             harness.chart.addPlot(plot);
             OnPlotAttached.registerListener(plot, chart => emittedChart = chart);
@@ -55,7 +55,7 @@ debugDescribe("=> ChartComponent", () =>
     {
         it("| emits a detach event", () =>
         {
-            let emittedChart: IChartComponent<TUnknownEntityRenderer> | undefined;
+            let emittedChart: IChartComponent<TUnknownRenderer> | undefined;
             const plot = CanvasTestPlotFactory.createOne(harness.chart);
             harness.chart.addPlot(plot);
             OnPlotDetached.registerListener(plot, chart => emittedChart = chart);
@@ -65,7 +65,7 @@ debugDescribe("=> ChartComponent", () =>
 
         it("| emits nothing if already detached", () =>
         {
-            let emittedChart: IChartComponent<TUnknownEntityRenderer> | undefined;
+            let emittedChart: IChartComponent<TUnknownRenderer> | undefined;
             const plot = CanvasTestPlotFactory.createOne(harness.chart);
             harness.chart.addPlot(plot);
             harness.chart.removePlot(plot);

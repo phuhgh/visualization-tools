@@ -1,21 +1,21 @@
-import { IEntityRendererFactory } from "../i-entity-renderer-factory";
-import { ICanvasEntityRenderer } from "./canvas-entity-renderer";
+import { IComponentRendererFactory } from "../component-renderer/i-component-renderer-factory";
+import { ICanvasComponentRenderer } from "./canvas-component-renderer";
 
 /**
  * @public
- * Canvas {@link IEntityRendererFactory}.
+ * Canvas {@link IComponentRendererFactory}.
  */
-export class CanvasRendererFactory implements IEntityRendererFactory<object, ICanvasEntityRenderer>
+export class CanvasRendererFactory implements IComponentRendererFactory<object, ICanvasComponentRenderer>
 {
     public constructor
     (
-        private entityRenderer: ICanvasEntityRenderer,
+        private componentRenderer: ICanvasComponentRenderer,
     )
     {
     }
 
-    public createRenderer(): ICanvasEntityRenderer
+    public createRenderer(): ICanvasComponentRenderer
     {
-        return this.entityRenderer;
+        return this.componentRenderer;
     }
 }

@@ -48,6 +48,7 @@ export abstract class GlContextAdapter<TCtx extends TGlContext> implements ICont
         {
             e.preventDefault();
             this.context = null;
+            this.graphContextChangeHooks.onContextLost();
         });
 
         this.canvasElement.addEventListener("webglcontextrestored", (e) =>

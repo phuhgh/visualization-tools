@@ -1,32 +1,39 @@
 import { IGlCartesian2dCameraBinder } from "../camera/gl-cartesian2d-camera-binder";
-import { ICartesian2dUpdateArg } from "../update/cartesian2d-update-arg";
+import { ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-arg";
 import { _Debug, Mat3, Once } from "rc-js-util";
-import { IGlIndexedPoint2dBinder } from "../indexed-point-2d/i-gl-indexed-point2d-binder";
+import { IGlIndexedPoint2dBinder, IndexedPoint2dIdentifier } from "../indexed-point-2d/i-gl-indexed-point2d-binder";
 import { TInterleavedPoint2dTrait } from "../traits/t-interleaved-point2d-trait";
-import { generate2LinedNormalShader, GlBuffer, GlFloatAttribute, GlMat3Uniform, GlProgramSpecification, GlShader, IGlProgramSpec, IGraphicsComponentSpecification, mat3MultiplyVec2Shader, TGl2EntityRenderer } from "@visualization-tools/core";
+import { assertBinder, EGraphicsComponentType, generate2LinedNormalShader, GlFloatAttribute, GlFloatBuffer, GlMat3Uniform, GlProgramSpecification, GlShader, GlTransformProvider, IGlProgramSpec, ILinkableGraphicsComponent, mat3MultiplyVec2Shader, TGl2ComponentRenderer } from "@visualization-tools/core";
 
 /**
  * @public
  * Draws line caps, to be used with {@link GlCaplessLineGraphicsComponent}. Handles sizes and colors per point.
  */
 export class GlLineFlatCapGraphicsComponent
-    implements IGraphicsComponentSpecification<TGl2EntityRenderer, ICartesian2dUpdateArg<Float32Array>, TInterleavedPoint2dTrait<Float32Array>>
+    implements ILinkableGraphicsComponent<TGl2ComponentRenderer, ICartesian2dUpdateArg<Float32Array>, TInterleavedPoint2dTrait<Float32Array>>
 {
+    public readonly type = EGraphicsComponentType.Entity;
     public specification: IGlProgramSpec;
+    public transform: GlTransformProvider<TGl2ComponentRenderer, IGlIndexedPoint2dBinder<Float32Array>, IGlIndexedPoint2dBinder<Float32Array>, ICartesian2dUpdateArg<Float32Array>, TInterleavedPoint2dTrait<Float32Array>>;
 
     public constructor
     (
         private readonly cameraBinder: IGlCartesian2dCameraBinder,
-        private readonly indexedDataBinder: IGlIndexedPoint2dBinder<Float32Array>,
+        private readonly indexedBinder: IGlIndexedPoint2dBinder<Float32Array>,
     )
     {
-        DEBUG_MODE && _Debug.assert(indexedDataBinder.pointsBound === 3, "requires 3 point binder");
+        DEBUG_MODE && _Debug.runBlock(() =>
+        {
+            assertBinder(indexedBinder, IndexedPoint2dIdentifier);
+            _Debug.assert(indexedBinder.pointsBound === 3, "requires 3 point to be bound");
+        });
         this.specification = GlProgramSpecification.mergeProgramSpecifications([
             cameraBinder.specification,
-            indexedDataBinder.specification,
+            indexedBinder.specification,
             caplessProgramSpecification,
         ]);
         this.bindings = GlLineFlatCapGraphicsComponent.getBindings();
+        this.transform = new GlTransformProvider(this, this.indexedBinder, (updateArg) => updateArg.userTransform);
     }
 
     @Once
@@ -34,30 +41,36 @@ export class GlLineFlatCapGraphicsComponent
     {
         return [
             "GlFlatCapLine",
-            this.cameraBinder.getCacheId(),
-            this.indexedDataBinder.getCacheId(),
+            this.cameraBinder.getBinderId(),
+            this.indexedBinder.getBinderId(),
         ].join("_");
     }
 
-    public initialize(entityRenderer: TGl2EntityRenderer): void
+    public getLinkableBinders(): readonly IGlIndexedPoint2dBinder<Float32Array>[]
     {
-        this.cameraBinder.initialize(entityRenderer);
-        this.indexedDataBinder.initialize(entityRenderer);
-        this.bindings.capGeometryAttribute.initialize(entityRenderer);
-        this.bindings.canvasToClipUniform.initialize(entityRenderer);
+        return [this.indexedBinder];
     }
 
-    public onBeforeUpdate(entityRenderer: TGl2EntityRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void
+    public initialize(componentRenderer: TGl2ComponentRenderer): void
     {
-        this.bindings.capGeometryAttribute.bind(entityRenderer, entityRenderer.context.STATIC_DRAW);
-        this.bindings.canvasToClipUniform.setData(updateArg.canvasDimensions.pixelToClipSize);
-        this.bindings.canvasToClipUniform.bind(entityRenderer);
+        this.cameraBinder.initialize(componentRenderer);
+        this.indexedBinder.initialize(componentRenderer);
+        this.bindings.capGeometryAttribute.initialize(componentRenderer);
+        this.bindings.canvasToClipUniform.initialize(componentRenderer);
+    }
+
+    public onBeforeUpdate(componentRenderer: TGl2ComponentRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void
+    {
+        this.bindings.capGeometryAttribute.bindArray(componentRenderer, componentRenderer.context.STATIC_DRAW);
+        const frameId = componentRenderer.sharedState.frameCounter;
+        this.bindings.canvasToClipUniform.setData(updateArg.canvasDimensions.pixelToClipSize, frameId);
+        this.bindings.canvasToClipUniform.bind(componentRenderer);
     }
 
     public update
     (
         entity: TInterleavedPoint2dTrait<Float32Array>,
-        entityRenderer: TGl2EntityRenderer,
+        componentRenderer: TGl2ComponentRenderer,
         updateArg: ICartesian2dUpdateArg<Float32Array>,
     )
         : void
@@ -71,14 +84,14 @@ export class GlLineFlatCapGraphicsComponent
         }
 
         this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(updateArg.drawTransforms, entityRenderer);
+        this.cameraBinder.update(updateArg.drawTransforms, componentRenderer, componentRenderer.sharedState.frameCounter);
 
         // draw 1st set
-        this.indexedDataBinder.updateInstanced(entity, entityRenderer, 1);
-        this.indexedDataBinder.overrideColors(entityRenderer, entity);
+        this.indexedBinder.updateInstanced(entity, componentRenderer, entity.changeId, 1);
+        this.indexedBinder.overrideColors(componentRenderer, entity, entity.changeId);
 
-        entityRenderer.drawInstancedArrays(
-            entityRenderer.context.TRIANGLE_STRIP,
+        componentRenderer.drawInstancedArrays(
+            componentRenderer.context.TRIANGLE_STRIP,
             0,
             4,
             (length * 0.3333333333333333) | 0,
@@ -87,22 +100,22 @@ export class GlLineFlatCapGraphicsComponent
         const startIndex = entity.data.getStart();
 
         // draw 2nd set
-        this.indexedDataBinder.setPointers(startIndex + 1, entity.data.getBlockByteSize());
-        this.indexedDataBinder.bindInstanced(entityRenderer, 1);
-        entityRenderer.drawInstancedArrays(
-            entityRenderer.context.TRIANGLE_STRIP,
+        this.indexedBinder.setPointers(startIndex + 1, entity.data.getBlockByteSize());
+        this.indexedBinder.bindInstanced(componentRenderer, 1);
+        componentRenderer.drawInstancedArrays(
+            componentRenderer.context.TRIANGLE_STRIP,
             0,
             4,
             ((length - 1) * 0.3333333333333333) | 0,
         );
 
         // draw 3nd set
-        this.indexedDataBinder.updatePointers(entity);
-        this.indexedDataBinder.setPointers(startIndex + 2, entity.data.getBlockByteSize());
-        this.indexedDataBinder.bindInstanced(entityRenderer, 1);
+        this.indexedBinder.updatePointers(entity);
+        this.indexedBinder.setPointers(startIndex + 2, entity.data.getBlockByteSize());
+        this.indexedBinder.bindInstanced(componentRenderer, 1);
 
-        entityRenderer.drawInstancedArrays(
-            entityRenderer.context.TRIANGLE_STRIP,
+        componentRenderer.drawInstancedArrays(
+            componentRenderer.context.TRIANGLE_STRIP,
             0,
             4,
             ((length - 2) * 0.3333333333333333) | 0,
@@ -113,7 +126,7 @@ export class GlLineFlatCapGraphicsComponent
     {
         const trianglePosition = new GlFloatAttribute(
             "caplessLine_trianglePosition",
-            new GlBuffer(new Float32Array([
+            new GlFloatBuffer(new Float32Array([
                 1, 0,
                 0, 0,
                 1, 1,

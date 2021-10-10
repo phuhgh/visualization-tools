@@ -1,7 +1,7 @@
 import { IInteractionOptions } from "../i-interaction-options";
 import { IPlotInteractionProviders } from "../plot-interaction-providers";
 import { IdleState } from "./idle-state";
-import { IDefaultTargets } from "../hit-test/i-default-targets";
+import { IDefaultTargets } from "../i-default-targets";
 import { DefaultInteractionSharedState } from "../default-interaction-shared-state";
 
 /**

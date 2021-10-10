@@ -1,4 +1,4 @@
-import { IHitTestComponent } from "../../eventing/user-interaction/hit-test/i-hit-test-component";
+import { IHitTestComponent } from "../../eventing/hit-testing/i-hit-test-component";
 import { IHitTestableTrait } from "../../entities/groups/i-hit-testable-trait";
 
 /**
