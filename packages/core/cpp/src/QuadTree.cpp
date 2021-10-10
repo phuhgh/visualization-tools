@@ -19,7 +19,7 @@ void VisualizationTools::QuadTree<T>::SetTopLevel(Range2d<T> _aabb)
 {
     JsUtil::Debug::OnBeforeAllocate();
     QuadNode<T> quadNode{ nullptr, _aabb };
-    m_root = std::move(quadNode);
+    m_root = quadNode;
 }
 
 template<typename T>

@@ -64,45 +64,45 @@ bool VisualizationTools::Range2d<T>::IsPointInRange(VisualizationTools::Vec2<T> 
 template<typename T>
 VisualizationTools::Range2d<T> VisualizationTools::Range2d<T>::GetNw() const
 {
-    return std::move(Range2d<T>{
+    return Range2d<T>{
             m_xMin,
             m_xMin + GetXRange() * 0.5f,
             m_yMin + GetYRange() * 0.5f,
             m_yMax
-    });
+    };
 }
 
 template<typename T>
 VisualizationTools::Range2d<T> VisualizationTools::Range2d<T>::GetNe() const
 {
-    return std::move(Range2d<T>{
+    return Range2d<T>{
             m_xMin + GetXRange() * 0.5f,
             m_xMax,
             m_yMin + GetYRange() * 0.5f,
             m_yMax
-    });
+    };
 }
 
 template<typename T>
 VisualizationTools::Range2d<T> VisualizationTools::Range2d<T>::GetSe() const
 {
-    return std::move(Range2d<T>{
+    return Range2d<T>{
             m_xMin + GetXRange() * 0.5f,
             m_xMax,
             m_yMin,
             m_yMin + GetYRange() * 0.5f
-    });
+    };
 }
 
 template<typename T>
 VisualizationTools::Range2d<T> VisualizationTools::Range2d<T>::GetSw() const
 {
-    return std::move(Range2d<T>{
+    return Range2d<T>{
             m_xMin,
             m_xMin + GetXRange() * 0.5f,
             m_yMin,
             m_yMin + GetYRange() * 0.5f
-    });
+    };
 }
 
 template

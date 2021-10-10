@@ -60,6 +60,17 @@ debugDescribe("=> SharedQuadTree", () =>
         tree.sharedObject.release();
     });
 
+    it("| clears without triggering the asan", () =>
+    {
+        const tree = SharedQuadTree.createOneF32(emscriptenTestModule.wrapper, 4, 1);
+        tree.setTopLevel(Range2d.f32.factory.createOne(0, 2, 0, 2));
+        tree.addBoundingBox(Range2d.f32.factory.createOne(0, 1, 0, 1), 1, 1, 0xF);
+        tree.addBoundingBox(Range2d.f32.factory.createOne(0, 1, 0, 1), 1, 1, 0xF);
+        tree.addBoundingBox(Range2d.f32.factory.createOne(0, 1, 0, 1), 1, 1, 0xF);
+        tree.setTopLevel(Range2d.f32.factory.createOne(0, 1, 0, 1));
+        tree.sharedObject.release();
+    });
+
     it("| returns the expected results", () =>
     {
         const tree = SharedQuadTree.createOneF32(emscriptenTestModule.wrapper, 4, 1);

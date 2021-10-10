@@ -14,7 +14,6 @@ void interleaved2dLineQuadIndexer_index
     auto & worldTransform = _arg->m_worldTransform;
     auto & offsets = _arg->m_offsets;
 
-
     for (size_t i = connector.GetStart(), iEnd = connector.GetEnd() - 1; i < iEnd; ++i)
     {
         VisualizationTools::Vec2<T> p1{ connector.GetValue(i, offsets.m_x), connector.GetValue(i, offsets.m_y) };

@@ -11,11 +11,11 @@ VisualizationTools::QuadNode<T>::QuadNode()
 template<typename T>
 VisualizationTools::QuadNode<T>::QuadNode
         (
-                QuadNode<T> * _parent,
+                QuadNode <T> * _parent,
                 VisualizationTools::Range2d<T> _bounds
         )
         : m_parent(_parent),
-          m_bounds(std::move(_bounds)),
+          m_bounds(_bounds),
           m_quads()
 {
 }
@@ -61,24 +61,12 @@ size_t VisualizationTools::QuadNode<T>::GetTotalElementCount() const
 {
     size_t count = 0;
 
-    if (m_quads[0])
+    for (std::uint8_t i = 0; i < 4; ++i)
     {
-        count += m_quads[0]->GetTotalElementCount();
-    }
-
-    if (m_quads[1])
-    {
-        count += m_quads[1]->GetTotalElementCount();
-    }
-
-    if (m_quads[2])
-    {
-        count += m_quads[2]->GetTotalElementCount();
-    }
-
-    if (m_quads[3])
-    {
-        count += m_quads[3]->GetTotalElementCount();
+        if (m_quads[i])
+        {
+            count += m_quads[i]->GetTotalElementCount();
+        }
     }
 
     return m_elements.size() + count;
