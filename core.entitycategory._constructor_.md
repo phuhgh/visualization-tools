@@ -9,15 +9,15 @@ Constructs a new instance of the `EntityCategory` class
 <b>Signature:</b>
 
 ```typescript
-constructor(plot: IPlot<TPlotRange, TRequiredTraits>, renderer: IRenderer<TEntityRenderer>, updateGroup: IEntityGroup<IUpdateGroupOptions<TUpdateArg>, TRequiredTraits>, updateHooks: ICategoryUpdateHooks<IRenderer<TEntityRenderer>, TUpdateArg>);
+constructor(plot: IPlot<unknown, TRequiredTraits>, renderer: IRenderer<TComponentRenderer>, updateGroup: IEntityGroup<IUpdateGroupOptions<TUpdateArg>, TRequiredTraits>, updateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, TUpdateArg>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  plot | [IPlot](./core.iplot.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt; |  |
-|  renderer | [IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt; |  |
+|  plot | [IPlot](./core.iplot.md)<!-- -->&lt;unknown, TRequiredTraits&gt; |  |
+|  renderer | [IRenderer](./core.irenderer.md)<!-- -->&lt;TComponentRenderer&gt; |  |
 |  updateGroup | [IEntityGroup](./core.ientitygroup.md)<!-- -->&lt;[IUpdateGroupOptions](./core.iupdategroupoptions.md)<!-- -->&lt;TUpdateArg&gt;, TRequiredTraits&gt; |  |
-|  updateHooks | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt;, TUpdateArg&gt; |  |
+|  updateHooks | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TComponentRenderer&gt;, TUpdateArg&gt; |  |
 

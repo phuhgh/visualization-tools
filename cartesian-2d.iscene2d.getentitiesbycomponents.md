@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-getEntitiesByComponents(category: I2dEntityCategoryRead<TUpdateArg, TRequiredTraits>): readonly [IGraphicsComponent<TUnknownEntityRenderer, TUpdateArg, TRequiredTraits>, TEntityTrait<TUpdateArg, TRequiredTraits>[]][];
+getEntitiesByComponents(category: I2dEntityCategoryRead<TUpdateArg, TRequiredTraits>): readonly [TGraphicsComponent<TUnknownComponentRenderer, TUpdateArg, TRequiredTraits>, TEntityTrait<TUpdateArg, TRequiredTraits>[]][];
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ getEntitiesByComponents(category: I2dEntityCategoryRead<TUpdateArg, TRequiredTra
 
 <b>Returns:</b>
 
-readonly \[[IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, TUpdateArg, TRequiredTraits&gt;, [TEntityTrait](./core.tentitytrait.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;\[\]\]\[\]
+readonly \[[TGraphicsComponent](./core.tgraphicscomponent.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, TUpdateArg, TRequiredTraits&gt;, [TEntityTrait](./core.tentitytrait.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;\[\]\]\[\]
 

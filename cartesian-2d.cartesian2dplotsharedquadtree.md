@@ -28,5 +28,6 @@ export declare class Cartesian2dPlotSharedQuadTree<TArray extends TTypedArray, T
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [clearInteractionHandler()](./cartesian-2d.cartesian2dplotsharedquadtree.clearinteractionhandler.md) |  |  |
 |  [setQuadTreeInteractionHandler(emscriptenWrapper, chart, listeners)](./cartesian-2d.cartesian2dplotsharedquadtree.setquadtreeinteractionhandler.md) |  |  |
 

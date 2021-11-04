@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static emit<TEntityRenderer extends TUnknownEntityRenderer, TPlotRange>(plot: IReadonlyPlot<TPlotRange, unknown>, chart: IChartComponent<TEntityRenderer>): void;
+static emit<TRenderer extends TUnknownRenderer, TPlotRange>(plot: IReadonlyPlot<TPlotRange, unknown>, chart: IChartComponent<TRenderer>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ static emit<TEntityRenderer extends TUnknownEntityRenderer, TPlotRange>(plot: IR
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  plot | [IReadonlyPlot](./core.ireadonlyplot.md)<!-- -->&lt;TPlotRange, unknown&gt; |  |
-|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TEntityRenderer&gt; |  |
+|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TRenderer&gt; |  |
 
 <b>Returns:</b>
 

@@ -4,18 +4,19 @@
 
 ## IGlRenderer interface
 
-WebGl system hooks and config (clearing bits, [TGlFeatureFlags](./core.tglfeatureflags.md) etc). Most WebGl state is handled at the [TGlEntityRenderer](./core.tglentityrenderer.md) level.
+WebGl system hooks and config (clearing bits, [TGlFeatureFlags](./core.tglfeatureflags.md) etc). Most WebGl state is handled at the [TGlComponentRenderer](./core.tglcomponentrenderer.md) level.
 
 <b>Signature:</b>
 
 ```typescript
-export interface IGlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys> extends IRenderer<TGlEntityRenderer<TCtx, TExts>> 
+export interface IGlRenderer<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>> extends IRenderer<TComponentRenderer> 
 ```
-<b>Extends:</b> [IRenderer](./core.irenderer.md)<!-- -->&lt;[TGlEntityRenderer](./core.tglentityrenderer.md)<!-- -->&lt;TCtx, TExts&gt;&gt;
+<b>Extends:</b> [IRenderer](./core.irenderer.md)<!-- -->&lt;TComponentRenderer&gt;
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [sharedState](./core.iglrenderer.sharedstate.md) | [IGlRendererSharedState](./core.iglrenderersharedstate.md) |  |
+|  [transformComponents](./core.iglrenderer.transformcomponents.md) | [ITransformComponentStore](./core.itransformcomponentstore.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->&gt; |  |
 

@@ -9,36 +9,37 @@ Provided as a means to compose graphics components; it does not infer / bestow a
 <b>Signature:</b>
 
 ```typescript
-export declare class CompositeGraphicsComponent<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TTraits> implements IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TTraits> 
+export declare class CompositeGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits> implements ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>, ILinkableCompositeGraphicsComponentFactory<TComponentRenderer, TUpdateArg, TTraits> 
 ```
-<b>Implements:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TTraits&gt;
+<b>Implements:</b> [ICompositeGraphicsComponent](./core.icompositegraphicscomponent.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt;, [ILinkableCompositeGraphicsComponentFactory](./core.ilinkablecompositegraphicscomponentfactory.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt;
 
 ## Remarks
 
-An instance with the appropriate types can be obtained from the renderer (on ChartComponent).
+Any duplicate graphics components (by instance) will be eliminated, regardless of how nested they are.
 
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(specification, graphicsComp)](./core.compositegraphicscomponent._constructor_.md) |  | Constructs a new instance of the <code>CompositeGraphicsComponent</code> class |
+|  [(constructor)(graphicsComp, groupUpdatesByEntity)](./core.compositegraphicscomponent._constructor_.md) |  | Constructs a new instance of the <code>CompositeGraphicsComponent</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [groupUpdatesByEntity?](./core.compositegraphicscomponent.groupupdatesbyentity.md) |  | boolean | <i>(Optional)</i> |
-|  [specification](./core.compositegraphicscomponent.specification.md) |  | [TExtractGcSpec](./core.textractgcspec.md)<!-- -->&lt;TEntityRenderer&gt; |  |
-|  [subComponents](./core.compositegraphicscomponent.subcomponents.md) |  | [GraphicsSubComponents](./core.graphicssubcomponents.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TTraits&gt; |  |
+|  [groupUpdatesByEntity](./core.compositegraphicscomponent.groupupdatesbyentity.md) |  | boolean |  |
+|  [subComponents](./core.compositegraphicscomponent.subcomponents.md) |  | [GraphicsSubComponents](./core.graphicssubcomponents.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt; |  |
+|  [type](./core.compositegraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [addComponent(graphicsComp)](./core.compositegraphicscomponent.addcomponent.md) |  |  |
-|  [createOne(specification, graphicsComp)](./core.compositegraphicscomponent.createone.md) | <code>static</code> |  |
-|  [getCacheId()](./core.compositegraphicscomponent.getcacheid.md) |  |  |
-|  [initialize()](./core.compositegraphicscomponent.initialize.md) |  |  |
-|  [onBeforeUpdate()](./core.compositegraphicscomponent.onbeforeupdate.md) |  |  |
-|  [update()](./core.compositegraphicscomponent.update.md) |  |  |
+|  [build()](./core.compositegraphicscomponent.build.md) |  |  |
+|  [createOne(graphicsComp)](./core.compositegraphicscomponent.createone.md) | <code>static</code> |  |
+|  [createOneLinked(graphicsComp)](./core.compositegraphicscomponent.createonelinked.md) | <code>static</code> |  |
+|  [recurseIterate(callback)](./core.compositegraphicscomponent.recurseiterate.md) |  |  |
+|  [recurseIterate(filter, callback)](./core.compositegraphicscomponent.recurseiterate_1.md) |  |  |
+|  [recurseIterate(filter, callback)](./core.compositegraphicscomponent.recurseiterate_2.md) |  |  |
 

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-updateDataRange(dataRange: IReadonlyRange2d<TArray>, canvasDims: ICanvasDimensions): void;
+updateDataRange(unclampedDataRange: IReadonlyRange2d<TArray>, canvasDims: ICanvasDimensions): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  dataRange | IReadonlyRange2d&lt;TArray&gt; |  |
+|  unclampedDataRange | IReadonlyRange2d&lt;TArray&gt; |  |
 |  canvasDims | [ICanvasDimensions](./core.icanvasdimensions.md) |  |
 
 <b>Returns:</b>

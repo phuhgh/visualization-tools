@@ -9,11 +9,11 @@ A Float32 [IGlAttribute](./core.iglattribute.md)<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlFloatAttribute extends AGlAttribute implements IGlAttribute 
+export declare class GlFloatAttribute extends AGlAttribute<Float32Array> implements IGlAttribute<Float32Array> 
 ```
-<b>Extends:</b> [AGlAttribute](./core.aglattribute.md)
+<b>Extends:</b> [AGlAttribute](./core.aglattribute.md)<!-- -->&lt;Float32Array&gt;
 
-<b>Implements:</b> [IGlAttribute](./core.iglattribute.md)
+<b>Implements:</b> [IGlAttribute](./core.iglattribute.md)<!-- -->&lt;Float32Array&gt;
 
 ## Methods
 

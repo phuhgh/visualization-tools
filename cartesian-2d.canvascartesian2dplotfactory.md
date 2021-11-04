@@ -17,5 +17,5 @@ export declare class CanvasCartesian2dPlotFactory
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [createOne(chart, options)](./cartesian-2d.canvascartesian2dplotfactory.createone.md) | <code>static</code> |  |
-|  [setDefaultAxis(plot, options, attachPoint)](./cartesian-2d.canvascartesian2dplotfactory.setdefaultaxis.md) | <code>static</code> |  |
+|  [setDefaultAxis(plot, options, chart)](./cartesian-2d.canvascartesian2dplotfactory.setdefaultaxis.md) | <code>static</code> |  |
 

@@ -9,12 +9,12 @@ Constructs a new instance of the `OnPlotAttached` class
 <b>Signature:</b>
 
 ```typescript
-constructor(onPlotAttached: (chart: IChartComponent<TEntityRenderer>) => void);
+constructor(onPlotAttached: (chart: IChartComponent<TRenderer>) => void);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  onPlotAttached | (chart: [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TEntityRenderer&gt;) =&gt; void |  |
+|  onPlotAttached | (chart: [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TRenderer&gt;) =&gt; void |  |
 

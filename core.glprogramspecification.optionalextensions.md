@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-optionalExtensions: TKeysOf<IGlExtensions>;
+optionalExtensions: readonly (keyof IGlExtensions)[];
 ```

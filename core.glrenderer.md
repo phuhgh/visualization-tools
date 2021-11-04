@@ -4,14 +4,14 @@
 
 ## GlRenderer class
 
-WebGl system hooks and config (clearing bits, [TGlFeatureFlags](./core.tglfeatureflags.md) etc). Most WebGl state is handled at the [TGlEntityRenderer](./core.tglentityrenderer.md) level.
+WebGl system hooks and config (clearing bits, [TGlFeatureFlags](./core.tglfeatureflags.md) etc). Most WebGl state is handled at the [TGlComponentRenderer](./core.tglcomponentrenderer.md) level.
 
 <b>Signature:</b>
 
 ```typescript
-export declare class GlRenderer<TCtx extends TGlContext, TExts extends TGlExtensionKeys> implements IGlRenderer<TCtx, TExts> 
+export declare class GlRenderer<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>> implements IGlRenderer<TComponentRenderer> 
 ```
-<b>Implements:</b> [IGlRenderer](./core.iglrenderer.md)<!-- -->&lt;TCtx, TExts&gt;
+<b>Implements:</b> [IGlRenderer](./core.iglrenderer.md)<!-- -->&lt;TComponentRenderer&gt;
 
 ## Constructors
 
@@ -23,19 +23,20 @@ export declare class GlRenderer<TCtx extends TGlContext, TExts extends TGlExtens
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [context](./core.glrenderer.context.md) |  | [TExtractGcContext](./core.textractgccontext.md)<!-- -->&lt;[TGlEntityRenderer](./core.tglentityrenderer.md)<!-- -->&lt;TCtx, TExts&gt;&gt; |  |
-|  [entityRendererFactory](./core.glrenderer.entityrendererfactory.md) |  | [IEntityRendererFactory](./core.ientityrendererfactory.md)<!-- -->&lt;[IGlProgramSpec](./core.iglprogramspec.md)<!-- -->, [TGlEntityRenderer](./core.tglentityrenderer.md)<!-- -->&lt;TCtx, TExts&gt;&gt; |  |
-|  [entityRendererProvider](./core.glrenderer.entityrendererprovider.md) |  | [IEntityRendererProvider](./core.ientityrendererprovider.md)<!-- -->&lt;[TGlEntityRenderer](./core.tglentityrenderer.md)<!-- -->&lt;TCtx, TExts&gt;&gt; |  |
-|  [graphicsComponents](./core.glrenderer.graphicscomponents.md) |  | Map&lt;string, [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;[TGlEntityRenderer](./core.tglentityrenderer.md)<!-- -->&lt;TCtx, TExts&gt;, unknown, unknown&gt;&gt; |  |
+|  [componentRendererFactory](./core.glrenderer.componentrendererfactory.md) |  | [IComponentRendererFactory](./core.icomponentrendererfactory.md)<!-- -->&lt;[IGlProgramSpec](./core.iglprogramspec.md)<!-- -->, TComponentRenderer&gt; |  |
+|  [componentRendererProvider](./core.glrenderer.componentrendererprovider.md) |  | [IComponentRendererProvider](./core.icomponentrendererprovider.md)<!-- -->&lt;TComponentRenderer&gt; |  |
+|  [context](./core.glrenderer.context.md) |  | [TExtractGcContext](./core.textractgccontext.md)<!-- -->&lt;TComponentRenderer&gt; |  |
+|  [graphicsComponents](./core.glrenderer.graphicscomponents.md) |  | [GraphicsComponentStore](./core.graphicscomponentstore.md)<!-- -->&lt;TComponentRenderer&gt; |  |
 |  [sharedState](./core.glrenderer.sharedstate.md) |  | [IGlRendererSharedState](./core.iglrenderersharedstate.md) |  |
+|  [transformComponents](./core.glrenderer.transformcomponents.md) |  | [ITransformComponentStore](./core.itransformcomponentstore.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->&gt; |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [createCompositeGraphicsComponent(graphicsComp)](./core.glrenderer.createcompositegraphicscomponent.md) |  |  |
 |  [createOne(context, options, localizations, callbacks)](./core.glrenderer.createone.md) | <code>static</code> |  |
 |  [onAfterPlotDraw()](./core.glrenderer.onafterplotdraw.md) |  |  |
 |  [onBeforePlotDraw(plot, canvasDims)](./core.glrenderer.onbeforeplotdraw.md) |  |  |
+|  [onContextLost()](./core.glrenderer.oncontextlost.md) |  |  |
 |  [onContextRegained(context)](./core.glrenderer.oncontextregained.md) |  |  |
 

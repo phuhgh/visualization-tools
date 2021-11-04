@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-onPlotAttached: (chart: IChartComponent<TEntityRenderer>) => void;
+onPlotAttached: (chart: IChartComponent<TRenderer>) => void;
 ```

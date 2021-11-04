@@ -29,6 +29,8 @@ export declare class Cartesian2dUpdateArg<TCtor extends TTypedArrayCtor> impleme
 |  [plotDimensionsOBL](./cartesian-2d.cartesian2dupdatearg.plotdimensionsobl.md) |  | [IPlotDimensions](./core.iplotdimensions.md) |  |
 |  [plotDimensionsOTL](./cartesian-2d.cartesian2dupdatearg.plotdimensionsotl.md) |  | [IPlotDimensions](./core.iplotdimensions.md) |  |
 |  [plotRange](./cartesian-2d.cartesian2dupdatearg.plotrange.md) |  | IReadonlyRange2d&lt;InstanceType&lt;TCtor&gt;&gt; |  |
+|  [transformedDataRange](./cartesian-2d.cartesian2dupdatearg.transformeddatarange.md) |  | IReadonlyRange2d&lt;InstanceType&lt;TCtor&gt;&gt; |  |
+|  [userTransform](./cartesian-2d.cartesian2dupdatearg.usertransform.md) |  | [ICartesian2dUserTransform](./cartesian-2d.icartesian2dusertransform.md)<!-- -->&lt;InstanceType&lt;TCtor&gt;&gt; |  |
 
 ## Methods
 

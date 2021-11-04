@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static createOne(context: CanvasRenderingContext2D | null, callbacks?: Partial<IRendererCallbacks<CanvasRenderingContext2D>>): IRenderer<ICanvasEntityRenderer> | null;
+static createOne(context: CanvasRenderingContext2D | null, callbacks?: Partial<IRendererCallbacks<CanvasRenderingContext2D>>): ICanvasRenderer | null;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ static createOne(context: CanvasRenderingContext2D | null, callbacks?: Partial<I
 
 <b>Returns:</b>
 
-[IRenderer](./core.irenderer.md)<!-- -->&lt;[ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->&gt; \| null
+[ICanvasRenderer](./core.icanvasrenderer.md) \| null
 

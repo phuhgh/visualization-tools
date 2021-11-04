@@ -9,5 +9,5 @@ Origin top left (OTL).
 <b>Signature:</b>
 
 ```typescript
-plotDimensionsOTL: IPlotDimensions;
+readonly plotDimensionsOTL: IPlotDimensions;
 ```

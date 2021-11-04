@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-onPanZoomStart(centerPointCssCanvas: IReadonlyVec2<Float32Array>, width: number): void;
+onPanZoomStart(cssCenterPoint: IReadonlyVec2<Float32Array>, width: number): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  centerPointCssCanvas | IReadonlyVec2&lt;Float32Array&gt; |  |
+|  cssCenterPoint | IReadonlyVec2&lt;Float32Array&gt; |  |
 |  width | number |  |
 
 <b>Returns:</b>

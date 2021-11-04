@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export interface IGlIndexedPoint2dBinder<TArray extends TTypedArray> extends IGlInstancedBinder<TIndexedPointTrait<TArray, IDrawablePoint2dOffsets>, TGl2EntityRenderer> 
+export interface IGlIndexedPoint2dBinder<TArray extends TTypedArray> extends IGlInstancedBinder<TGl2ComponentRenderer, TIndexedPointTrait<TArray, IDrawablePoint2dOffsets>>, IGlTransformBinder<TIndexedPointTrait<TArray, IDrawablePoint2dOffsets>, IGlIndexedPoint2dBinder<TArray>, TGl2ComponentRenderer>, ILinkableBinder<TGl2ComponentRenderer>, ITransformBinderProvider<IGlIndexedPoint2dBinder<TArray>> 
 ```
-<b>Extends:</b> [IGlInstancedBinder](./core.iglinstancedbinder.md)<!-- -->&lt;[TIndexedPointTrait](./cartesian-2d.tindexedpointtrait.md)<!-- -->&lt;TArray, [IDrawablePoint2dOffsets](./cartesian-2d.idrawablepoint2doffsets.md)<!-- -->&gt;, [TGl2EntityRenderer](./core.tgl2entityrenderer.md)<!-- -->&gt;
+<b>Extends:</b> [IGlInstancedBinder](./core.iglinstancedbinder.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [TIndexedPointTrait](./cartesian-2d.tindexedpointtrait.md)<!-- -->&lt;TArray, [IDrawablePoint2dOffsets](./cartesian-2d.idrawablepoint2doffsets.md)<!-- -->&gt;&gt;, [IGlTransformBinder](./core.igltransformbinder.md)<!-- -->&lt;[TIndexedPointTrait](./cartesian-2d.tindexedpointtrait.md)<!-- -->&lt;TArray, [IDrawablePoint2dOffsets](./cartesian-2d.idrawablepoint2doffsets.md)<!-- -->&gt;, [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;TArray&gt;, [TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->&gt;, [ILinkableBinder](./core.ilinkablebinder.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->&gt;, [ITransformBinderProvider](./core.itransformbinderprovider.md)<!-- -->&lt;[IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;TArray&gt;&gt;
 
 ## Properties
 
@@ -22,6 +22,6 @@ export interface IGlIndexedPoint2dBinder<TArray extends TTypedArray> extends IGl
 
 |  Method | Description |
 |  --- | --- |
-|  [overrideColors(entityRenderer, entity)](./cartesian-2d.iglindexedpoint2dbinder.overridecolors.md) |  |
+|  [overrideColors(componentRenderer, entity, changeId)](./cartesian-2d.iglindexedpoint2dbinder.overridecolors.md) |  |
 |  [setPointers(startIndex, blockByteSize)](./cartesian-2d.iglindexedpoint2dbinder.setpointers.md) |  |
 

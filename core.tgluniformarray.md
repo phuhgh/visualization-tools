@@ -9,5 +9,5 @@ Supported uniform types.
 <b>Signature:</b>
 
 ```typescript
-export declare type TGlUniformArray = IReadonlyVec2<Float32Array> | IReadonlyVec3<Float32Array> | IReadonlyVec4<Float32Array> | IReadonlyMat2<Float32Array> | IReadonlyMat3<Float32Array> | IReadonlyMat4<Float32Array>;
+export declare type TGlUniformArray = IReadonlyVec2<Float32Array | Int32Array> | IReadonlyVec3<Float32Array | Int32Array> | IReadonlyVec4<Float32Array | Int32Array> | IReadonlyMat2<Float32Array | Int32Array> | IReadonlyMat3<Float32Array | Int32Array> | IReadonlyMat4<Float32Array | Int32Array>;
 ```

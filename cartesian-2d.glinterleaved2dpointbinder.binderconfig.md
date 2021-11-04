@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-protected readonly binderConfig: IGlInterleavedPointBinderConfig;
+protected readonly binderConfig: TGlInterleavedPointBinderConfig;
 ```

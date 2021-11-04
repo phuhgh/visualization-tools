@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly prototype: ICartesian2dPlot<TEntityRenderer, TArray, TRequiredTraits>;
+readonly prototype: ICartesian2dPlot<TComponentRenderer, TArray, TRequiredTraits>;
 ```

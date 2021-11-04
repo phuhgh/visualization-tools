@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static registerListener(plot: IReadonlyPlot<unknown, unknown>, onEvent: (chart: IChartComponent<TUnknownEntityRenderer>) => void): () => void;
+static registerListener(plot: IReadonlyPlot<unknown, unknown>, onEvent: (chart: IChartComponent<TUnknownRenderer>) => void): () => void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ static registerListener(plot: IReadonlyPlot<unknown, unknown>, onEvent: (chart: 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  plot | [IReadonlyPlot](./core.ireadonlyplot.md)<!-- -->&lt;unknown, unknown&gt; |  |
-|  onEvent | (chart: [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->&gt;) =&gt; void |  |
+|  onEvent | (chart: [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt;) =&gt; void |  |
 
 <b>Returns:</b>
 

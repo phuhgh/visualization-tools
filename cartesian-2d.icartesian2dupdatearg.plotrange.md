@@ -9,5 +9,5 @@ In data space.
 <b>Signature:</b>
 
 ```typescript
-plotRange: IReadonlyRange2d<TArray>;
+readonly plotRange: IReadonlyRange2d<TArray>;
 ```

@@ -7,17 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static createOneF32(maxBounds: Range2d<Float32Array>, dataRange: Range2d<Float32Array>, maxZoom: number, canvasDims: ICanvasDimensions): ICartesian2dPlotRange<Float32Array>;
+static createOneF32(options: ICartesian2dPlotConstructorOptions<Float32Array>): ICartesian2dPlotRange<Float32Array>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  maxBounds | Range2d&lt;Float32Array&gt; |  |
-|  dataRange | Range2d&lt;Float32Array&gt; |  |
-|  maxZoom | number |  |
-|  canvasDims | [ICanvasDimensions](./core.icanvasdimensions.md) |  |
+|  options | [ICartesian2dPlotConstructorOptions](./cartesian-2d.icartesian2dplotconstructoroptions.md)<!-- -->&lt;Float32Array&gt; |  |
 
 <b>Returns:</b>
 

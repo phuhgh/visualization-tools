@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-bindUniforms(entityRenderer: TGlBasicEntityRenderer): void;
+bindUniforms(componentRenderer: TGlBasicComponentRenderer): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entityRenderer | [TGlBasicEntityRenderer](./core.tglbasicentityrenderer.md) |  |
+|  componentRenderer | [TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md) |  |
 
 <b>Returns:</b>
 

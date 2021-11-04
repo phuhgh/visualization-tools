@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-addEntity<TGraphicsTraits extends object, TCategoryTraits extends object>(entity: IChartEntity<TUpdateArg> & TGraphicsTraits & TCategoryTraits & TRequiredTraits, graphicsComponent: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TGraphicsTraits>, hooks?: IEntityChangeHooks<TCategoryTraits>): void;
+addEntity<TGraphicsTraits extends object, TCategoryTraits extends object>(entity: IChartEntity<TUpdateArg> & TGraphicsTraits & TCategoryTraits & TRequiredTraits, graphicsComponent: TGraphicsComponent<TComponentRenderer, TUpdateArg, TGraphicsTraits>, hooks?: IEntityChangeHooks<TCategoryTraits>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ addEntity<TGraphicsTraits extends object, TCategoryTraits extends object>(entity
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entity | [IChartEntity](./core.ichartentity.md)<!-- -->&lt;TUpdateArg&gt; &amp; TGraphicsTraits &amp; TCategoryTraits &amp; TRequiredTraits |  |
-|  graphicsComponent | [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TGraphicsTraits&gt; |  |
+|  graphicsComponent | [TGraphicsComponent](./core.tgraphicscomponent.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TGraphicsTraits&gt; |  |
 |  hooks | [IEntityChangeHooks](./core.ientitychangehooks.md)<!-- -->&lt;TCategoryTraits&gt; |  |
 
 <b>Returns:</b>

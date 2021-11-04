@@ -9,11 +9,11 @@ Root component. Orchestrates updates and events.
 <b>Signature:</b>
 
 ```typescript
-export declare class ChartComponent<TEntityRenderer extends TUnknownEntityRenderer> extends AOnDestroy implements IChartComponent<TEntityRenderer> 
+export declare class ChartComponent<TRenderer extends TUnknownRenderer> extends AOnDestroy implements IChartComponent<TRenderer> 
 ```
 <b>Extends:</b> AOnDestroy
 
-<b>Implements:</b> [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TEntityRenderer&gt;
+<b>Implements:</b> [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TRenderer&gt;
 
 ## Constructors
 
@@ -32,7 +32,7 @@ export declare class ChartComponent<TEntityRenderer extends TUnknownEntityRender
 |  [eventService](./core.chartcomponent.eventservice.md) |  | [IEventService](./core.ieventservice.md) |  |
 |  [frameProvider](./core.chartcomponent.frameprovider.md) |  | [FrameProvider](./core.frameprovider.md) |  |
 |  [plotCollection](./core.chartcomponent.plotcollection.md) |  | DirtyCheckedUniqueCollection&lt;[IReadonlyPlot](./core.ireadonlyplot.md)<!-- -->&lt;unknown, unknown&gt;&gt; |  |
-|  [renderer](./core.chartcomponent.renderer.md) |  | [IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt; |  |
+|  [renderer](./core.chartcomponent.renderer.md) |  | TRenderer |  |
 |  [updateOptions](./core.chartcomponent.updateoptions.md) |  | [IChartUpdateOptions](./core.ichartupdateoptions.md) |  |
 
 ## Methods
@@ -41,6 +41,7 @@ export declare class ChartComponent<TEntityRenderer extends TUnknownEntityRender
 |  --- | --- | --- |
 |  [addPlot(plot)](./core.chartcomponent.addplot.md) |  |  |
 |  [cancelNextFrame()](./core.chartcomponent.cancelnextframe.md) |  |  |
+|  [getTransformProvider(transformsToInitialize, missIsDebugError)](./core.chartcomponent.gettransformprovider.md) |  |  |
 |  [removePlot(plot)](./core.chartcomponent.removeplot.md) |  |  |
 |  [resize()](./core.chartcomponent.resize.md) |  |  |
 |  [updateImmediate(plot)](./core.chartcomponent.updateimmediate.md) |  |  |

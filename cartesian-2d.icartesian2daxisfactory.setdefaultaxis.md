@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-setDefaultAxis(plot: ICartesian2dPlot<TEntityRenderer, TArray, TRequiredTraits>, options: ICartesian2dPlotConstructionOptions<TArray, TRequiredTraits>, attachPoint: IGraphAttachPoint): void;
+setDefaultAxis(plot: ICartesian2dPlot<TComponentRenderer, TArray, TRequiredTraits>, options: ICartesian2dPlotConstructionOptions<TArray, TRequiredTraits>, chartComponent: IChartComponent<TUnknownRenderer>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  plot | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;TEntityRenderer, TArray, TRequiredTraits&gt; |  |
+|  plot | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;TComponentRenderer, TArray, TRequiredTraits&gt; |  |
 |  options | [ICartesian2dPlotConstructionOptions](./cartesian-2d.icartesian2dplotconstructionoptions.md)<!-- -->&lt;TArray, TRequiredTraits&gt; |  |
-|  attachPoint | [IGraphAttachPoint](./core.igraphattachpoint.md) |  |
+|  chartComponent | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

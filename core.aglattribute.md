@@ -9,15 +9,15 @@ Wrapper for dirty checked GL attributes with VAO and shared mutable buffer suppo
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class AGlAttribute implements IGlAttribute 
+export declare abstract class AGlAttribute<TArray extends TTypedArray> implements IGlAttribute<TArray> 
 ```
-<b>Implements:</b> [IGlAttribute](./core.iglattribute.md)
+<b>Implements:</b> [IGlAttribute](./core.iglattribute.md)<!-- -->&lt;TArray&gt;
 
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(name, buffer, componentsPerVertex, byteOffset, byteStride, normalized)](./core.aglattribute._constructor_.md) |  | Constructs a new instance of the <code>AGlAttribute</code> class |
+|  [(constructor)(name, buffer, componentsPerVertex, byteOffset, byteStride, normalized)](./core.aglattribute._constructor_.md) |  | DO NOT MANUALLY SHARE BUFFERS, \*\*USE LINK\*\*! |
 
 ## Properties
 
@@ -30,14 +30,21 @@ export declare abstract class AGlAttribute implements IGlAttribute
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [bind(entityRenderer, usage)](./core.aglattribute.bind.md) |  |  |
-|  [bindInstanced(entityRenderer, divisor, usage)](./core.aglattribute.bindinstanced.md) |  |  |
-|  [extractBuffer(attribute)](./core.aglattribute.extractbuffer.md) | <code>static</code> |  |
+|  [bindArray(componentRenderer, usage)](./core.aglattribute.bindarray.md) |  |  |
+|  [bindArrayInstanced(componentRenderer, divisor, usage)](./core.aglattribute.bindarrayinstanced.md) |  |  |
+|  [bindTransform(componentRenderer, index)](./core.aglattribute.bindtransform.md) |  |  |
+|  [getBuffer()](./core.aglattribute.getbuffer.md) |  |  |
 |  [getGlType(context)](./core.aglattribute.getgltype.md) |  |  |
-|  [initialize(entityRenderer)](./core.aglattribute.initialize.md) |  |  |
-|  [overrideValues(entityRenderer, byteOffset, data, changeId, updateId)](./core.aglattribute.overridevalues.md) |  |  |
-|  [reset(entityRenderer)](./core.aglattribute.reset.md) |  |  |
-|  [setBuffer(attribute, buffer)](./core.aglattribute.setbuffer.md) | <code>static</code> |  |
+|  [getSharableState()](./core.aglattribute.getsharablestate.md) |  |  |
+|  [initialize(componentRenderer)](./core.aglattribute.initialize.md) |  |  |
+|  [link(sharedState)](./core.aglattribute.link.md) |  |  |
+|  [onContextLost()](./core.aglattribute.oncontextlost.md) |  |  |
+|  [reset(componentRenderer)](./core.aglattribute.reset.md) |  |  |
+|  [setBuffer(buffer)](./core.aglattribute.setbuffer.md) |  |  |
 |  [setData(data, changeId)](./core.aglattribute.setdata.md) |  |  |
 |  [setOffset(byteOffset)](./core.aglattribute.setoffset.md) |  |  |
+|  [setSize(context, byteSize, usage, changeId)](./core.aglattribute.setsize.md) |  |  |
+|  [setStride(byteStride)](./core.aglattribute.setstride.md) |  |  |
+|  [setSubBufferData(componentRenderer, byteOffset, data, changeId, modificationId)](./core.aglattribute.setsubbufferdata.md) |  |  |
+|  [swapBuffer(attribute)](./core.aglattribute.swapbuffer.md) |  |  |
 

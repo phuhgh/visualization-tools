@@ -9,14 +9,14 @@ Constructs a new instance of the `PlotCtorArg` class
 <b>Signature:</b>
 
 ```typescript
-constructor(chart: IChartComponent<TUnknownEntityRenderer>, plotOptions: IPlotConstructionOptions<TPlotRange, TUpdateGroup, TRequiredTraits>, plotArea: IPlotArea);
+constructor(chart: IChartComponent<TUnknownRenderer>, plotOptions: IPlotConstructionOptions<TPlotRange, TUpdateGroup, TRequiredTraits>, plotArea: IPlotArea);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->&gt; |  |
+|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
 |  plotOptions | [IPlotConstructionOptions](./core.iplotconstructionoptions.md)<!-- -->&lt;TPlotRange, TUpdateGroup, TRequiredTraits&gt; |  |
 |  plotArea | [IPlotArea](./core.iplotarea.md) |  |
 

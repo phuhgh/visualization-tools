@@ -9,25 +9,26 @@ Data binder for webgl graphics components.
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class AGlBinder<TConnector, TRenderer> implements IGlBinder<TConnector, TRenderer> 
+export declare abstract class AGlBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector> implements IGlBinder<TComponentRenderer, TConnector> 
 ```
-<b>Implements:</b> [IGlBinder](./core.iglbinder.md)<!-- -->&lt;TConnector, TRenderer&gt;
+<b>Implements:</b> [IGlBinder](./core.iglbinder.md)<!-- -->&lt;TComponentRenderer, TConnector&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [binderClassificationId](./core.aglbinder.binderclassificationid.md) |  | symbol |  |
 |  [specification](./core.aglbinder.specification.md) |  | [IGlProgramSpec](./core.iglprogramspec.md) |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [bindAttributes(entityRenderer)](./core.aglbinder.bindattributes.md) |  |  |
-|  [bindUniforms(entityRenderer)](./core.aglbinder.binduniforms.md) |  |  |
-|  [getCacheId()](./core.aglbinder.getcacheid.md) |  |  |
-|  [initialize(entityRenderer)](./core.aglbinder.initialize.md) |  |  |
-|  [update(connector, entityRenderer)](./core.aglbinder.update.md) |  |  |
-|  [updateData(connector, usage)](./core.aglbinder.updatedata.md) |  |  |
+|  [bindAttributes(componentRenderer)](./core.aglbinder.bindattributes.md) |  |  |
+|  [bindUniforms(componentRenderer)](./core.aglbinder.binduniforms.md) |  |  |
+|  [getBinderId()](./core.aglbinder.getbinderid.md) |  |  |
+|  [initialize(componentRenderer)](./core.aglbinder.initialize.md) |  |  |
+|  [update(connector, componentRenderer, changeId)](./core.aglbinder.update.md) |  |  |
+|  [updateData(connector, changeId)](./core.aglbinder.updatedata.md) |  |  |
 |  [updatePointers(connector)](./core.aglbinder.updatepointers.md) |  |  |
 

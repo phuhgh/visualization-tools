@@ -4,14 +4,14 @@
 
 ## GraphicsSubComponents class
 
-Children components of a [CompositeGraphicsComponent](./core.compositegraphicscomponent.md)<!-- -->.
+Children components of a [ICompositeGraphicsComponent](./core.icompositegraphicscomponent.md)<!-- -->.
 
 <b>Signature:</b>
 
 ```typescript
-export declare class GraphicsSubComponents<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TEntityTraits> implements IGraphicsSubComponents<TEntityRenderer, TUpdateArg, TEntityTraits> 
+export declare class GraphicsSubComponents<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TEntityTraits> implements IGraphicsSubComponents<TComponentRenderer, TUpdateArg, TEntityTraits> 
 ```
-<b>Implements:</b> [IGraphicsSubComponents](./core.igraphicssubcomponents.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TEntityTraits&gt;
+<b>Implements:</b> [IGraphicsSubComponents](./core.igraphicssubcomponents.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TEntityTraits&gt;
 
 ## Constructors
 
@@ -19,16 +19,10 @@ export declare class GraphicsSubComponents<TEntityRenderer extends TUnknownEntit
 |  --- | --- | --- |
 |  [(constructor)(graphicsComponents)](./core.graphicssubcomponents._constructor_.md) |  | Constructs a new instance of the <code>GraphicsSubComponents</code> class |
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [entityRenderers](./core.graphicssubcomponents.entityrenderers.md) |  | [TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->\[\] |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [addComponent(graphicsComp)](./core.graphicssubcomponents.addcomponent.md) |  |  |
 |  [getSubComponents()](./core.graphicssubcomponents.getsubcomponents.md) |  |  |
-|  [setEntityRenderers(entityRenderers)](./core.graphicssubcomponents.setentityrenderers.md) |  |  |
 

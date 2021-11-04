@@ -9,7 +9,7 @@ Maps extension keys to extensions.
 <b>Signature:</b>
 
 ```typescript
-export declare type TGlExtensions<TExts extends TGlExtensionKeys> = ([TExts] extends [never] ? {} : Pick<IGlExtensions, TExts>) & Partial<IGlExtensions>;
+export declare type TGlExtensions<TExts extends TGlExtensionKeys> = TNeverPredicate<TExts, {}, Pick<IGlExtensions, TExts>> & Partial<IGlExtensions>;
 ```
 <b>References:</b> [TGlExtensionKeys](./core.tglextensionkeys.md)<!-- -->, [IGlExtensions](./core.iglextensions.md)
 

@@ -8,6 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
+|  [ACartesian2dUserTransform](./cartesian-2d.acartesian2dusertransform.md) | Provides a user transform that assumes maxes and mins will remain extrema. |
 |  [CanvasCartesian2dAxisLabelGraphicsComponent](./cartesian-2d.canvascartesian2daxislabelgraphicscomponent.md) | Draws labels for cartesian 2d plots. |
 |  [CanvasCartesian2dPlotFactory](./cartesian-2d.canvascartesian2dplotfactory.md) | Provides [TCanvasCartesianPlot](./cartesian-2d.tcanvascartesianplot.md) for canvas charts. |
 |  [CanvasCartesian2dTraceGraphicsComponent](./cartesian-2d.canvascartesian2dtracegraphicscomponent.md) | Draws traces for cartesian 2d plots. |
@@ -17,7 +18,9 @@
 |  [Cartesian2dAxisLabelConfig](./cartesian-2d.cartesian2daxislabelconfig.md) | Provides dirty checking for generating axis config from axis options. |
 |  [Cartesian2dAxisLabelGenerator](./cartesian-2d.cartesian2daxislabelgenerator.md) | Generates sprites for axis labels. |
 |  [Cartesian2dFloatPrecisionRangeBounder](./cartesian-2d.cartesian2dfloatprecisionrangebounder.md) | Constrains the data range so that the mapping into screen space is not worse than per pixel because of float precision. |
+|  [Cartesian2dIdentityTransform](./cartesian-2d.cartesian2didentitytransform.md) | Apply no transform. |
 |  [Cartesian2dInteractionHandler](./cartesian-2d.cartesian2dinteractionhandler.md) | Default interaction handler for cartesian 2d. Allows panning, zooming with mouse and touch events like pinch zoom. Ranges are restricted to avoid float precision issues, see [Cartesian2dFloatPrecisionRangeBounder](./cartesian-2d.cartesian2dfloatprecisionrangebounder.md)<!-- -->. |
+|  [Cartesian2dNaturalLogTransform](./cartesian-2d.cartesian2dnaturallogtransform.md) | Apply natural log as a transform, range must be greater than 0. |
 |  [Cartesian2dPlotCtorArg](./cartesian-2d.cartesian2dplotctorarg.md) | The construction arg of [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->. |
 |  [Cartesian2dPlotRange](./cartesian-2d.cartesian2dplotrange.md) | Cartesian 2d data range, range is bounded by [Cartesian2dInteractionHandler](./cartesian-2d.cartesian2dinteractionhandler.md)<!-- -->. |
 |  [Cartesian2dPlotSharedQuadTree](./cartesian-2d.cartesian2dplotsharedquadtree.md) | Default interaction groups implemented using a shared quad tree. |
@@ -27,7 +30,7 @@
 |  [CartesianPlotConstructionOptions](./cartesian-2d.cartesianplotconstructionoptions.md) | Construction options of [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->. |
 |  [CategoryStack2d](./cartesian-2d.categorystack2d.md) | Assigns a value to [T2dRelativeZIndexTrait](./cartesian-2d.t2drelativezindextrait.md) based on the position in the stack. Entities towards the top of the stack have higher values. |
 |  [EntityCategory2d](./cartesian-2d.entitycategory2d.md) | Update category for 2d plots. Provides Z-ordering. |
-|  [GlCaplessLineGraphicsComponent](./cartesian-2d.glcaplesslinegraphicscomponent.md) | Draws lines without caps without generating any intermediate geometry. Caps can be added by combining with a cap drawing component. Handles sizes and colors per point. |
+|  [GlCaplessLineGraphicsComponent](./cartesian-2d.glcaplesslinegraphicscomponent.md) | Draws lines without caps, without generating any intermediate geometry. Caps can be added by combining with a cap drawing component. Handles sizes and colors per point. |
 |  [GlCartesian2dAxisGraphicsComponent](./cartesian-2d.glcartesian2daxisgraphicscomponent.md) | Draws labels for cartesian 2d plots. |
 |  [GlCartesian2dCameraBinder](./cartesian-2d.glcartesian2dcamerabinder.md) | Provides WebGL bindings for cartesian 2d graphics components. |
 |  [GlCartesian2dPlotFactory](./cartesian-2d.glcartesian2dplotfactory.md) | Creates a Cartesian 2d plot. |
@@ -37,10 +40,12 @@
 |  [GlCartesianUpdateHooks](./cartesian-2d.glcartesianupdatehooks.md) | Canvas update hook, called before and after a plot is drawn. |
 |  [GlInterleaved2dPointBinder](./cartesian-2d.glinterleaved2dpointbinder.md) | Provides bindings for an interleaved buffer that described points in 2d. |
 |  [GlLineFlatCapGraphicsComponent](./cartesian-2d.gllineflatcapgraphicscomponent.md) | Draws line caps, to be used with [GlCaplessLineGraphicsComponent](./cartesian-2d.glcaplesslinegraphicscomponent.md)<!-- -->. Handles sizes and colors per point. |
-|  [GlPointGraphicsComponent](./cartesian-2d.glpointgraphicscomponent.md) | Draws points of varying sizes and colors. |
+|  [GlPoint2dGraphicsComponent](./cartesian-2d.glpoint2dgraphicscomponent.md) | Draws points of varying sizes and colors. |
+|  [GlPoint2dNaturalLogTransform](./cartesian-2d.glpoint2dnaturallogtransform.md) | Applies natural log to an indexable gl connector. The behavior of the transform is undefined if any point is less than 0. |
+|  [GlTrace2dNaturalLogTransform](./cartesian-2d.gltrace2dnaturallogtransform.md) | Applies natural log to a trace gl connector. The behavior of the transform is undefined if the range is less than 0. |
 |  [InterleavedLine2dHitTestComponent](./cartesian-2d.interleavedline2dhittestcomponent.md) | Inserts line segments into a shared quad tree from a [TIndexedPointTrait](./cartesian-2d.tindexedpointtrait.md)<!-- -->. |
 |  [PinchZoomHandlerCartesian2d](./cartesian-2d.pinchzoomhandlercartesian2d.md) | User interaction handler for pinch zooming. |
-|  [Point2dDisplaySettings](./cartesian-2d.point2ddisplaysettings.md) | Point config where not specified per point. |
+|  [Point2dDisplaySettings](./cartesian-2d.point2ddisplaysettings.md) | Point config where not specified per point. Colors are stored normalized. |
 |  [Point2dSizeNormalizer](./cartesian-2d.point2dsizenormalizer.md) | Normalizes the arbitrary data point size into a screen space display size. |
 |  [Point2dSubcategory](./cartesian-2d.point2dsubcategory.md) | Membership hooks for 2d points, normalizes point display size. |
 |  [Scene2dCategorySorted](./cartesian-2d.scene2dcategorysorted.md) | sorts entities by z order. |
@@ -48,13 +53,14 @@
 |  [SharedInterleavedLine2dQuadIndexerFactory](./cartesian-2d.sharedinterleavedline2dquadindexerfactory.md) | Creates a [ISharedInterleavedPoint2dQuadIndexer](./cartesian-2d.isharedinterleavedpoint2dquadindexer.md) for capless lines. |
 |  [SharedInterleavedPoint2dHitTestComponent](./cartesian-2d.sharedinterleavedpoint2dhittestcomponent.md) | Where an entity makes use of shared buffers it can be indexed natively, potentially providing a significant performance boost. Otherwise equivalent to [InterleavedLine2dHitTestComponent](./cartesian-2d.interleavedline2dhittestcomponent.md)<!-- -->. |
 |  [SharedInterleavedPoint2dQuadIndexer](./cartesian-2d.sharedinterleavedpoint2dquadindexer.md) | Base 2d point quad indexer. |
-|  [Sorted2dUpdateStrategy](./cartesian-2d.sorted2dupdatestrategy.md) | Sorts entities according to [IScene2d](./cartesian-2d.iscene2d.md) and then batches entities to minimize draw calls. Respects [IGraphicsComponentSpecification.groupUpdatesByEntity](./core.igraphicscomponentspecification.groupupdatesbyentity.md) flag. |
+|  [Sorted2dUpdateStrategy](./cartesian-2d.sorted2dupdatestrategy.md) | Sorts entities according to [IScene2d](./cartesian-2d.iscene2d.md) and then batches entities to minimize draw calls. Respects  flag. |
 |  [Update2dGroup](./cartesian-2d.update2dgroup.md) | Update group for drawable entities part of a 2d plot. |
 
 ## Enumerations
 
 |  Enumeration | Description |
 |  --- | --- |
+|  [ECartesian2dUserTransform](./cartesian-2d.ecartesian2dusertransform.md) | Supported 2d user transforms. |
 |  [EScreenUnit](./cartesian-2d.escreenunit.md) | Supported methods of describing screen space dimensions. |
 
 ## Functions
@@ -63,6 +69,7 @@
 |  --- | --- |
 |  [createCartesianPlotCtor(axisFactory, metaUpdateHooks, dataUpdateHooks)](./cartesian-2d.createcartesianplotctor.md) | Generates the constructor of [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->. Use a factory to create an instance ([CanvasCartesian2dPlotFactory](./cartesian-2d.canvascartesian2dplotfactory.md)<!-- -->, [GlCartesian2dPlotFactory](./cartesian-2d.glcartesian2dplotfactory.md) etc) unless extending. |
 |  [getRangeFromIndexedConnector(connector, result)](./cartesian-2d.getrangefromindexedconnector.md) | Provides the AABB (in data space) of an indexed point connector. The last parameter is an optional out parameter, if not supplied F64 will be assumed. |
+|  [getTransformChangeId(entity)](./cartesian-2d.gettransformchangeid.md) |  |
 |  [hoverHighlightLineSegment(entity, state, segments)](./cartesian-2d.hoverhighlightlinesegment.md) | Updates the state of an entity that receives a hover event. |
 |  [populateCartesian2dTraceBindings(entity)](./cartesian-2d.populatecartesian2dtracebindings.md) | Generates a typed array buffer of the entities current traces. Output structure is of the form \[xMin, yMin, xMax, yMax\] per trace, where min and max are the extrema of the data range being drawn. Vertical traces come first. |
 
@@ -80,6 +87,7 @@
 |  [ICartesian2dInteractionBounder](./cartesian-2d.icartesian2dinteractionbounder.md) | Constrains a 2d draw range. |
 |  [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md) |  |
 |  [ICartesian2dPlotConstructionOptions](./cartesian-2d.icartesian2dplotconstructionoptions.md) | Construction options of [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->. |
+|  [ICartesian2dPlotConstructorOptions](./cartesian-2d.icartesian2dplotconstructoroptions.md) |  |
 |  [ICartesian2dPlotCtor](./cartesian-2d.icartesian2dplotctor.md) |  |
 |  [ICartesian2dPlotCtorArg](./cartesian-2d.icartesian2dplotctorarg.md) | The construction arg of [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->. |
 |  [ICartesian2dPlotRange](./cartesian-2d.icartesian2dplotrange.md) | Cartesian 2d data range, range is bounded by [Cartesian2dInteractionHandler](./cartesian-2d.cartesian2dinteractionhandler.md)<!-- -->. |
@@ -88,11 +96,13 @@
 |  [ICartesian2dTransforms](./cartesian-2d.icartesian2dtransforms.md) | Provides data transforms useful for drawing and interaction handling. Created by [ICartesian2dUpdateArgProvider](./cartesian-2d.icartesian2dupdateargprovider.md)<!-- -->. |
 |  [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md) | Update arg provided by [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->. |
 |  [ICartesian2dUpdateArgProvider](./cartesian-2d.icartesian2dupdateargprovider.md) | Created every frame and on interaction events, passed to graphics and interaction components. |
+|  [ICartesian2dUserTransform](./cartesian-2d.icartesian2dusertransform.md) | A user transform to apply before the screen space transform. By default this is identity. |
 |  [IDrawablePoint2dOffsets](./cartesian-2d.idrawablepoint2doffsets.md) |  |
+|  [IGlCamera2dBinder](./cartesian-2d.iglcamera2dbinder.md) | Provides coordinate system invariant WebGL bindings for 2d graphics components. |
 |  [IGlCartesian2dCameraBinder](./cartesian-2d.iglcartesian2dcamerabinder.md) | Provides WebGL bindings for cartesian 2d graphics components. |
 |  [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md) |  |
-|  [IGlInterleavedPointBinderConfig](./cartesian-2d.iglinterleavedpointbinderconfig.md) |  |
 |  [IGlTraceBinder](./cartesian-2d.igltracebinder.md) | Binds trace data to WebGL buffers. |
+|  [IGlTraceTransformBinder](./cartesian-2d.igltracetransformbinder.md) | Binds trace data to WebGL transform feedback. |
 |  [IInterleavedCircle2dQuadIndexerBindings](./cartesian-2d.iinterleavedcircle2dquadindexerbindings.md) |  |
 |  [IInterleavedLine2dQuadIndexerBindings](./cartesian-2d.iinterleavedline2dquadindexerbindings.md) |  |
 |  [IPoint2dOffsets](./cartesian-2d.ipoint2doffsets.md) | Offsets into a <code>IIndexedDataConnector</code> that represent a 2d point. |
@@ -120,6 +130,7 @@
 |  [TCartesianUpdateStrategy](./cartesian-2d.tcartesianupdatestrategy.md) |  |
 |  [TGlAxisEntity](./cartesian-2d.tglaxisentity.md) | WebGL entity that draws axis labels. |
 |  [TGlCartesianPlot](./cartesian-2d.tglcartesianplot.md) |  |
+|  [TGlInterleavedPointBinderConfig](./cartesian-2d.tglinterleavedpointbinderconfig.md) |  |
 |  [TGlTraceEntity](./cartesian-2d.tgltraceentity.md) | An entity that draws traces in cartesian 2d plot. |
 |  [THighlightColorOverride](./cartesian-2d.thighlightcoloroverride.md) |  |
 |  [THitTestableIndexedPoint2dTrait](./cartesian-2d.thittestableindexedpoint2dtrait.md) |  |

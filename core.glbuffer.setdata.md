@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-setData(data: TTypedArray, changeId: number): void;
+setData(data: InstanceType<TCtor>, changeId: number): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  data | TTypedArray |  |
+|  data | InstanceType&lt;TCtor&gt; |  |
 |  changeId | number |  |
 
 <b>Returns:</b>

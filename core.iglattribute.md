@@ -9,7 +9,7 @@ Wrapper for dirty checked GL attributes with VAO and shared mutable buffer suppo
 <b>Signature:</b>
 
 ```typescript
-export interface IGlAttribute 
+export interface IGlAttribute<TArray extends TTypedArray> 
 ```
 
 ## Properties
@@ -23,11 +23,20 @@ export interface IGlAttribute
 
 |  Method | Description |
 |  --- | --- |
-|  [bind(entityRenderer, usage)](./core.iglattribute.bind.md) | Wrapper of vertexAttribPointer. |
-|  [bindInstanced(entityRenderer, divisor, usage)](./core.iglattribute.bindinstanced.md) | Like <code>bind</code> but with instancing enabled for this attribute. |
-|  [initialize(entityRenderer)](./core.iglattribute.initialize.md) | Called once on creation or context restored. |
-|  [overrideValues(entityRenderer, byteOffset, data, changeId, updateId)](./core.iglattribute.overridevalues.md) | Overwrite data in the buffer. The argument <code>updateId</code> is provided to allow multiple writes per draw, if the <code>updateId</code> is larger than the previous call's <code>updateId</code> then the modification is allowed. This resets whenever <code>changeId</code> changes. |
-|  [reset(entityRenderer)](./core.iglattribute.reset.md) | Reset the state of this attribute. If <code>OES_vertex_array_object</code> is enabled or the context is webgl2 this is a no-op. Called after update as part of the update strategy. |
+|  [bindArray(componentRenderer, usage)](./core.iglattribute.bindarray.md) | Binds the current buffer to <code>ARRAY_BUFFER</code>. |
+|  [bindArrayInstanced(componentRenderer, divisor, usage)](./core.iglattribute.bindarrayinstanced.md) | Like <code>bind</code> but with instancing enabled for this attribute. |
+|  [bindTransform(componentRenderer, index)](./core.iglattribute.bindtransform.md) | Binds the current buffer to <code>TRANSFORM_FEEDBACK_BUFFER</code>. |
+|  [getBuffer()](./core.iglattribute.getbuffer.md) |  |
+|  [getSharableState()](./core.iglattribute.getsharablestate.md) | The internal state of the attribute that can be shared, namely the buffer that the attribute points to. |
+|  [initialize(componentRenderer)](./core.iglattribute.initialize.md) | Called once on creation or context restored. |
+|  [link(sharedState)](./core.iglattribute.link.md) | Links this attribute to shared state, such that a change to one attribute results in a change to all attributes. |
+|  [onContextLost()](./core.iglattribute.oncontextlost.md) | Called once on context loss. |
+|  [reset(componentRenderer)](./core.iglattribute.reset.md) | Reset the state of this attribute. If <code>OES_vertex_array_object</code> is enabled or the context is webgl2 this is a no-op. Called after update as part of the update strategy. |
+|  [setBuffer(buffer)](./core.iglattribute.setbuffer.md) |  |
 |  [setData(data, changeId)](./core.iglattribute.setdata.md) | Copy new data into the buffer. |
 |  [setOffset(byteOffset)](./core.iglattribute.setoffset.md) | Set the byte offset into the buffer. |
+|  [setSize(context, byteSize, usage, changeId)](./core.iglattribute.setsize.md) | Resizes the buffer ready as a copy target. Clears the current data / dirty state. |
+|  [setStride(byteStride)](./core.iglattribute.setstride.md) | Set the number of bytes to the start of the next attribute. |
+|  [setSubBufferData(componentRenderer, byteOffset, data, changeId, modificationId)](./core.iglattribute.setsubbufferdata.md) | Overwrite data in the buffer. The argument <code>modificationId</code> is provided to allow multiple writes per draw, if the <code>modificationId</code> is larger than the previous call's <code>modificationId</code> then the modification is allowed. This resets whenever <code>changeId</code> changes. |
+|  [swapBuffer(attribute)](./core.iglattribute.swapbuffer.md) | Transfer this attribute's buffer to the argument and vice versa. |
 

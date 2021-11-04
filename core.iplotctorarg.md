@@ -16,7 +16,7 @@ export interface IPlotCtorArg<TPlotRange, TUpdateGroup extends IEntityGroup<unkn
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [chart](./core.iplotctorarg.chart.md) | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->&gt; |  |
+|  [chart](./core.iplotctorarg.chart.md) | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
 |  [plotArea](./core.iplotctorarg.plotarea.md) | [IPlotArea](./core.iplotarea.md) |  |
 |  [plotOptions](./core.iplotctorarg.plotoptions.md) | [IPlotConstructionOptions](./core.iplotconstructionoptions.md)<!-- -->&lt;TPlotRange, TUpdateGroup, TRequiredTraits&gt; |  |
 

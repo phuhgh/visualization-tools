@@ -17,8 +17,9 @@ export interface IGlProgramSpec
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [fragmentShader](./core.iglprogramspec.fragmentshader.md) | [IGlShader](./core.iglshader.md) |  |
-|  [optionalExtensions](./core.iglprogramspec.optionalextensions.md) | TKeysOf&lt;[IGlExtensions](./core.iglextensions.md)<!-- -->&gt; |  |
-|  [requiredExtensions](./core.iglprogramspec.requiredextensions.md) | TKeysOf&lt;[IGlExtensions](./core.iglextensions.md)<!-- -->&gt; |  |
+|  [optionalExtensions](./core.iglprogramspec.optionalextensions.md) | readonly (keyof [IGlExtensions](./core.iglextensions.md)<!-- -->)\[\] |  |
+|  [outAttributes](./core.iglprogramspec.outattributes.md) | readonly string\[\] \| null |  |
+|  [requiredExtensions](./core.iglprogramspec.requiredextensions.md) | readonly (keyof [IGlExtensions](./core.iglextensions.md)<!-- -->)\[\] |  |
 |  [shaderLanguageVersion](./core.iglprogramspec.shaderlanguageversion.md) | number \| undefined |  |
 |  [vertexShader](./core.iglprogramspec.vertexshader.md) | [IGlShader](./core.iglshader.md) |  |
 

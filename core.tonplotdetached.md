@@ -9,7 +9,7 @@ Listener for plot detaching from chart.
 <b>Signature:</b>
 
 ```typescript
-export declare type TOnPlotDetached<TEntityRenderer extends TUnknownEntityRenderer> = TListener<"onPlotDetached", TOnPlotDetachedArgs<TEntityRenderer>>;
+export declare type TOnPlotDetached<TRenderer extends TUnknownRenderer> = TListener<"onPlotDetached", TOnPlotDetachedArgs<TRenderer>>;
 ```
-<b>References:</b> [TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, [TOnPlotDetachedArgs](./core.tonplotdetachedargs.md)
+<b>References:</b> [TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->, [TOnPlotDetachedArgs](./core.tonplotdetachedargs.md)
 

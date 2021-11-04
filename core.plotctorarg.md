@@ -23,7 +23,7 @@ export declare class PlotCtorArg<TPlotRange, TUpdateGroup extends IEntityGroup<u
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [chart](./core.plotctorarg.chart.md) |  | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->&gt; |  |
+|  [chart](./core.plotctorarg.chart.md) |  | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
 |  [plotArea](./core.plotctorarg.plotarea.md) |  | [IPlotArea](./core.iplotarea.md) |  |
 |  [plotOptions](./core.plotctorarg.plotoptions.md) |  | [IPlotConstructionOptions](./core.iplotconstructionoptions.md)<!-- -->&lt;TPlotRange, TUpdateGroup, TRequiredTraits&gt; |  |
 

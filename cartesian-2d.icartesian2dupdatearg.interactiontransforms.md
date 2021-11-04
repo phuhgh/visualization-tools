@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-interactionTransforms: ICartesian2dTransforms<TArray>;
+readonly interactionTransforms: ICartesian2dTransforms<TArray>;
 ```

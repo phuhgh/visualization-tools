@@ -7,15 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-overrideColors(entityRenderer: TGl2EntityRenderer, entity: TInterleavedPoint2dTrait<Float32Array>): void;
+overrideColors(componentRenderer: TGl2ComponentRenderer, entity: TInterleavedPoint2dTrait<Float32Array>, changeId: number): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entityRenderer | [TGl2EntityRenderer](./core.tgl2entityrenderer.md) |  |
+|  componentRenderer | [TGl2ComponentRenderer](./core.tgl2componentrenderer.md) |  |
 |  entity | [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt; |  |
+|  changeId | number |  |
 
 <b>Returns:</b>
 

@@ -9,12 +9,12 @@ Constructs a new instance of the `CanvasRendererFactory` class
 <b>Signature:</b>
 
 ```typescript
-constructor(entityRenderer: ICanvasEntityRenderer);
+constructor(componentRenderer: ICanvasComponentRenderer);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entityRenderer | [ICanvasEntityRenderer](./core.icanvasentityrenderer.md) |  |
+|  componentRenderer | [ICanvasComponentRenderer](./core.icanvascomponentrenderer.md) |  |
 

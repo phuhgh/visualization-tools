@@ -19,6 +19,8 @@ export interface ICartesian2dPlotRange<TArray extends TTypedArray>
 |  [dataRange](./cartesian-2d.icartesian2dplotrange.datarange.md) | IReadonlyRange2d&lt;TArray&gt; | The range to be drawn. |
 |  [maxBounds](./cartesian-2d.icartesian2dplotrange.maxbounds.md) | IReadonlyRange2d&lt;TArray&gt; | Prevent panning / zooming past these bounds. |
 |  [minRange](./cartesian-2d.icartesian2dplotrange.minrange.md) | IReadonlyRange2d&lt;TArray&gt; | The data range may not span less than this range. |
+|  [transformedDataRange](./cartesian-2d.icartesian2dplotrange.transformeddatarange.md) | IReadonlyRange2d&lt;TArray&gt; | <code>dataRange</code> after <code>userTransform</code> has been applied. |
+|  [userTransform](./cartesian-2d.icartesian2dplotrange.usertransform.md) | [ICartesian2dUserTransform](./cartesian-2d.icartesian2dusertransform.md)<!-- -->&lt;TArray&gt; |  |
 
 ## Methods
 

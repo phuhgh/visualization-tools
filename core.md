@@ -15,14 +15,15 @@
 |  [AGlUniformArray](./core.agluniformarray.md) | Wrapper for webgl uniform. |
 |  [AGlUniformValue](./core.agluniformvalue.md) | wrapper for a single uniform value. |
 |  [AInterleavedConnector](./core.ainterleavedconnector.md) | Interleaved implementation of [IIndexedDataConnector](./core.iindexeddataconnector.md) |
+|  [AttributeState](./core.attributestate.md) | Sharable state of a webgl attribute. |
 |  [CanvasChartFactory](./core.canvaschartfactory.md) | Creates canvas charts. |
+|  [CanvasComponentRenderer](./core.canvascomponentrenderer.md) | Canvas renderer entity draw hooks. |
+|  [CanvasComponentRendererProvider](./core.canvascomponentrendererprovider.md) | Canvas implementation of [IComponentRendererProvider](./core.icomponentrendererprovider.md)<!-- -->. |
 |  [CanvasContextAdapter](./core.canvascontextadapter.md) | Canvas implementation of [IContextAdapter](./core.icontextadapter.md)<!-- -->. |
 |  [CanvasDimensions](./core.canvasdimensions.md) | Canvas element dimensions and useful transforms. |
-|  [CanvasEntityRenderer](./core.canvasentityrenderer.md) | Canvas renderer entity draw hooks. |
-|  [CanvasEntityRendererProvider](./core.canvasentityrendererprovider.md) | Canvas implementation of [IEntityRendererProvider](./core.ientityrendererprovider.md)<!-- -->. |
 |  [CanvasNoOpGraphicsComponent](./core.canvasnoopgraphicscomponent.md) | A graphics component for canvas renderer that doesn't draw. |
 |  [CanvasRenderer](./core.canvasrenderer.md) | Canvas implementation of [IRenderer](./core.irenderer.md)<!-- -->. |
-|  [CanvasRendererFactory](./core.canvasrendererfactory.md) | Canvas [IEntityRendererFactory](./core.ientityrendererfactory.md)<!-- -->. |
+|  [CanvasRendererFactory](./core.canvasrendererfactory.md) | Canvas [IComponentRendererFactory](./core.icomponentrendererfactory.md)<!-- -->. |
 |  [CanvasRendererSharedState](./core.canvasrenderersharedstate.md) | Canvas state shared between draw calls. Some methods use the state stack, refer to documentation on individual methods for usage notes. |
 |  [CanvasTransforms](./core.canvastransforms.md) | Provides a set of common 2d transforms from pixel to clip space etc. |
 |  [CategoryStore](./core.categorystore.md) | A store of categories of entities in an entity group (effectively sub group). |
@@ -31,45 +32,56 @@
 |  [ChartDataEntity](./core.chartdataentity.md) | An entity that represents a simple data entity. Use is not required, create a specific type as required. |
 |  [ChartEntity](./core.chartentity.md) | Base chart entity. |
 |  [ChartPointerEvent](./core.chartpointerevent.md) | Wrapper of <code>MouseEvent</code> with position translated into chart coordinate systems. |
+|  [ChartTransformFactory](./core.charttransformfactory.md) |  |
 |  [CompositeGraphicsComponent](./core.compositegraphicscomponent.md) | Provided as a means to compose graphics components; it does not infer / bestow any behaviors. Refer to update strategy documentation for draw call behavior. |
 |  [DefaultInteractionGroups](./core.defaultinteractiongroups.md) | A set of interaction groups that should meet most use cases. |
 |  [EntityCategory](./core.entitycategory.md) | Implementation of [IEntityCategory](./core.ientitycategory.md)<!-- -->, handles initialization of graphics components. |
 |  [EntityComponentStore](./core.entitycomponentstore.md) | Place to store components for entity groups. It is taken as a membership requirement that the component be present, if this is not the case the <code>TComponent</code> type should include undefined in the union. |
-|  [EntityUpdateGrouping](./core.entityupdategrouping.md) | A grouping of a graphics component with its renderer. |
+|  [EntityUpdateGrouping](./core.entityupdategrouping.md) | A plain update grouping. |
+|  [EntityUpdateTransformGrouping](./core.entityupdatetransformgrouping.md) | A grouping of a graphics component with its renderer and transform. |
 |  [EventService](./core.eventservice.md) | A store of event categories that can be used to emit events. |
 |  [FrameProvider](./core.frameprovider.md) | Handles rollup of draw calls and incremental updating of interaction handlers. |
 |  [Gl1ContextAdapter](./core.gl1contextadapter.md) | Webgl1 context adapter. Handles viewport and context loss. |
 |  [Gl2ContextAdapter](./core.gl2contextadapter.md) | Webgl2 context adapter. Handles viewport and context loss. |
-|  [GlBuffer](./core.glbuffer.md) | Dirty checked wrapper of <code>ARRAY_BUFFER</code>. Modify via [IGlAttribute](./core.iglattribute.md)<!-- -->. |
+|  [GlBuffer](./core.glbuffer.md) | Dirty checked wrapper of <code>WebGLBuffer</code>. Modify via [IGlAttribute](./core.iglattribute.md)<!-- -->. |
 |  [GlChartFactory](./core.glchartfactory.md) | Factory to make [TGlChart](./core.tglchart.md)<!-- -->. |
+|  [GlComponentRenderer](./core.glcomponentrenderer.md) | Webgl / webgl2 component renderer implementation. |
+|  [GlComponentRendererFactory](./core.glcomponentrendererfactory.md) | Webgl component renderer factory. |
+|  [GlComponentRendererProvider](./core.glcomponentrendererprovider.md) | Webgl1/2 implementation of [IComponentRendererProvider](./core.icomponentrendererprovider.md)<!-- -->. |
 |  [GlContextAdapter](./core.glcontextadapter.md) | Base webgl context adapter. Handles viewport and context loss. |
-|  [GlEntityRenderer](./core.glentityrenderer.md) | Webgl / webgl2 entity renderer implementation. |
-|  [GlEntityRendererProvider](./core.glentityrendererprovider.md) | Webgl1/2 implementation of [IEntityRendererProvider](./core.ientityrendererprovider.md)<!-- -->. |
 |  [GlFloatAttribute](./core.glfloatattribute.md) | A Float32 [IGlAttribute](./core.iglattribute.md)<!-- -->. |
+|  [GlFloatBuffer](./core.glfloatbuffer.md) | Float32 [GlBuffer](./core.glbuffer.md)<!-- -->. |
 |  [GlFloatUniform](./core.glfloatuniform.md) | wrapper for a single uniform float. |
+|  [GlIVec2Uniform](./core.glivec2uniform.md) | Wrapper for webgl int32 vector2 uniform. |
+|  [GlIVec3Uniform](./core.glivec3uniform.md) | Wrapper for webgl int32 vector3 uniform. |
+|  [GlIVec4Uniform](./core.glivec4uniform.md) | Wrapper for webgl int32 vector4 uniform. |
 |  [GlMat2Uniform](./core.glmat2uniform.md) | Wrapper for webgl float matrix2 uniform. |
 |  [GlMat3Uniform](./core.glmat3uniform.md) | Wrapper for webgl float matrix3 uniform. |
 |  [GlMat4Uniform](./core.glmat4uniform.md) | Wrapper for webgl float matrix4 uniform. |
 |  [GlNoOpGraphicsComponent](./core.glnoopgraphicscomponent.md) | A graphics component for webgl/webgl2 renderer that doesn't draw. |
 |  [GlProgramSpecification](./core.glprogramspecification.md) | Specification of a webgl program to build. |
-|  [GlRenderer](./core.glrenderer.md) | WebGl system hooks and config (clearing bits, [TGlFeatureFlags](./core.tglfeatureflags.md) etc). Most WebGl state is handled at the [TGlEntityRenderer](./core.tglentityrenderer.md) level. |
-|  [GlRendererFactory](./core.glrendererfactory.md) | Webgl entity renderer factory. |
+|  [GlRenderer](./core.glrenderer.md) | WebGl system hooks and config (clearing bits, [TGlFeatureFlags](./core.tglfeatureflags.md) etc). Most WebGl state is handled at the [TGlComponentRenderer](./core.tglcomponentrenderer.md) level. |
 |  [GlRendererOptions](./core.glrendereroptions.md) | WebGl Renderer construction options. |
 |  [GlRendererSharedState](./core.glrenderersharedstate.md) | Webgl state that is shred between entity renderers. |
 |  [GlShader](./core.glshader.md) | WebGl shader specification. |
 |  [GlTexture2d](./core.gltexture2d.md) | Currently only supports canvas as texture. |
+|  [GlTransformComponentFactory](./core.gltransformcomponentfactory.md) |  |
+|  [GlTransformFeedback](./core.gltransformfeedback.md) |  |
+|  [GlTransformProvider](./core.gltransformprovider.md) |  |
 |  [GlVec2Uniform](./core.glvec2uniform.md) | Wrapper for webgl float vector2 uniform. |
 |  [GlVec3Uniform](./core.glvec3uniform.md) | Wrapper for webgl float vector3 uniform. |
 |  [GlVec4Uniform](./core.glvec4uniform.md) | Wrapper for webgl float vector4 uniform. |
 |  [GraphAttachPoint](./core.graphattachpoint.md) | Wrapper of DOM element that contains the chart, houses hidden canvases as required. |
 |  [GraphAttachPointProvider](./core.graphattachpointprovider.md) | Takes a DOM node and inserts a [IChartComponent](./core.ichartcomponent.md) into it. |
-|  [GraphicsSubComponents](./core.graphicssubcomponents.md) | Children components of a [CompositeGraphicsComponent](./core.compositegraphicscomponent.md)<!-- -->. |
+|  [GraphicsComponentStore](./core.graphicscomponentstore.md) | Stores both graphics components and transform components. |
+|  [GraphicsSubComponents](./core.graphicssubcomponents.md) | Children components of a [ICompositeGraphicsComponent](./core.icompositegraphicscomponent.md)<!-- -->. |
 |  [HitAlwaysAllowedComponent](./core.hitalwaysallowedcomponent.md) | A [IHitAllowedComponent](./core.ihitallowedcomponent.md) that always returns true. |
 |  [HitTestableGroup](./core.hittestablegroup.md) | Entities in this group must implement [IHitTestableTrait](./core.ihittestabletrait.md) and have an associated [IHitAllowedComponent](./core.ihitallowedcomponent.md) and [IHitTestComponent](./core.ihittestcomponent.md) which can be accessed through the group. Hit test composition is not currently supported. |
 |  [HitTestResult](./core.hittestresult.md) | An entity that user has interacted with. |
 |  [IdleState](./core.idlestate.md) | The initial state of the default user interaction state machine. |
 |  [InteractionGroup](./core.interactiongroup.md) | Entities in this group have the same requirements as [IHitTestableGroup](./core.ihittestablegroup.md)<!-- -->. Allows up to 32 <code>IInteractionGroup</code>s per plot for click / hover handlers etc. |
 |  [InterleavedConnector](./core.interleavedconnector.md) | Interleaved implementation of [IIndexedDataConnector](./core.iindexeddataconnector.md) |
+|  [NoTransformProvider](./core.notransformprovider.md) |  |
 |  [OnCanvasMouseEvent](./core.oncanvasmouseevent.md) | Provides raw mouse events. Shouldn't typically be used unless implementing custom interaction handler. |
 |  [OnCanvasPointerEvent](./core.oncanvaspointerevent.md) | Provides raw pointer events. Shouldn't typically be used unless implementing custom interaction handler. |
 |  [OnCanvasResized](./core.oncanvasresized.md) | Provides events for chart resizing, emitted on [IChartComponent.resize()](./core.ichartcomponent.resize.md) call. |
@@ -79,9 +91,12 @@
 |  [OnEntityModified](./core.onentitymodified.md) | Emit on a plot to indicate that an entity has been modified and that caches should be regenerated. Refer to the group's documentation as to the conditions where this is required. |
 |  [OnEntityRemoved](./core.onentityremoved.md) | Emitted on entity removed from plot, if the entity is not present this is not emitted. |
 |  [OnEntityRemovedFromGroup](./core.onentityremovedfromgroup.md) | Emitted on entity removed from group, if the entity is not present this is not emitted. |
+|  [OnGraphicsComponentAdded](./core.ongraphicscomponentadded.md) | Emitted on graphics component added to chart. |
+|  [OnHoverResult](./core.onhoverresult.md) |  |
 |  [OnPlotAttached](./core.onplotattached.md) | Emitted on plot attaching to chart. |
 |  [OnPlotDetached](./core.onplotdetached.md) | Emitted on plot being removed from [IChartComponent](./core.ichartcomponent.md)<!-- -->. |
 |  [OnPlotRequiresUpdate](./core.onplotrequiresupdate.md) | Used to indicate that a redraw is required, which is performed by [IChartComponent.updateOnNextFrame()](./core.ichartcomponent.updateonnextframe.md)<!-- -->. Multiple calls will be rolled up into a single update. |
+|  [OnRendererContextLost](./core.onrenderercontextlost.md) | Emitted the renderer context is lost due to e.g. resource contention. Emitted on both chart and plots. |
 |  [Plot](./core.plot.md) | Basic drawing unit to which entities and behaviors can be attached. |
 |  [PlotArea](./core.plotarea.md) | The space a plot takes up on a chart. |
 |  [PlotCtorArg](./core.plotctorarg.md) | Default plot construction args. |
@@ -97,6 +112,8 @@
 |  [SharedQuadTree](./core.sharedquadtree.md) | Emscripten quad tree. |
 |  [SpriteLookup](./core.spritelookup.md) | Store for sprite positions. |
 |  [SpriteProvider](./core.spriteprovider.md) | Creates a hidden 2d canvas, useful for sprites etc. |
+|  [TransformComponentStore](./core.transformcomponentstore.md) | A store for transform components (feedback transforms in wgl). |
+|  [UpdateTransformGroupingByEntity](./core.updatetransformgroupingbyentity.md) | An update grouping corresponding to [ICompositeGraphicsComponent.groupUpdatesByEntity](./core.icompositegraphicscomponent.groupupdatesbyentity.md) with transforms. |
 |  [UserEventHandlerCallbacks](./core.usereventhandlercallbacks.md) | Hooks for user interaction events. |
 
 ## Enumerations
@@ -104,7 +121,8 @@
 |  Enumeration | Description |
 |  --- | --- |
 |  [EEntityUpdateFlag](./core.eentityupdateflag.md) | Flags to indicate required state changes when entities change. Can be combined by bitwise OR. |
-|  [EHoverState](./core.ehoverstate.md) | State changes of [IHoverableTrait](./core.ihoverabletrait.md)<!-- -->. |
+|  [EGraphicsComponentType](./core.egraphicscomponenttype.md) | May be used as filter mask. |
+|  [EHoverState](./core.ehoverstate.md) | State changes of [IHoverableTrait](./core.ihoverabletrait.md)<!-- -->. Events are emitted to entities in the order listed in the enum. |
 |  [EMouseEventType](./core.emouseeventtype.md) | Supported mouse event types, most events are handled through [EPointerEventType](./core.epointereventtype.md)<!-- -->. |
 |  [EPointerEventType](./core.epointereventtype.md) | Supported pointer events (both mouse and touch events). |
 
@@ -112,16 +130,21 @@
 
 |  Function | Description |
 |  --- | --- |
+|  [addEntityToCategory(category, entity, graphicsComponent, hooks)](./core.addentitytocategory.md) |  |
+|  [assertBinder(binder, id)](./core.assertbinder.md) | debug utility for checking binder type in graphics / transform component. |
 |  [getChartInitialState(options, stateProviders)](./core.getchartinitialstate.md) | Provides user interaction state machine initial state. |
+|  [linkGraphicsComponents(graphicsComponents)](./core.linkgraphicscomponents.md) | Shares compatible buffers between components, so updates to one affect all. |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [IBaseEntityRenderer](./core.ibaseentityrenderer.md) | Renderer invariant entity renderer. See extensions for specific implementations. |
+|  [IAttributeState](./core.iattributestate.md) | Sharable state of a webgl attribute. |
+|  [IBaseComponentRenderer](./core.ibasecomponentrenderer.md) | Renderer invariant entity renderer. See extensions for specific implementations. |
+|  [IBinder](./core.ibinder.md) | Base data binder, provides a key which indicates that it meets a specification for binding data in e.g. shaders. This is used to match up transform components with an appropriate binder. |
 |  [ICacheable](./core.icacheable.md) | Uniquely identifiable by string identifier generated by <code>getCacheId</code>. |
+|  [ICanvasComponentRenderer](./core.icanvascomponentrenderer.md) | Canvas renderer entity draw hooks. |
 |  [ICanvasDimensions](./core.icanvasdimensions.md) | Canvas element dimensions and useful transforms. |
-|  [ICanvasEntityRenderer](./core.icanvasentityrenderer.md) | Canvas renderer entity draw hooks. |
 |  [ICanvasRenderer](./core.icanvasrenderer.md) | Canvas implementation of [IRenderer](./core.irenderer.md)<!-- -->. |
 |  [ICanvasTransforms](./core.icanvastransforms.md) | Provides a set of common 2d transforms from pixel to clip space etc. |
 |  [ICategoryStore](./core.icategorystore.md) | A store of categories of entities in an entity group (effectively sub group). |
@@ -132,9 +155,14 @@
 |  [IChartEntity](./core.ichartentity.md) | Base chart entity. |
 |  [IChartPointerEvent](./core.ichartpointerevent.md) | Wrapper of <code>MouseEvent</code> with position translated into chart coordinate systems. |
 |  [IChartState](./core.ichartstate.md) | Base user interaction state. |
+|  [IChartTransformFactory](./core.icharttransformfactory.md) |  |
 |  [IChartUpdateOptions](./core.ichartupdateoptions.md) | Options for how to update plots, like whether updating one plot requires updating all other plots. |
 |  [IChartWideInteractionOptions](./core.ichartwideinteractionoptions.md) | These are set for the whole chart as opposed to per plot. |
 |  [IClickableTrait](./core.iclickabletrait.md) | An entity that may handle click events. |
+|  [IComponentRendererFactory](./core.icomponentrendererfactory.md) | Generic factory for creating [IBaseComponentRenderer](./core.ibasecomponentrenderer.md)<!-- -->s for graphics component specifications. |
+|  [IComponentRendererProvider](./core.icomponentrendererprovider.md) | Wrapper of [IComponentRendererFactory](./core.icomponentrendererfactory.md) to get entity renderers. |
+|  [ICompositeGraphicsComponent](./core.icompositegraphicscomponent.md) | Provided as a means to compose graphics components; it does not infer / bestow any behaviors. Refer to update strategy documentation for draw call behavior. |
+|  [ICompositeGraphicsComponentFactory](./core.icompositegraphicscomponentfactory.md) |  |
 |  [IContextAdapter](./core.icontextadapter.md) | Hooks for context loss etc. |
 |  [IContextChangeHooks](./core.icontextchangehooks.md) | Context adapter event hooks. |
 |  [IDataTrait](./core.idatatrait.md) | Slot for entity data. |
@@ -147,33 +175,39 @@
 |  [IEntityChangeHooks](./core.ientitychangehooks.md) | Group entity membership hooks. |
 |  [IEntityComponentStore](./core.ientitycomponentstore.md) | Place to store components for entity groups. It is taken as a membership requirement that the component be present, if this is not the case the <code>TComponent</code> type should include undefined in the union. |
 |  [IEntityGroup](./core.ientitygroup.md) | A group of entities that implement <code>TRequiredTraits</code>. |
-|  [IEntityRendererFactory](./core.ientityrendererfactory.md) | Generic factory for creating [IBaseEntityRenderer](./core.ibaseentityrenderer.md)<!-- -->s for graphics component specifications. |
-|  [IEntityRendererProvider](./core.ientityrendererprovider.md) | Wrapper of [IEntityRendererFactory](./core.ientityrendererfactory.md) to get entity renderers. |
 |  [IEntityUpdateArgProvider](./core.ientityupdateargprovider.md) |  |
+|  [IEntityUpdateGrouping](./core.ientityupdategrouping.md) | A grouping graphics components (and optionally transforms) ready to draw. |
 |  [IErrorLocalization](./core.ierrorlocalization.md) |  |
 |  [IEventCategoryCtor](./core.ieventcategoryctor.md) | Utility type for extracting types out of event categories. |
 |  [IEventService](./core.ieventservice.md) | A store of event categories that can be used to emit events. |
 |  [IFrameProvider](./core.iframeprovider.md) | Handles rollup of draw calls and incremental updating of interaction handlers. |
 |  [IGlAttribute](./core.iglattribute.md) | Wrapper for dirty checked GL attributes with VAO and shared mutable buffer support. <code>ChangeId</code>s must be generated program wide to avoid collisions <code>IncrementingIdentifierFactory</code> (rc-js-util) is a suitable implementation. |
 |  [IGlBinder](./core.iglbinder.md) | Data binder for webgl graphics components. |
-|  [IGlEntityInstancedRenderer](./core.iglentityinstancedrenderer.md) | ANGLE\_instanced\_arrays or webgl2 equivalent. |
-|  [IGlEntityRenderer](./core.iglentityrenderer.md) | Base gl entity renderer. |
-|  [IGlEntityVAORenderer](./core.iglentityvaorenderer.md) | OES\_vertex\_array\_object or webgl2 equivalent. |
+|  [IGlBuffer](./core.iglbuffer.md) | Dirty checked wrapper of <code>WebGLBuffer</code>. Modify via [IGlAttribute](./core.iglattribute.md)<!-- -->. |
+|  [IGlComponentInstancedRenderer](./core.iglcomponentinstancedrenderer.md) | ANGLE\_instanced\_arrays or webgl2 equivalent. |
+|  [IGlComponentRenderer](./core.iglcomponentrenderer.md) | Base gl entity renderer. |
+|  [IGlComponentVAORenderer](./core.iglcomponentvaorenderer.md) | OES\_vertex\_array\_object or webgl2 equivalent. |
 |  [IGlExtensions](./core.iglextensions.md) |  |
 |  [IGlInstancedBinder](./core.iglinstancedbinder.md) | Instanced data binder for webgl graphics components. |
 |  [IGlProgramSpec](./core.iglprogramspec.md) | Specification of a webgl program to build. |
-|  [IGlRenderer](./core.iglrenderer.md) | WebGl system hooks and config (clearing bits, [TGlFeatureFlags](./core.tglfeatureflags.md) etc). Most WebGl state is handled at the [TGlEntityRenderer](./core.tglentityrenderer.md) level. |
+|  [IGlRenderer](./core.iglrenderer.md) | WebGl system hooks and config (clearing bits, [TGlFeatureFlags](./core.tglfeatureflags.md) etc). Most WebGl state is handled at the [TGlComponentRenderer](./core.tglcomponentrenderer.md) level. |
 |  [IGlRendererCreationOptions](./core.iglrenderercreationoptions.md) | WebGL on create options. |
 |  [IGlRendererOnFrameOptions](./core.iglrendereronframeoptions.md) | WebGl parameters to set before each frame. |
 |  [IGlRendererOptions](./core.iglrendereroptions.md) | WebGl Renderer construction options. |
 |  [IGlRendererSharedState](./core.iglrenderersharedstate.md) | Webgl state that is shred between entity renderers. |
 |  [IGlShader](./core.iglshader.md) | WebGl shader specification. |
+|  [IGlTexture2d](./core.igltexture2d.md) | Currently only supports canvas as texture. |
+|  [IGlTransformBinder](./core.igltransformbinder.md) | Data binder for webgl transform feedback components. |
+|  [IGlTransformComponent](./core.igltransformcomponent.md) |  |
+|  [IGlTransformFeedback](./core.igltransformfeedback.md) |  |
+|  [IGlUniform](./core.igluniform.md) |  |
 |  [IGraphAttachPoint](./core.igraphattachpoint.md) | Wrapper of DOM element that contains the chart, houses hidden canvases as required. |
 |  [IGraphAttachPointProvider](./core.igraphattachpointprovider.md) | Takes a DOM node and inserts a [IChartComponent](./core.ichartcomponent.md) into it. |
 |  [IGraphicsComponent](./core.igraphicscomponent.md) | Base graphics component. |
 |  [IGraphicsComponentSettingsTrait](./core.igraphicscomponentsettingstrait.md) | A slot for draw options specific to the entity. |
-|  [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md) | The minimum specification of a graphics component such that [IEntityRendererFactory](./core.ientityrendererfactory.md) can generate entity renderers. |
-|  [IGraphicsSubComponents](./core.igraphicssubcomponents.md) | Children components of a [CompositeGraphicsComponent](./core.compositegraphicscomponent.md)<!-- -->. |
+|  [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md) | The minimum specification of a graphics component such that [IComponentRendererFactory](./core.icomponentrendererfactory.md) can generate entity renderers. |
+|  [IGraphicsComponentStore](./core.igraphicscomponentstore.md) | Stores both graphics components and transform components. |
+|  [IGraphicsSubComponents](./core.igraphicssubcomponents.md) | Children components of a [ICompositeGraphicsComponent](./core.icompositegraphicscomponent.md)<!-- -->. |
 |  [IHitAllowedComponent](./core.ihitallowedcomponent.md) | Called before hit testing an entity, return false to prevent the entity from being included in the result. |
 |  [IHitTestableGroup](./core.ihittestablegroup.md) | Entities in this group must implement [IHitTestableTrait](./core.ihittestabletrait.md) and have an associated [IHitAllowedComponent](./core.ihitallowedcomponent.md) and [IHitTestComponent](./core.ihittestcomponent.md) which can be accessed through the group. Hit test composition is not currently supported. |
 |  [IHitTestableGroupOptions](./core.ihittestablegroupoptions.md) |  |
@@ -188,6 +222,11 @@
 |  [IInterleavedBindingDescriptor](./core.iinterleavedbindingdescriptor.md) |  |
 |  [IInterleavedConfig](./core.iinterleavedconfig.md) | Construction options of [AInterleavedConnector](./core.ainterleavedconnector.md)<!-- -->. |
 |  [IInterleavedConnector](./core.iinterleavedconnector.md) | Interleaved implementation of [IIndexedDataConnector](./core.iindexeddataconnector.md) |
+|  [ILinkableBinder](./core.ilinkablebinder.md) | An automatically sharable binder. |
+|  [ILinkableBinderProvider](./core.ilinkablebinderprovider.md) | Components can implement this to indicate that they can automatically share buffers. |
+|  [ILinkableCompositeGraphicsComponentFactory](./core.ilinkablecompositegraphicscomponentfactory.md) |  |
+|  [ILinkableGraphicsComponent](./core.ilinkablegraphicscomponent.md) | WebGl components may optionally implement this instead of [IGraphicsComponent](./core.igraphicscomponent.md) to indicate that they have linkable attributes. Use in conjunction with [ILinkableBinderProvider](./core.ilinkablebinderprovider.md) is recommended if transforms are used. |
+|  [IOnHoverResult](./core.ionhoverresult.md) |  |
 |  [IPlot](./core.iplot.md) | Basic drawing unit to which entities and behaviors can be attached. |
 |  [IPlotArea](./core.iplotarea.md) | The space a plot takes up on a chart. |
 |  [IPlotConstructionOptions](./core.iplotconstructionoptions.md) |  |
@@ -210,7 +249,15 @@
 |  [ISharedInterleavedConnectorBindings](./core.isharedinterleavedconnectorbindings.md) |  |
 |  [ISharedQuadTree](./core.isharedquadtree.md) | Emscripten quad tree. |
 |  [ISharedQuadTreeBindings](./core.isharedquadtreebindings.md) |  |
+|  [ITransformBinder](./core.itransformbinder.md) |  |
+|  [ITransformBinderProvider](./core.itransformbinderprovider.md) |  |
+|  [ITransformComponent](./core.itransformcomponent.md) |  |
+|  [ITransformComponentFactory](./core.itransformcomponentfactory.md) | Transforms components can define a factory / factories so that [ChartTransformFactory](./core.charttransformfactory.md) can automatically hook these up at run time. Usage not mandatory, transforms can be registered directly with the renderer. |
+|  [ITransformComponentStore](./core.itransformcomponentstore.md) | A store for transform components (feedback transforms in wgl). |
+|  [ITransformProvider](./core.itransformprovider.md) |  |
+|  [IUpdateArg](./core.iupdatearg.md) | Base update arg for components, dimension agnostic. |
 |  [IUpdateGroupOptions](./core.iupdategroupoptions.md) |  |
+|  [IUserTransform](./core.iusertransform.md) | Base user transform, defines a symbol which transform components can use to indicate they are appropriate for that transform |
 |  [IVisualizationToolBindings](./core.ivisualizationtoolbindings.md) | Emscripten bindings exposed by core. |
 |  [IWritableEntityGroup](./core.iwritableentitygroup.md) | Provides hooks for changes to membership of this group. |
 |  [IWritablePlot](./core.iwritableplot.md) | Mutative methods of a plot. |
@@ -239,7 +286,7 @@
 |  [TCanvasChart](./core.tcanvaschart.md) | Canvas chart. |
 |  [TChangeTrackedTrait](./core.tchangetrackedtrait.md) | Used for dirty checking of entity state. |
 |  [TChartEventHandlerProvider](./core.tcharteventhandlerprovider.md) |  |
-|  [TChartGraphicsComponents](./core.tchartgraphicscomponents.md) |  |
+|  [TCompositeGraphicsComponent](./core.tcompositegraphicscomponent.md) |  |
 |  [TEntitiesByHitTester](./core.tentitiesbyhittester.md) |  |
 |  [TEntityAddedArgs](./core.tentityaddedargs.md) | Args for [TOnEntityAdded](./core.tonentityadded.md)<!-- -->. |
 |  [TEntityAddedToGroupArgs](./core.tentityaddedtogroupargs.md) | Args for [TOnEntityAddedToGroup](./core.tonentityaddedtogroup.md)<!-- -->. |
@@ -251,23 +298,26 @@
 |  [TExtractGcContext](./core.textractgccontext.md) |  |
 |  [TExtractGcSpec](./core.textractgcspec.md) |  |
 |  [TGetChartEventTargetProviders](./core.tgetcharteventtargetproviders.md) |  |
-|  [TGl1EntityRenderer](./core.tgl1entityrenderer.md) | Webgl1 renderer, without extensions by default. |
-|  [TGl2EntityRenderer](./core.tgl2entityrenderer.md) | Webgl2 renderer, without extensions by default. |
-|  [TGlBasicEntityRenderer](./core.tglbasicentityrenderer.md) | Either wgl1 or wgl2, without extensions by default. |
+|  [TGl1ComponentRenderer](./core.tgl1componentrenderer.md) | Webgl1 renderer, without extensions by default. |
+|  [TGl2ComponentRenderer](./core.tgl2componentrenderer.md) | Webgl2 renderer, without extensions by default. |
+|  [TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md) | Either wgl1 or wgl2, without extensions by default. |
 |  [TGlBindings](./core.tglbindings.md) | All supported attribute and uniform types. |
 |  [TGlBufferBitKeys](./core.tglbufferbitkeys.md) | keys to buffer bits such as <code>DEPTH_BUFFER_BIT</code>. |
 |  [TGlChart](./core.tglchart.md) | WebGL [IChartComponent](./core.ichartcomponent.md)<!-- -->. |
+|  [TGlComponentRenderer](./core.tglcomponentrenderer.md) | Gl entity renderer with extensions. |
 |  [TGlContext](./core.tglcontext.md) |  |
 |  [TGlContextAdapterCtor](./core.tglcontextadapterctor.md) | Constructor signature for [Gl1ContextAdapter](./core.gl1contextadapter.md) or [Gl2ContextAdapter](./core.gl2contextadapter.md)<!-- -->. |
-|  [TGlEntityRenderer](./core.tglentityrenderer.md) | Gl entity renderer with extensions. |
 |  [TGlExtensionKeys](./core.tglextensionkeys.md) |  |
 |  [TGlExtensions](./core.tglextensions.md) | Maps extension keys to extensions. |
 |  [TGlFeatureFlags](./core.tglfeatureflags.md) | Features to enable, e.g. SCISSOR\_TEST. |
 |  [TGlHasExtension](./core.tglhasextension.md) | <code>true</code> if <code>TKey</code> is present in <code>TExts</code>, <code>false</code> otherwise. |
-|  [TGlInstancedEntityRenderer](./core.tglinstancedentityrenderer.md) | Either a wgl1 renderer with extension <code>ANGLE_instanced_arrays</code> or wgl2 renderer. |
+|  [TGlInstancedComponentRenderer](./core.tglinstancedcomponentrenderer.md) | Either a wgl1 renderer with extension <code>ANGLE_instanced_arrays</code> or wgl2 renderer. |
 |  [TGlUniformArray](./core.tgluniformarray.md) | Supported uniform types. |
+|  [TGraphicsComponent](./core.tgraphicscomponent.md) |  |
+|  [TGraphicsComponentAddedArgs](./core.tgraphicscomponentaddedargs.md) | Args for [TOnGraphicsComponentAdded](./core.tongraphicscomponentadded.md)<!-- -->. |
 |  [TInitialChartStateFactory](./core.tinitialchartstatefactory.md) |  |
 |  [TIsGl2](./core.tisgl2.md) | <code>true</code> if <code>TCtx</code> extends <code>WebGL2RenderingContext</code>, <code>false</code> otherwise. |
+|  [TLinkableCompositeGraphicsComponent](./core.tlinkablecompositegraphicscomponent.md) |  |
 |  [TOnCanvasMouseEvent](./core.toncanvasmouseevent.md) | Mouse event listener. |
 |  [TOnCanvasPointerEvent](./core.toncanvaspointerevent.md) | Mouse / touch event listener. |
 |  [TOnCanvasResized](./core.toncanvasresized.md) | Resize listener, event emitted on [IChartComponent.resize()](./core.ichartcomponent.resize.md) call. |
@@ -277,12 +327,15 @@
 |  [TOnEntityModified](./core.tonentitymodified.md) | Listener for entity modification. |
 |  [TOnEntityRemoved](./core.tonentityremoved.md) | Listener for entity removed form plot. |
 |  [TOnEntityRemovedFromGroup](./core.tonentityremovedfromgroup.md) | Listener for entity removed form group. |
+|  [TOnGraphicsComponentAdded](./core.tongraphicscomponentadded.md) | Listener for graphics components added to chart. |
 |  [TOnPlotAttached](./core.tonplotattached.md) | Listener for plot attach to chart. |
 |  [TOnPlotDetached](./core.tonplotdetached.md) | Listener for plot detaching from chart. |
 |  [TOnPlotDetachedArgs](./core.tonplotdetachedargs.md) | Args for [TOnPlotDetached](./core.tonplotdetached.md)<!-- -->. |
 |  [TOnPlotRequiresUpdate](./core.tonplotrequiresupdate.md) | Plot requires update/redraw listener. |
+|  [TRendererOnContextLost](./core.trendereroncontextlost.md) | Listener for renderer context loss. |
 |  [TSharedInterleavedConnectorPrefix](./core.tsharedinterleavedconnectorprefix.md) |  |
+|  [TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md) | Useful where the component renderer is not important, i.e. draw calls are not allowed. |
 |  [TUnknownEntity](./core.tunknownentity.md) |  |
-|  [TUnknownEntityRenderer](./core.tunknownentityrenderer.md) | Useful where the entity renderer is not important, i.e. draw calls are not allowed. |
 |  [TUnknownRenderer](./core.tunknownrenderer.md) |  |
+|  [TUnknownTransformComponent](./core.tunknowntransformcomponent.md) |  |
 

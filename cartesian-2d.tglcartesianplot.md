@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type TGlCartesianPlot<TEntityRenderer extends TGlEntityRenderer<TGlContext, never>, TRequiredTraits> = ICartesian2dPlot<TEntityRenderer, Float32Array, TRequiredTraits>;
+export declare type TGlCartesianPlot<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>, TRequiredTraits> = ICartesian2dPlot<TComponentRenderer, Float32Array, TRequiredTraits>;
 ```
-<b>References:</b> [TGlEntityRenderer](./core.tglentityrenderer.md)<!-- -->, [TGlContext](./core.tglcontext.md)<!-- -->, [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)
+<b>References:</b> [TGlComponentRenderer](./core.tglcomponentrenderer.md)<!-- -->, [TGlContext](./core.tglcontext.md)<!-- -->, [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)
 

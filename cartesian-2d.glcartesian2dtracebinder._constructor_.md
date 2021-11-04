@@ -9,5 +9,12 @@ Constructs a new instance of the `GlCartesian2dTraceBinder` class
 <b>Signature:</b>
 
 ```typescript
-constructor();
+constructor(bindsOutput?: boolean);
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  bindsOutput | boolean |  |
+

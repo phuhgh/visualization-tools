@@ -9,7 +9,7 @@ Constructs a new instance of the `ChartComponent` class
 <b>Signature:</b>
 
 ```typescript
-constructor(attachPoint: IGraphAttachPoint, renderer: IRenderer<TEntityRenderer>, eventService: IEventService, config: IChartConfig, contextAdapter: IContextAdapter<unknown>, frameProvider?: FrameProvider);
+constructor(attachPoint: IGraphAttachPoint, renderer: TRenderer, eventService: IEventService, config: IChartConfig, contextAdapter: IContextAdapter<unknown>, frameProvider?: FrameProvider);
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ constructor(attachPoint: IGraphAttachPoint, renderer: IRenderer<TEntityRenderer>
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  attachPoint | [IGraphAttachPoint](./core.igraphattachpoint.md) |  |
-|  renderer | [IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt; |  |
+|  renderer | TRenderer |  |
 |  eventService | [IEventService](./core.ieventservice.md) |  |
 |  config | [IChartConfig](./core.ichartconfig.md) |  |
 |  contextAdapter | [IContextAdapter](./core.icontextadapter.md)<!-- -->&lt;unknown&gt; |  |

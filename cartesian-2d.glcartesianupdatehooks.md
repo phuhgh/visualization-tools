@@ -9,9 +9,9 @@ Canvas update hook, called before and after a plot is drawn.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlCartesianUpdateHooks implements ICategoryUpdateHooks<IGlRenderer<TGlContext, never>, ICartesian2dUpdateArg<Float32Array>> 
+export declare class GlCartesianUpdateHooks implements ICategoryUpdateHooks<IGlRenderer<TGlBasicComponentRenderer>, ICartesian2dUpdateArg<Float32Array>> 
 ```
-<b>Implements:</b> [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IGlRenderer](./core.iglrenderer.md)<!-- -->&lt;[TGlContext](./core.tglcontext.md)<!-- -->, never&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;&gt;
+<b>Implements:</b> [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IGlRenderer](./core.iglrenderer.md)<!-- -->&lt;[TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md)<!-- -->&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;&gt;
 
 ## Constructors
 

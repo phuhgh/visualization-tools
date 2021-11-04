@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-addComponent<TComponentTraits>(graphicsComp: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TComponentTraits>): CompositeGraphicsComponent<TEntityRenderer, TUpdateArg, TTraits & TComponentTraits>;
+addComponent<TAddedComponentRenderer extends TUnknownComponentRenderer, TComponentTraits>(graphicsComp: IGraphicsComponent<TAddedComponentRenderer, TUpdateArg, TComponentTraits>): CompositeGraphicsComponent<TComponentRenderer & TAddedComponentRenderer, TUpdateArg, TTraits & TComponentTraits>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  graphicsComp | [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TComponentTraits&gt; |  |
+|  graphicsComp | [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;TAddedComponentRenderer, TUpdateArg, TComponentTraits&gt; |  |
 
 <b>Returns:</b>
 
-[CompositeGraphicsComponent](./core.compositegraphicscomponent.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TTraits &amp; TComponentTraits&gt;
+[CompositeGraphicsComponent](./core.compositegraphicscomponent.md)<!-- -->&lt;TComponentRenderer &amp; TAddedComponentRenderer, TUpdateArg, TTraits &amp; TComponentTraits&gt;
 

@@ -9,7 +9,7 @@ Args for [TOnPlotDetached](./core.tonplotdetached.md)<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-export declare type TOnPlotDetachedArgs<TEntityRenderer extends TUnknownEntityRenderer> = [chart: IChartComponent<TEntityRenderer>];
+export declare type TOnPlotDetachedArgs<TRenderer extends TUnknownRenderer> = [chart: IChartComponent<TRenderer>];
 ```
-<b>References:</b> [TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, [IChartComponent](./core.ichartcomponent.md)
+<b>References:</b> [TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->, [IChartComponent](./core.ichartcomponent.md)
 

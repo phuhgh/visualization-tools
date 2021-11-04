@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly graphicsComponents: Map<string, IGraphicsComponentSpecification<ICanvasEntityRenderer, unknown, unknown>>;
+readonly graphicsComponents: GraphicsComponentStore<ICanvasComponentRenderer>;
 ```

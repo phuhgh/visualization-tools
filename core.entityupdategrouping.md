@@ -4,24 +4,31 @@
 
 ## EntityUpdateGrouping class
 
-A grouping of a graphics component with its renderer.
+A plain update grouping.
 
 <b>Signature:</b>
 
 ```typescript
-export declare class EntityUpdateGrouping<TUpdateArg, TRequiredTraits> 
+export declare class EntityUpdateGrouping<TUpdateArg, TRequiredTraits> implements IEntityUpdateGrouping<TUpdateArg, TRequiredTraits> 
 ```
+<b>Implements:</b> [IEntityUpdateGrouping](./core.ientityupdategrouping.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;
 
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(graphicsComponent, entityRenderer)](./core.entityupdategrouping._constructor_.md) |  | Constructs a new instance of the <code>EntityUpdateGrouping</code> class |
+|  [(constructor)(graphicsComponent, componentRenderer)](./core.entityupdategrouping._constructor_.md) |  | Constructs a new instance of the <code>EntityUpdateGrouping</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [entityRenderer](./core.entityupdategrouping.entityrenderer.md) |  | [TUnknownEntityRenderer](./core.tunknownentityrenderer.md) |  |
-|  [graphicsComponent](./core.entityupdategrouping.graphicscomponent.md) |  | [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, TUpdateArg, TRequiredTraits&gt; |  |
+|  [componentRenderer](./core.entityupdategrouping.componentrenderer.md) |  | [TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md) |  |
+|  [graphicsComponent](./core.entityupdategrouping.graphicscomponent.md) |  | [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, TUpdateArg, TRequiredTraits&gt; |  |
+
+## Methods
+
+|  Method | Modifiers | Description |
+|  --- | --- | --- |
+|  [drawUpdateGroup(entities, updateArg)](./core.entityupdategrouping.drawupdategroup.md) |  |  |
 

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly context: TExtractGcContext<TEntityRenderer>;
+readonly context: TExtractGcContext<TComponentRenderer>;
 ```

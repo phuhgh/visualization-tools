@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly subComponents: GraphicsSubComponents<TEntityRenderer, TUpdateArg, TTraits>;
+readonly subComponents: GraphicsSubComponents<TComponentRenderer, TUpdateArg, TTraits>;
 ```

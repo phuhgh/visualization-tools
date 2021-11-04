@@ -9,9 +9,9 @@ Draws labels for cartesian 2d plots.
 <b>Signature:</b>
 
 ```typescript
-export declare class CanvasCartesian2dAxisLabelGraphicsComponent implements IGraphicsComponentSpecification<ICanvasEntityRenderer, ICartesian2dUpdateArg<Float64Array>, TAxisLabelEntity<Float64Array>> 
+export declare class CanvasCartesian2dAxisLabelGraphicsComponent implements IGraphicsComponent<ICanvasComponentRenderer, ICartesian2dUpdateArg<Float64Array>, TAxisLabelEntity<Float64Array>> 
 ```
-<b>Implements:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;[ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float64Array&gt;, [TAxisLabelEntity](./cartesian-2d.taxislabelentity.md)<!-- -->&lt;Float64Array&gt;&gt;
+<b>Implements:</b> [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float64Array&gt;, [TAxisLabelEntity](./cartesian-2d.taxislabelentity.md)<!-- -->&lt;Float64Array&gt;&gt;
 
 ## Constructors
 
@@ -24,6 +24,8 @@ export declare class CanvasCartesian2dAxisLabelGraphicsComponent implements IGra
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./cartesian-2d.canvascartesian2daxislabelgraphicscomponent.specification.md) |  | {} |  |
+|  [transform](./cartesian-2d.canvascartesian2daxislabelgraphicscomponent.transform.md) |  | [NoTransformProvider](./core.notransformprovider.md) |  |
+|  [type](./cartesian-2d.canvascartesian2daxislabelgraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods
 
@@ -32,5 +34,5 @@ export declare class CanvasCartesian2dAxisLabelGraphicsComponent implements IGra
 |  [getCacheId()](./cartesian-2d.canvascartesian2daxislabelgraphicscomponent.getcacheid.md) |  |  |
 |  [initialize()](./cartesian-2d.canvascartesian2daxislabelgraphicscomponent.initialize.md) |  |  |
 |  [onBeforeUpdate()](./cartesian-2d.canvascartesian2daxislabelgraphicscomponent.onbeforeupdate.md) |  |  |
-|  [update(entity, entityRenderer, updateArg)](./cartesian-2d.canvascartesian2daxislabelgraphicscomponent.update.md) |  |  |
+|  [update(entity, componentRenderer, updateArg)](./cartesian-2d.canvascartesian2daxislabelgraphicscomponent.update.md) |  |  |
 

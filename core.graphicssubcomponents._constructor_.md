@@ -9,12 +9,12 @@ Constructs a new instance of the `GraphicsSubComponents` class
 <b>Signature:</b>
 
 ```typescript
-constructor(graphicsComponents: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TEntityTraits>[]);
+constructor(graphicsComponents: TGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>[]);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  graphicsComponents | [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TEntityTraits&gt;\[\] |  |
+|  graphicsComponents | [TGraphicsComponent](./core.tgraphicscomponent.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TEntityTraits&gt;\[\] |  |
 

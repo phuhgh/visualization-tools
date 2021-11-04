@@ -38,6 +38,6 @@ export declare class ChartDataEntity<TUpdateArg, TConnector, TGcSettings extends
 |  [onDblClick(pointerEvent, segmentIds)?](./core.chartdataentity.ondblclick.md) |  | <i>(Optional)</i> |
 |  [onDragEnd(pointerEvent, segmentIds)?](./core.chartdataentity.ondragend.md) |  | <i>(Optional)</i> |
 |  [onDragStart(pointerEvent, segmentIds)?](./core.chartdataentity.ondragstart.md) |  | <i>(Optional)</i> |
-|  [onHoverChange(state, segments, pointerEvent)?](./core.chartdataentity.onhoverchange.md) |  | <i>(Optional)</i> |
+|  [onHover(state, segments, pointerEvent)?](./core.chartdataentity.onhover.md) |  | <i>(Optional)</i> |
 |  [updateChangeId()](./core.chartdataentity.updatechangeid.md) |  |  |
 

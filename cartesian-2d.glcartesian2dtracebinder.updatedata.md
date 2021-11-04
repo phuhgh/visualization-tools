@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-updateData(entity: TGlTraceEntity): void;
+updateData(entity: TGlTraceEntity, changeId: number): void;
 ```
 
 ## Parameters
@@ -15,6 +15,7 @@ updateData(entity: TGlTraceEntity): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entity | [TGlTraceEntity](./cartesian-2d.tgltraceentity.md) |  |
+|  changeId | number |  |
 
 <b>Returns:</b>
 

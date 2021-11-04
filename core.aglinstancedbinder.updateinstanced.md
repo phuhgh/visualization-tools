@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-updateInstanced(connector: TConnector, entityRenderer: TRenderer, divisor: number, usage?: GLenum): void;
+updateInstanced(connector: TConnector, componentRenderer: TComponentRenderer, changeId: number, divisor: number, usage?: GLenum): void;
 ```
 
 ## Parameters
@@ -15,7 +15,8 @@ updateInstanced(connector: TConnector, entityRenderer: TRenderer, divisor: numbe
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  connector | TConnector |  |
-|  entityRenderer | TRenderer |  |
+|  componentRenderer | TComponentRenderer |  |
+|  changeId | number |  |
 |  divisor | number |  |
 |  usage | GLenum |  |
 

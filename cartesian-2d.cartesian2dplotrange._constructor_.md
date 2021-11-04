@@ -9,7 +9,7 @@ Constructs a new instance of the `Cartesian2dPlotRange` class
 <b>Signature:</b>
 
 ```typescript
-protected constructor(maxBounds: Range2d<TArray>, dataRange: Range2d<TArray>, maxZoom: number, canvasDims: ICanvasDimensions, interactionBounder: ICartesian2dInteractionBounder<TArray>);
+protected constructor(maxBounds: Range2d<TArray>, dataRange: Range2d<TArray>, maxZoom: number, canvasDims: ICanvasDimensions, interactionBounder: ICartesian2dInteractionBounder<TArray>, userTransform: ICartesian2dUserTransform<TArray>);
 ```
 
 ## Parameters
@@ -21,4 +21,5 @@ protected constructor(maxBounds: Range2d<TArray>, dataRange: Range2d<TArray>, ma
 |  maxZoom | number |  |
 |  canvasDims | [ICanvasDimensions](./core.icanvasdimensions.md) |  |
 |  interactionBounder | [ICartesian2dInteractionBounder](./cartesian-2d.icartesian2dinteractionbounder.md)<!-- -->&lt;TArray&gt; |  |
+|  userTransform | [ICartesian2dUserTransform](./cartesian-2d.icartesian2dusertransform.md)<!-- -->&lt;TArray&gt; |  |
 

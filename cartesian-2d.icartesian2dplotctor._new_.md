@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-new (arg: ICartesian2dPlotCtorArg<TArray, TRequiredTraits>): ICartesian2dPlot<TEntityRenderer, TArray, TRequiredTraits>;
+new (arg: ICartesian2dPlotCtorArg<TArray, TRequiredTraits>): ICartesian2dPlot<TComponentRenderer, TArray, TRequiredTraits>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ new (arg: ICartesian2dPlotCtorArg<TArray, TRequiredTraits>): ICartesian2dPlot<TE
 
 <b>Returns:</b>
 
-[ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;TEntityRenderer, TArray, TRequiredTraits&gt;
+[ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;TComponentRenderer, TArray, TRequiredTraits&gt;
 

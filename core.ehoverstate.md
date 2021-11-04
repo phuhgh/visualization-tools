@@ -4,7 +4,7 @@
 
 ## EHoverState enum
 
-State changes of [IHoverableTrait](./core.ihoverabletrait.md)<!-- -->.
+State changes of [IHoverableTrait](./core.ihoverabletrait.md)<!-- -->. Events are emitted to entities in the order listed in the enum.
 
 <b>Signature:</b>
 
@@ -16,7 +16,8 @@ export declare enum EHoverState
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Entered | <code>3</code> |  |
+|  Entered | <code>4</code> |  |
 |  Left | <code>1</code> |  |
-|  SegmentChange | <code>2</code> |  |
+|  SegmentChange | <code>3</code> |  |
+|  Unchanged | <code>2</code> | Required where entities share state, otherwise a Left state would clear the hovered state. |
 

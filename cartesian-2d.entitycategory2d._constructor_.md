@@ -9,7 +9,7 @@ Constructs a new instance of the `EntityCategory2d` class
 <b>Signature:</b>
 
 ```typescript
-constructor(plot: IPlot<TPlotRange, TRequiredTraits>, renderer: IRenderer<TEntityRenderer>, updateGroup: IUpdate2dGroup<TPlotRange, TUpdateArg, TRequiredTraits>, updateHooks: ICategoryUpdateHooks<IRenderer<TEntityRenderer>, TUpdateArg>);
+constructor(plot: IPlot<TPlotRange, TRequiredTraits>, renderer: IRenderer<TComponentRenderer>, updateGroup: IUpdate2dGroup<TPlotRange, TUpdateArg, TRequiredTraits>, updateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, TUpdateArg>);
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ constructor(plot: IPlot<TPlotRange, TRequiredTraits>, renderer: IRenderer<TEntit
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  plot | [IPlot](./core.iplot.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt; |  |
-|  renderer | [IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt; |  |
+|  renderer | [IRenderer](./core.irenderer.md)<!-- -->&lt;TComponentRenderer&gt; |  |
 |  updateGroup | [IUpdate2dGroup](./cartesian-2d.iupdate2dgroup.md)<!-- -->&lt;TPlotRange, TUpdateArg, TRequiredTraits&gt; |  |
-|  updateHooks | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt;, TUpdateArg&gt; |  |
+|  updateHooks | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TComponentRenderer&gt;, TUpdateArg&gt; |  |
 

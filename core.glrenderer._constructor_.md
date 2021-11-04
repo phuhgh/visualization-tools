@@ -9,16 +9,16 @@ Constructs a new instance of the `GlRenderer` class
 <b>Signature:</b>
 
 ```typescript
-protected constructor(context: TCtx, options: IGlRendererOptions<TExts>, renderContextFactory: GlRendererFactory<TCtx, TExts>, callbacks: Partial<IRendererCallbacks<TCtx>> | undefined, sharedState: IGlRendererSharedState);
+protected constructor(context: TGlContext, options: IGlRendererOptions<TGlExtensionKeys>, renderContextFactory: GlComponentRendererFactory<TComponentRenderer>, callbacks: Partial<IRendererCallbacks<TExtractGcContext<TComponentRenderer>>> | undefined, sharedState: IGlRendererSharedState);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  context | TCtx |  |
-|  options | [IGlRendererOptions](./core.iglrendereroptions.md)<!-- -->&lt;TExts&gt; |  |
-|  renderContextFactory | [GlRendererFactory](./core.glrendererfactory.md)<!-- -->&lt;TCtx, TExts&gt; |  |
-|  callbacks | Partial&lt;[IRendererCallbacks](./core.irenderercallbacks.md)<!-- -->&lt;TCtx&gt;&gt; \| undefined |  |
+|  context | [TGlContext](./core.tglcontext.md) |  |
+|  options | [IGlRendererOptions](./core.iglrendereroptions.md)<!-- -->&lt;[TGlExtensionKeys](./core.tglextensionkeys.md)<!-- -->&gt; |  |
+|  renderContextFactory | [GlComponentRendererFactory](./core.glcomponentrendererfactory.md)<!-- -->&lt;TComponentRenderer&gt; |  |
+|  callbacks | Partial&lt;[IRendererCallbacks](./core.irenderercallbacks.md)<!-- -->&lt;[TExtractGcContext](./core.textractgccontext.md)<!-- -->&lt;TComponentRenderer&gt;&gt;&gt; \| undefined |  |
 |  sharedState | [IGlRendererSharedState](./core.iglrenderersharedstate.md) |  |
 

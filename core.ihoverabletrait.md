@@ -17,5 +17,5 @@ export interface IHoverableTrait extends IHitTestableTrait
 
 |  Method | Description |
 |  --- | --- |
-|  [onHoverChange(state, segments, pointerEvent)?](./core.ihoverabletrait.onhoverchange.md) | <i>(Optional)</i> |
+|  [onHover(state, segments, pointerEvent)?](./core.ihoverabletrait.onhover.md) | <i>(Optional)</i> |
 

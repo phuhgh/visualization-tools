@@ -9,13 +9,13 @@ Constructs a new instance of the `Cartesian2dPlotSharedQuadTree` class
 <b>Signature:</b>
 
 ```typescript
-constructor(plot: ICartesian2dPlot<TUnknownEntityRenderer, TArray, TRequiredTraits>, options: IQuadTreeTargetOptions);
+constructor(plot: ICartesian2dPlot<TUnknownComponentRenderer, TArray, TRequiredTraits>, options: IQuadTreeTargetOptions);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  plot | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, TArray, TRequiredTraits&gt; |  |
+|  plot | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, TArray, TRequiredTraits&gt; |  |
 |  options | [IQuadTreeTargetOptions](./core.iquadtreetargetoptions.md) |  |
 

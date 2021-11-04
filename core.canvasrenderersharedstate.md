@@ -30,6 +30,7 @@ export declare class CanvasRendererSharedState implements IRendererSharedState
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [onContextLost()](./core.canvasrenderersharedstate.oncontextlost.md) |  |  |
 |  [onNewFrame()](./core.canvasrenderersharedstate.onnewframe.md) |  |  |
 |  [setContext(context)](./core.canvasrenderersharedstate.setcontext.md) |  |  |
 |  [updateScissorRange(scissorRange)](./core.canvasrenderersharedstate.updatescissorrange.md) |  | Where multiple ranges are provided the scissor range will be the intersection of these. Each of these must be popped of the stack individually. |

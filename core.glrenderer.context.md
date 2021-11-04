@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-context: TExtractGcContext<TGlEntityRenderer<TCtx, TExts>>;
+context: TExtractGcContext<TComponentRenderer>;
 ```

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly graphicsComponents: TChartGraphicsComponents<TEntityRenderer>;
+readonly graphicsComponents: IGraphicsComponentStore<TComponentRenderer>;
 ```

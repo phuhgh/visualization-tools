@@ -9,14 +9,14 @@ Called once on creation or context restored.
 <b>Signature:</b>
 
 ```typescript
-initialize(entityRenderer: TGlBasicEntityRenderer): void;
+initialize(componentRenderer: TGlBasicComponentRenderer): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entityRenderer | [TGlBasicEntityRenderer](./core.tglbasicentityrenderer.md) |  |
+|  componentRenderer | [TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md) |  |
 
 <b>Returns:</b>
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-update(entity: TAxisLabelEntity<Float64Array>, entityRenderer: ICanvasEntityRenderer, updateArg: ICartesian2dUpdateArg<Float64Array>): void;
+update(entity: TAxisLabelEntity<Float64Array>, componentRenderer: ICanvasComponentRenderer, updateArg: ICartesian2dUpdateArg<Float64Array>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ update(entity: TAxisLabelEntity<Float64Array>, entityRenderer: ICanvasEntityRend
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entity | [TAxisLabelEntity](./cartesian-2d.taxislabelentity.md)<!-- -->&lt;Float64Array&gt; |  |
-|  entityRenderer | [ICanvasEntityRenderer](./core.icanvasentityrenderer.md) |  |
+|  componentRenderer | [ICanvasComponentRenderer](./core.icanvascomponentrenderer.md) |  |
 |  updateArg | [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float64Array&gt; |  |
 
 <b>Returns:</b>

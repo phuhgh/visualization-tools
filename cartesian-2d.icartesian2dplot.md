@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface ICartesian2dPlot<TEntityRenderer extends TUnknownEntityRenderer, TArray extends TTypedArray, TRequiredTraits> extends IPlot<ICartesian2dPlotRange<TArray>, TRequiredTraits> 
+export interface ICartesian2dPlot<TComponentRenderer extends TUnknownComponentRenderer, TArray extends TTypedArray, TRequiredTraits> extends IPlot<ICartesian2dPlotRange<TArray>, TRequiredTraits> 
 ```
 <b>Extends:</b> [IPlot](./core.iplot.md)<!-- -->&lt;[ICartesian2dPlotRange](./cartesian-2d.icartesian2dplotrange.md)<!-- -->&lt;TArray&gt;, TRequiredTraits&gt;
 
@@ -16,7 +16,7 @@ export interface ICartesian2dPlot<TEntityRenderer extends TUnknownEntityRenderer
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [dataCategory](./cartesian-2d.icartesian2dplot.datacategory.md) | [IEntityCategory](./core.ientitycategory.md)<!-- -->&lt;TEntityRenderer, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TArray&gt;, TRequiredTraits&gt; |  |
-|  [metaCategory](./cartesian-2d.icartesian2dplot.metacategory.md) | [IEntityCategory](./core.ientitycategory.md)<!-- -->&lt;TEntityRenderer, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TArray&gt;, TRequiredTraits&gt; |  |
+|  [dataCategory](./cartesian-2d.icartesian2dplot.datacategory.md) | [IEntityCategory](./core.ientitycategory.md)<!-- -->&lt;TComponentRenderer, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TArray&gt;, TRequiredTraits&gt; |  |
+|  [metaCategory](./cartesian-2d.icartesian2dplot.metacategory.md) | [IEntityCategory](./core.ientitycategory.md)<!-- -->&lt;TComponentRenderer, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TArray&gt;, TRequiredTraits&gt; |  |
 |  [updateArgProvider](./cartesian-2d.icartesian2dplot.updateargprovider.md) | [ICartesian2dUpdateArgProvider](./cartesian-2d.icartesian2dupdateargprovider.md)<!-- -->&lt;TArray, TRequiredTraits&gt; |  |
 

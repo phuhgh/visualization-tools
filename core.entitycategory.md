@@ -9,9 +9,9 @@ Implementation of [IEntityCategory](./core.ientitycategory.md)<!-- -->, handles 
 <b>Signature:</b>
 
 ```typescript
-export declare class EntityCategory<TEntityRenderer extends TUnknownEntityRenderer, TPlotRange, TUpdateArg, TRequiredTraits> implements IEntityCategory<TEntityRenderer, TUpdateArg, TRequiredTraits> 
+export declare class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TRequiredTraits> implements IEntityCategory<TComponentRenderer, TUpdateArg, TRequiredTraits> 
 ```
-<b>Implements:</b> [IEntityCategory](./core.ientitycategory.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TRequiredTraits&gt;
+<b>Implements:</b> [IEntityCategory](./core.ientitycategory.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TRequiredTraits&gt;
 
 ## Constructors
 
@@ -23,7 +23,7 @@ export declare class EntityCategory<TEntityRenderer extends TUnknownEntityRender
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [updateHooks](./core.entitycategory.updatehooks.md) |  | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt;, TUpdateArg&gt; |  |
+|  [updateHooks](./core.entitycategory.updatehooks.md) |  | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TComponentRenderer&gt;, TUpdateArg&gt; |  |
 
 ## Methods
 

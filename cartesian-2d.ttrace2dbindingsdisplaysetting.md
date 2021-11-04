@@ -9,6 +9,6 @@
 
 ```typescript
 export declare type TTrace2dBindingsDisplaySetting = {
-    readonly traces: TTypedArray;
+    readonly traces: Float32Array;
 };
 ```

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-bindAttributes(entityRenderer: TGlInstancedEntityRenderer): void;
+bindAttributes(componentRenderer: TGlInstancedComponentRenderer): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entityRenderer | [TGlInstancedEntityRenderer](./core.tglinstancedentityrenderer.md) |  |
+|  componentRenderer | [TGlInstancedComponentRenderer](./core.tglinstancedcomponentrenderer.md) |  |
 
 <b>Returns:</b>
 

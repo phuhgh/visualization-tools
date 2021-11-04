@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-onPlotDetached: (...args: TOnPlotDetachedArgs<TEntityRenderer>) => void;
+onPlotDetached: (...args: TOnPlotDetachedArgs<TRenderer>) => void;
 ```

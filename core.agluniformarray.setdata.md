@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-setData(data: TData): void;
+setData(data: TData, changeId: number): void;
 ```
 
 ## Parameters
@@ -15,6 +15,7 @@ setData(data: TData): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | TData |  |
+|  changeId | number |  |
 
 <b>Returns:</b>
 

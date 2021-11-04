@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static createOne<TExts extends TGlExtensionKeys, TCtx extends TGlContext, TAdapterCtor extends TGlContextAdapterCtor<TCtx>>(chartContainer: HTMLElement, contextAdapterCtor: TAdapterCtor, chartConfig: IChartConfig, rendererOptions: IGlRendererOptions<TExts>): TGlChart<TExts, TCtx> | null;
+static createOne<TExts extends TGlExtensionKeys, TCtx extends TGlContext>(chartContainer: HTMLElement, contextAdapterCtor: TGlContextAdapterCtor<TCtx>, chartConfig: IChartConfig, rendererOptions: IGlRendererOptions<TExts>): TGlChart<TGlComponentRenderer<TCtx, TExts>> | null;
 ```
 
 ## Parameters
@@ -15,11 +15,11 @@ static createOne<TExts extends TGlExtensionKeys, TCtx extends TGlContext, TAdapt
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  chartContainer | HTMLElement |  |
-|  contextAdapterCtor | TAdapterCtor |  |
+|  contextAdapterCtor | [TGlContextAdapterCtor](./core.tglcontextadapterctor.md)<!-- -->&lt;TCtx&gt; |  |
 |  chartConfig | [IChartConfig](./core.ichartconfig.md) |  |
 |  rendererOptions | [IGlRendererOptions](./core.iglrendereroptions.md)<!-- -->&lt;TExts&gt; |  |
 
 <b>Returns:</b>
 
-[TGlChart](./core.tglchart.md)<!-- -->&lt;TExts, TCtx&gt; \| null
+[TGlChart](./core.tglchart.md)<!-- -->&lt;[TGlComponentRenderer](./core.tglcomponentrenderer.md)<!-- -->&lt;TCtx, TExts&gt;&gt; \| null
 

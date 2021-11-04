@@ -9,12 +9,12 @@ Constructs a new instance of the `OnPlotDetached` class
 <b>Signature:</b>
 
 ```typescript
-constructor(onPlotDetached: (...args: TOnPlotDetachedArgs<TEntityRenderer>) => void);
+constructor(onPlotDetached: (...args: TOnPlotDetachedArgs<TRenderer>) => void);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  onPlotDetached | (...args: [TOnPlotDetachedArgs](./core.tonplotdetachedargs.md)<!-- -->&lt;TEntityRenderer&gt;) =&gt; void |  |
+|  onPlotDetached | (...args: [TOnPlotDetachedArgs](./core.tonplotdetachedargs.md)<!-- -->&lt;TRenderer&gt;) =&gt; void |  |
 

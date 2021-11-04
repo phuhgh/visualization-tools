@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-update(entity: TGlAxisEntity, entityRenderer: TGl2EntityRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void;
+update(entity: TGlAxisEntity, componentRenderer: TGl2ComponentRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ update(entity: TGlAxisEntity, entityRenderer: TGl2EntityRenderer, updateArg: ICa
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entity | [TGlAxisEntity](./cartesian-2d.tglaxisentity.md) |  |
-|  entityRenderer | [TGl2EntityRenderer](./core.tgl2entityrenderer.md) |  |
+|  componentRenderer | [TGl2ComponentRenderer](./core.tgl2componentrenderer.md) |  |
 |  updateArg | [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt; |  |
 
 <b>Returns:</b>

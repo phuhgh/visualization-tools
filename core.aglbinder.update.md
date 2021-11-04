@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-update(connector: TConnector, entityRenderer: TRenderer): void;
+update(connector: TConnector, componentRenderer: TComponentRenderer, changeId: number): void;
 ```
 
 ## Parameters
@@ -15,7 +15,8 @@ update(connector: TConnector, entityRenderer: TRenderer): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  connector | TConnector |  |
-|  entityRenderer | TRenderer |  |
+|  componentRenderer | TComponentRenderer |  |
+|  changeId | number |  |
 
 <b>Returns:</b>
 

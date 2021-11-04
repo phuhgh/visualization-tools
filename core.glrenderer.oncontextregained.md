@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-onContextRegained(context: TExtractGcContext<TGlEntityRenderer<TCtx, TExts>>): void;
+onContextRegained(context: TExtractGcContext<TComponentRenderer>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  context | [TExtractGcContext](./core.textractgccontext.md)<!-- -->&lt;[TGlEntityRenderer](./core.tglentityrenderer.md)<!-- -->&lt;TCtx, TExts&gt;&gt; |  |
+|  context | [TExtractGcContext](./core.textractgccontext.md)<!-- -->&lt;TComponentRenderer&gt; |  |
 
 <b>Returns:</b>
 

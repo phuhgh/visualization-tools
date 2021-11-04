@@ -9,13 +9,13 @@ Constructs a new instance of the `EntityUpdateGrouping` class
 <b>Signature:</b>
 
 ```typescript
-constructor(graphicsComponent: IGraphicsComponent<TUnknownEntityRenderer, TUpdateArg, TRequiredTraits>, entityRenderer: TUnknownEntityRenderer);
+constructor(graphicsComponent: IGraphicsComponent<TUnknownComponentRenderer, TUpdateArg, TRequiredTraits>, componentRenderer: TUnknownComponentRenderer);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  graphicsComponent | [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, TUpdateArg, TRequiredTraits&gt; |  |
-|  entityRenderer | [TUnknownEntityRenderer](./core.tunknownentityrenderer.md) |  |
+|  graphicsComponent | [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, TUpdateArg, TRequiredTraits&gt; |  |
+|  componentRenderer | [TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md) |  |
 

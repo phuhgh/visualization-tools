@@ -4,12 +4,12 @@
 
 ## AGlAttribute.(constructor)
 
-Constructs a new instance of the `AGlAttribute` class
+DO NOT MANUALLY SHARE BUFFERS, \*\*USE LINK\*\*!
 
 <b>Signature:</b>
 
 ```typescript
-constructor(name: string, buffer: GlBuffer, componentsPerVertex: number, byteOffset?: number, byteStride?: number, normalized?: boolean);
+constructor(name: string, buffer: IGlBuffer<TArray>, componentsPerVertex: number, byteOffset?: number, byteStride?: number, normalized?: boolean);
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ constructor(name: string, buffer: GlBuffer, componentsPerVertex: number, byteOff
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  buffer | [GlBuffer](./core.glbuffer.md) |  |
+|  buffer | [IGlBuffer](./core.iglbuffer.md)<!-- -->&lt;TArray&gt; |  |
 |  componentsPerVertex | number |  |
 |  byteOffset | number |  |
 |  byteStride | number |  |

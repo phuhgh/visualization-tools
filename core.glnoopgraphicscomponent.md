@@ -9,15 +9,17 @@ A graphics component for webgl/webgl2 renderer that doesn't draw.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlNoOpGraphicsComponent implements IGraphicsComponentSpecification<TUnknownEntityRenderer, unknown, unknown> 
+export declare class GlNoOpGraphicsComponent implements IGraphicsComponent<TUnknownComponentRenderer, unknown, unknown> 
 ```
-<b>Implements:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, unknown, unknown&gt;
+<b>Implements:</b> [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, unknown, unknown&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./core.glnoopgraphicscomponent.specification.md) |  | import("../..").[IGlProgramSpec](./core.iglprogramspec.md) |  |
+|  [transform](./core.glnoopgraphicscomponent.transform.md) |  | [NoTransformProvider](./core.notransformprovider.md) |  |
+|  [type](./core.glnoopgraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods
 

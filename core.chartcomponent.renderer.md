@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly renderer: IRenderer<TEntityRenderer>;
+readonly renderer: TRenderer;
 ```

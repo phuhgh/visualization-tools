@@ -9,9 +9,9 @@ Draws traces for cartesian 2d plots.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlCartesian2dTraceGraphicsComponent implements IGraphicsComponentSpecification<TGlInstancedEntityRenderer, ICartesian2dUpdateArg<Float32Array>, TGlTraceEntity> 
+export declare class GlCartesian2dTraceGraphicsComponent implements ILinkableGraphicsComponent<TGlInstancedComponentRenderer, ICartesian2dUpdateArg<Float32Array>, TGlTraceEntity> 
 ```
-<b>Implements:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;[TGlInstancedEntityRenderer](./core.tglinstancedentityrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->&gt;
+<b>Implements:</b> [ILinkableGraphicsComponent](./core.ilinkablegraphicscomponent.md)<!-- -->&lt;[TGlInstancedComponentRenderer](./core.tglinstancedcomponentrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->&gt;
 
 ## Constructors
 
@@ -24,13 +24,16 @@ export declare class GlCartesian2dTraceGraphicsComponent implements IGraphicsCom
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./cartesian-2d.glcartesian2dtracegraphicscomponent.specification.md) |  | [IGlProgramSpec](./core.iglprogramspec.md) |  |
+|  [transform](./cartesian-2d.glcartesian2dtracegraphicscomponent.transform.md) |  | [GlTransformProvider](./core.gltransformprovider.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [IGlTraceTransformBinder](./cartesian-2d.igltracetransformbinder.md)<!-- -->, [IGlTraceBinder](./cartesian-2d.igltracebinder.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->&gt; |  |
+|  [type](./cartesian-2d.glcartesian2dtracegraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [getCacheId()](./cartesian-2d.glcartesian2dtracegraphicscomponent.getcacheid.md) |  |  |
-|  [initialize(entityRenderer)](./cartesian-2d.glcartesian2dtracegraphicscomponent.initialize.md) |  |  |
-|  [onBeforeUpdate(entityRenderer, updateArg)](./cartesian-2d.glcartesian2dtracegraphicscomponent.onbeforeupdate.md) |  |  |
-|  [update(entity, entityRenderer, updateArg)](./cartesian-2d.glcartesian2dtracegraphicscomponent.update.md) |  |  |
+|  [getLinkableBinders()](./cartesian-2d.glcartesian2dtracegraphicscomponent.getlinkablebinders.md) |  |  |
+|  [initialize(componentRenderer)](./cartesian-2d.glcartesian2dtracegraphicscomponent.initialize.md) |  |  |
+|  [onBeforeUpdate(componentRenderer, updateArg)](./cartesian-2d.glcartesian2dtracegraphicscomponent.onbeforeupdate.md) |  |  |
+|  [update(entity, componentRenderer, updateArg)](./cartesian-2d.glcartesian2dtracegraphicscomponent.update.md) |  |  |
 

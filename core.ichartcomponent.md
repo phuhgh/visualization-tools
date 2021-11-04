@@ -9,7 +9,7 @@ Root component. Orchestrates updates and events.
 <b>Signature:</b>
 
 ```typescript
-export interface IChartComponent<TEntityRenderer extends TUnknownEntityRenderer> 
+export interface IChartComponent<TRenderer extends TUnknownRenderer> 
 ```
 
 ## Properties
@@ -19,7 +19,7 @@ export interface IChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
 |  [attachPoint](./core.ichartcomponent.attachpoint.md) | [IGraphAttachPoint](./core.igraphattachpoint.md) |  |
 |  [changeIdFactory](./core.ichartcomponent.changeidfactory.md) | IIdentifierFactory |  |
 |  [eventService](./core.ichartcomponent.eventservice.md) | [IEventService](./core.ieventservice.md) |  |
-|  [renderer](./core.ichartcomponent.renderer.md) | [IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt; |  |
+|  [renderer](./core.ichartcomponent.renderer.md) | TRenderer |  |
 
 ## Methods
 
@@ -27,6 +27,7 @@ export interface IChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
 |  --- | --- |
 |  [addPlot(plot)](./core.ichartcomponent.addplot.md) |  |
 |  [cancelNextFrame()](./core.ichartcomponent.cancelnextframe.md) |  |
+|  [getTransformProvider(transformsToInitialize, missIsDebugError)](./core.ichartcomponent.gettransformprovider.md) | Subsequent calls will return the same object. |
 |  [removePlot(plot)](./core.ichartcomponent.removeplot.md) |  |
 |  [resize()](./core.ichartcomponent.resize.md) | By default resize is performed on every draw, this can be disabled and controlled manually. |
 |  [updateImmediate(plot)](./core.ichartcomponent.updateimmediate.md) | Does not update interaction handlers. |

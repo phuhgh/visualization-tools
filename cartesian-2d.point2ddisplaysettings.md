@@ -4,7 +4,7 @@
 
 ## Point2dDisplaySettings class
 
-Point config where not specified per point.
+Point config where not specified per point. Colors are stored normalized.
 
 <b>Signature:</b>
 
@@ -23,14 +23,16 @@ export declare class Point2dDisplaySettings extends Mat4.f32
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [colorOverrides](./cartesian-2d.point2ddisplaysettings.coloroverrides.md) |  | [THighlightColorOverride](./cartesian-2d.thighlightcoloroverride.md)<!-- -->\[\] \| null |  |
+|  [highlightedSegments](./cartesian-2d.point2ddisplaysettings.highlightedsegments.md) |  | ReadonlySet&lt;number&gt; \| null |  |
+|  [packedColor](./cartesian-2d.point2ddisplaysettings.packedcolor.md) |  | number |  |
+|  [packedHighlightColor](./cartesian-2d.point2ddisplaysettings.packedhighlightcolor.md) |  | number |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [getColor()](./cartesian-2d.point2ddisplaysettings.getcolor.md) |  |  |
-|  [getHighlightColor()](./cartesian-2d.point2ddisplaysettings.gethighlightcolor.md) |  |  |
+|  [getNormalizedColor()](./cartesian-2d.point2ddisplaysettings.getnormalizedcolor.md) |  |  |
+|  [getNormalizedHighlightColor()](./cartesian-2d.point2ddisplaysettings.getnormalizedhighlightcolor.md) |  |  |
 |  [getPixelSize()](./cartesian-2d.point2ddisplaysettings.getpixelsize.md) |  |  |
 |  [setColor(rgbaColor)](./cartesian-2d.point2ddisplaysettings.setcolor.md) |  |  |
 |  [setHighlightColor(rgbaColor)](./cartesian-2d.point2ddisplaysettings.sethighlightcolor.md) |  |  |

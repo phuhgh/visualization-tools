@@ -23,19 +23,21 @@ export declare class CanvasRenderer implements ICanvasRenderer
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [componentRendererFactory](./core.canvasrenderer.componentrendererfactory.md) |  | [IComponentRendererFactory](./core.icomponentrendererfactory.md)<!-- -->&lt;{}, [ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->&gt; |  |
+|  [componentRendererProvider](./core.canvasrenderer.componentrendererprovider.md) |  | [IComponentRendererProvider](./core.icomponentrendererprovider.md)<!-- -->&lt;[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->&gt; |  |
 |  [context](./core.canvasrenderer.context.md) |  | CanvasRenderingContext2D |  |
-|  [entityRendererFactory](./core.canvasrenderer.entityrendererfactory.md) |  | [IEntityRendererFactory](./core.ientityrendererfactory.md)<!-- -->&lt;{}, [ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->&gt; |  |
-|  [entityRendererProvider](./core.canvasrenderer.entityrendererprovider.md) |  | [IEntityRendererProvider](./core.ientityrendererprovider.md)<!-- -->&lt;[ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->&gt; |  |
-|  [graphicsComponents](./core.canvasrenderer.graphicscomponents.md) |  | Map&lt;string, [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;[ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->, unknown, unknown&gt;&gt; |  |
+|  [graphicsComponents](./core.canvasrenderer.graphicscomponents.md) |  | [GraphicsComponentStore](./core.graphicscomponentstore.md)<!-- -->&lt;[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->&gt; |  |
 |  [sharedState](./core.canvasrenderer.sharedstate.md) |  | [CanvasRendererSharedState](./core.canvasrenderersharedstate.md) |  |
+|  [TComponentRenderer](./core.canvasrenderer.tcomponentrenderer.md) |  | [ICanvasComponentRenderer](./core.icanvascomponentrenderer.md) |  |
+|  [transformComponents](./core.canvasrenderer.transformcomponents.md) |  | [ITransformComponentStore](./core.itransformcomponentstore.md)<!-- -->&lt;[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->&gt; |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [createCompositeGraphicsComponent(graphicsComp)](./core.canvasrenderer.createcompositegraphicscomponent.md) |  |  |
 |  [createOne(context, callbacks)](./core.canvasrenderer.createone.md) | <code>static</code> |  |
 |  [onAfterPlotDraw()](./core.canvasrenderer.onafterplotdraw.md) |  |  |
 |  [onBeforePlotDraw(plot, canvasDims)](./core.canvasrenderer.onbeforeplotdraw.md) |  |  |
+|  [onContextLost()](./core.canvasrenderer.oncontextlost.md) |  |  |
 |  [onContextRegained(context)](./core.canvasrenderer.oncontextregained.md) |  |  |
 

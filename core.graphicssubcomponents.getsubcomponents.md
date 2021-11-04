@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-getSubComponents(): IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TEntityTraits>[];
+getSubComponents(): readonly TGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>[];
 ```
 <b>Returns:</b>
 
-[IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TEntityTraits&gt;\[\]
+readonly [TGraphicsComponent](./core.tgraphicscomponent.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TEntityTraits&gt;\[\]
 

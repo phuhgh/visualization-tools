@@ -9,18 +9,18 @@ Generates the constructor of [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.
 <b>Signature:</b>
 
 ```typescript
-export declare function createCartesianPlotCtor<TEntityRenderer extends TUnknownEntityRenderer, TArray extends TTypedArray>(axisFactory: ICartesian2dAxisFactory<TEntityRenderer, TArray, unknown>, metaUpdateHooks: ICategoryUpdateHooks<IRenderer<TEntityRenderer>, ICartesian2dUpdateArg<TArray>>, dataUpdateHooks: ICategoryUpdateHooks<IRenderer<TEntityRenderer>, ICartesian2dUpdateArg<TArray>>): ICartesian2dPlotCtor<TEntityRenderer, TArray, unknown>;
+export declare function createCartesianPlotCtor<TComponentRenderer extends TUnknownComponentRenderer, TArray extends TTypedArray>(axisFactory: ICartesian2dAxisFactory<TComponentRenderer, TArray, unknown>, metaUpdateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, ICartesian2dUpdateArg<TArray>>, dataUpdateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, ICartesian2dUpdateArg<TArray>>): ICartesian2dPlotCtor<TComponentRenderer, TArray, unknown>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  axisFactory | [ICartesian2dAxisFactory](./cartesian-2d.icartesian2daxisfactory.md)<!-- -->&lt;TEntityRenderer, TArray, unknown&gt; |  |
-|  metaUpdateHooks | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TArray&gt;&gt; |  |
-|  dataUpdateHooks | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TEntityRenderer&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TArray&gt;&gt; |  |
+|  axisFactory | [ICartesian2dAxisFactory](./cartesian-2d.icartesian2daxisfactory.md)<!-- -->&lt;TComponentRenderer, TArray, unknown&gt; |  |
+|  metaUpdateHooks | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TComponentRenderer&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TArray&gt;&gt; |  |
+|  dataUpdateHooks | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[IRenderer](./core.irenderer.md)<!-- -->&lt;TComponentRenderer&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TArray&gt;&gt; |  |
 
 <b>Returns:</b>
 
-[ICartesian2dPlotCtor](./cartesian-2d.icartesian2dplotctor.md)<!-- -->&lt;TEntityRenderer, TArray, unknown&gt;
+[ICartesian2dPlotCtor](./cartesian-2d.icartesian2dplotctor.md)<!-- -->&lt;TComponentRenderer, TArray, unknown&gt;
 

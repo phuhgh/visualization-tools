@@ -9,14 +9,14 @@ Constructs a new instance of the `Cartesian2dInteractionHandler` class
 <b>Signature:</b>
 
 ```typescript
-constructor(chart: IChartComponent<TUnknownEntityRenderer>, plot: IPlot<ICartesian2dPlotRange<TTypedArray>, unknown>, listeners: Partial<IInteractionStateChangeCallbacks<TTraits>>);
+constructor(chart: IChartComponent<TUnknownRenderer>, plot: IPlot<ICartesian2dPlotRange<TTypedArray>, unknown>, listeners: Partial<IInteractionStateChangeCallbacks<TTraits>>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->&gt; |  |
+|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
 |  plot | [IPlot](./core.iplot.md)<!-- -->&lt;[ICartesian2dPlotRange](./cartesian-2d.icartesian2dplotrange.md)<!-- -->&lt;TTypedArray&gt;, unknown&gt; |  |
 |  listeners | Partial&lt;[IInteractionStateChangeCallbacks](./core.iinteractionstatechangecallbacks.md)<!-- -->&lt;TTraits&gt;&gt; |  |
 

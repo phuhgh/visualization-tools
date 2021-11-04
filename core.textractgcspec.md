@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type TExtractGcSpec<TEntityRenderer extends IBaseEntityRenderer<unknown, unknown>> = TEntityRenderer["specification"];
+export declare type TExtractGcSpec<TComponentRenderer extends IBaseComponentRenderer<unknown, unknown>> = TComponentRenderer["specification"];
 ```
-<b>References:</b> [IBaseEntityRenderer](./core.ibaseentityrenderer.md)
+<b>References:</b> [IBaseComponentRenderer](./core.ibasecomponentrenderer.md)
 

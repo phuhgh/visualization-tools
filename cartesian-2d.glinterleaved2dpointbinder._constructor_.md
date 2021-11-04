@@ -9,7 +9,7 @@ Constructs a new instance of the `GlInterleaved2dPointBinder` class
 <b>Signature:</b>
 
 ```typescript
-constructor(bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>, binderConfig?: IGlInterleavedPointBinderConfig);
+constructor(bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>, binderConfig?: TGlInterleavedPointBinderConfig);
 ```
 
 ## Parameters
@@ -17,5 +17,5 @@ constructor(bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOff
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  bindingDescriptor | [IInterleavedBindingDescriptor](./core.iinterleavedbindingdescriptor.md)<!-- -->&lt;[IDrawablePoint2dOffsets](./cartesian-2d.idrawablepoint2doffsets.md)<!-- -->&gt; |  |
-|  binderConfig | [IGlInterleavedPointBinderConfig](./cartesian-2d.iglinterleavedpointbinderconfig.md) |  |
+|  binderConfig | [TGlInterleavedPointBinderConfig](./cartesian-2d.tglinterleavedpointbinderconfig.md) |  |
 

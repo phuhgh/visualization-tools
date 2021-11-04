@@ -7,14 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-updateData(camera: ICartesian2dTransforms<Float32Array>): void;
+updateData(transforms: ICartesian2dTransforms<Float32Array>, changeId: number): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  camera | [ICartesian2dTransforms](./cartesian-2d.icartesian2dtransforms.md)<!-- -->&lt;Float32Array&gt; |  |
+|  transforms | [ICartesian2dTransforms](./cartesian-2d.icartesian2dtransforms.md)<!-- -->&lt;Float32Array&gt; |  |
+|  changeId | number |  |
 
 <b>Returns:</b>
 

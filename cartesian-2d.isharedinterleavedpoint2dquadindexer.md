@@ -17,5 +17,5 @@ export interface ISharedInterleavedPoint2dQuadIndexer<TArray extends TTypedArray
 
 |  Method | Description |
 |  --- | --- |
-|  [update(tree, entity, worldTransform)](./cartesian-2d.isharedinterleavedpoint2dquadindexer.update.md) |  |
+|  [addToTree(tree, entity, worldTransform, userTransform)](./cartesian-2d.isharedinterleavedpoint2dquadindexer.addtotree.md) |  |
 

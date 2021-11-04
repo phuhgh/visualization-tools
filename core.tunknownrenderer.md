@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type TUnknownRenderer = IRenderer<TUnknownEntityRenderer>;
+export declare type TUnknownRenderer = IRenderer<TUnknownComponentRenderer>;
 ```
-<b>References:</b> [IRenderer](./core.irenderer.md)<!-- -->, [TUnknownEntityRenderer](./core.tunknownentityrenderer.md)
+<b>References:</b> [IRenderer](./core.irenderer.md)<!-- -->, [TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)
 

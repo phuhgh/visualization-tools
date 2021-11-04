@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly groupings: [EntityUpdateGrouping<TUpdateArg, TRequiredTraits>, TEntityTrait<TUpdateArg, TRequiredTraits>[]][];
+readonly groupings: [IEntityUpdateGrouping<TUpdateArg, TRequiredTraits>, TEntityTrait<TUpdateArg, TRequiredTraits>[]][];
 ```

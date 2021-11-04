@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-setQuadTreeInteractionHandler(emscriptenWrapper: IEmscriptenWrapper<ISharedQuadTreeBindings>, chart: IChartComponent<TUnknownEntityRenderer>, listeners?: Partial<IInteractionStateChangeCallbacks<IHitTestableTrait & TRequiredTraits>>): void;
+setQuadTreeInteractionHandler(emscriptenWrapper: IEmscriptenWrapper<ISharedQuadTreeBindings>, chart: IChartComponent<TUnknownRenderer>, listeners?: Partial<IInteractionStateChangeCallbacks<IHitTestableTrait & TRequiredTraits>>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ setQuadTreeInteractionHandler(emscriptenWrapper: IEmscriptenWrapper<ISharedQuadT
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  emscriptenWrapper | IEmscriptenWrapper&lt;[ISharedQuadTreeBindings](./core.isharedquadtreebindings.md)<!-- -->&gt; |  |
-|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->&gt; |  |
+|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
 |  listeners | Partial&lt;[IInteractionStateChangeCallbacks](./core.iinteractionstatechangecallbacks.md)<!-- -->&lt;[IHitTestableTrait](./core.ihittestabletrait.md) &amp; TRequiredTraits&gt;&gt; |  |
 
 <b>Returns:</b>

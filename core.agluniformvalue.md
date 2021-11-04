@@ -9,8 +9,9 @@ wrapper for a single uniform value.
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class AGlUniformValue 
+export declare abstract class AGlUniformValue implements IGlUniform 
 ```
+<b>Implements:</b> [IGlUniform](./core.igluniform.md)
 
 ## Constructors
 
@@ -23,6 +24,7 @@ export declare abstract class AGlUniformValue
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [data](./core.agluniformvalue.data.md) |  | number |  |
+|  [isDirty](./core.agluniformvalue.isdirty.md) |  | boolean |  |
 |  [name](./core.agluniformvalue.name.md) |  | string |  |
 |  [uniformLocation](./core.agluniformvalue.uniformlocation.md) |  | WebGLUniformLocation \| null |  |
 
@@ -31,6 +33,7 @@ export declare abstract class AGlUniformValue
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [bind(renderer)](./core.agluniformvalue.bind.md) |  |  |
-|  [initialize(entityRenderer)](./core.agluniformvalue.initialize.md) |  |  |
+|  [initialize(componentRenderer)](./core.agluniformvalue.initialize.md) |  |  |
+|  [onContextLost()](./core.agluniformvalue.oncontextlost.md) |  |  |
 |  [setData(data)](./core.agluniformvalue.setdata.md) |  |  |
 

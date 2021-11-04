@@ -9,7 +9,7 @@ Listener for plot attach to chart.
 <b>Signature:</b>
 
 ```typescript
-export declare type TOnPlotAttached<TEntityRenderer extends TUnknownEntityRenderer> = TListener<"onPlotAttached", [IChartComponent<TEntityRenderer>]>;
+export declare type TOnPlotAttached<TRenderer extends TUnknownRenderer> = TListener<"onPlotAttached", [IChartComponent<TRenderer>]>;
 ```
-<b>References:</b> [TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, [IChartComponent](./core.ichartcomponent.md)
+<b>References:</b> [TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->, [IChartComponent](./core.ichartcomponent.md)
 

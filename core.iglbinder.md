@@ -9,9 +9,9 @@ Data binder for webgl graphics components.
 <b>Signature:</b>
 
 ```typescript
-export interface IGlBinder<TConnector, TRenderer> extends ICacheable 
+export interface IGlBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector> extends IBinder<TComponentRenderer> 
 ```
-<b>Extends:</b> [ICacheable](./core.icacheable.md)
+<b>Extends:</b> [IBinder](./core.ibinder.md)<!-- -->&lt;TComponentRenderer&gt;
 
 ## Properties
 
@@ -23,10 +23,9 @@ export interface IGlBinder<TConnector, TRenderer> extends ICacheable
 
 |  Method | Description |
 |  --- | --- |
-|  [bindAttributes(entityRenderer)](./core.iglbinder.bindattributes.md) |  |
-|  [bindUniforms(entityRenderer)](./core.iglbinder.binduniforms.md) |  |
-|  [initialize(entityRenderer)](./core.iglbinder.initialize.md) |  |
-|  [update(connector, entityRenderer)](./core.iglbinder.update.md) | Perform all possible updates. |
-|  [updateData(connector, usage)](./core.iglbinder.updatedata.md) |  |
+|  [bindAttributes(componentRenderer)](./core.iglbinder.bindattributes.md) |  |
+|  [bindUniforms(componentRenderer)](./core.iglbinder.binduniforms.md) |  |
+|  [update(connector, componentRenderer, changeId)](./core.iglbinder.update.md) | Perform all possible updates. |
+|  [updateData(connector, changeId)](./core.iglbinder.updatedata.md) |  |
 |  [updatePointers(connector)](./core.iglbinder.updatepointers.md) |  |
 

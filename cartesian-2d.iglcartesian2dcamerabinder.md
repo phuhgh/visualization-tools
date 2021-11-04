@@ -9,13 +9,7 @@ Provides WebGL bindings for cartesian 2d graphics components.
 <b>Signature:</b>
 
 ```typescript
-export interface IGlCartesian2dCameraBinder extends IGlBinder<ICartesian2dTransforms<Float32Array>, TGlBasicEntityRenderer> 
+export interface IGlCartesian2dCameraBinder extends IGlCamera2dBinder<ICartesian2dTransforms<Float32Array>, ICartesian2dUpdateArg<Float32Array>> 
 ```
-<b>Extends:</b> [IGlBinder](./core.iglbinder.md)<!-- -->&lt;[ICartesian2dTransforms](./cartesian-2d.icartesian2dtransforms.md)<!-- -->&lt;Float32Array&gt;, [TGlBasicEntityRenderer](./core.tglbasicentityrenderer.md)<!-- -->&gt;
-
-## Methods
-
-|  Method | Description |
-|  --- | --- |
-|  [setZ(entity)](./cartesian-2d.iglcartesian2dcamerabinder.setz.md) |  |
+<b>Extends:</b> [IGlCamera2dBinder](./cartesian-2d.iglcamera2dbinder.md)<!-- -->&lt;[ICartesian2dTransforms](./cartesian-2d.icartesian2dtransforms.md)<!-- -->&lt;Float32Array&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;&gt;
 

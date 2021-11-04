@@ -9,7 +9,7 @@ An entity sub-grouping. Provides hooks for entity membership changes, useful for
 <b>Signature:</b>
 
 ```typescript
-export interface IEntityCategory<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TRequiredTraits> extends IEntityCategoryWrite<TEntityRenderer, TUpdateArg, TRequiredTraits>, IEntityCategoryRead<TUpdateArg, TRequiredTraits> 
+export interface IEntityCategory<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TRequiredTraits> extends IEntityCategoryWrite<TComponentRenderer, TUpdateArg, TRequiredTraits>, IEntityCategoryRead<TUpdateArg, TRequiredTraits> 
 ```
-<b>Extends:</b> [IEntityCategoryWrite](./core.ientitycategorywrite.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TRequiredTraits&gt;, [IEntityCategoryRead](./core.ientitycategoryread.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;
+<b>Extends:</b> [IEntityCategoryWrite](./core.ientitycategorywrite.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TRequiredTraits&gt;, [IEntityCategoryRead](./core.ientitycategoryread.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;
 

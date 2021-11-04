@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-bindUniforms(entityRenderer: TRenderer): void;
+bindUniforms(componentRenderer: TComponentRenderer): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entityRenderer | TRenderer |  |
+|  componentRenderer | TComponentRenderer |  |
 
 <b>Returns:</b>
 

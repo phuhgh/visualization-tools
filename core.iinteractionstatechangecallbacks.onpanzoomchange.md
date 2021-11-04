@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-onPanZoomChange($event: IChartPointerEvent<PointerEvent>, centerPoint: IReadonlyVec2<Float32Array>, distanceBetweenPoints: number): void;
+onPanZoomChange($event: IChartPointerEvent<PointerEvent>, cssCenterPoint: IReadonlyVec2<Float32Array>, distanceBetweenPoints: number): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ onPanZoomChange($event: IChartPointerEvent<PointerEvent>, centerPoint: IReadonly
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  $event | [IChartPointerEvent](./core.ichartpointerevent.md)<!-- -->&lt;PointerEvent&gt; |  |
-|  centerPoint | IReadonlyVec2&lt;Float32Array&gt; |  |
+|  cssCenterPoint | IReadonlyVec2&lt;Float32Array&gt; |  |
 |  distanceBetweenPoints | number |  |
 
 <b>Returns:</b>

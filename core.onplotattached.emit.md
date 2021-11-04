@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static emit(plot: IReadonlyPlot<unknown, unknown>, chart: IChartComponent<TUnknownEntityRenderer>): void;
+static emit(plot: IReadonlyPlot<unknown, unknown>, chart: IChartComponent<TUnknownRenderer>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ static emit(plot: IReadonlyPlot<unknown, unknown>, chart: IChartComponent<TUnkno
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  plot | [IReadonlyPlot](./core.ireadonlyplot.md)<!-- -->&lt;unknown, unknown&gt; |  |
-|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->&gt; |  |
+|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

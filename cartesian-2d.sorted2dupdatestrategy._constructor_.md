@@ -9,7 +9,7 @@ Constructs a new instance of the `Sorted2dUpdateStrategy` class
 <b>Signature:</b>
 
 ```typescript
-constructor(plot: IReadonlyPlot<TPlotRange, TRequiredTraits>, updateGroup: IUpdate2dGroup<TPlotRange, TUpdateArg, TRequiredTraits>, scene: IScene2d<TPlotRange, TUpdateArg, TRequiredTraits>);
+constructor(plot: IReadonlyPlot<TPlotRange, TRequiredTraits>, updateGroup: IUpdate2dGroup<TPlotRange, TUpdateArg, TRequiredTraits>, scene: IScene2d<TPlotRange, TUpdateArg, TRequiredTraits>, getUserTransform: (updateArg: TUpdateArg) => IUserTransform);
 ```
 
 ## Parameters
@@ -19,4 +19,5 @@ constructor(plot: IReadonlyPlot<TPlotRange, TRequiredTraits>, updateGroup: IUpda
 |  plot | [IReadonlyPlot](./core.ireadonlyplot.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt; |  |
 |  updateGroup | [IUpdate2dGroup](./cartesian-2d.iupdate2dgroup.md)<!-- -->&lt;TPlotRange, TUpdateArg, TRequiredTraits&gt; |  |
 |  scene | [IScene2d](./cartesian-2d.iscene2d.md)<!-- -->&lt;TPlotRange, TUpdateArg, TRequiredTraits&gt; |  |
+|  getUserTransform | (updateArg: TUpdateArg) =&gt; [IUserTransform](./core.iusertransform.md) |  |
 

@@ -9,8 +9,9 @@ Wrapper for webgl uniform.
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class AGlUniformArray<TData extends TGlUniformArray> 
+export declare abstract class AGlUniformArray<TData extends TGlUniformArray> implements IGlUniform 
 ```
+<b>Implements:</b> [IGlUniform](./core.igluniform.md)
 
 ## Constructors
 
@@ -22,7 +23,9 @@ export declare abstract class AGlUniformArray<TData extends TGlUniformArray>
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [changeId](./core.agluniformarray.changeid.md) |  | number |  |
 |  [data](./core.agluniformarray.data.md) |  | TData |  |
+|  [isDirty](./core.agluniformarray.isdirty.md) |  | boolean |  |
 |  [name](./core.agluniformarray.name.md) |  | string |  |
 |  [transpose](./core.agluniformarray.transpose.md) |  | boolean |  |
 |  [uniformLocation](./core.agluniformarray.uniformlocation.md) |  | WebGLUniformLocation \| null |  |
@@ -32,6 +35,7 @@ export declare abstract class AGlUniformArray<TData extends TGlUniformArray>
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [bind(renderer)](./core.agluniformarray.bind.md) |  |  |
-|  [initialize(entityRenderer)](./core.agluniformarray.initialize.md) |  |  |
-|  [setData(data)](./core.agluniformarray.setdata.md) |  |  |
+|  [initialize(componentRenderer)](./core.agluniformarray.initialize.md) |  |  |
+|  [onContextLost()](./core.agluniformarray.oncontextlost.md) |  |  |
+|  [setData(data, changeId)](./core.agluniformarray.setdata.md) |  |  |
 

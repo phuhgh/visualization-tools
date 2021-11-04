@@ -15,5 +15,5 @@ export interface IUpdateGroupOptions<TUpdateArg>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [graphicsComponent](./core.iupdategroupoptions.graphicscomponent.md) | [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, TUpdateArg, unknown&gt; |  |
+|  [graphicsComponent](./core.iupdategroupoptions.graphicscomponent.md) | [TGraphicsComponent](./core.tgraphicscomponent.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, TUpdateArg, unknown&gt; |  |
 

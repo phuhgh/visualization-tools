@@ -9,28 +9,31 @@ Draws line caps, to be used with [GlCaplessLineGraphicsComponent](./cartesian-2d
 <b>Signature:</b>
 
 ```typescript
-export declare class GlLineFlatCapGraphicsComponent implements IGraphicsComponentSpecification<TGl2EntityRenderer, ICartesian2dUpdateArg<Float32Array>, TInterleavedPoint2dTrait<Float32Array>> 
+export declare class GlLineFlatCapGraphicsComponent implements ILinkableGraphicsComponent<TGl2ComponentRenderer, ICartesian2dUpdateArg<Float32Array>, TInterleavedPoint2dTrait<Float32Array>> 
 ```
-<b>Implements:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;[TGl2EntityRenderer](./core.tgl2entityrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt;&gt;
+<b>Implements:</b> [ILinkableGraphicsComponent](./core.ilinkablegraphicscomponent.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt;&gt;
 
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(cameraBinder, indexedDataBinder)](./cartesian-2d.gllineflatcapgraphicscomponent._constructor_.md) |  | Constructs a new instance of the <code>GlLineFlatCapGraphicsComponent</code> class |
+|  [(constructor)(cameraBinder, indexedBinder)](./cartesian-2d.gllineflatcapgraphicscomponent._constructor_.md) |  | Constructs a new instance of the <code>GlLineFlatCapGraphicsComponent</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./cartesian-2d.gllineflatcapgraphicscomponent.specification.md) |  | [IGlProgramSpec](./core.iglprogramspec.md) |  |
+|  [transform](./cartesian-2d.gllineflatcapgraphicscomponent.transform.md) |  | [GlTransformProvider](./core.gltransformprovider.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt;, [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt;&gt; |  |
+|  [type](./cartesian-2d.gllineflatcapgraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [getCacheId()](./cartesian-2d.gllineflatcapgraphicscomponent.getcacheid.md) |  |  |
-|  [initialize(entityRenderer)](./cartesian-2d.gllineflatcapgraphicscomponent.initialize.md) |  |  |
-|  [onBeforeUpdate(entityRenderer, updateArg)](./cartesian-2d.gllineflatcapgraphicscomponent.onbeforeupdate.md) |  |  |
-|  [update(entity, entityRenderer, updateArg)](./cartesian-2d.gllineflatcapgraphicscomponent.update.md) |  |  |
+|  [getLinkableBinders()](./cartesian-2d.gllineflatcapgraphicscomponent.getlinkablebinders.md) |  |  |
+|  [initialize(componentRenderer)](./cartesian-2d.gllineflatcapgraphicscomponent.initialize.md) |  |  |
+|  [onBeforeUpdate(componentRenderer, updateArg)](./cartesian-2d.gllineflatcapgraphicscomponent.onbeforeupdate.md) |  |  |
+|  [update(entity, componentRenderer, updateArg)](./cartesian-2d.gllineflatcapgraphicscomponent.update.md) |  |  |
 

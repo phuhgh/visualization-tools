@@ -22,9 +22,9 @@ export interface IInteractionStateChangeCallbacks<TTraits> extends TOnCanvasResi
 |  [onDragEnd($event)](./core.iinteractionstatechangecallbacks.ondragend.md) |  |
 |  [onDragStart(targets, $event)](./core.iinteractionstatechangecallbacks.ondragstart.md) | Return <code>true</code> to indicate that dragging is allowed systemically. To indicate that an entity should be dragged, have the entity's onDragStart return true too. |
 |  [onEntityRequiresUpdate(updateFlag)](./core.iinteractionstatechangecallbacks.onentityrequiresupdate.md) |  |
-|  [onHover(newlyHovered, stillHovered, noLongerHovered, $event)](./core.iinteractionstatechangecallbacks.onhover.md) |  |
+|  [onHover(hoverResult, $event)](./core.iinteractionstatechangecallbacks.onhover.md) |  |
 |  [onPan($event, dx, dy)](./core.iinteractionstatechangecallbacks.onpan.md) |  |
-|  [onPanZoomChange($event, centerPoint, distanceBetweenPoints)](./core.iinteractionstatechangecallbacks.onpanzoomchange.md) |  |
+|  [onPanZoomChange($event, cssCenterPoint, distanceBetweenPoints)](./core.iinteractionstatechangecallbacks.onpanzoomchange.md) |  |
 |  [onPanZoomStart(centerPointCssCanvas, width)](./core.iinteractionstatechangecallbacks.onpanzoomstart.md) |  |
 |  [onWheel($event, dz)](./core.iinteractionstatechangecallbacks.onwheel.md) |  |
 

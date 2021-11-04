@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-static createOne<TEntityRenderer extends ICanvasEntityRenderer, TRequiredTraits>(chart: IChartComponent<TEntityRenderer>, options: ICartesian2dPlotConstructionOptions<Float64Array, TRequiredTraits>): TCanvasCartesianPlot<TEntityRenderer, TRequiredTraits>;
+static createOne<TRequiredTraits>(chart: IChartComponent<ICanvasRenderer>, options: ICartesian2dPlotConstructionOptions<Float64Array, TRequiredTraits>): TCanvasCartesianPlot<TRequiredTraits>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TEntityRenderer&gt; |  |
+|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[ICanvasRenderer](./core.icanvasrenderer.md)<!-- -->&gt; |  |
 |  options | [ICartesian2dPlotConstructionOptions](./cartesian-2d.icartesian2dplotconstructionoptions.md)<!-- -->&lt;Float64Array, TRequiredTraits&gt; |  |
 
 <b>Returns:</b>
 
-[TCanvasCartesianPlot](./cartesian-2d.tcanvascartesianplot.md)<!-- -->&lt;TEntityRenderer, TRequiredTraits&gt;
+[TCanvasCartesianPlot](./cartesian-2d.tcanvascartesianplot.md)<!-- -->&lt;TRequiredTraits&gt;
 

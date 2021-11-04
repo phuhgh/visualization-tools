@@ -22,4 +22,6 @@ export interface ICartesian2dUpdateArg<TArray extends TTypedArray>
 |  [plotDimensionsOBL](./cartesian-2d.icartesian2dupdatearg.plotdimensionsobl.md) | [IPlotDimensions](./core.iplotdimensions.md) | Origin bottom left (OBL). |
 |  [plotDimensionsOTL](./cartesian-2d.icartesian2dupdatearg.plotdimensionsotl.md) | [IPlotDimensions](./core.iplotdimensions.md) | Origin top left (OTL). |
 |  [plotRange](./cartesian-2d.icartesian2dupdatearg.plotrange.md) | IReadonlyRange2d&lt;TArray&gt; | In data space. |
+|  [transformedDataRange](./cartesian-2d.icartesian2dupdatearg.transformeddatarange.md) | IReadonlyRange2d&lt;TArray&gt; |  |
+|  [userTransform](./cartesian-2d.icartesian2dupdatearg.usertransform.md) | [ICartesian2dUserTransform](./cartesian-2d.icartesian2dusertransform.md)<!-- -->&lt;TArray&gt; |  |
 

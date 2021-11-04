@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-createRenderer(): ICanvasEntityRenderer;
+createRenderer(): ICanvasComponentRenderer;
 ```
 <b>Returns:</b>
 
-[ICanvasEntityRenderer](./core.icanvasentityrenderer.md)
+[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)
 

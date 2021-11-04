@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly updateHooks: ICategoryUpdateHooks<IRenderer<TEntityRenderer>, TUpdateArg>;
+readonly updateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, TUpdateArg>;
 ```

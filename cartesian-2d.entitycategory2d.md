@@ -9,9 +9,9 @@ Update category for 2d plots. Provides Z-ordering.
 <b>Signature:</b>
 
 ```typescript
-export declare class EntityCategory2d<TEntityRenderer extends TUnknownEntityRenderer, TPlotRange, TUpdateArg, TRequiredTraits> extends EntityCategory<TEntityRenderer, TPlotRange, TUpdateArg, TRequiredTraits> implements I2dEntityCategoryRead<TUpdateArg, TRequiredTraits> 
+export declare class EntityCategory2d<TComponentRenderer extends TUnknownComponentRenderer, TPlotRange, TUpdateArg, TRequiredTraits> extends EntityCategory<TComponentRenderer, TUpdateArg, TRequiredTraits> implements I2dEntityCategoryRead<TUpdateArg, TRequiredTraits> 
 ```
-<b>Extends:</b> [EntityCategory](./core.entitycategory.md)<!-- -->&lt;TEntityRenderer, TPlotRange, TUpdateArg, TRequiredTraits&gt;
+<b>Extends:</b> [EntityCategory](./core.entitycategory.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TRequiredTraits&gt;
 
 <b>Implements:</b> [I2dEntityCategoryRead](./cartesian-2d.i2dentitycategoryread.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;
 

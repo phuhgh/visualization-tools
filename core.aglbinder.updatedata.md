@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-abstract updateData(connector: TConnector, usage?: GLenum): void;
+abstract updateData(connector: TConnector, changeId: number): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ abstract updateData(connector: TConnector, usage?: GLenum): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  connector | TConnector |  |
-|  usage | GLenum |  |
+|  changeId | number |  |
 
 <b>Returns:</b>
 

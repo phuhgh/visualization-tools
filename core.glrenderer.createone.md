@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static createOne<TCtx extends TGlContext, TExts extends TGlExtensionKeys>(context: TCtx | null, options: IGlRendererOptions<TExts>, localizations?: IErrorLocalization<unknown>, callbacks?: Partial<IRendererCallbacks<TCtx>>): IRenderer<TGlEntityRenderer<TCtx, TExts>> | null;
+static createOne<TCtx extends TGlContext, TExts extends TGlExtensionKeys>(context: TCtx | null, options: IGlRendererOptions<TExts>, localizations?: IErrorLocalization<unknown>, callbacks?: Partial<IRendererCallbacks<TCtx>>): IGlRenderer<TGlComponentRenderer<TCtx, TExts>> | null;
 ```
 
 ## Parameters
@@ -21,5 +21,5 @@ static createOne<TCtx extends TGlContext, TExts extends TGlExtensionKeys>(contex
 
 <b>Returns:</b>
 
-[IRenderer](./core.irenderer.md)<!-- -->&lt;[TGlEntityRenderer](./core.tglentityrenderer.md)<!-- -->&lt;TCtx, TExts&gt;&gt; \| null
+[IGlRenderer](./core.iglrenderer.md)<!-- -->&lt;[TGlComponentRenderer](./core.tglcomponentrenderer.md)<!-- -->&lt;TCtx, TExts&gt;&gt; \| null
 

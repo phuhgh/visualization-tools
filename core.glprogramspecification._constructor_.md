@@ -9,7 +9,7 @@ Constructs a new instance of the `GlProgramSpecification` class
 <b>Signature:</b>
 
 ```typescript
-constructor(vertexShader: IGlShader, fragmentShader: IGlShader, requiredExtensions?: TKeysOf<IGlExtensions>, optionalExtensions?: TKeysOf<IGlExtensions>);
+constructor(vertexShader: IGlShader, fragmentShader: IGlShader, requiredExtensions?: readonly (keyof IGlExtensions)[], optionalExtensions?: readonly (keyof IGlExtensions)[], outAttributes?: readonly string[] | null);
 ```
 
 ## Parameters
@@ -18,6 +18,7 @@ constructor(vertexShader: IGlShader, fragmentShader: IGlShader, requiredExtensio
 |  --- | --- | --- |
 |  vertexShader | [IGlShader](./core.iglshader.md) |  |
 |  fragmentShader | [IGlShader](./core.iglshader.md) |  |
-|  requiredExtensions | TKeysOf&lt;[IGlExtensions](./core.iglextensions.md)<!-- -->&gt; |  |
-|  optionalExtensions | TKeysOf&lt;[IGlExtensions](./core.iglextensions.md)<!-- -->&gt; |  |
+|  requiredExtensions | readonly (keyof [IGlExtensions](./core.iglextensions.md)<!-- -->)\[\] |  |
+|  optionalExtensions | readonly (keyof [IGlExtensions](./core.iglextensions.md)<!-- -->)\[\] |  |
+|  outAttributes | readonly string\[\] \| null |  |
 

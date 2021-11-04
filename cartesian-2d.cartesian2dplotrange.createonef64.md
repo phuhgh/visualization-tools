@@ -7,17 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static createOneF64(maxBounds: Range2d<Float64Array>, dataRange: Range2d<Float64Array>, maxZoom: number, canvasDims: ICanvasDimensions): ICartesian2dPlotRange<Float64Array>;
+static createOneF64(options: ICartesian2dPlotConstructorOptions<Float64Array>): ICartesian2dPlotRange<Float64Array>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  maxBounds | Range2d&lt;Float64Array&gt; |  |
-|  dataRange | Range2d&lt;Float64Array&gt; |  |
-|  maxZoom | number |  |
-|  canvasDims | [ICanvasDimensions](./core.icanvasdimensions.md) |  |
+|  options | [ICartesian2dPlotConstructorOptions](./cartesian-2d.icartesian2dplotconstructoroptions.md)<!-- -->&lt;Float64Array&gt; |  |
 
 <b>Returns:</b>
 

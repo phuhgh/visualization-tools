@@ -9,7 +9,7 @@ All supported attribute and uniform types.
 <b>Signature:</b>
 
 ```typescript
-export declare type TGlBindings = IGlAttribute | GlVec2Uniform | GlVec3Uniform | GlVec4Uniform | GlMat2Uniform | GlMat3Uniform | GlMat4Uniform;
+export declare type TGlBindings = IGlAttribute<TTypedArray> | GlIVec2Uniform | GlIVec3Uniform | GlIVec4Uniform | GlVec2Uniform | GlVec3Uniform | GlVec4Uniform | GlMat2Uniform | GlMat3Uniform | GlMat4Uniform;
 ```
-<b>References:</b> [IGlAttribute](./core.iglattribute.md)<!-- -->, [GlVec2Uniform](./core.glvec2uniform.md)<!-- -->, [GlVec3Uniform](./core.glvec3uniform.md)<!-- -->, [GlVec4Uniform](./core.glvec4uniform.md)<!-- -->, [GlMat2Uniform](./core.glmat2uniform.md)<!-- -->, [GlMat3Uniform](./core.glmat3uniform.md)<!-- -->, [GlMat4Uniform](./core.glmat4uniform.md)
+<b>References:</b> [IGlAttribute](./core.iglattribute.md)<!-- -->, [GlIVec2Uniform](./core.glivec2uniform.md)<!-- -->, [GlIVec3Uniform](./core.glivec3uniform.md)<!-- -->, [GlIVec4Uniform](./core.glivec4uniform.md)<!-- -->, [GlVec2Uniform](./core.glvec2uniform.md)<!-- -->, [GlVec3Uniform](./core.glvec3uniform.md)<!-- -->, [GlVec4Uniform](./core.glvec4uniform.md)<!-- -->, [GlMat2Uniform](./core.glmat2uniform.md)<!-- -->, [GlMat3Uniform](./core.glmat3uniform.md)<!-- -->, [GlMat4Uniform](./core.glmat4uniform.md)
 

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-canvasDimensions: ICanvasDimensions;
+readonly canvasDimensions: ICanvasDimensions;
 ```

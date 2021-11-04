@@ -9,7 +9,13 @@ Canvas implementation of [IRenderer](./core.irenderer.md)<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-export interface ICanvasRenderer extends IRenderer<ICanvasEntityRenderer> 
+export interface ICanvasRenderer extends IRenderer<ICanvasComponentRenderer> 
 ```
-<b>Extends:</b> [IRenderer](./core.irenderer.md)<!-- -->&lt;[ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->&gt;
+<b>Extends:</b> [IRenderer](./core.irenderer.md)<!-- -->&lt;[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->&gt;
+
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [transformComponents](./core.icanvasrenderer.transformcomponents.md) | [ITransformComponentStore](./core.itransformcomponentstore.md)<!-- -->&lt;[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->&gt; |  |
 

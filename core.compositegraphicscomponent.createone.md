@@ -7,17 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-static createOne<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TTraits>(specification: TExtractGcSpec<TEntityRenderer>, graphicsComp: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TTraits>): CompositeGraphicsComponent<TEntityRenderer, TUpdateArg, TTraits>;
+static createOne<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits>(graphicsComp: IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>): TCompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  specification | [TExtractGcSpec](./core.textractgcspec.md)<!-- -->&lt;TEntityRenderer&gt; |  |
-|  graphicsComp | [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TTraits&gt; |  |
+|  graphicsComp | [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt; |  |
 
 <b>Returns:</b>
 
-[CompositeGraphicsComponent](./core.compositegraphicscomponent.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TTraits&gt;
+[TCompositeGraphicsComponent](./core.tcompositegraphicscomponent.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt;
 

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-addGrouping(grouping: EntityUpdateGrouping<TUpdateArg, TRequiredTraits>): void;
+addGrouping(grouping: IEntityUpdateGrouping<TUpdateArg, TRequiredTraits>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  grouping | [EntityUpdateGrouping](./core.entityupdategrouping.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt; |  |
+|  grouping | [IEntityUpdateGrouping](./core.ientityupdategrouping.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt; |  |
 
 <b>Returns:</b>
 

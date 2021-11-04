@@ -4,12 +4,12 @@
 
 ## IGraphicsComponentSpecification interface
 
-The minimum specification of a graphics component such that [IEntityRendererFactory](./core.ientityrendererfactory.md) can generate entity renderers.
+The minimum specification of a graphics component such that [IComponentRendererFactory](./core.icomponentrendererfactory.md) can generate entity renderers.
 
 <b>Signature:</b>
 
 ```typescript
-export interface IGraphicsComponentSpecification<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TEntityTraits> extends ICacheable 
+export interface IGraphicsComponentSpecification<TComponentRenderer extends TUnknownComponentRenderer> extends ICacheable 
 ```
 <b>Extends:</b> [ICacheable](./core.icacheable.md)
 
@@ -17,15 +17,11 @@ export interface IGraphicsComponentSpecification<TEntityRenderer extends TUnknow
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [groupUpdatesByEntity?](./core.igraphicscomponentspecification.groupupdatesbyentity.md) | boolean | <i>(Optional)</i> Instead of batching entities into update groups based on the subcomponents, update entities in turn cycling through the subcomponents. With large shared buffers and few entities this can significantly improve performance. |
-|  [specification](./core.igraphicscomponentspecification.specification.md) | [TExtractGcSpec](./core.textractgcspec.md)<!-- -->&lt;TEntityRenderer&gt; |  |
-|  [subComponents?](./core.igraphicscomponentspecification.subcomponents.md) | [IGraphicsSubComponents](./core.igraphicssubcomponents.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TEntityTraits&gt; | <i>(Optional)</i> |
+|  [specification](./core.igraphicscomponentspecification.specification.md) | [TExtractGcSpec](./core.textractgcspec.md)<!-- -->&lt;TComponentRenderer&gt; |  |
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [initialize(entityRenderer)](./core.igraphicscomponentspecification.initialize.md) |  |
-|  [onBeforeUpdate(entityRenderer, updateArg)](./core.igraphicscomponentspecification.onbeforeupdate.md) | Invariant by entity for a given frame, called either once or entity count times before update, depending on update strategy. |
-|  [update(entity, entityRenderer, updateParameter)](./core.igraphicscomponentspecification.update.md) | Called once per entity per frame. |
+|  [initialize(componentRenderer)](./core.igraphicscomponentspecification.initialize.md) |  |
 

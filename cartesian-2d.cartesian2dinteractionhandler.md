@@ -30,9 +30,9 @@ export declare class Cartesian2dInteractionHandler<TTraits> implements IInteract
 |  [onDragEnd($event)](./cartesian-2d.cartesian2dinteractionhandler.ondragend.md) |  |  |
 |  [onDragStart(targets, $event)](./cartesian-2d.cartesian2dinteractionhandler.ondragstart.md) |  |  |
 |  [onEntityRequiresUpdate(updateFlag)](./cartesian-2d.cartesian2dinteractionhandler.onentityrequiresupdate.md) |  |  |
-|  [onHover(newlyHovered, stillHovered, noLongerHovered, $event)](./cartesian-2d.cartesian2dinteractionhandler.onhover.md) |  |  |
+|  [onHover(hoverResult, $event)](./cartesian-2d.cartesian2dinteractionhandler.onhover.md) |  |  |
 |  [onPan($event, dx, dy)](./cartesian-2d.cartesian2dinteractionhandler.onpan.md) |  |  |
 |  [onPanZoomChange($event, centerPoint, distanceBetweenPoints)](./cartesian-2d.cartesian2dinteractionhandler.onpanzoomchange.md) |  |  |
-|  [onPanZoomStart(centerPointCssCanvas, width)](./cartesian-2d.cartesian2dinteractionhandler.onpanzoomstart.md) |  |  |
+|  [onPanZoomStart(cssCenterPoint, width)](./cartesian-2d.cartesian2dinteractionhandler.onpanzoomstart.md) |  |  |
 |  [onWheel($event, dz)](./cartesian-2d.cartesian2dinteractionhandler.onwheel.md) |  |  |
 

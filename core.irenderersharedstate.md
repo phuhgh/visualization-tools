@@ -23,6 +23,7 @@ export interface IRendererSharedState
 
 |  Method | Description |
 |  --- | --- |
+|  [onContextLost()](./core.irenderersharedstate.oncontextlost.md) |  |
 |  [onNewFrame()](./core.irenderersharedstate.onnewframe.md) |  |
 |  [updateScissorRange(scissorRange)](./core.irenderersharedstate.updatescissorrange.md) |  |
 

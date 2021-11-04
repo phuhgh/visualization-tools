@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-update(entity: TInterleavedPoint2dTrait<TTypedArray>, renderer: ICanvasEntityRenderer, updateArg: ICartesian2dUpdateArg<TTypedArray>): void;
+update(entity: TInterleavedPoint2dTrait<TTypedArray>, renderer: ICanvasComponentRenderer, updateArg: ICartesian2dUpdateArg<TTypedArray>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ update(entity: TInterleavedPoint2dTrait<TTypedArray>, renderer: ICanvasEntityRen
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entity | [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;TTypedArray&gt; |  |
-|  renderer | [ICanvasEntityRenderer](./core.icanvasentityrenderer.md) |  |
+|  renderer | [ICanvasComponentRenderer](./core.icanvascomponentrenderer.md) |  |
 |  updateArg | [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TTypedArray&gt; |  |
 
 <b>Returns:</b>

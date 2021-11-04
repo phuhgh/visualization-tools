@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static setDefaultAxis(plot: ICartesian2dPlot<TGlInstancedEntityRenderer, Float32Array, T2dZIndexesTrait>, options: ICartesian2dPlotConstructionOptions<Float32Array, T2dZIndexesTrait>): void;
+static setDefaultAxis(plot: ICartesian2dPlot<TGlInstancedComponentRenderer, Float32Array, T2dZIndexesTrait>, options: ICartesian2dPlotConstructionOptions<Float32Array, T2dZIndexesTrait>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  plot | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;[TGlInstancedEntityRenderer](./core.tglinstancedentityrenderer.md)<!-- -->, Float32Array, [T2dZIndexesTrait](./cartesian-2d.t2dzindexestrait.md)<!-- -->&gt; |  |
+|  plot | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;[TGlInstancedComponentRenderer](./core.tglinstancedcomponentrenderer.md)<!-- -->, Float32Array, [T2dZIndexesTrait](./cartesian-2d.t2dzindexestrait.md)<!-- -->&gt; |  |
 |  options | [ICartesian2dPlotConstructionOptions](./cartesian-2d.icartesian2dplotconstructionoptions.md)<!-- -->&lt;Float32Array, [T2dZIndexesTrait](./cartesian-2d.t2dzindexestrait.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>

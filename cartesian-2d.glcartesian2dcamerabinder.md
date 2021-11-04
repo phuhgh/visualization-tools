@@ -9,9 +9,9 @@ Provides WebGL bindings for cartesian 2d graphics components.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlCartesian2dCameraBinder extends AGlBinder<ICartesian2dTransforms<Float32Array>, TGlBasicEntityRenderer> implements IGlCartesian2dCameraBinder 
+export declare class GlCartesian2dCameraBinder extends AGlBinder<TGlBasicComponentRenderer, ICartesian2dTransforms<Float32Array>> implements IGlCartesian2dCameraBinder 
 ```
-<b>Extends:</b> [AGlBinder](./core.aglbinder.md)<!-- -->&lt;[ICartesian2dTransforms](./cartesian-2d.icartesian2dtransforms.md)<!-- -->&lt;Float32Array&gt;, [TGlBasicEntityRenderer](./core.tglbasicentityrenderer.md)<!-- -->&gt;
+<b>Extends:</b> [AGlBinder](./core.aglbinder.md)<!-- -->&lt;[TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md)<!-- -->, [ICartesian2dTransforms](./cartesian-2d.icartesian2dtransforms.md)<!-- -->&lt;Float32Array&gt;&gt;
 
 <b>Implements:</b> [IGlCartesian2dCameraBinder](./cartesian-2d.iglcartesian2dcamerabinder.md)
 
@@ -19,6 +19,7 @@ export declare class GlCartesian2dCameraBinder extends AGlBinder<ICartesian2dTra
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [binderClassificationId](./cartesian-2d.glcartesian2dcamerabinder.binderclassificationid.md) |  | symbol |  |
 |  [specification](./cartesian-2d.glcartesian2dcamerabinder.specification.md) |  | [GlProgramSpecification](./core.glprogramspecification.md) |  |
 
 ## Methods
@@ -26,10 +27,11 @@ export declare class GlCartesian2dCameraBinder extends AGlBinder<ICartesian2dTra
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [bindAttributes()](./cartesian-2d.glcartesian2dcamerabinder.bindattributes.md) |  |  |
-|  [bindUniforms(entityRenderer)](./cartesian-2d.glcartesian2dcamerabinder.binduniforms.md) |  |  |
-|  [getCacheId()](./cartesian-2d.glcartesian2dcamerabinder.getcacheid.md) |  |  |
-|  [initialize(entityRenderer)](./cartesian-2d.glcartesian2dcamerabinder.initialize.md) |  |  |
+|  [bindUniforms(componentRenderer)](./cartesian-2d.glcartesian2dcamerabinder.binduniforms.md) |  |  |
+|  [getBinderData(updateArg)](./cartesian-2d.glcartesian2dcamerabinder.getbinderdata.md) |  |  |
+|  [getBinderId()](./cartesian-2d.glcartesian2dcamerabinder.getbinderid.md) |  |  |
+|  [initialize(componentRenderer)](./cartesian-2d.glcartesian2dcamerabinder.initialize.md) |  |  |
 |  [setZ(entity)](./cartesian-2d.glcartesian2dcamerabinder.setz.md) |  |  |
-|  [updateData(camera)](./cartesian-2d.glcartesian2dcamerabinder.updatedata.md) |  |  |
+|  [updateData(transforms, changeId)](./cartesian-2d.glcartesian2dcamerabinder.updatedata.md) |  |  |
 |  [updatePointers()](./cartesian-2d.glcartesian2dcamerabinder.updatepointers.md) |  |  |
 

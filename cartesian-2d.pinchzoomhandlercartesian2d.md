@@ -22,5 +22,5 @@ export declare class PinchZoomHandlerCartesian2d<TArray extends TTypedArray>
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [onPanZoomChange(centerPoint, distanceBetweenPoints)](./cartesian-2d.pinchzoomhandlercartesian2d.onpanzoomchange.md) |  |  |
+|  [onPanZoomChange(cssCenterPoint, distanceBetweenPoints)](./cartesian-2d.pinchzoomhandlercartesian2d.onpanzoomchange.md) |  |  |
 

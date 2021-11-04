@@ -9,15 +9,17 @@ Draws traces for cartesian 2d plots.
 <b>Signature:</b>
 
 ```typescript
-export declare class CanvasCartesian2dTraceGraphicsComponent implements IGraphicsComponentSpecification<ICanvasEntityRenderer, ICartesian2dUpdateArg<Float64Array>, TTrace2dDisplaySettingsTrait & IDataTrait<ICartesian2dTraceEntityConnector<Float64Array>>> 
+export declare class CanvasCartesian2dTraceGraphicsComponent implements IGraphicsComponent<ICanvasComponentRenderer, ICartesian2dUpdateArg<Float64Array>, TTrace2dDisplaySettingsTrait & IDataTrait<ICartesian2dTraceEntityConnector<Float64Array>>> 
 ```
-<b>Implements:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;[ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float64Array&gt;, [TTrace2dDisplaySettingsTrait](./cartesian-2d.ttrace2ddisplaysettingstrait.md) &amp; [IDataTrait](./core.idatatrait.md)<!-- -->&lt;[ICartesian2dTraceEntityConnector](./cartesian-2d.icartesian2dtraceentityconnector.md)<!-- -->&lt;Float64Array&gt;&gt;&gt;
+<b>Implements:</b> [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float64Array&gt;, [TTrace2dDisplaySettingsTrait](./cartesian-2d.ttrace2ddisplaysettingstrait.md) &amp; [IDataTrait](./core.idatatrait.md)<!-- -->&lt;[ICartesian2dTraceEntityConnector](./cartesian-2d.icartesian2dtraceentityconnector.md)<!-- -->&lt;Float64Array&gt;&gt;&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./cartesian-2d.canvascartesian2dtracegraphicscomponent.specification.md) |  | {} |  |
+|  [transform](./cartesian-2d.canvascartesian2dtracegraphicscomponent.transform.md) |  | [NoTransformProvider](./core.notransformprovider.md) |  |
+|  [type](./cartesian-2d.canvascartesian2dtracegraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods
 

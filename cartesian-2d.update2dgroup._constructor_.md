@@ -9,7 +9,7 @@ Constructs a new instance of the `Update2dGroup` class
 <b>Signature:</b>
 
 ```typescript
-constructor(updateArgProvider: IEntityUpdateArgProvider<TPlotRange, TUpdateArg, TRequiredTraits>, categories?: ICategoryStore<I2dEntityCategory<TUnknownEntityRenderer, TUpdateArg, TRequiredTraits>>);
+constructor(updateArgProvider: IEntityUpdateArgProvider<TPlotRange, TUpdateArg, TRequiredTraits>, categories?: ICategoryStore<I2dEntityCategory<TUnknownComponentRenderer, TUpdateArg, TRequiredTraits>>);
 ```
 
 ## Parameters
@@ -17,5 +17,5 @@ constructor(updateArgProvider: IEntityUpdateArgProvider<TPlotRange, TUpdateArg, 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  updateArgProvider | [IEntityUpdateArgProvider](./core.ientityupdateargprovider.md)<!-- -->&lt;TPlotRange, TUpdateArg, TRequiredTraits&gt; |  |
-|  categories | [ICategoryStore](./core.icategorystore.md)<!-- -->&lt;[I2dEntityCategory](./cartesian-2d.i2dentitycategory.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, TUpdateArg, TRequiredTraits&gt;&gt; |  |
+|  categories | [ICategoryStore](./core.icategorystore.md)<!-- -->&lt;[I2dEntityCategory](./cartesian-2d.i2dentitycategory.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, TUpdateArg, TRequiredTraits&gt;&gt; |  |
 

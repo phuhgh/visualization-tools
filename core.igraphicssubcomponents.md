@@ -4,24 +4,18 @@
 
 ## IGraphicsSubComponents interface
 
-Children components of a [CompositeGraphicsComponent](./core.compositegraphicscomponent.md)<!-- -->.
+Children components of a [ICompositeGraphicsComponent](./core.icompositegraphicscomponent.md)<!-- -->.
 
 <b>Signature:</b>
 
 ```typescript
-export interface IGraphicsSubComponents<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TEntityTraits> 
+export interface IGraphicsSubComponents<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TEntityTraits> 
 ```
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [entityRenderers](./core.igraphicssubcomponents.entityrenderers.md) | [TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->\[\] |  |
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
+|  [addComponent(graphicsComp)](./core.igraphicssubcomponents.addcomponent.md) |  |
 |  [getSubComponents()](./core.igraphicssubcomponents.getsubcomponents.md) |  |
-|  [setEntityRenderers(entityRenderers)](./core.igraphicssubcomponents.setentityrenderers.md) |  |
 

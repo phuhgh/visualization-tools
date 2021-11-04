@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-setHighlightColor(rgbaColor: number): void;
+setHighlightColor(rgbaColor: number): number;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ setHighlightColor(rgbaColor: number): void;
 
 <b>Returns:</b>
 
-void
+number
 

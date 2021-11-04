@@ -7,15 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static setBuffer(attribute: IGlAttribute, buffer: GlBuffer): void;
+setBuffer(buffer: IGlBuffer<TArray>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  attribute | [IGlAttribute](./core.iglattribute.md) |  |
-|  buffer | [GlBuffer](./core.glbuffer.md) |  |
+|  buffer | [IGlBuffer](./core.iglbuffer.md)<!-- -->&lt;TArray&gt; |  |
 
 <b>Returns:</b>
 

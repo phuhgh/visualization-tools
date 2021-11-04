@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-static createOne<TEntityRenderer extends TGlEntityRenderer<TGlContext, never>, TRequiredTraits>(chart: IChartComponent<TEntityRenderer>, options: ICartesian2dPlotConstructionOptions<Float32Array, TRequiredTraits>): TGlCartesianPlot<TEntityRenderer, TRequiredTraits>;
+static createOne<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>, TRequiredTraits>(chart: IChartComponent<IGlRenderer<TComponentRenderer>>, options: ICartesian2dPlotConstructionOptions<Float32Array, TRequiredTraits>): TGlCartesianPlot<TComponentRenderer, TRequiredTraits>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TEntityRenderer&gt; |  |
+|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[IGlRenderer](./core.iglrenderer.md)<!-- -->&lt;TComponentRenderer&gt;&gt; |  |
 |  options | [ICartesian2dPlotConstructionOptions](./cartesian-2d.icartesian2dplotconstructionoptions.md)<!-- -->&lt;Float32Array, TRequiredTraits&gt; |  |
 
 <b>Returns:</b>
 
-[TGlCartesianPlot](./cartesian-2d.tglcartesianplot.md)<!-- -->&lt;TEntityRenderer, TRequiredTraits&gt;
+[TGlCartesianPlot](./cartesian-2d.tglcartesianplot.md)<!-- -->&lt;TComponentRenderer, TRequiredTraits&gt;
 

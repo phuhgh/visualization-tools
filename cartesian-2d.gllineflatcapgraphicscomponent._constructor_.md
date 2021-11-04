@@ -9,7 +9,7 @@ Constructs a new instance of the `GlLineFlatCapGraphicsComponent` class
 <b>Signature:</b>
 
 ```typescript
-constructor(cameraBinder: IGlCartesian2dCameraBinder, indexedDataBinder: IGlIndexedPoint2dBinder<Float32Array>);
+constructor(cameraBinder: IGlCartesian2dCameraBinder, indexedBinder: IGlIndexedPoint2dBinder<Float32Array>);
 ```
 
 ## Parameters
@@ -17,5 +17,5 @@ constructor(cameraBinder: IGlCartesian2dCameraBinder, indexedDataBinder: IGlInde
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  cameraBinder | [IGlCartesian2dCameraBinder](./cartesian-2d.iglcartesian2dcamerabinder.md) |  |
-|  indexedDataBinder | [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt; |  |
+|  indexedBinder | [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt; |  |
 

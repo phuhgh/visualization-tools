@@ -9,7 +9,7 @@ WebGL [IChartComponent](./core.ichartcomponent.md)<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-export declare type TGlChart<TExts extends TGlExtensionKeys, TCtx extends TGlContext> = IChartComponent<TGlEntityRenderer<TCtx, TExts>>;
+export declare type TGlChart<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>> = IChartComponent<IGlRenderer<TComponentRenderer>>;
 ```
-<b>References:</b> [TGlExtensionKeys](./core.tglextensionkeys.md)<!-- -->, [TGlContext](./core.tglcontext.md)<!-- -->, [IChartComponent](./core.ichartcomponent.md)<!-- -->, [TGlEntityRenderer](./core.tglentityrenderer.md)
+<b>References:</b> [TGlComponentRenderer](./core.tglcomponentrenderer.md)<!-- -->, [TGlContext](./core.tglcontext.md)<!-- -->, [IChartComponent](./core.ichartcomponent.md)<!-- -->, [IGlRenderer](./core.iglrenderer.md)
 

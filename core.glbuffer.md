@@ -4,19 +4,20 @@
 
 ## GlBuffer class
 
-Dirty checked wrapper of `ARRAY_BUFFER`<!-- -->. Modify via [IGlAttribute](./core.iglattribute.md)<!-- -->.
+Dirty checked wrapper of `WebGLBuffer`<!-- -->. Modify via [IGlAttribute](./core.iglattribute.md)<!-- -->.
 
 <b>Signature:</b>
 
 ```typescript
-export declare class GlBuffer 
+export declare class GlBuffer<TCtor extends TTypedArrayCtor> implements IGlBuffer<InstanceType<TCtor>> 
 ```
+<b>Implements:</b> [IGlBuffer](./core.iglbuffer.md)<!-- -->&lt;InstanceType&lt;TCtor&gt;&gt;
 
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(data)](./core.glbuffer._constructor_.md) |  | Constructs a new instance of the <code>GlBuffer</code> class |
+|  [(constructor)(data, ctor)](./core.glbuffer._constructor_.md) |  | Constructs a new instance of the <code>GlBuffer</code> class |
 
 ## Properties
 
@@ -28,8 +29,12 @@ export declare class GlBuffer
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [bindBuffer(context, usage)](./core.glbuffer.bindbuffer.md) |  |  |
-|  [initialize(entityRenderer)](./core.glbuffer.initialize.md) |  |  |
-|  [overrideValues(context, byteOffset, data, changeId, updateId)](./core.glbuffer.overridevalues.md) |  |  |
+|  [bindArray(context, usage)](./core.glbuffer.bindarray.md) |  |  |
+|  [bindTransform(context, index)](./core.glbuffer.bindtransform.md) |  |  |
+|  [getSubBufferData(context, result)](./core.glbuffer.getsubbufferdata.md) |  |  |
+|  [initialize(componentRenderer)](./core.glbuffer.initialize.md) |  |  |
+|  [onContextLost()](./core.glbuffer.oncontextlost.md) |  |  |
 |  [setData(data, changeId)](./core.glbuffer.setdata.md) |  |  |
+|  [setSize(context, byteSize, usage, changeId)](./core.glbuffer.setsize.md) |  |  |
+|  [setSubBufferData(context, byteOffset, data, changeId, modificationId)](./core.glbuffer.setsubbufferdata.md) |  |  |
 

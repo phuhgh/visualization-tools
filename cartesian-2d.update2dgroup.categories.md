@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly categories: ICategoryStore<I2dEntityCategory<TUnknownEntityRenderer, TUpdateArg, TRequiredTraits>>;
+readonly categories: ICategoryStore<I2dEntityCategory<TUnknownComponentRenderer, TUpdateArg, TRequiredTraits>>;
 ```

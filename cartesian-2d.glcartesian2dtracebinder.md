@@ -9,9 +9,9 @@ Binds trace data to WebGL buffers.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlCartesian2dTraceBinder extends AGlInstancedBinder<TGlTraceEntity, TGlInstancedEntityRenderer> implements IGlTraceBinder 
+export declare class GlCartesian2dTraceBinder extends AGlInstancedBinder<TGlInstancedComponentRenderer, TGlTraceEntity> implements IGlTraceBinder 
 ```
-<b>Extends:</b> [AGlInstancedBinder](./core.aglinstancedbinder.md)<!-- -->&lt;[TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->, [TGlInstancedEntityRenderer](./core.tglinstancedentityrenderer.md)<!-- -->&gt;
+<b>Extends:</b> [AGlInstancedBinder](./core.aglinstancedbinder.md)<!-- -->&lt;[TGlInstancedComponentRenderer](./core.tglinstancedcomponentrenderer.md)<!-- -->, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->&gt;
 
 <b>Implements:</b> [IGlTraceBinder](./cartesian-2d.igltracebinder.md)
 
@@ -19,24 +19,29 @@ export declare class GlCartesian2dTraceBinder extends AGlInstancedBinder<TGlTrac
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)()](./cartesian-2d.glcartesian2dtracebinder._constructor_.md) |  | Constructs a new instance of the <code>GlCartesian2dTraceBinder</code> class |
+|  [(constructor)(bindsOutput)](./cartesian-2d.glcartesian2dtracebinder._constructor_.md) |  | Constructs a new instance of the <code>GlCartesian2dTraceBinder</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [binderClassificationId](./cartesian-2d.glcartesian2dtracebinder.binderclassificationid.md) |  | symbol |  |
+|  [bindings](./cartesian-2d.glcartesian2dtracebinder.bindings.md) |  | { positionAttribute: [IGlAttribute](./core.iglattribute.md)<!-- -->&lt;Float32Array&gt;; configUniform: [GlMat4Uniform](./core.glmat4uniform.md)<!-- -->; } |  |
+|  [bindsOutput](./cartesian-2d.glcartesian2dtracebinder.bindsoutput.md) |  | boolean |  |
+|  [linkId](./cartesian-2d.glcartesian2dtracebinder.linkid.md) |  | symbol |  |
 |  [specification](./cartesian-2d.glcartesian2dtracebinder.specification.md) |  | [IGlProgramSpec](./core.iglprogramspec.md) |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [bindAttributes(entityRenderer)](./cartesian-2d.glcartesian2dtracebinder.bindattributes.md) |  |  |
-|  [bindInstanced(entityRenderer, divisor, usage)](./cartesian-2d.glcartesian2dtracebinder.bindinstanced.md) |  |  |
-|  [bindUniforms(entityRenderer)](./cartesian-2d.glcartesian2dtracebinder.binduniforms.md) |  |  |
-|  [getCacheId()](./cartesian-2d.glcartesian2dtracebinder.getcacheid.md) |  |  |
-|  [initialize(entityRenderer)](./cartesian-2d.glcartesian2dtracebinder.initialize.md) |  |  |
-|  [mergeBuffers(binders)](./cartesian-2d.glcartesian2dtracebinder.mergebuffers.md) |  |  |
-|  [updateData(entity)](./cartesian-2d.glcartesian2dtracebinder.updatedata.md) |  |  |
+|  [bindAttributes(componentRenderer)](./cartesian-2d.glcartesian2dtracebinder.bindattributes.md) |  |  |
+|  [bindInstanced(componentRenderer, divisor, usage)](./cartesian-2d.glcartesian2dtracebinder.bindinstanced.md) |  |  |
+|  [bindUniforms(componentRenderer)](./cartesian-2d.glcartesian2dtracebinder.binduniforms.md) |  |  |
+|  [getBinderId()](./cartesian-2d.glcartesian2dtracebinder.getbinderid.md) |  |  |
+|  [getTransformBinder()](./cartesian-2d.glcartesian2dtracebinder.gettransformbinder.md) |  |  |
+|  [initialize(componentRenderer)](./cartesian-2d.glcartesian2dtracebinder.initialize.md) |  |  |
+|  [link(binders)](./cartesian-2d.glcartesian2dtracebinder.link.md) |  |  |
+|  [updateData(entity, changeId)](./cartesian-2d.glcartesian2dtracebinder.updatedata.md) |  |  |
 |  [updatePointers()](./cartesian-2d.glcartesian2dtracebinder.updatepointers.md) |  |  |
 

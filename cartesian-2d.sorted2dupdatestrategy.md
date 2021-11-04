@@ -4,7 +4,7 @@
 
 ## Sorted2dUpdateStrategy class
 
-Sorts entities according to [IScene2d](./cartesian-2d.iscene2d.md) and then batches entities to minimize draw calls. Respects [IGraphicsComponentSpecification.groupUpdatesByEntity](./core.igraphicscomponentspecification.groupupdatesbyentity.md) flag.
+Sorts entities according to [IScene2d](./cartesian-2d.iscene2d.md) and then batches entities to minimize draw calls. Respects  flag.
 
 <b>Signature:</b>
 
@@ -17,7 +17,7 @@ export declare class Sorted2dUpdateStrategy<TPlotRange, TUpdateArg, TRequiredTra
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(plot, updateGroup, scene)](./cartesian-2d.sorted2dupdatestrategy._constructor_.md) |  | Constructs a new instance of the <code>Sorted2dUpdateStrategy</code> class |
+|  [(constructor)(plot, updateGroup, scene, getUserTransform)](./cartesian-2d.sorted2dupdatestrategy._constructor_.md) |  | Constructs a new instance of the <code>Sorted2dUpdateStrategy</code> class |
 
 ## Properties
 

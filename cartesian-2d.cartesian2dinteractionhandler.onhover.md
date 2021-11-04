@@ -7,16 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-onHover(newlyHovered: readonly HitTestResult<unknown, TTraits>[], stillHovered: readonly HitTestResult<unknown, TTraits>[], noLongerHovered: readonly HitTestResult<unknown, TTraits>[], $event: IChartPointerEvent<PointerEvent>): void;
+onHover(hoverResult: IOnHoverResult<TTraits>, $event: IChartPointerEvent<PointerEvent>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  newlyHovered | readonly [HitTestResult](./core.hittestresult.md)<!-- -->&lt;unknown, TTraits&gt;\[\] |  |
-|  stillHovered | readonly [HitTestResult](./core.hittestresult.md)<!-- -->&lt;unknown, TTraits&gt;\[\] |  |
-|  noLongerHovered | readonly [HitTestResult](./core.hittestresult.md)<!-- -->&lt;unknown, TTraits&gt;\[\] |  |
+|  hoverResult | [IOnHoverResult](./core.ionhoverresult.md)<!-- -->&lt;TTraits&gt; |  |
 |  $event | [IChartPointerEvent](./core.ichartpointerevent.md)<!-- -->&lt;PointerEvent&gt; |  |
 
 <b>Returns:</b>

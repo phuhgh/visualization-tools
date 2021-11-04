@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-static setDefaultAxis(plot: ICartesian2dPlot<ICanvasEntityRenderer, Float64Array, T2dZIndexesTrait>, options: ICartesian2dPlotConstructionOptions<Float64Array, T2dZIndexesTrait>, attachPoint: IGraphAttachPoint): void;
+static setDefaultAxis(plot: ICartesian2dPlot<ICanvasComponentRenderer, Float64Array, T2dZIndexesTrait>, options: ICartesian2dPlotConstructionOptions<Float64Array, T2dZIndexesTrait>, chart: IChartComponent<ICanvasRenderer>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  plot | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;[ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->, Float64Array, [T2dZIndexesTrait](./cartesian-2d.t2dzindexestrait.md)<!-- -->&gt; |  |
+|  plot | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->, Float64Array, [T2dZIndexesTrait](./cartesian-2d.t2dzindexestrait.md)<!-- -->&gt; |  |
 |  options | [ICartesian2dPlotConstructionOptions](./cartesian-2d.icartesian2dplotconstructionoptions.md)<!-- -->&lt;Float64Array, [T2dZIndexesTrait](./cartesian-2d.t2dzindexestrait.md)<!-- -->&gt; |  |
-|  attachPoint | [IGraphAttachPoint](./core.igraphattachpoint.md) |  |
+|  chart | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[ICanvasRenderer](./core.icanvasrenderer.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

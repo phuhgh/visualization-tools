@@ -22,8 +22,8 @@ export declare class RenderList<TUpdateArg, TRequiredTraits>
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [entitiesInGroup](./core.renderlist.entitiesingroup.md) |  | [TEntityTrait](./core.tentitytrait.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;\[\] |  |
-|  [groupings](./core.renderlist.groupings.md) |  | \[[EntityUpdateGrouping](./core.entityupdategrouping.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;, [TEntityTrait](./core.tentitytrait.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;\[\]\]\[\] |  |
+|  [groupings](./core.renderlist.groupings.md) |  | \[[IEntityUpdateGrouping](./core.ientityupdategrouping.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;, [TEntityTrait](./core.tentitytrait.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;\[\]\]\[\] |  |
+|  [uniqueEntities](./core.renderlist.uniqueentities.md) |  | [TEntityTrait](./core.tentitytrait.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;\[\] |  |
 |  [updateGroupHooks](./core.renderlist.updategrouphooks.md) |  | [ICategoryUpdateHooks](./core.icategoryupdatehooks.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->, TUpdateArg&gt; |  |
 
 ## Methods

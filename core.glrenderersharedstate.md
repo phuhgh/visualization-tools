@@ -34,6 +34,7 @@ export declare class GlRendererSharedState implements IGlRendererSharedState
 |  --- | --- | --- |
 |  [claimTextureUnit()](./core.glrenderersharedstate.claimtextureunit.md) |  |  |
 |  [clearScissor()](./core.glrenderersharedstate.clearscissor.md) |  |  |
+|  [onContextLost()](./core.glrenderersharedstate.oncontextlost.md) |  |  |
 |  [onNewFrame()](./core.glrenderersharedstate.onnewframe.md) |  |  |
 |  [setContext(context)](./core.glrenderersharedstate.setcontext.md) |  |  |
 |  [updateScissorRange(range)](./core.glrenderersharedstate.updatescissorrange.md) |  |  |

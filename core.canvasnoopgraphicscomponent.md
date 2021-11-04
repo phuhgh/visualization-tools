@@ -9,15 +9,17 @@ A graphics component for canvas renderer that doesn't draw.
 <b>Signature:</b>
 
 ```typescript
-export declare class CanvasNoOpGraphicsComponent implements IGraphicsComponentSpecification<TUnknownEntityRenderer, unknown, unknown> 
+export declare class CanvasNoOpGraphicsComponent implements IGraphicsComponent<TUnknownComponentRenderer, unknown, unknown> 
 ```
-<b>Implements:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, unknown, unknown&gt;
+<b>Implements:</b> [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, unknown, unknown&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./core.canvasnoopgraphicscomponent.specification.md) |  | {} |  |
+|  [transform](./core.canvasnoopgraphicscomponent.transform.md) |  | [NoTransformProvider](./core.notransformprovider.md) |  |
+|  [type](./core.canvasnoopgraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods
 

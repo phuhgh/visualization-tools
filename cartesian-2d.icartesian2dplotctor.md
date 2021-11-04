@@ -8,14 +8,14 @@
 <b>Signature:</b>
 
 ```typescript
-export interface ICartesian2dPlotCtor<TEntityRenderer extends TUnknownEntityRenderer, TArray extends TTypedArray, TRequiredTraits> 
+export interface ICartesian2dPlotCtor<TComponentRenderer extends TUnknownComponentRenderer, TArray extends TTypedArray, TRequiredTraits> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [prototype](./cartesian-2d.icartesian2dplotctor.prototype.md) | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;TEntityRenderer, TArray, TRequiredTraits&gt; |  |
+|  [prototype](./cartesian-2d.icartesian2dplotctor.prototype.md) | [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->&lt;TComponentRenderer, TArray, TRequiredTraits&gt; |  |
 
 ## Methods
 

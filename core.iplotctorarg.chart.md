@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-readonly chart: IChartComponent<TUnknownEntityRenderer>;
+readonly chart: IChartComponent<TUnknownRenderer>;
 ```

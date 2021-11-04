@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-onBeforeUpdate(entityRenderer: TGl2EntityRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void;
+onBeforeUpdate(componentRenderer: TGl2ComponentRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entityRenderer | [TGl2EntityRenderer](./core.tgl2entityrenderer.md) |  |
+|  componentRenderer | [TGl2ComponentRenderer](./core.tgl2componentrenderer.md) |  |
 |  updateArg | [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt; |  |
 
 <b>Returns:</b>

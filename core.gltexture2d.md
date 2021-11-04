@@ -9,8 +9,9 @@ Currently only supports canvas as texture.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlTexture2d 
+export declare class GlTexture2d implements IGlTexture2d 
 ```
+<b>Implements:</b> [IGlTexture2d](./core.igltexture2d.md)
 
 ## Constructors
 
@@ -30,7 +31,8 @@ export declare class GlTexture2d
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [bind(entityRenderer)](./core.gltexture2d.bind.md) |  |  |
-|  [initialize(entityRenderer)](./core.gltexture2d.initialize.md) |  |  |
+|  [bind(componentRenderer)](./core.gltexture2d.bind.md) |  |  |
+|  [initialize(componentRenderer)](./core.gltexture2d.initialize.md) |  |  |
+|  [onContextLost()](./core.gltexture2d.oncontextlost.md) |  |  |
 |  [updateData(canvas)](./core.gltexture2d.updatedata.md) |  |  |
 

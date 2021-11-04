@@ -9,13 +9,13 @@ Constructs a new instance of the `CompositeGraphicsComponent` class
 <b>Signature:</b>
 
 ```typescript
-constructor(specification: TExtractGcSpec<TEntityRenderer>, graphicsComp: IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TTraits>);
+constructor(graphicsComp: IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>, groupUpdatesByEntity: boolean);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  specification | [TExtractGcSpec](./core.textractgcspec.md)<!-- -->&lt;TEntityRenderer&gt; |  |
-|  graphicsComp | [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TTraits&gt; |  |
+|  graphicsComp | [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt; |  |
+|  groupUpdatesByEntity | boolean |  |
 

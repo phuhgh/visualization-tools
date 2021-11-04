@@ -9,9 +9,9 @@ Emitted on plot being removed from [IChartComponent](./core.ichartcomponent.md)<
 <b>Signature:</b>
 
 ```typescript
-export declare class OnPlotDetached<TEntityRenderer extends TUnknownEntityRenderer> implements TOnPlotDetached<TEntityRenderer> 
+export declare class OnPlotDetached<TRenderer extends TUnknownRenderer> implements TOnPlotDetached<TRenderer> 
 ```
-<b>Implements:</b> [TOnPlotDetached](./core.tonplotdetached.md)<!-- -->&lt;TEntityRenderer&gt;
+<b>Implements:</b> [TOnPlotDetached](./core.tonplotdetached.md)<!-- -->&lt;TRenderer&gt;
 
 ## Constructors
 
@@ -24,7 +24,7 @@ export declare class OnPlotDetached<TEntityRenderer extends TUnknownEntityRender
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [callbackKey](./core.onplotdetached.callbackkey.md) | <code>static</code> | "onPlotDetached" |  |
-|  [onPlotDetached](./core.onplotdetached.onplotdetached.md) |  | (...args: [TOnPlotDetachedArgs](./core.tonplotdetachedargs.md)<!-- -->&lt;TEntityRenderer&gt;) =&gt; void |  |
+|  [onPlotDetached](./core.onplotdetached.onplotdetached.md) |  | (...args: [TOnPlotDetachedArgs](./core.tonplotdetachedargs.md)<!-- -->&lt;TRenderer&gt;) =&gt; void |  |
 
 ## Methods
 

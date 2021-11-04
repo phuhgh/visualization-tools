@@ -9,12 +9,13 @@ Constructs a new instance of the `GlBuffer` class
 <b>Signature:</b>
 
 ```typescript
-constructor(data: TTypedArray | null);
+constructor(data: InstanceType<TCtor> | null, ctor: TCtor);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  data | TTypedArray \| null |  |
+|  data | InstanceType&lt;TCtor&gt; \| null |  |
+|  ctor | TCtor |  |
 

@@ -9,7 +9,7 @@ Canvas [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-export declare type TCanvasCartesianPlot<TEntityRenderer extends ICanvasEntityRenderer, TRequiredTraits> = ICartesian2dPlot<TEntityRenderer, Float64Array, TRequiredTraits>;
+export declare type TCanvasCartesianPlot<TRequiredTraits> = ICartesian2dPlot<ICanvasComponentRenderer, Float64Array, TRequiredTraits>;
 ```
-<b>References:</b> [ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->, [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)
+<b>References:</b> [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->, [ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)
 

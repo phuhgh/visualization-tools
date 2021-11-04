@@ -23,7 +23,7 @@ export declare class Cartesian2dPlotCtorArg<TArray extends TTypedArray, TRequire
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [chart](./cartesian-2d.cartesian2dplotctorarg.chart.md) |  | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->&gt; |  |
+|  [chart](./cartesian-2d.cartesian2dplotctorarg.chart.md) |  | [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
 |  [plotArea](./cartesian-2d.cartesian2dplotctorarg.plotarea.md) |  | [IPlotArea](./core.iplotarea.md) |  |
 |  [plotOptions](./cartesian-2d.cartesian2dplotctorarg.plotoptions.md) |  | [ICartesian2dPlotConstructionOptions](./cartesian-2d.icartesian2dplotconstructionoptions.md)<!-- -->&lt;TArray, TRequiredTraits&gt; |  |
 

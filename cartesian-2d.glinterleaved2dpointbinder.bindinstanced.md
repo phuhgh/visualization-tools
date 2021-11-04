@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-bindInstanced(entityRenderer: TGl2EntityRenderer, divisor: number, usage?: GLenum): void;
+bindInstanced(componentRenderer: TGl2ComponentRenderer, divisor: number, usage?: GLenum): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entityRenderer | [TGl2EntityRenderer](./core.tgl2entityrenderer.md) |  |
+|  componentRenderer | [TGl2ComponentRenderer](./core.tgl2componentrenderer.md) |  |
 |  divisor | number |  |
 |  usage | GLenum |  |
 

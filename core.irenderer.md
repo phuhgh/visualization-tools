@@ -9,25 +9,26 @@ Base wrapper for the underlying drawing technology, use to get specific drawing 
 <b>Signature:</b>
 
 ```typescript
-export interface IRenderer<TEntityRenderer extends TUnknownEntityRenderer> 
+export interface IRenderer<TComponentRenderer extends TUnknownComponentRenderer> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [context](./core.irenderer.context.md) | [TExtractGcContext](./core.textractgccontext.md)<!-- -->&lt;TEntityRenderer&gt; |  |
-|  [entityRendererFactory](./core.irenderer.entityrendererfactory.md) | [IEntityRendererFactory](./core.ientityrendererfactory.md)<!-- -->&lt;[TExtractGcSpec](./core.textractgcspec.md)<!-- -->&lt;TEntityRenderer&gt;, TEntityRenderer&gt; |  |
-|  [entityRendererProvider](./core.irenderer.entityrendererprovider.md) | [IEntityRendererProvider](./core.ientityrendererprovider.md)<!-- -->&lt;TEntityRenderer&gt; |  |
-|  [graphicsComponents](./core.irenderer.graphicscomponents.md) | [TChartGraphicsComponents](./core.tchartgraphicscomponents.md)<!-- -->&lt;TEntityRenderer&gt; |  |
+|  [componentRendererFactory](./core.irenderer.componentrendererfactory.md) | [IComponentRendererFactory](./core.icomponentrendererfactory.md)<!-- -->&lt;[TExtractGcSpec](./core.textractgcspec.md)<!-- -->&lt;TComponentRenderer&gt;, TComponentRenderer&gt; |  |
+|  [componentRendererProvider](./core.irenderer.componentrendererprovider.md) | [IComponentRendererProvider](./core.icomponentrendererprovider.md)<!-- -->&lt;TComponentRenderer&gt; |  |
+|  [context](./core.irenderer.context.md) | [TExtractGcContext](./core.textractgccontext.md)<!-- -->&lt;TComponentRenderer&gt; |  |
+|  [graphicsComponents](./core.irenderer.graphicscomponents.md) | [IGraphicsComponentStore](./core.igraphicscomponentstore.md)<!-- -->&lt;TComponentRenderer&gt; |  |
 |  [sharedState](./core.irenderer.sharedstate.md) | [IRendererSharedState](./core.irenderersharedstate.md) |  |
+|  [transformComponents](./core.irenderer.transformcomponents.md) | [ITransformComponentStore](./core.itransformcomponentstore.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->&gt; |  |
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [createCompositeGraphicsComponent(graphicsComp, plot)](./core.irenderer.createcompositegraphicscomponent.md) |  |
 |  [onAfterPlotDraw()](./core.irenderer.onafterplotdraw.md) |  |
 |  [onBeforePlotDraw(plot, canvasDims)](./core.irenderer.onbeforeplotdraw.md) |  |
+|  [onContextLost()](./core.irenderer.oncontextlost.md) |  |
 |  [onContextRegained(context)](./core.irenderer.oncontextregained.md) |  |
 

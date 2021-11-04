@@ -9,7 +9,13 @@ Binds trace data to WebGL buffers.
 <b>Signature:</b>
 
 ```typescript
-export interface IGlTraceBinder extends IGlInstancedBinder<TGlTraceEntity, TGlInstancedEntityRenderer> 
+export interface IGlTraceBinder extends IGlInstancedBinder<TGlInstancedComponentRenderer, TGlTraceEntity>, ILinkableBinder<TGlInstancedComponentRenderer>, ITransformBinderProvider<IGlTraceTransformBinder> 
 ```
-<b>Extends:</b> [IGlInstancedBinder](./core.iglinstancedbinder.md)<!-- -->&lt;[TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->, [TGlInstancedEntityRenderer](./core.tglinstancedentityrenderer.md)<!-- -->&gt;
+<b>Extends:</b> [IGlInstancedBinder](./core.iglinstancedbinder.md)<!-- -->&lt;[TGlInstancedComponentRenderer](./core.tglinstancedcomponentrenderer.md)<!-- -->, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->&gt;, [ILinkableBinder](./core.ilinkablebinder.md)<!-- -->&lt;[TGlInstancedComponentRenderer](./core.tglinstancedcomponentrenderer.md)<!-- -->&gt;, [ITransformBinderProvider](./core.itransformbinderprovider.md)<!-- -->&lt;[IGlTraceTransformBinder](./cartesian-2d.igltracetransformbinder.md)<!-- -->&gt;
+
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [bindsOutput](./cartesian-2d.igltracebinder.bindsoutput.md) | boolean |  |
 

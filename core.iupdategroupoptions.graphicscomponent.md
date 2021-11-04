@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-graphicsComponent: IGraphicsComponent<TUnknownEntityRenderer, TUpdateArg, unknown>;
+graphicsComponent: TGraphicsComponent<TUnknownComponentRenderer, TUpdateArg, unknown>;
 ```

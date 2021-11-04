@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-onPanZoomChange(centerPoint: IReadonlyVec2<Float32Array>, distanceBetweenPoints: number): void;
+onPanZoomChange(cssCenterPoint: IReadonlyVec2<Float32Array>, distanceBetweenPoints: number): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  centerPoint | IReadonlyVec2&lt;Float32Array&gt; |  |
+|  cssCenterPoint | IReadonlyVec2&lt;Float32Array&gt; |  |
 |  distanceBetweenPoints | number |  |
 
 <b>Returns:</b>

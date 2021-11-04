@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-update(entity: TInterleavedPoint2dTrait<Float32Array>, entityRenderer: TGl2EntityRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void;
+update(entity: TInterleavedPoint2dTrait<Float32Array>, componentRenderer: TGl2ComponentRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ update(entity: TInterleavedPoint2dTrait<Float32Array>, entityRenderer: TGl2Entit
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entity | [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt; |  |
-|  entityRenderer | [TGl2EntityRenderer](./core.tgl2entityrenderer.md) |  |
+|  componentRenderer | [TGl2ComponentRenderer](./core.tgl2componentrenderer.md) |  |
 |  updateArg | [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt; |  |
 
 <b>Returns:</b>

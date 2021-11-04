@@ -9,9 +9,9 @@ Emitted on plot attaching to chart.
 <b>Signature:</b>
 
 ```typescript
-export declare class OnPlotAttached<TEntityRenderer extends TUnknownEntityRenderer> implements TOnPlotAttached<TEntityRenderer> 
+export declare class OnPlotAttached<TRenderer extends TUnknownRenderer> implements TOnPlotAttached<TRenderer> 
 ```
-<b>Implements:</b> [TOnPlotAttached](./core.tonplotattached.md)<!-- -->&lt;TEntityRenderer&gt;
+<b>Implements:</b> [TOnPlotAttached](./core.tonplotattached.md)<!-- -->&lt;TRenderer&gt;
 
 ## Constructors
 
@@ -24,7 +24,7 @@ export declare class OnPlotAttached<TEntityRenderer extends TUnknownEntityRender
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [callbackKey](./core.onplotattached.callbackkey.md) | <code>static</code> | "onPlotAttached" |  |
-|  [onPlotAttached](./core.onplotattached.onplotattached.md) |  | (chart: [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TEntityRenderer&gt;) =&gt; void |  |
+|  [onPlotAttached](./core.onplotattached.onplotattached.md) |  | (chart: [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;TRenderer&gt;) =&gt; void |  |
 
 ## Methods
 

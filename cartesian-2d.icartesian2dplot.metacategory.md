@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-metaCategory: IEntityCategory<TEntityRenderer, ICartesian2dUpdateArg<TArray>, TRequiredTraits>;
+metaCategory: IEntityCategory<TComponentRenderer, ICartesian2dUpdateArg<TArray>, TRequiredTraits>;
 ```

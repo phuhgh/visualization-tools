@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface I2dEntityCategory<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TRequiredTraits> extends IEntityCategory<TEntityRenderer, TUpdateArg, TRequiredTraits>, I2dEntityCategoryRead<TUpdateArg, TRequiredTraits> 
+export interface I2dEntityCategory<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TRequiredTraits> extends IEntityCategory<TComponentRenderer, TUpdateArg, TRequiredTraits>, I2dEntityCategoryRead<TUpdateArg, TRequiredTraits> 
 ```
-<b>Extends:</b> [IEntityCategory](./core.ientitycategory.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TRequiredTraits&gt;, [I2dEntityCategoryRead](./cartesian-2d.i2dentitycategoryread.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;
+<b>Extends:</b> [IEntityCategory](./core.ientitycategory.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TRequiredTraits&gt;, [I2dEntityCategoryRead](./cartesian-2d.i2dentitycategoryread.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;
 

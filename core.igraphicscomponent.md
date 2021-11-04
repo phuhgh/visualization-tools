@@ -9,7 +9,22 @@ Base graphics component.
 <b>Signature:</b>
 
 ```typescript
-export interface IGraphicsComponent<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TEntityTraits> extends IGraphicsComponentSpecification<TEntityRenderer, TUpdateArg, TEntityTraits> 
+export interface IGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TEntityTraits> extends IGraphicsComponentSpecification<TComponentRenderer> 
 ```
-<b>Extends:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;TEntityRenderer, TUpdateArg, TEntityTraits&gt;
+<b>Extends:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;TComponentRenderer&gt;
+
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [transform](./core.igraphicscomponent.transform.md) | [ITransformProvider](./core.itransformprovider.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, TUpdateArg, TEntityTraits&gt; |  |
+|  [type](./core.igraphicscomponent.type.md) | [EGraphicsComponentType.Entity](./core.egraphicscomponenttype.entity.md) |  |
+
+## Methods
+
+|  Method | Description |
+|  --- | --- |
+|  [initialize(componentRenderer)](./core.igraphicscomponent.initialize.md) |  |
+|  [onBeforeUpdate(componentRenderer, updateArg)](./core.igraphicscomponent.onbeforeupdate.md) | Invariant by entity for a given frame, called either once or entity count times before update, depending on update strategy. |
+|  [update(entity, componentRenderer, updateParameter)](./core.igraphicscomponent.update.md) | Called once per entity per frame. |
 

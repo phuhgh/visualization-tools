@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-groupUpdatesByEntity?: boolean;
+readonly groupUpdatesByEntity: boolean;
 ```

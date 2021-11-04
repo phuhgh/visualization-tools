@@ -9,7 +9,7 @@ Canvas chart.
 <b>Signature:</b>
 
 ```typescript
-export declare type TCanvasChart = IChartComponent<ICanvasEntityRenderer>;
+export declare type TCanvasChart = IChartComponent<ICanvasRenderer>;
 ```
-<b>References:</b> [IChartComponent](./core.ichartcomponent.md)<!-- -->, [ICanvasEntityRenderer](./core.icanvasentityrenderer.md)
+<b>References:</b> [IChartComponent](./core.ichartcomponent.md)<!-- -->, [ICanvasRenderer](./core.icanvasrenderer.md)
 

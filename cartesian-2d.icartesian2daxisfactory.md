@@ -8,12 +8,12 @@
 <b>Signature:</b>
 
 ```typescript
-export interface ICartesian2dAxisFactory<TEntityRenderer extends TUnknownEntityRenderer, TArray extends TTypedArray, TRequiredTraits> 
+export interface ICartesian2dAxisFactory<TComponentRenderer extends TUnknownComponentRenderer, TArray extends TTypedArray, TRequiredTraits> 
 ```
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [setDefaultAxis(plot, options, attachPoint)](./cartesian-2d.icartesian2daxisfactory.setdefaultaxis.md) |  |
+|  [setDefaultAxis(plot, options, chartComponent)](./cartesian-2d.icartesian2daxisfactory.setdefaultaxis.md) |  |
 

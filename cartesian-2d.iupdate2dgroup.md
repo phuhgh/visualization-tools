@@ -18,6 +18,6 @@ export interface IUpdate2dGroup<TPlotRange, TUpdateArg, TRequiredTraits> extends
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [categories](./cartesian-2d.iupdate2dgroup.categories.md) | [ICategoryStore](./core.icategorystore.md)<!-- -->&lt;[I2dEntityCategoryRead](./cartesian-2d.i2dentitycategoryread.md)<!-- -->&lt;TUpdateArg, TRequiredTraits&gt;&gt; |  |
-|  [graphicsComponents](./cartesian-2d.iupdate2dgroup.graphicscomponents.md) | [IEntityComponentStore](./core.ientitycomponentstore.md)<!-- -->&lt;[TUnknownEntity](./core.tunknownentity.md)<!-- -->, [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[TUnknownEntityRenderer](./core.tunknownentityrenderer.md)<!-- -->, TUpdateArg, unknown&gt;&gt; |  |
+|  [graphicsComponents](./cartesian-2d.iupdate2dgroup.graphicscomponents.md) | [IEntityComponentStore](./core.ientitycomponentstore.md)<!-- -->&lt;[TUnknownEntity](./core.tunknownentity.md)<!-- -->, [TGraphicsComponent](./core.tgraphicscomponent.md)<!-- -->&lt;[TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, TUpdateArg, unknown&gt;&gt; |  |
 |  [updateArgProvider](./cartesian-2d.iupdate2dgroup.updateargprovider.md) | [IEntityUpdateArgProvider](./core.ientityupdateargprovider.md)<!-- -->&lt;TPlotRange, TUpdateArg, TRequiredTraits&gt; |  |
 

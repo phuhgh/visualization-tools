@@ -9,7 +9,7 @@ The mutative methods of an [IEntityCategory](./core.ientitycategory.md)<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-export interface IEntityCategoryWrite<TEntityRenderer extends TUnknownEntityRenderer, TUpdateArg, TRequiredTraits> 
+export interface IEntityCategoryWrite<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TRequiredTraits> 
 ```
 
 ## Methods

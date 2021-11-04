@@ -29,6 +29,6 @@ export declare class SharedInterleavedPoint2dQuadIndexer<TArray extends TTypedAr
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [addToTree(tree, entity, worldTransform, userTransform)](./cartesian-2d.sharedinterleavedpoint2dquadindexer.addtotree.md) |  |  |
 |  [createOne(wrapper, prefix, inputType)](./cartesian-2d.sharedinterleavedpoint2dquadindexer.createone.md) | <code>static</code> |  |
-|  [update(tree, entity, worldTransform)](./cartesian-2d.sharedinterleavedpoint2dquadindexer.update.md) |  |  |
 

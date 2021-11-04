@@ -4,20 +4,20 @@
 
 ## CanvasRendererFactory class
 
-Canvas [IEntityRendererFactory](./core.ientityrendererfactory.md)<!-- -->.
+Canvas [IComponentRendererFactory](./core.icomponentrendererfactory.md)<!-- -->.
 
 <b>Signature:</b>
 
 ```typescript
-export declare class CanvasRendererFactory implements IEntityRendererFactory<object, ICanvasEntityRenderer> 
+export declare class CanvasRendererFactory implements IComponentRendererFactory<object, ICanvasComponentRenderer> 
 ```
-<b>Implements:</b> [IEntityRendererFactory](./core.ientityrendererfactory.md)<!-- -->&lt;object, [ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->&gt;
+<b>Implements:</b> [IComponentRendererFactory](./core.icomponentrendererfactory.md)<!-- -->&lt;object, [ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->&gt;
 
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(entityRenderer)](./core.canvasrendererfactory._constructor_.md) |  | Constructs a new instance of the <code>CanvasRendererFactory</code> class |
+|  [(constructor)(componentRenderer)](./core.canvasrendererfactory._constructor_.md) |  | Constructs a new instance of the <code>CanvasRendererFactory</code> class |
 
 ## Methods
 

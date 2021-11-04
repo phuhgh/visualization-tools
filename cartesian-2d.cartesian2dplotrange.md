@@ -17,7 +17,7 @@ export declare class Cartesian2dPlotRange<TArray extends TTypedArray> implements
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(maxBounds, dataRange, maxZoom, canvasDims, interactionBounder)](./cartesian-2d.cartesian2dplotrange._constructor_.md) |  | Constructs a new instance of the <code>Cartesian2dPlotRange</code> class |
+|  [(constructor)(maxBounds, dataRange, maxZoom, canvasDims, interactionBounder, userTransform)](./cartesian-2d.cartesian2dplotrange._constructor_.md) |  | Constructs a new instance of the <code>Cartesian2dPlotRange</code> class |
 
 ## Properties
 
@@ -26,13 +26,15 @@ export declare class Cartesian2dPlotRange<TArray extends TTypedArray> implements
 |  [dataRange](./cartesian-2d.cartesian2dplotrange.datarange.md) |  | Range2d&lt;TArray&gt; |  |
 |  [maxBounds](./cartesian-2d.cartesian2dplotrange.maxbounds.md) |  | Range2d&lt;TArray&gt; |  |
 |  [minRange](./cartesian-2d.cartesian2dplotrange.minrange.md) |  | Range2d&lt;TArray&gt; |  |
+|  [transformedDataRange](./cartesian-2d.cartesian2dplotrange.transformeddatarange.md) |  | IReadonlyRange2d&lt;TArray&gt; |  |
+|  [userTransform](./cartesian-2d.cartesian2dplotrange.usertransform.md) |  | [ICartesian2dUserTransform](./cartesian-2d.icartesian2dusertransform.md)<!-- -->&lt;TArray&gt; |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [createOneF32(maxBounds, dataRange, maxZoom, canvasDims)](./cartesian-2d.cartesian2dplotrange.createonef32.md) | <code>static</code> |  |
-|  [createOneF64(maxBounds, dataRange, maxZoom, canvasDims)](./cartesian-2d.cartesian2dplotrange.createonef64.md) | <code>static</code> |  |
+|  [createOneF32(options)](./cartesian-2d.cartesian2dplotrange.createonef32.md) | <code>static</code> |  |
+|  [createOneF64(options)](./cartesian-2d.cartesian2dplotrange.createonef64.md) | <code>static</code> |  |
 |  [updateBounds(bounds, maxZoom)](./cartesian-2d.cartesian2dplotrange.updatebounds.md) |  |  |
-|  [updateDataRange(dataRange, canvasDims)](./cartesian-2d.cartesian2dplotrange.updatedatarange.md) |  |  |
+|  [updateDataRange(unclampedDataRange, canvasDims)](./cartesian-2d.cartesian2dplotrange.updatedatarange.md) |  |  |
 

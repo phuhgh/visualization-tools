@@ -9,15 +9,17 @@ Draws lines with or without segments of different colors and sizes.
 <b>Signature:</b>
 
 ```typescript
-export declare class CanvasLineGraphicsComponent implements IGraphicsComponentSpecification<ICanvasEntityRenderer, ICartesian2dUpdateArg<TTypedArray>, TInterleavedPoint2dTrait<TTypedArray>> 
+export declare class CanvasLineGraphicsComponent implements IGraphicsComponent<ICanvasComponentRenderer, ICartesian2dUpdateArg<TTypedArray>, TInterleavedPoint2dTrait<TTypedArray>> 
 ```
-<b>Implements:</b> [IGraphicsComponentSpecification](./core.igraphicscomponentspecification.md)<!-- -->&lt;[ICanvasEntityRenderer](./core.icanvasentityrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TTypedArray&gt;, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;TTypedArray&gt;&gt;
+<b>Implements:</b> [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;[ICanvasComponentRenderer](./core.icanvascomponentrenderer.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;TTypedArray&gt;, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;TTypedArray&gt;&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./cartesian-2d.canvaslinegraphicscomponent.specification.md) |  | {} |  |
+|  [transform](./cartesian-2d.canvaslinegraphicscomponent.transform.md) |  | [NoTransformProvider](./core.notransformprovider.md) |  |
+|  [type](./cartesian-2d.canvaslinegraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods
 

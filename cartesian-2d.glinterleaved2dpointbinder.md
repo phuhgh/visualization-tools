@@ -9,9 +9,9 @@ Provides bindings for an interleaved buffer that described points in 2d.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlInterleaved2dPointBinder extends AGlInstancedBinder<TInterleavedPoint2dTrait<Float32Array>, TGl2EntityRenderer> implements IGlIndexedPoint2dBinder<Float32Array> 
+export declare class GlInterleaved2dPointBinder extends AGlInstancedBinder<TGl2ComponentRenderer, TInterleavedPoint2dTrait<Float32Array>> implements IGlIndexedPoint2dBinder<Float32Array> 
 ```
-<b>Extends:</b> [AGlInstancedBinder](./core.aglinstancedbinder.md)<!-- -->&lt;[TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt;, [TGl2EntityRenderer](./core.tgl2entityrenderer.md)<!-- -->&gt;
+<b>Extends:</b> [AGlInstancedBinder](./core.aglinstancedbinder.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt;&gt;
 
 <b>Implements:</b> [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt;
 
@@ -29,7 +29,9 @@ These may optionally have per point color and size. Where either size or color i
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [binderConfig](./cartesian-2d.glinterleaved2dpointbinder.binderconfig.md) |  | [IGlInterleavedPointBinderConfig](./cartesian-2d.iglinterleavedpointbinderconfig.md) |  |
+|  [binderClassificationId](./cartesian-2d.glinterleaved2dpointbinder.binderclassificationid.md) |  | symbol |  |
+|  [binderConfig](./cartesian-2d.glinterleaved2dpointbinder.binderconfig.md) |  | [TGlInterleavedPointBinderConfig](./cartesian-2d.tglinterleavedpointbinderconfig.md) |  |
+|  [linkId](./cartesian-2d.glinterleaved2dpointbinder.linkid.md) |  | symbol |  |
 |  [pointsBound](./cartesian-2d.glinterleaved2dpointbinder.pointsbound.md) |  | number |  |
 |  [specification](./cartesian-2d.glinterleaved2dpointbinder.specification.md) |  | [IGlProgramSpec](./core.iglprogramspec.md) |  |
 
@@ -37,14 +39,19 @@ These may optionally have per point color and size. Where either size or color i
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [bindAttributes(entityRenderer)](./cartesian-2d.glinterleaved2dpointbinder.bindattributes.md) |  |  |
-|  [bindInstanced(entityRenderer, divisor, usage)](./cartesian-2d.glinterleaved2dpointbinder.bindinstanced.md) |  |  |
-|  [bindUniforms(entityRenderer)](./cartesian-2d.glinterleaved2dpointbinder.binduniforms.md) |  |  |
-|  [getCacheId()](./cartesian-2d.glinterleaved2dpointbinder.getcacheid.md) |  |  |
-|  [initialize(entityRenderer)](./cartesian-2d.glinterleaved2dpointbinder.initialize.md) |  |  |
-|  [mergeTracePositionBuffers(binders)](./cartesian-2d.glinterleaved2dpointbinder.mergetracepositionbuffers.md) |  |  |
-|  [overrideColors(entityRenderer, entity)](./cartesian-2d.glinterleaved2dpointbinder.overridecolors.md) |  |  |
+|  [bindAttributes(componentRenderer)](./cartesian-2d.glinterleaved2dpointbinder.bindattributes.md) |  |  |
+|  [bindInstanced(componentRenderer, divisor, usage)](./cartesian-2d.glinterleaved2dpointbinder.bindinstanced.md) |  |  |
+|  [bindUniforms(componentRenderer)](./cartesian-2d.glinterleaved2dpointbinder.binduniforms.md) |  |  |
+|  [clearResultBuffers(componentRenderer)](./cartesian-2d.glinterleaved2dpointbinder.clearresultbuffers.md) |  |  |
+|  [getBinderId()](./cartesian-2d.glinterleaved2dpointbinder.getbinderid.md) |  |  |
+|  [getTransformBinder()](./cartesian-2d.glinterleaved2dpointbinder.gettransformbinder.md) |  |  |
+|  [getTransformId()](./cartesian-2d.glinterleaved2dpointbinder.gettransformid.md) |  |  |
+|  [initialize(componentRenderer)](./cartesian-2d.glinterleaved2dpointbinder.initialize.md) |  |  |
+|  [link(binders)](./cartesian-2d.glinterleaved2dpointbinder.link.md) |  |  |
+|  [overrideColors(componentRenderer, entity, changeId)](./cartesian-2d.glinterleaved2dpointbinder.overridecolors.md) |  |  |
 |  [setPointers(startIndex, blockByteSize)](./cartesian-2d.glinterleaved2dpointbinder.setpointers.md) |  |  |
-|  [updateData(entity)](./cartesian-2d.glinterleaved2dpointbinder.updatedata.md) |  |  |
+|  [setResultBuffers(entity, binder, componentRenderer, usage)](./cartesian-2d.glinterleaved2dpointbinder.setresultbuffers.md) |  |  |
+|  [swapBuffers(binder)](./cartesian-2d.glinterleaved2dpointbinder.swapbuffers.md) |  |  |
+|  [updateData(entity, changeId)](./cartesian-2d.glinterleaved2dpointbinder.updatedata.md) |  |  |
 |  [updatePointers(entity)](./cartesian-2d.glinterleaved2dpointbinder.updatepointers.md) |  |  |
 

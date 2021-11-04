@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-updateData(connector: TConnector, usage?: GLenum): void;
+updateData(connector: TConnector, changeId: number): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ updateData(connector: TConnector, usage?: GLenum): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  connector | TConnector |  |
-|  usage | GLenum |  |
+|  changeId | number |  |
 
 <b>Returns:</b>
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-update(entity: TTrace2dDisplaySettingsTrait & IDataTrait<ICartesian2dTraceEntityConnector<Float64Array>>, renderer: ICanvasEntityRenderer, arg: ICartesian2dUpdateArg<Float64Array>): void;
+update(entity: TTrace2dDisplaySettingsTrait & IDataTrait<ICartesian2dTraceEntityConnector<Float64Array>>, renderer: ICanvasComponentRenderer, arg: ICartesian2dUpdateArg<Float64Array>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ update(entity: TTrace2dDisplaySettingsTrait & IDataTrait<ICartesian2dTraceEntity
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entity | [TTrace2dDisplaySettingsTrait](./cartesian-2d.ttrace2ddisplaysettingstrait.md) &amp; [IDataTrait](./core.idatatrait.md)<!-- -->&lt;[ICartesian2dTraceEntityConnector](./cartesian-2d.icartesian2dtraceentityconnector.md)<!-- -->&lt;Float64Array&gt;&gt; |  |
-|  renderer | [ICanvasEntityRenderer](./core.icanvasentityrenderer.md) |  |
+|  renderer | [ICanvasComponentRenderer](./core.icanvascomponentrenderer.md) |  |
 |  arg | [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float64Array&gt; |  |
 
 <b>Returns:</b>

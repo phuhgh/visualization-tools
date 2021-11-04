@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-initialize(entityRenderer: TEntityRenderer): void;
+initialize(componentRenderer: TComponentRenderer): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entityRenderer | TEntityRenderer |  |
+|  componentRenderer | TComponentRenderer |  |
 
 <b>Returns:</b>
 
