@@ -1,14 +1,15 @@
 import { IInteractionSharedState } from "./i-interaction-shared-state";
-import { IDefaultTargets } from "./hit-test/i-default-targets";
+import { IDefaultTargets } from "./i-default-targets";
 import { IChartPointerEvent } from "./internal-events/chart-pointer-event";
 import { _Array, _Map, _Set } from "rc-js-util";
-import { HitTestResult } from "./hit-test/hit-test-result";
+import { HitTestResult } from "../hit-testing/hit-test-result";
 import { IPlotInteractionProviders } from "./plot-interaction-providers";
 import { IClickableTrait } from "../../entities/traits/i-clickable-trait";
 import { TEntityTrait } from "../../entities/traits/t-entity-trait";
 import { EHoverState, IHoverableTrait } from "../../entities/traits/i-hoverable-trait";
 import { IHitTestableTrait } from "../../entities/groups/i-hit-testable-trait";
 import { EEntityUpdateFlag } from "../../update/e-entity-update-flag";
+import { OnHoverResult } from "./on-hover-result";
 
 export class DefaultInteractionSharedState<TPlotRange>
     implements IInteractionSharedState
@@ -38,33 +39,28 @@ export class DefaultInteractionSharedState<TPlotRange>
         const hoverTargets = this.providers.eventTargets.hoverTargetProvider.hitTestPlot(chartEvent);
         const hoverTargetsByEntity = _Array.index(hoverTargets, target => target.entity);
 
-        const newlyHoveredMap = _Map.setDifference(hoverTargetsByEntity, this.hoveredEntities);
-        const noLongerHoveredMap = _Map.setDifference(this.hoveredEntities, hoverTargetsByEntity);
+        const newlyHovered = _Map.setDifference(hoverTargetsByEntity, this.hoveredEntities);
+        const noLongerHovered = _Map.setDifference(this.hoveredEntities, hoverTargetsByEntity);
         const stillHovered = _Map.intersect(hoverTargetsByEntity, this.hoveredEntities);
-        const newlyHovered = _Map.valuesToArray(newlyHoveredMap);
-        const noLongerHovered = _Map.valuesToArray(noLongerHoveredMap);
-
-        stillHovered.forEach((target, key) =>
-        {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const newTarget = this.hoveredEntities.get(key)!;
-
-            if (_Set.isSetEqual(newTarget.segmentIds, target.segmentIds))
-            {
-                stillHovered.delete(key);
-            }
-        });
-
         const stillHoveredArray = _Map.valuesToArray(stillHovered);
-        let updateFlag = emitHoverLeftEvents(chartEvent, noLongerHovered);
-        updateFlag |= emitHoverEnterEvents(chartEvent, newlyHovered);
-        updateFlag |= emitSegmentChangeEvents(chartEvent, stillHoveredArray);
+        const newlyHoveredArray = _Map.valuesToArray(newlyHovered);
+        const noLongerHoveredArray = _Map.valuesToArray(noLongerHovered);
+        const segmentChanged = getSegmentChangedEntities(stillHovered, this.hoveredEntities);
+        const segmentChangedArray = _Map.valuesToArray(segmentChanged);
+        const unchanged = _Map.setDifference(stillHovered, segmentChanged);
+        const unchangedArray = _Map.valuesToArray(unchanged);
+
+        let updateFlag = emitHoverLeftEvents(chartEvent, noLongerHoveredArray);
+        updateFlag |= emitSegmentChangeEvents(chartEvent, unchangedArray, EHoverState.Unchanged);
+        updateFlag |= emitHoverEnterEvents(chartEvent, newlyHoveredArray);
+        updateFlag |= emitSegmentChangeEvents(chartEvent, segmentChangedArray, EHoverState.SegmentChange);
 
         this.hoveredEntities = hoverTargetsByEntity;
 
-        if (newlyHovered.length > 0 || stillHoveredArray.length > 0 || noLongerHovered.length > 0)
+        if (newlyHoveredArray.length > 0 || segmentChangedArray.length > 0 || noLongerHoveredArray.length > 0)
         {
-            this.providers.callbacks.onHover(newlyHovered, stillHoveredArray, noLongerHovered, chartEvent);
+            const result = new OnHoverResult(newlyHoveredArray, stillHoveredArray, noLongerHoveredArray, unchangedArray);
+            this.providers.callbacks.onHover(result, chartEvent);
         }
 
         if (updateFlag !== EEntityUpdateFlag.NoUpdateRequired)
@@ -100,6 +96,30 @@ export class DefaultInteractionSharedState<TPlotRange>
     private hoveredEntities = new Map<TEntityTrait<unknown, IHitTestableTrait>, HitTestResult<unknown, IHitTestableTrait>>();
 }
 
+function getSegmentChangedEntities
+(
+    stillHovered: Map<TEntityTrait<unknown, IHitTestableTrait>, HitTestResult<unknown, IHitTestableTrait>>,
+    previouslyHovered: Map<TEntityTrait<unknown, IHitTestableTrait>, HitTestResult<unknown, IHitTestableTrait>>,
+)
+    : Map<TEntityTrait<unknown, IHitTestableTrait>, HitTestResult<unknown, IHitTestableTrait>>
+{
+    const segmentChanged = new Map<TEntityTrait<unknown, IHitTestableTrait>, HitTestResult<unknown, IHitTestableTrait>>();
+
+    // from those that were previously hovered, remove those where the segment hasn't changed
+    stillHovered.forEach((target, key) =>
+    {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const newTarget = previouslyHovered.get(key)!;
+
+        if (!_Set.isSetEqual(newTarget.segmentIds, target.segmentIds))
+        {
+            segmentChanged.set(key, target);
+        }
+    });
+
+    return segmentChanged;
+}
+
 function emitHoverLeftEvents
 (
     chartEvent: IChartPointerEvent<PointerEvent>,
@@ -113,9 +133,9 @@ function emitHoverLeftEvents
     {
         const target = targets[i];
 
-        if (target.entity.onHoverChange != null)
+        if (target.entity.onHover != null)
         {
-            updateFlag |= target.entity.onHoverChange(EHoverState.Left, target.segmentIds, chartEvent);
+            updateFlag |= target.entity.onHover(EHoverState.Left, target.segmentIds, chartEvent);
         }
     }
 
@@ -135,9 +155,9 @@ function emitHoverEnterEvents
     {
         const target = targets[i];
 
-        if (target.entity.onHoverChange != null)
+        if (target.entity.onHover != null)
         {
-            updateFlag |= target.entity.onHoverChange(EHoverState.Entered, target.segmentIds, chartEvent);
+            updateFlag |= target.entity.onHover(EHoverState.Entered, target.segmentIds, chartEvent);
         }
     }
 
@@ -148,6 +168,7 @@ function emitSegmentChangeEvents
 (
     chartEvent: IChartPointerEvent<PointerEvent>,
     targets: HitTestResult<unknown, IHoverableTrait>[],
+    state: EHoverState.SegmentChange | EHoverState.Unchanged,
 )
     : EEntityUpdateFlag
 {
@@ -157,13 +178,20 @@ function emitSegmentChangeEvents
     {
         const target = targets[i];
 
-        if (target.entity.onHoverChange != null)
+        if (target.entity.onHover != null)
         {
-            updateFlag |= target.entity.onHoverChange(EHoverState.SegmentChange, target.segmentIds, chartEvent);
+            updateFlag |= target.entity.onHover(state, target.segmentIds, chartEvent);
         }
     }
 
-    return updateFlag;
+    if (state === EHoverState.Unchanged)
+    {
+        return EEntityUpdateFlag.NoUpdateRequired;
+    }
+    else
+    {
+        return updateFlag;
+    }
 }
 
 function emitClickEvents

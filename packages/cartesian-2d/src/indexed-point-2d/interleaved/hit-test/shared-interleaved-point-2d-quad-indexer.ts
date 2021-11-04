@@ -2,6 +2,8 @@ import { IEmscriptenWrapper, IMemoryUtilBindings, IReferenceCountedPtr, ISharedO
 import { IHitTestableTrait, ISharedEntityQuadTree } from "@visualization-tools/core";
 import { TSharedInterleavedPoint2dTrait } from "../../../traits/t-shared-interleaved-point2d-trait";
 import { IDrawablePoint2dOffsets } from "../../../series/i-drawable-point2d-offsets";
+import { ECartesian2dUserTransform } from "../../../update/user-transforms/e-cartesian2d-user-transform";
+import { ICartesian2dUserTransform } from "../../../update/user-transforms/i-cartesian2d-user-transform";
 
 /**
  * @public
@@ -19,11 +21,12 @@ export type TInterleavedPoint2dQuadIndexerBindings<TPrefix extends string> =
 export interface ISharedInterleavedPoint2dQuadIndexer<TArray extends TTypedArray>
     extends ISharedObject
 {
-    update
+    addToTree
     (
         tree: ISharedEntityQuadTree<unknown, IHitTestableTrait>,
         entity: IHitTestableTrait & TSharedInterleavedPoint2dTrait<TArray, IDrawablePoint2dOffsets>,
         worldTransform: Mat3<TArray>,
+        userTransform: ICartesian2dUserTransform<TArray>,
     )
         : void;
 }
@@ -56,11 +59,12 @@ export class SharedInterleavedPoint2dQuadIndexer<TArray extends TTypedArray, TPr
 
     public sharedObject: IReferenceCountedPtr;
 
-    public update
+    public addToTree
     (
         tree: ISharedEntityQuadTree<unknown, IHitTestableTrait>,
         entity: IHitTestableTrait & TSharedInterleavedPoint2dTrait<TArray, IDrawablePoint2dOffsets>,
         worldTransform: Mat3<TArray>,
+        userTransform: ICartesian2dUserTransform<TArray>,
     )
         : void
     {
@@ -68,7 +72,10 @@ export class SharedInterleavedPoint2dQuadIndexer<TArray extends TTypedArray, TPr
         const dataView = this.rvp.getDataView();
         dataView.setUint32(0, tree.sharedObject.getPtr(), SharedInterleavedPoint2dQuadIndexer.littleEndian);
         dataView.setUint32(this.connectorOffset, connector.sharedObject.getPtr(), SharedInterleavedPoint2dQuadIndexer.littleEndian);
-        dataView.setUint16(this.displayConfigOffset, entity.graphicsSettings.pointDisplay.getPixelSize(), SharedInterleavedPoint2dQuadIndexer.littleEndian);
+
+        dataView.setInt8(this.displayConfigOffset, userTransform.xTransformEnabled ? userTransform.transformId : ECartesian2dUserTransform.Identity);
+        dataView.setInt8(this.displayConfigOffset + 1, userTransform.yTransformEnabled ? userTransform.transformId : ECartesian2dUserTransform.Identity);
+        dataView.setUint16(this.displayConfigOffset + 2, entity.graphicsSettings.pointDisplay.getPixelSize(), SharedInterleavedPoint2dQuadIndexer.littleEndian);
 
         dataView.setInt8(this.offsetsOffset, connector.offsets.x);
         dataView.setInt8(this.offsetsOffset + 1, connector.offsets.y);
@@ -91,8 +98,8 @@ export class SharedInterleavedPoint2dQuadIndexer<TArray extends TTypedArray, TPr
     )
     {
         this.cIndex = `_${prefix}_index`;
-        const offsets = BigInt.asUintN(64, BigInt(this.wrapper.instance[offsetMethodName]()));
 
+        const offsets = BigInt.asUintN(64, BigInt(this.wrapper.instance[offsetMethodName]()));
         const size = Number(offsets & BigInt(0xFF));
         this.connectorOffset = Number((offsets >> BigInt(8)) & BigInt(0xFF));
         this.displayConfigOffset = Number((offsets >> BigInt(16)) & BigInt(0xFF));

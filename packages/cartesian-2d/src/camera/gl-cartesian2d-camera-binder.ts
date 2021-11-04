@@ -1,16 +1,17 @@
-import { ICartesian2dTransforms } from "../update/cartesian2d-transforms";
+import { ICartesian2dTransforms } from "../update/update-arg/cartesian2d-transforms";
 import { Mat3 } from "rc-js-util";
 import { T2dAbsoluteZIndexTrait } from "../traits/t2d-absolute-z-index-trait";
-import { AGlBinder, emptyShader, GlFloatUniform, GlMat3Uniform, GlProgramSpecification, GlShader, IGlBinder, mat3MultiplyVec2Shader, TGlBasicEntityRenderer } from "@visualization-tools/core";
+import { AGlBinder, emptyShader, GlFloatUniform, GlMat3Uniform, GlProgramSpecification, GlShader, mat3MultiplyVec2Shader, TGlBasicComponentRenderer } from "@visualization-tools/core";
+import { ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-arg";
+import { IGlCamera2dBinder } from "./i-gl-camera2d-binder";
 
 /**
  * @public
  * Provides WebGL bindings for cartesian 2d graphics components.
  */
 export interface IGlCartesian2dCameraBinder
-    extends IGlBinder<ICartesian2dTransforms<Float32Array>, TGlBasicEntityRenderer>
+    extends IGlCamera2dBinder<ICartesian2dTransforms<Float32Array>, ICartesian2dUpdateArg<Float32Array>>
 {
-    setZ(entity: T2dAbsoluteZIndexTrait): void;
 }
 
 /**
@@ -18,15 +19,26 @@ export interface IGlCartesian2dCameraBinder
  * {@inheritDoc IGlCartesian2dCameraBinder}
  */
 export class GlCartesian2dCameraBinder
-    extends AGlBinder<ICartesian2dTransforms<Float32Array>, TGlBasicEntityRenderer>
+    extends AGlBinder<TGlBasicComponentRenderer, ICartesian2dTransforms<Float32Array>>
     implements IGlCartesian2dCameraBinder
 {
     public specification = specification;
+    public binderClassificationId = Symbol(); // no category matching allowed
 
-    public initialize(entityRenderer: TGlBasicEntityRenderer): void
+    public getBinderId(): string
     {
-        this.bindings.cameraWorld.initialize(entityRenderer);
-        this.bindings.z.initialize(entityRenderer);
+        return "GlCamera2d";
+    }
+
+    public initialize(componentRenderer: TGlBasicComponentRenderer): void
+    {
+        this.bindings.cameraWorld.initialize(componentRenderer);
+        this.bindings.z.initialize(componentRenderer);
+    }
+
+    public getBinderData(updateArg: ICartesian2dUpdateArg<Float32Array>): ICartesian2dTransforms<Float32Array>
+    {
+        return updateArg.drawTransforms;
     }
 
     public updatePointers(): void
@@ -39,25 +51,20 @@ export class GlCartesian2dCameraBinder
         this.bindings.z.setData(entity.graphicsSettings.zIndexAbs);
     }
 
-    public updateData(camera: ICartesian2dTransforms<Float32Array>): void
+    public updateData(transforms: ICartesian2dTransforms<Float32Array>, changeId: number): void
     {
-        this.bindings.cameraWorld.setData(camera.dataToInteractiveArea);
+        this.bindings.cameraWorld.setData(transforms.dataToInteractiveArea, changeId);
     }
 
-    public bindUniforms(entityRenderer: TGlBasicEntityRenderer): void
+    public bindUniforms(componentRenderer: TGlBasicComponentRenderer): void
     {
-        this.bindings.cameraWorld.bind(entityRenderer);
-        this.bindings.z.bind(entityRenderer);
+        this.bindings.cameraWorld.bind(componentRenderer);
+        this.bindings.z.bind(componentRenderer);
     }
 
     public bindAttributes(): void
     {
         // no attributes to bind
-    }
-
-    public getCacheId(): string
-    {
-        return "GlCamera2d";
     }
 
     private static getBindings(): ICamera2dBindings

@@ -23,6 +23,11 @@ export class CanvasRendererSharedState implements IRendererSharedState
         ++this.frameCounter;
     }
 
+    public onContextLost(): void
+    {
+        // not currently required
+    }
+
     /**
      * Where multiple ranges are provided the scissor range will be the intersection of these. Each of these must be
      * popped of the stack individually.

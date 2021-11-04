@@ -1,5 +1,5 @@
 import { IGlExtensions, TGlExtensionKeys } from "./i-gl-extensions";
-import { _Array, _Debug, _Math, _Set, TKeysOf } from "rc-js-util";
+import { _Array, _Debug, _Math, _Set } from "rc-js-util";
 import { GlShader, IGlShader } from "./gl-shader";
 
 /**
@@ -11,8 +11,9 @@ export interface IGlProgramSpec
     shaderLanguageVersion: number | undefined;
     vertexShader: IGlShader;
     fragmentShader: IGlShader;
-    requiredExtensions: TKeysOf<IGlExtensions>;
-    optionalExtensions: TKeysOf<IGlExtensions>;
+    requiredExtensions: readonly (keyof IGlExtensions)[];
+    optionalExtensions: readonly (keyof IGlExtensions)[];
+    outAttributes: readonly string[] | null;
 }
 
 /**
@@ -27,8 +28,9 @@ export class GlProgramSpecification implements IGlProgramSpec
     (
         public vertexShader: IGlShader,
         public fragmentShader: IGlShader,
-        public requiredExtensions: TKeysOf<IGlExtensions> = [],
-        public optionalExtensions: TKeysOf<IGlExtensions> = [],
+        public requiredExtensions: readonly (keyof IGlExtensions)[] = [],
+        public optionalExtensions: readonly (keyof IGlExtensions)[] = [],
+        public outAttributes: readonly string[] | null = null,
     )
     {
         DEBUG_MODE && _Debug.runBlock(() =>
@@ -72,6 +74,7 @@ export class GlProgramSpecification implements IGlProgramSpec
             combinedFragmentShader,
             _Set.valuesToArray(requiredExts),
             _Set.valuesToArray(optionalExts),
+            _Array.flatMap(specs, (spec) => spec.outAttributes),
         );
     }
 

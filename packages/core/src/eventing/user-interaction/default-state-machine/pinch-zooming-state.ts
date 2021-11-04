@@ -6,7 +6,7 @@ import { getDistanceBetweenPointerEvents } from "../util/get-distance-between-po
 import { IChartPointerEvent } from "../internal-events/chart-pointer-event";
 import { IPlotInteractionProviders } from "../plot-interaction-providers";
 import { getCenterBetweenPointerEvents } from "../util/get-center-between-pointer-events";
-import { IDefaultTargets } from "../hit-test/i-default-targets";
+import { IDefaultTargets } from "../i-default-targets";
 import { IInteractionSharedState } from "../i-interaction-shared-state";
 
 /**
@@ -27,8 +27,8 @@ export class PinchZoomingState<TPlotRange> implements IChartState<TPlotRange>
         // remove possibility of zeros
         this.initialDistance = _Math.max(distanceBetweenPointerEvents, 1);
 
-        getCenterBetweenPointerEvents(firstFingerDownEvent, secondFingerDownEvent, this.centerPoint);
-        this.providers.callbacks.onPanZoomStart(this.centerPoint, this.initialDistance);
+        getCenterBetweenPointerEvents(firstFingerDownEvent, secondFingerDownEvent, this.cssCenterPoint);
+        this.providers.callbacks.onPanZoomStart(this.cssCenterPoint, this.initialDistance);
     }
 
     public handleMouseEvent(): IChartState<TPlotRange> | null
@@ -45,7 +45,7 @@ export class PinchZoomingState<TPlotRange> implements IChartState<TPlotRange>
         });
 
         this.updateEvents(chartEvent);
-        getCenterBetweenPointerEvents(this.firstFingerDownEvent, this.secondFingerDownEvent, this.centerPoint);
+        getCenterBetweenPointerEvents(this.firstFingerDownEvent, this.secondFingerDownEvent, this.cssCenterPoint);
 
         switch (eventType)
         {
@@ -67,7 +67,7 @@ export class PinchZoomingState<TPlotRange> implements IChartState<TPlotRange>
                     const distanceBetweenPointerEvents = getDistanceBetweenPointerEvents(this.firstFingerDownEvent.$event, this.secondFingerDownEvent.$event);
                     // remove possibility of divide by 0
                     const currentDistance = _Math.max(distanceBetweenPointerEvents, 1);
-                    this.providers.callbacks.onPanZoomChange(chartEvent, this.centerPoint, currentDistance);
+                    this.providers.callbacks.onPanZoomChange(chartEvent, this.cssCenterPoint, currentDistance);
                 }
                 return null;
             }
@@ -102,5 +102,5 @@ export class PinchZoomingState<TPlotRange> implements IChartState<TPlotRange>
     }
 
     private readonly initialDistance: number;
-    private readonly centerPoint = new Vec2.f32();
+    private readonly cssCenterPoint = new Vec2.f32();
 }

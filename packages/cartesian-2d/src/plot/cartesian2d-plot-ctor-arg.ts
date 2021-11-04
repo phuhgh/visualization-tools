@@ -1,7 +1,7 @@
-import { IChartComponent, IPlotArea, IPlotCtorArg, TUnknownEntityRenderer } from "@visualization-tools/core";
+import { IChartComponent, IPlotArea, IPlotCtorArg, TUnknownRenderer } from "@visualization-tools/core";
 import { TTypedArray } from "rc-js-util";
-import { ICartesian2dPlotRange } from "../update/cartesian2d-plot-range";
-import { ICartesian2dPlotConstructionOptions} from "./options/cartesian2d-plot-construction-options";
+import { ICartesian2dPlotRange } from "../update/update-arg/cartesian2d-plot-range";
+import { ICartesian2dPlotConstructionOptions } from "./options/cartesian2d-plot-construction-options";
 import { T2dUpdateGroup } from "./options/t2d-update-group";
 
 /**
@@ -23,7 +23,7 @@ export class Cartesian2dPlotCtorArg<TArray extends TTypedArray, TRequiredTraits>
 {
     public constructor
     (
-        public readonly chart: IChartComponent<TUnknownEntityRenderer>,
+        public readonly chart: IChartComponent<TUnknownRenderer>,
         public readonly plotOptions: ICartesian2dPlotConstructionOptions<TArray, TRequiredTraits>,
         public readonly plotArea: IPlotArea,
     )

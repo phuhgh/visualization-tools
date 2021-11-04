@@ -1,9 +1,9 @@
 import { IEmscriptenWrapper, TemporaryListener, TTypedArray } from "rc-js-util";
-import { ICartesian2dPlotRange } from "../update/cartesian2d-plot-range";
-import { ICartesian2dUpdateArg } from "../update/cartesian2d-update-arg";
+import { ICartesian2dPlotRange } from "../update/update-arg/cartesian2d-plot-range";
+import { ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-arg";
 import { ICartesian2dPlot } from "../plot/i-cartesian2d-plot";
 import { Cartesian2dInteractionHandler } from "./cartesian2d-interaction-handler";
-import { DefaultInteractionGroups, getChartInitialState, IChartComponent, IDefaultInteractionGroups, IHitTestableTrait, IInteractionStateChangeCallbacks, IQuadTreeTargetOptions, ISharedEntityQuadTree, ISharedQuadTreeBindings, OnEntityAddedToGroup, OnEntityRemoved, OnEntityRemovedFromGroup, OnPlotDetached, PlotInteractionConnector, QuadTreeEventTargetProvider, SharedEntityQuadTree, TUnknownEntityRenderer } from "@visualization-tools/core";
+import { DefaultInteractionGroups, getChartInitialState, IChartComponent, IDefaultInteractionGroups, IHitTestableTrait, IInteractionStateChangeCallbacks, IQuadTreeTargetOptions, ISharedEntityQuadTree, ISharedQuadTreeBindings, OnEntityAddedToGroup, OnEntityRemoved, OnEntityRemovedFromGroup, OnPlotDetached, PlotInteractionConnector, QuadTreeEventTargetProvider, SharedEntityQuadTree, TUnknownComponentRenderer, TUnknownRenderer } from "@visualization-tools/core";
 
 /**
  * @public
@@ -28,7 +28,7 @@ export class Cartesian2dPlotSharedQuadTree<TArray extends TTypedArray, TRequired
 
     public constructor
     (
-        private readonly plot: ICartesian2dPlot<TUnknownEntityRenderer, TArray, TRequiredTraits>,
+        private readonly plot: ICartesian2dPlot<TUnknownComponentRenderer, TArray, TRequiredTraits>,
         private readonly options: IQuadTreeTargetOptions,
     )
     {
@@ -38,7 +38,7 @@ export class Cartesian2dPlotSharedQuadTree<TArray extends TTypedArray, TRequired
     public setQuadTreeInteractionHandler
     (
         emscriptenWrapper: IEmscriptenWrapper<ISharedQuadTreeBindings>,
-        chart: IChartComponent<TUnknownEntityRenderer>,
+        chart: IChartComponent<TUnknownRenderer>,
         listeners: Partial<IInteractionStateChangeCallbacks<IHitTestableTrait & TRequiredTraits>> = {},
     )
         : void
@@ -56,6 +56,11 @@ export class Cartesian2dPlotSharedQuadTree<TArray extends TTypedArray, TRequired
             () => new QuadTreeEventTargetProvider(entityTree, this.plot, this.interactionGroups, this.options),
             getChartInitialState,
         );
+    }
+
+    public clearInteractionHandler(): void
+    {
+        this.plot.clearInteractionHandler();
     }
 
     private populateTree

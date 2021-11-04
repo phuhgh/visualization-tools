@@ -1,33 +1,34 @@
 import { IGraphAttachPoint } from "../templating/graph-attach-point";
 import { IChartConfig } from "./chart-config";
-import { _Iterator, AOnDestroy, DirtyCheckedUniqueCollection, IIdentifierFactory } from "rc-js-util";
-import { IRenderer } from "../rendering/i-renderer";
+import { _Array, _Iterator, AOnDestroy, DirtyCheckedUniqueCollection, IIdentifierFactory } from "rc-js-util";
 import { FrameProvider } from "../update/frame-provider";
 import { ICanvasDimensions } from "../templating/canvas-dimensions";
 import { IPlot, IReadonlyPlot } from "../plot/i-plot";
 import { IChartUpdateOptions } from "../update/i-chart-update-options";
 import { OnPlotAttached } from "../plot/events/on-plot-attached";
 import { OnPlotDetached } from "../plot/events/on-plot-detached";
-import { IEventService } from "../eventing/chart-event-service";
-import { OnCanvasResized } from "../eventing/events/on-canvas-resized";
+import { IEventService } from "../eventing/event-service";
+import { OnCanvasResized } from "../templating/events/on-canvas-resized";
 import { IContextAdapter } from "../rendering/i-context-adapter";
-import { TUnknownEntityRenderer } from "../rendering/t-unknown-entity-renderer";
-import { OnPlotRequiresUpdate } from "../eventing/events/on-plot-requires-update";
-import { OnDprChanged } from "../eventing/events/on-dpr-changed";
+import { OnPlotRequiresUpdate } from "../plot/events/on-plot-requires-update";
+import { OnDprChanged } from "../templating/events/on-dpr-changed";
 import { EEntityUpdateFlag } from "../update/e-entity-update-flag";
+import { ChartTransformFactory, IChartTransformFactory } from "./chart-transform-factory";
+import { OnRendererContextLost } from "../rendering/events/on-renderer-context-lost";
+import { TUnknownRenderer } from "../rendering/t-unknown-renderer";
+import { OnGraphicsComponentAdded } from "../rendering/events/on-graphics-component-added";
 
 /**
  * @public
  * Root component. Orchestrates updates and events.
  */
-export interface IChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
+export interface IChartComponent<TRenderer extends TUnknownRenderer>
 {
     readonly attachPoint: IGraphAttachPoint;
     readonly eventService: IEventService;
-    readonly renderer: IRenderer<TEntityRenderer>;
+    readonly renderer: TRenderer;
     readonly changeIdFactory: IIdentifierFactory;
 
-    removePlot(plot: IPlot<unknown, unknown>): void;
     /**
      * Interaction handlers will be updated after a timeout defined in {@link IChartConfig.updateOptions}.
      * @param plot - The plot to update.
@@ -47,25 +48,36 @@ export interface IChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
     resize(): ICanvasDimensions;
 
     addPlot<TPlot extends IPlot<unknown, unknown>>(plot: TPlot): TPlot;
+    removePlot(plot: IPlot<unknown, unknown>): void;
+
+    /**
+     * Subsequent calls will return the same object.
+     */
+    getTransformProvider
+    (
+        transformsToInitialize: readonly symbol[],
+        missIsDebugError?: boolean,
+    )
+        : IChartTransformFactory<TRenderer["TComponentRenderer"]>;
 }
 
 /**
  * @public
  * {@inheritDoc IChartComponent}
  */
-export class ChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
+export class ChartComponent<TRenderer extends TUnknownRenderer>
     extends AOnDestroy
-    implements IChartComponent<TEntityRenderer>
+    implements IChartComponent<TRenderer>
 {
     public readonly attachPoint: IGraphAttachPoint;
     public readonly eventService: IEventService;
-    public readonly renderer: IRenderer<TEntityRenderer>;
+    public readonly renderer: TRenderer;
     public readonly changeIdFactory: IIdentifierFactory;
 
     public constructor
     (
         attachPoint: IGraphAttachPoint,
-        renderer: IRenderer<TEntityRenderer>,
+        renderer: TRenderer,
         eventService: IEventService,
         config: IChartConfig,
         contextAdapter: IContextAdapter<unknown>,
@@ -126,7 +138,7 @@ export class ChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
         {
             if (this.plotCollection.has(plot))
             {
-                this.draw(plot, canvasDims);
+                this.drawPlot(plot, canvasDims);
             }
         }
         else
@@ -136,12 +148,12 @@ export class ChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
             for (let i = 0, iEnd = plots.length; i < iEnd; ++i)
             {
                 const plot = plots[i];
-                this.draw(plot, canvasDims);
+                this.drawPlot(plot, canvasDims);
             }
         }
     }
 
-    private draw(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void
+    private drawPlot(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void
     {
         this.renderer.onBeforePlotDraw(plot, canvasDims);
         plot.updateStrategy.update(canvasDims, this.renderer);
@@ -236,6 +248,21 @@ export class ChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
         OnPlotDetached.emit(plot, this);
     }
 
+    public getTransformProvider
+    (
+        transformsToInitialize: readonly symbol[],
+        missIsDebugError: boolean = false,
+    )
+        : IChartTransformFactory<TRenderer["TComponentRenderer"]>
+    {
+        if (this.transformProvider != null)
+        {
+            return this.transformProvider;
+        }
+
+        return this.transformProvider = new ChartTransformFactory(this.renderer, transformsToInitialize, missIsDebugError);
+    }
+
     private static updateInteractionHandler
     (
         plot: IReadonlyPlot<unknown, unknown>,
@@ -266,6 +293,12 @@ export class ChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
             () =>
             {
                 this.contextLost = true;
+                this.renderer.onContextLost();
+                OnRendererContextLost.emit(this.eventService);
+                _Array.forEach(this.plotCollection.getArray(), (plot) =>
+                {
+                    OnRendererContextLost.emit(plot.eventService);
+                });
             },
             () =>
             {
@@ -318,11 +351,20 @@ export class ChartComponent<TEntityRenderer extends TUnknownEntityRenderer>
                 emit(plots[i].eventService, dpr);
             }
         });
+
+        OnGraphicsComponentAdded.registerListener(this.eventService, (graphicsComponent) =>
+        {
+            if (this.transformProvider != null)
+            {
+                this.transformProvider.initializeTransformComponent(graphicsComponent);
+            }
+        });
     }
 
     protected readonly frameProvider: FrameProvider;
     protected readonly contextAdapter: IContextAdapter<unknown>;
     protected readonly updateOptions: IChartUpdateOptions;
     protected readonly plotCollection = new DirtyCheckedUniqueCollection<IReadonlyPlot<unknown, unknown>>();
+    private transformProvider: ChartTransformFactory<TRenderer["TComponentRenderer"]> | null = null;
     protected contextLost = false;
 }

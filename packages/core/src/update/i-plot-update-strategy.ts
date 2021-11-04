@@ -1,6 +1,6 @@
 import { ICanvasDimensions } from "../templating/canvas-dimensions";
-import { TUnknownRenderer } from "../rendering/i-renderer";
 import { IEntityGroup } from "../entities/groups/a-entity-group";
+import { TUnknownRenderer } from "../rendering/t-unknown-renderer";
 
 /**
  * @public

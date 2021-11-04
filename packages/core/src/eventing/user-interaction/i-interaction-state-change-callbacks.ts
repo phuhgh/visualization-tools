@@ -1,8 +1,9 @@
 import { IChartPointerEvent } from "./internal-events/chart-pointer-event";
 import { IReadonlyVec2 } from "rc-js-util";
-import { TOnCanvasResized } from "../events/on-canvas-resized";
-import { HitTestResult } from "./hit-test/hit-test-result";
+import { TOnCanvasResized } from "../../templating/events/on-canvas-resized";
+import { HitTestResult } from "../hit-testing/hit-test-result";
 import { EEntityUpdateFlag } from "../../update/e-entity-update-flag";
+import { IOnHoverResult } from "./on-hover-result";
 
 /**
  * @public
@@ -26,19 +27,12 @@ export interface IInteractionStateChangeCallbacks<TTraits>
     onPanZoomChange
     (
         $event: IChartPointerEvent<PointerEvent>,
-        centerPoint: IReadonlyVec2<Float32Array>,
+        cssCenterPoint: IReadonlyVec2<Float32Array>,
         distanceBetweenPoints: number,
     )
         : void;
 
     onClick(targets: readonly HitTestResult<unknown, TTraits>[], $event: IChartPointerEvent<PointerEvent>): void;
     onDoubleClick(targets: readonly HitTestResult<unknown, TTraits>[], $event: IChartPointerEvent<PointerEvent>): void;
-    onHover
-    (
-        newlyHovered: readonly HitTestResult<unknown, TTraits>[],
-        stillHovered: readonly HitTestResult<unknown, TTraits>[],
-        noLongerHovered: readonly HitTestResult<unknown, TTraits>[],
-        $event: IChartPointerEvent<PointerEvent>,
-    )
-        : void;
+    onHover(hoverResult: IOnHoverResult<TTraits>, $event: IChartPointerEvent<PointerEvent>): void;
 }

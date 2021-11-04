@@ -9,6 +9,7 @@ import { TSharedInterleavedPoint2dTrait } from "../../../traits/t-shared-interle
 import { IDrawablePoint2dOffsets } from "../../../series/i-drawable-point2d-offsets";
 import { Point2dDisplaySettings } from "../../../traits/t-point2d-display-settings-trait";
 import { Point2dSizeNormalizer } from "../../../traits/t-point2d-size-normalizer-trait";
+import { Cartesian2dIdentityTransform } from "../../../update/user-transforms/cartesian2d-identity-transform";
 
 declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<ICartesian2dBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -18,6 +19,7 @@ debugDescribe("=> SharedInterleavedLine2dQuadIndexer", () =>
 {
     const emscriptenTestModule = new SanitizedEmscriptenTestModule(testModule, emscriptenAsanTestModuleOptions, testModuleExtension);
     const changeIdFactory = new IncrementingIdentifierFactory();
+    const identityTransform = new Cartesian2dIdentityTransform<Float32Array>();
 
     beforeAll(async () =>
     {
@@ -56,7 +58,7 @@ debugDescribe("=> SharedInterleavedLine2dQuadIndexer", () =>
         entity.groupMask = 1;
         entity.hitTestId = 2;
 
-        indexer.update(tree, entity, Mat3.f32.factory.createOneEmpty().setIdentityMatrix());
+        indexer.addToTree(tree, entity, Mat3.f32.factory.createOneEmpty().setIdentityMatrix(), identityTransform);
         expect(tree.sharedTree.queryPoint(Vec2.f32.factory.createOne(0.5, 0.5), 1)).toBe(1, "bottom left quad");
         expect(tree.sharedTree.getResults().subarray(0, 3)).toEqual(new Uint32Array([2, 0, 1]));
         expect(tree.sharedTree.queryPoint(Vec2.f32.factory.createOne(1.5, 0.5), 1)).toBe(2, "bottom right quad");

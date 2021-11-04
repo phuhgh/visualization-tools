@@ -24,6 +24,8 @@ if (NOT "VisualizationToolsCore" IN_LIST RC_JS_BUILD_LIST)
 endif ()
 
 set(SOURCE_FILES
+        cpp/src/Cartesian2dIdentityTransform.cpp
+        cpp/src/Cartesian2dNaturalLogTransform.cpp
         cpp/src/InterleavedLine2dQuadIndexer.cpp
         cpp/src/InterleavedCircle2dQuadIndexer.cpp
         cpp/src/InterleavedPoint2dQuadIndexerArg.cpp

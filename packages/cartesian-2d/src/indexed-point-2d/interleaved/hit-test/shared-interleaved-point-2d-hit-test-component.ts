@@ -1,5 +1,5 @@
 import { IReadonlyVec2, TTypedArray } from "rc-js-util";
-import { ICartesian2dUpdateArg } from "../../../update/cartesian2d-update-arg";
+import { ICartesian2dUpdateArg } from "../../../update/update-arg/cartesian2d-update-arg";
 import { THitTestableSharedInterleavedPoint2dTrait } from "../../../traits/t-hit-testable-shared-interleaved-point-2d-trait";
 import { TCartesianSharedQuadTree } from "../../../eventing/cartesian2d-plot-shared-quad-tree";
 import { IndexablePointEntityLineHitTester } from "../../hit-test/indexable-point-entity-line-hit-tester";
@@ -41,6 +41,11 @@ export class SharedInterleavedPoint2dHitTestComponent<TArray extends TTypedArray
     )
         : void
     {
-        this.indexer.update(tree, entity, updateArg.interactionTransforms.dataToInteractiveArea);
+        this.indexer.addToTree(
+            tree,
+            entity,
+            updateArg.interactionTransforms.dataToInteractiveArea,
+            updateArg.userTransform,
+        );
     }
 }

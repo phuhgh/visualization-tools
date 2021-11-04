@@ -1,11 +1,14 @@
-import { TGlBasicEntityRenderer } from "../entity-renderer/t-gl-basic-entity-renderer";
+import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
+import { IGlUniform } from "./i-gl-uniform";
 
 /**
  * @public
  * wrapper for a single uniform value.
  */
-export abstract class AGlUniformValue
+export abstract class AGlUniformValue implements IGlUniform
 {
+    public isDirty = true;
+
     public constructor
     (
         public name: string,
@@ -14,24 +17,27 @@ export abstract class AGlUniformValue
     {
     }
 
-    public abstract bind
-    (
-        renderer: TGlBasicEntityRenderer,
-    )
-        : void;
-
-    public initialize
-    (
-        entityRenderer: TGlBasicEntityRenderer,
-    )
-        : void
+    public onContextLost(): void
     {
-        this.uniformLocation = entityRenderer.context.getUniformLocation(entityRenderer.program, this.name);
+        this.isDirty = true;
+        this.uniformLocation = null;
+    }
+
+    public abstract bind(renderer: TGlBasicComponentRenderer): void;
+
+    public initialize(componentRenderer: TGlBasicComponentRenderer): void
+    {
+        componentRenderer.addUniform(this);
+        this.uniformLocation = componentRenderer.context.getUniformLocation(componentRenderer.program, this.name);
     }
 
     public setData(data: number): void
     {
-        this.data = data;
+        if (this.data !== data)
+        {
+            this.data = data;
+            this.isDirty = true;
+        }
     }
 
     protected uniformLocation: WebGLUniformLocation | null = null;

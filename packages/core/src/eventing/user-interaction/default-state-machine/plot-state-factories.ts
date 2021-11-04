@@ -8,7 +8,7 @@ import { IPointerEventTimestamp } from "../internal-events/i-pointer-event-times
 import { IChartState } from "./i-chart-state";
 import { IChartPointerEvent } from "../internal-events/chart-pointer-event";
 import { IPlotInteractionProviders } from "../plot-interaction-providers";
-import { IDefaultTargets } from "../hit-test/i-default-targets";
+import { IDefaultTargets } from "../i-default-targets";
 import { IInteractionSharedState } from "../i-interaction-shared-state";
 
 /**

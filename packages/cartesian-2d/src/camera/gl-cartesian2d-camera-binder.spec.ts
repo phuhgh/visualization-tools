@@ -1,16 +1,17 @@
 import { GlCartesian2dCameraBinder, IGlCartesian2dCameraBinder } from "./gl-cartesian2d-camera-binder";
-import { Cartesian2dTransforms, ICartesian2dTransforms } from "../update/cartesian2d-transforms";
+import { Cartesian2dTransforms, ICartesian2dTransforms } from "../update/update-arg/cartesian2d-transforms";
 import { IncrementingIdentifierFactory, Range2d, Vec2 } from "rc-js-util";
 import { debugDescribe, ExpectColor } from "rc-js-test-util";
-import { ChartDataEntity, fullClipSpaceRange2d, GlBuffer, GlFloatAttribute, GlProgramSpecification, GlShader, IDataTrait, IGraphicsComponentSpecification, TGlBasicEntityRenderer } from "@visualization-tools/core";
+import { ChartDataEntity, EGraphicsComponentType, fullClipSpaceRange2d, GlFloatAttribute, GlFloatBuffer, GlProgramSpecification, GlShader, IDataTrait, IGraphicsComponent, NoTransformProvider, TGlBasicComponentRenderer } from "@visualization-tools/core";
 import { TestGl2RendererHarness } from "@visualization-tools/core/bin/test-utils/test-gl2-renderer-harness";
 import { debugFragmentShader } from "@visualization-tools/core/bin/test-utils/debug-fragment-shader";
+import { updateTestGc } from "@visualization-tools/core/bin/test-utils/update-test-gc";
 
 debugDescribe("GlCartesian2dCameraBinder", () =>
 {
     const changeIdFactory = new IncrementingIdentifierFactory();
     let points: Float32Array;
-    let testRendererHarness: TestGl2RendererHarness<never>;
+    let testRendererHarness: TestGl2RendererHarness;
     let camera: ICartesian2dTransforms<Float32Array>;
 
     beforeEach(() =>
@@ -52,16 +53,16 @@ debugDescribe("GlCartesian2dCameraBinder", () =>
         const testEntity = new ChartDataEntity(points, {}, changeIdFactory);
         testEntity.changeId = 1;
         const testGraphicsComponent = new GlTestGraphicsComponent(new GlCartesian2dCameraBinder());
-        const entityRenderer = testRendererHarness.renderer.entityRendererFactory.createRenderer(testGraphicsComponent.specification);
-        entityRenderer.useProgram();
-        testGraphicsComponent.initialize(entityRenderer);
-        testGraphicsComponent.update(testEntity, entityRenderer, camera);
+
+        updateTestGc(testRendererHarness, testGraphicsComponent, testEntity, camera);
     }
 });
 
 class GlTestGraphicsComponent
-    implements IGraphicsComponentSpecification<TGlBasicEntityRenderer, ICartesian2dTransforms<Float32Array>, IDataTrait<Float32Array>>
+    implements IGraphicsComponent<TGlBasicComponentRenderer, ICartesian2dTransforms<Float32Array>, IDataTrait<Float32Array>>
 {
+    public readonly type = EGraphicsComponentType.Entity;
+    public transform = new NoTransformProvider();
     public specification = GlProgramSpecification.mergeProgramSpecifications([
         this.cameraBinder.specification,
         new GlProgramSpecification(
@@ -94,10 +95,10 @@ class GlTestGraphicsComponent
         return "GlTestSpec";
     }
 
-    public initialize(entityRenderer: TGlBasicEntityRenderer): void
+    public initialize(componentRenderer: TGlBasicComponentRenderer): void
     {
-        this.testDataAttribute.initialize(entityRenderer);
-        this.cameraBinder.initialize(entityRenderer);
+        this.testDataAttribute.initialize(componentRenderer);
+        this.cameraBinder.initialize(componentRenderer);
     }
 
     public onBeforeUpdate(): void
@@ -105,20 +106,20 @@ class GlTestGraphicsComponent
         // no action needed
     }
 
-    public update(entity: IDataTrait<Float32Array>, entityRenderer: TGlBasicEntityRenderer, camera: ICartesian2dTransforms<Float32Array>): void
+    public update(entity: IDataTrait<Float32Array>, componentRenderer: TGlBasicComponentRenderer, camera: ICartesian2dTransforms<Float32Array>): void
     {
         this.testDataAttribute.setData(entity.data, 0);
 
-        const ctx = entityRenderer.context;
-        this.testDataAttribute.bind(entityRenderer);
-        this.cameraBinder.update(camera, entityRenderer);
+        const ctx = componentRenderer.context;
+        this.testDataAttribute.bindArray(componentRenderer);
+        this.cameraBinder.update(camera, componentRenderer, componentRenderer.sharedState.frameCounter);
 
         ctx.drawArrays(ctx.TRIANGLES, 0, entity.data.length / this.testDataAttribute.componentsPerVertex);
     }
 
     private testDataAttribute = new GlFloatAttribute(
         "test_position",
-        new GlBuffer(null),
+        new GlFloatBuffer(null),
         2,
     );
 }

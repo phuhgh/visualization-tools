@@ -1,7 +1,7 @@
 import { debugDescribe } from "rc-js-test-util";
 import { TestCanvasChartHarness } from "../../test-utils/test-canvas-chart-harness";
 import { IncrementingIdentifierFactory } from "rc-js-util";
-import { HitAlwaysAllowedComponent } from "../../eventing/user-interaction/hit-test/hit-always-allowed-component";
+import { HitAlwaysAllowedComponent } from "../../eventing/hit-testing/hit-always-allowed-component";
 import { TestHitTestComponent } from "../../test-utils/fakes/test-hit-test.component";
 import { setDefaultAppTestFlags } from "rc-js-util/bin/src/debug/impl/set-debug-app-test-flags";
 import { InteractionGroup } from "./interaction-group";

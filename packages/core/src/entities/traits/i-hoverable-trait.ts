@@ -5,10 +5,15 @@ import { EEntityUpdateFlag } from "../../update/e-entity-update-flag";
 /**
  * @public
  * State changes of {@link IHoverableTrait}.
+ * Events are emitted to entities in the order listed in the enum.
  */
 export enum EHoverState
 {
     Left = 1,
+    /**
+     * Required where entities share state, otherwise a Left state would clear the hovered state.
+     */
+    Unchanged,
     SegmentChange,
     Entered,
 }
@@ -19,5 +24,5 @@ export enum EHoverState
  */
 export interface IHoverableTrait extends IHitTestableTrait
 {
-    onHoverChange?(state: EHoverState, segments: ReadonlySet<number>, pointerEvent: IChartPointerEvent<MouseEvent>): EEntityUpdateFlag;
+    onHover?(state: EHoverState, segments: ReadonlySet<number>, pointerEvent: IChartPointerEvent<MouseEvent>): EEntityUpdateFlag;
 }

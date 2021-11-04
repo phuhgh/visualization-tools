@@ -2,7 +2,7 @@ import { TestCanvasChartHarness } from "../../test-utils/test-canvas-chart-harne
 import { HitTestableGroup } from "./hit-testable-group";
 import { _Debug, IncrementingIdentifierFactory } from "rc-js-util";
 import { ChartDataEntity } from "../chart-data-entity";
-import { HitAlwaysAllowedComponent } from "../../eventing/user-interaction/hit-test/hit-always-allowed-component";
+import { HitAlwaysAllowedComponent } from "../../eventing/hit-testing/hit-always-allowed-component";
 import { TestHitTestComponent } from "../../test-utils/fakes/test-hit-test.component";
 import { setDefaultAppTestFlags } from "rc-js-util/bin/src/debug/impl/set-debug-app-test-flags";
 import { debugDescribe } from "rc-js-test-util";

@@ -20,26 +20,36 @@ const traceOptions: ICartesian2dTraceOptions = {
     traceLinePixelSize: 5,
 };
 
+export interface ITestPlotOptions<TArray extends TTypedArray>
+{
+    updateArgProvider: ICartesian2dUpdateArgProvider<TArray, T2dZIndexesTrait>;
+    plotPosition: TF32Range2d;
+    plotName: string;
+    plotRange: ICartesian2dPlotRange<TArray>;
+}
+
 export function getTestPlotOptions<TArray extends TTypedArray>
 (
-    updateArgProvider: ICartesian2dUpdateArgProvider<TArray, T2dZIndexesTrait>,
-    plotPosition: TF32Range2d,
-    plotName: string,
-    plotRange: ICartesian2dPlotRange<TArray>,
+    options: ITestPlotOptions<TArray>,
 )
     : ICartesian2dPlotConstructionOptions<TArray, T2dZIndexesTrait>
 {
     return new CartesianPlotConstructionOptions<TArray, T2dZIndexesTrait>({
-        plotName: plotName,
-        plotRange: plotRange,
+        plotName: options.plotName,
+        plotRange: options.plotRange,
         gutterOptions: gutterOptions,
-        plotPosition: plotPosition,
+        plotPosition: options.plotPosition,
         axisConfig: axisOptions,
         traceOptions: traceOptions,
-        updateGroup: new Update2dGroup(updateArgProvider),
+        updateGroup: new Update2dGroup(options.updateArgProvider),
         createUpdateStrategy: (plot, updateGroup) =>
         {
-            return new Sorted2dUpdateStrategy(plot, updateGroup, new Scene2dCategorySorted(updateGroup));
+            return new Sorted2dUpdateStrategy(
+                plot,
+                updateGroup,
+                new Scene2dCategorySorted(updateGroup),
+                (updateArg) => updateArg.userTransform,
+            );
         },
     });
 }

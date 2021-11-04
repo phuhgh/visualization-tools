@@ -1,16 +1,16 @@
 import { IEntityGroup } from "../entities/groups/a-entity-group";
 import { TEntityTrait } from "../entities/traits/t-entity-trait";
 import { IPlotInteractionConnector } from "./interaction-connector/i-plot-interaction-connector";
-import { IPlotEventTargetProvider } from "../eventing/user-interaction/hit-test/i-plot-event-target-provider";
+import { IPlotEventTargetProvider } from "../eventing/user-interaction/i-plot-event-target-provider";
 import { IPlotArea } from "./i-plot-area";
 import { TUnknownEntity } from "../entities/t-unknown-entity";
 import { IPlotDimensions } from "./plot-dimensions";
-import { IEventService } from "../eventing/chart-event-service";
-import { TOnCanvasResized } from "../eventing/events/on-canvas-resized";
+import { IEventService } from "../eventing/event-service";
+import { TOnCanvasResized } from "../templating/events/on-canvas-resized";
 import { IPlotUpdateStrategy } from "../update/i-plot-update-strategy";
 import { TGetChartEventTargetProviders } from "./interaction-connector/t-get-chart-event-target-providers";
 import { TInitialChartStateFactory } from "./interaction-connector/t-initial-chart-state-factory";
-import { IDefaultTargets } from "../eventing/user-interaction/hit-test/i-default-targets";
+import { IDefaultTargets } from "../eventing/user-interaction/i-default-targets";
 import { IGraphAttachPoint } from "../templating/graph-attach-point";
 import { IIdentifierFactory } from "rc-js-util";
 

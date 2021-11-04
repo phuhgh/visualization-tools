@@ -10,6 +10,7 @@ import { Point2dDisplaySettings } from "../../../traits/t-point2d-display-settin
 import { Point2dSizeNormalizer } from "../../../traits/t-point2d-size-normalizer-trait";
 import { SharedInterleavedCircle2dQuadIndexerFactory } from "./shared-interleaved-circle-2d-quad-indexer-factory";
 import { ISharedInterleavedPoint2dQuadIndexer } from "./shared-interleaved-point-2d-quad-indexer";
+import { Cartesian2dIdentityTransform } from "../../../update/user-transforms/cartesian2d-identity-transform";
 
 declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<ICartesian2dBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -24,6 +25,7 @@ debugDescribe("=> SharedInterleavedCircle2dQuadIndexerFactory", () =>
     let sharedArray: TF32SharedArray;
     let connector: SharedInterleavedConnector<Float32ArrayConstructor, IDrawablePoint2dOffsets>;
     let entity: IHitTestableTrait & TSharedInterleavedPoint2dTrait<Float32Array, IDrawablePoint2dOffsets>;
+    const identityTransform = new Cartesian2dIdentityTransform<Float32Array>();
 
     beforeAll(async () =>
     {
@@ -81,7 +83,7 @@ debugDescribe("=> SharedInterleavedCircle2dQuadIndexerFactory", () =>
             entity.graphicsSettings.pointSizeNormalizer.extendDataRange(1, 2);
             tree.sharedTree.setTopLevel(Range2d.f32.factory.createOne(0, 4, 0, 4));
 
-            indexer.update(tree, entity, Mat3.f32.factory.createOneEmpty().setIdentityMatrix());
+            indexer.addToTree(tree, entity, Mat3.f32.factory.createOneEmpty().setIdentityMatrix(), identityTransform);
 
             expect(tree.sharedTree.getQuadElementCount())
                 .withContext("total count")
@@ -117,7 +119,7 @@ debugDescribe("=> SharedInterleavedCircle2dQuadIndexerFactory", () =>
             ]);
             tree.sharedTree.setTopLevel(Range2d.f32.factory.createOne(0, 4, 0, 4));
 
-            indexer.update(tree, entity, Mat3.f32.factory.createOneEmpty().setIdentityMatrix());
+            indexer.addToTree(tree, entity, Mat3.f32.factory.createOneEmpty().setIdentityMatrix(), identityTransform);
 
             expect(tree.sharedTree.getQuadElementCount())
                 .withContext("total count")

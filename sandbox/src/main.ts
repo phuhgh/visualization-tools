@@ -1,17 +1,12 @@
-import { CanvasChartFactory, ChartConfig, ChartDataEntity, EEntityUpdateFlag, Gl2ContextAdapter, GlChartFactory, GlRendererOptions, HitAlwaysAllowedComponent, SharedInterleavedConnector } from "@visualization-tools/core";
+import { addEntityToCategory, CanvasChartFactory, ChartConfig, ChartDataEntity, CompositeGraphicsComponent, EEntityUpdateFlag, Gl2ContextAdapter, GlChartFactory, GlRendererOptions, HitAlwaysAllowedComponent, SharedInterleavedConnector } from "@visualization-tools/core";
+import { CanvasCartesian2dPlotFactory, CanvasCartesian2dUpdateArgProvider, CanvasLineGraphicsComponent, Cartesian2dIdentityTransform, Cartesian2dNaturalLogTransform, Cartesian2dPlotRange, Cartesian2dPlotSharedQuadTree, GlCaplessLineGraphicsComponent, GlCartesian2dCameraBinder, GlCartesian2dPlotFactory, GlCartesian2dUpdateArgProvider, GlInterleaved2dPointBinder, GlLineFlatCapGraphicsComponent, GlPoint2dNaturalLogTransform, GlTrace2dNaturalLogTransform, hoverHighlightLineSegment, ICartesian2dBindings, Point2dDisplaySettings, Point2dSubcategory, SharedInterleavedLine2dQuadIndexerFactory, SharedInterleavedPoint2dHitTestComponent, TPoint2dSettings } from "@visualization-tools/cartesian-2d";
 import { getTestPlotOptions } from "./test-data/get-test-plot-options";
-import { _Debug, _Fp, Emscripten, getEmscriptenWrapper, IEmscriptenWrapper, Mulberry32Generator, Range1d, Range2d, RgbaColorPacker } from "rc-js-util";
 import { populateTestData } from "./test-data/populate-test-data";
-import { CanvasCartesian2dPlotFactory, CanvasCartesian2dUpdateArgProvider, CanvasLineGraphicsComponent, Cartesian2dPlotRange, Cartesian2dPlotSharedQuadTree, GlCaplessLineGraphicsComponent, GlCartesian2dCameraBinder, GlCartesian2dPlotFactory, GlCartesian2dUpdateArgProvider, GlInterleaved2dPointBinder, GlLineFlatCapGraphicsComponent, hoverHighlightLineSegment, ICartesian2dBindings, Point2dDisplaySettings, Point2dSubcategory, SharedInterleavedLine2dQuadIndexerFactory, SharedInterleavedPoint2dHitTestComponent, TPoint2dSettings } from "@visualization-tools/cartesian-2d";
+import { _Fp, Emscripten, getEmscriptenWrapper, IEmscriptenWrapper, Mulberry32Generator, Range1d, Range2d, RgbaColorPacker } from "rc-js-util";
 
 declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<ICartesian2dBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const testModule = require("sandbox-module");
-
-// todo jack
-// setDefaultAppTestFlags();
-_Debug.setFlag("DEBUG_MODE", true);
-_Debug.setFlag("DEBUG_VERBOSE", true);
 const rnd = new Mulberry32Generator(79769);
 
 window.onload = async () =>
@@ -23,17 +18,22 @@ window.onload = async () =>
 
 export function canvasTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dBindings>): void
 {
-    const dataRange = Range2d.f64.factory.createOne(-2, 2, -2, 2);
-    const someData = SharedInterleavedConnector.createOneF32(emscriptenModule, 40, { offsets: { x: 0, y: 1, size: 2, color: 3 }, blockElementCount: 4 });
-    populateTestData(someData, dataRange, 255, rnd);
-
+    const dataRange = Range2d.f64.factory.createOne(1, 10, 1, 10);
     const chart = CanvasChartFactory.createOne(document.getElementById("canvas-chart") as HTMLElement, new ChartConfig());
     const pointSubcategory = new Point2dSubcategory(Range1d.f64.factory.createOne(10, 20));
     const graphicsSettings: TPoint2dSettings<Float64Array> = {
-        pointDisplay: new Point2dDisplaySettings(1, RgbaColorPacker.packColor(255, 0, 0, 255)),
+        pointDisplay: new Point2dDisplaySettings(
+            5,
+            RgbaColorPacker.packColor(130, 0, 255, 255),
+            RgbaColorPacker.packColor(0, 130, 255, 255),
+        ),
         pointSizeNormalizer: pointSubcategory.normalization,
         zIndexAbs: 0,
         zIndexRel: 0,
+    };
+    const interleavedPointTester = {
+        hitAllowedComponent: new HitAlwaysAllowedComponent(),
+        hitTestComponent: new SharedInterleavedPoint2dHitTestComponent(SharedInterleavedLine2dQuadIndexerFactory.createOneF64(emscriptenModule)),
     };
 
     if (chart == null)
@@ -45,39 +45,57 @@ export function canvasTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesia
 
     const plot1 = chart.addPlot(CanvasCartesian2dPlotFactory.createOne(
         chart,
-        getTestPlotOptions(
-            new CanvasCartesian2dUpdateArgProvider(),
-            Range2d.f32.factory.createOne(-1, 0, -1, 0),
-            "plot lower left",
-            Cartesian2dPlotRange.createOneF64(
-                Range2d.f64.factory.createOne(-4, 4, -4, 4),
-                dataRange.slice(),
-                4,
-                chart.attachPoint.canvasDims,
-            ),
-        ),
+        getTestPlotOptions({
+            plotName: "plot lower left",
+            plotRange: Cartesian2dPlotRange.createOneF64({
+                canvasDims: chart.attachPoint.canvasDims,
+                userTransform: new Cartesian2dNaturalLogTransform(false, true),
+                maxZoom: 1,
+                dataRange: dataRange.slice(),
+                maxBounds: dataRange.slice(),
+            }),
+            plotPosition: Range2d.f32.factory.createOne(-1, 0, -1, 0),
+            updateArgProvider: new CanvasCartesian2dUpdateArgProvider(),
+        }),
     ));
-
-    plot1.dataCategory.addEntity(new ChartDataEntity(someData, graphicsSettings, chart.changeIdFactory), canvasLineGraphicsComponent, pointSubcategory);
+    const plot1InteractionHandler = new Cartesian2dPlotSharedQuadTree(plot1, { yieldTime: 16 });
+    plot1InteractionHandler.setQuadTreeInteractionHandler(emscriptenModule, chart);
 
     const plot2 = chart.addPlot(CanvasCartesian2dPlotFactory.createOne(
         chart,
-        getTestPlotOptions(
-            new CanvasCartesian2dUpdateArgProvider(),
-            Range2d.f32.factory.createOne(0, 1, 0, 1),
-            "plot upper right",
-            Cartesian2dPlotRange.createOneF64(
-                Range2d.f64.factory.createOne(-4, 4, -4, 4),
-                dataRange.slice(),
-                4,
-                chart.attachPoint.canvasDims,
-            ),
-        ),
+        getTestPlotOptions({
+            plotName: "plot upper right",
+            plotRange: Cartesian2dPlotRange.createOneF64({
+                canvasDims: chart.attachPoint.canvasDims,
+                userTransform: new Cartesian2dIdentityTransform(),
+                maxZoom: 100,
+                dataRange: dataRange.slice(),
+                maxBounds: Range2d.f64.factory.createOne(1, 100, 1, 100),
+            }),
+            plotPosition: Range2d.f32.factory.createOne(0, 1, 0, 1),
+            updateArgProvider: new CanvasCartesian2dUpdateArgProvider(),
+        }),
     ));
-    plot2.dataCategory.addEntity(new ChartDataEntity(someData, graphicsSettings, chart.changeIdFactory), canvasLineGraphicsComponent, pointSubcategory);
-
     const plot2InteractionHandler = new Cartesian2dPlotSharedQuadTree(plot2, { yieldTime: 16 });
     plot2InteractionHandler.setQuadTreeInteractionHandler(emscriptenModule, chart);
+
+    for (let i = 0; i < 50; ++i)
+    {
+        const someData = SharedInterleavedConnector.createOneF64(emscriptenModule, 180, { offsets: { x: 0, y: 1, size: 2, color: 3 }, blockElementCount: 4 });
+        populateTestData(someData, dataRange, 255, rnd);
+
+        const p1Entity = new ChartDataEntity(someData, graphicsSettings, chart.changeIdFactory);
+        p1Entity.onHover = function (state, segments)
+        {
+            hoverHighlightLineSegment(this, state, segments);
+            return EEntityUpdateFlag.DrawRequired;
+        };
+
+        plot1.dataCategory.addEntity(p1Entity, canvasLineGraphicsComponent, pointSubcategory);
+        plot1InteractionHandler.interactionGroups.hoverable.addToGroup(p1Entity, interleavedPointTester);
+
+        plot2.dataCategory.addEntity(new ChartDataEntity(someData, graphicsSettings, chart.changeIdFactory), canvasLineGraphicsComponent, pointSubcategory);
+    }
 
     chart.updateImmediate();
     chart.updateInteractionHandlers();
@@ -102,6 +120,10 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
         throw new Error("failed to create renderer");
     }
 
+    const transformProvider = chart.getTransformProvider([Cartesian2dNaturalLogTransform.transformId], true);
+    GlPoint2dNaturalLogTransform.factory.addToChart(transformProvider);
+    GlTrace2dNaturalLogTransform.factory.addToChart(transformProvider);
+
     const pointSubcategory = new Point2dSubcategory(Range1d.f32.factory.createOne(10, 20));
     const graphicsSettings: TPoint2dSettings<Float32Array> = {
         pointDisplay: new Point2dDisplaySettings(
@@ -118,50 +140,48 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
         hitTestComponent: new SharedInterleavedPoint2dHitTestComponent(SharedInterleavedLine2dQuadIndexerFactory.createOneF32(emscriptenModule)),
     };
 
-    const dataRange = Range2d.f32.factory.createOne(3, 5, 3, 5);
+    const dataRange = Range2d.f32.factory.createOne(1, 10, 1, 10);
     const plot = chart.addPlot(GlCartesian2dPlotFactory.createOne(
         chart,
-        getTestPlotOptions(
-            new GlCartesian2dUpdateArgProvider(),
-            Range2d.f32.factory.createOne(-1, 1, -1, 1),
-            "plot upper right",
-            Cartesian2dPlotRange.createOneF32(
-                Range2d.f32.factory.createOne(-5, 5, -5, 5),
-                dataRange.slice(),
-                Infinity,
-                chart.attachPoint.canvasDims,
-            ),
-        ),
+        getTestPlotOptions({
+            plotName: "gl plot",
+            plotRange: Cartesian2dPlotRange.createOneF32({
+                canvasDims: chart.attachPoint.canvasDims,
+                userTransform: new Cartesian2dNaturalLogTransform(false, true),
+                maxZoom: Infinity,
+                dataRange: dataRange.slice(),
+                maxBounds: Range2d.f32.factory.createOne(1, 100, 1, 100),
+            }),
+            plotPosition: Range2d.f32.factory.createOne(-1, 1, -1, 1),
+            updateArgProvider: new GlCartesian2dUpdateArgProvider(),
+        }),
     ));
-    const plot2InteractionHandler = new Cartesian2dPlotSharedQuadTree(plot, { yieldTime: 16 });
-    plot2InteractionHandler.setQuadTreeInteractionHandler(emscriptenModule, chart);
+    const plotInteractionHandler = new Cartesian2dPlotSharedQuadTree(plot, { yieldTime: 16 });
+    plotInteractionHandler.setQuadTreeInteractionHandler(emscriptenModule, chart);
 
     const interleavedConfig = { offsets: { x: 0, y: 1, size: 2, color: 3 }, blockElementCount: 4 };
     const interleavedBindingDescriptor = SharedInterleavedConnector.getDescriptor(interleavedConfig, Float32Array);
 
-    const pointPairBinder = new GlInterleaved2dPointBinder(interleavedBindingDescriptor, { pointsToBind: 2, byteStride: interleavedBindingDescriptor.blockByteSize * 2 });
-    const pointTripletBinder = new GlInterleaved2dPointBinder(interleavedBindingDescriptor, { pointsToBind: 3, byteStride: interleavedBindingDescriptor.blockByteSize * 3 });
+    const lineGc = CompositeGraphicsComponent
+        .createOneLinked(new GlLineFlatCapGraphicsComponent(new GlCartesian2dCameraBinder(), new GlInterleaved2dPointBinder(interleavedBindingDescriptor, { pointsToBind: 3 })))
+        .addComponent(new GlCaplessLineGraphicsComponent(new GlCartesian2dCameraBinder(), new GlInterleaved2dPointBinder(interleavedBindingDescriptor, { pointsToBind: 2 })))
+        .build();
 
-    pointPairBinder.mergeTracePositionBuffers([pointTripletBinder]);
-
-    const gc = chart.renderer
-        .createCompositeGraphicsComponent(new GlLineFlatCapGraphicsComponent(new GlCartesian2dCameraBinder(), pointTripletBinder), plot)
-        .addComponent(new GlCaplessLineGraphicsComponent(new GlCartesian2dCameraBinder(), pointPairBinder));
-    gc.groupUpdatesByEntity = true;
-
-    for (let i = 0, iEnd = 100; i < iEnd; ++i)
+    for (let i = 0; i < 100; ++i)
     {
-        const someData = SharedInterleavedConnector.createOneF32(emscriptenModule, 4000, interleavedConfig);
+        const someData = SharedInterleavedConnector.createOneF32(emscriptenModule, 400, interleavedConfig);
         populateTestData(someData, dataRange, 0, rnd);
+
         const entity = new ChartDataEntity(someData, graphicsSettings, chart.changeIdFactory);
-        entity.onHoverChange = function (state, segments)
+        entity.onHover = function (state, segments)
         {
             hoverHighlightLineSegment(this, state, segments);
             return EEntityUpdateFlag.DrawRequired;
         };
-        plot.dataCategory.addEntity(entity, gc, pointSubcategory);
-        plot2InteractionHandler.interactionGroups.clickable.addToGroup(entity, interleavedPointTester);
-        plot2InteractionHandler.interactionGroups.hoverable.addToGroup(entity, interleavedPointTester);
+
+        addEntityToCategory(plot.dataCategory, entity, lineGc, pointSubcategory);
+        plotInteractionHandler.interactionGroups.clickable.addToGroup(entity, interleavedPointTester);
+        plotInteractionHandler.interactionGroups.hoverable.addToGroup(entity, interleavedPointTester);
     }
 
     chart.updateImmediate();

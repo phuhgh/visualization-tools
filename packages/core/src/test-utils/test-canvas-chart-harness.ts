@@ -1,14 +1,14 @@
 import { IChartComponent } from "../chart/chart-component";
-import { ICanvasEntityRenderer } from "../rendering/canvas/canvas-entity-renderer";
 import { ChartConfig } from "../chart/chart-config";
 import { CanvasChartFactory } from "../chart/canvas-chart-factory";
+import { ICanvasRenderer } from "../rendering/canvas/canvas-renderer";
 
 /**
  * @internal
  */
 export class TestCanvasChartHarness
 {
-    public readonly chart: IChartComponent<ICanvasEntityRenderer>;
+    public readonly chart: IChartComponent<ICanvasRenderer>;
 
     public constructor
     ()

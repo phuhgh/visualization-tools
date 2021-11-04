@@ -1,16 +1,17 @@
-import { TGlInstancedEntityRenderer } from "../entity-renderer/t-gl-instanced-entity-renderer";
+import { TGlInstancedComponentRenderer } from "../component-renderer/t-gl-instanced-component-renderer";
 import { AGlBinder, IGlBinder } from "./a-gl-binder";
+import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 
 /**
  * @public
  * Instanced data binder for webgl graphics components.
  */
-export interface IGlInstancedBinder<TConnector, TRenderer extends TGlInstancedEntityRenderer>
-    extends IGlBinder<TConnector, TRenderer>
+export interface IGlInstancedBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector>
+    extends IGlBinder<TComponentRenderer, TConnector>
 {
     bindInstanced
     (
-        entityRenderer: TRenderer,
+        componentRenderer: TComponentRenderer,
         divisor: number,
         usage?: GLenum,
     )
@@ -22,7 +23,8 @@ export interface IGlInstancedBinder<TConnector, TRenderer extends TGlInstancedEn
     updateInstanced
     (
         connector: TConnector,
-        entityRenderer: TRenderer,
+        componentRenderer: TComponentRenderer,
+        changeId: number,
         divisor: number,
         usage?: GLenum,
     )
@@ -33,17 +35,25 @@ export interface IGlInstancedBinder<TConnector, TRenderer extends TGlInstancedEn
  * @public
  * Instanced data binder for webgl graphics components.
  */
-export abstract class AGlInstancedBinder<TConnector, TRenderer extends TGlInstancedEntityRenderer>
-    extends AGlBinder<TConnector, TRenderer>
-    implements IGlInstancedBinder<TConnector, TRenderer>
+export abstract class AGlInstancedBinder<TComponentRenderer extends TGlInstancedComponentRenderer, TConnector>
+    extends AGlBinder<TComponentRenderer, TConnector>
+    implements IGlInstancedBinder<TComponentRenderer, TConnector>
 {
-    public abstract bindInstanced(entityRenderer: TRenderer, divisor: number, usage?: GLenum): void;
+    public abstract bindInstanced(componentRenderer: TComponentRenderer, divisor: number, usage?: GLenum): void;
 
-    public updateInstanced(connector: TConnector, entityRenderer: TRenderer, divisor: number, usage?: GLenum): void
+    public updateInstanced
+    (
+        connector: TConnector,
+        componentRenderer: TComponentRenderer,
+        changeId: number,
+        divisor: number,
+        usage?: GLenum,
+    )
+        : void
     {
-        this.updateData(connector);
+        this.updateData(connector, changeId);
         this.updatePointers(connector);
-        this.bindUniforms(entityRenderer);
-        this.bindInstanced(entityRenderer, divisor, usage);
+        this.bindUniforms(componentRenderer);
+        this.bindInstanced(componentRenderer, divisor, usage);
     }
 }

@@ -1,5 +1,5 @@
 import { IReadonlyVec2, TTypedArray } from "rc-js-util";
-import { ICartesian2dUpdateArg } from "../../update/cartesian2d-update-arg";
+import { ICartesian2dUpdateArg } from "../../update/update-arg/cartesian2d-update-arg";
 import { THitTestableIndexedPoint2dTrait } from "../../traits/t-hit-testable-indexed-point-2d-trait";
 import { TEntityTrait } from "@visualization-tools/core";
 

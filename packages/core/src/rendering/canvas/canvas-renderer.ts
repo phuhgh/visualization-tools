@@ -1,23 +1,23 @@
 import { IRenderer, IRendererCallbacks } from "../i-renderer";
-import { CanvasEntityRenderer, ICanvasEntityRenderer } from "./canvas-entity-renderer";
-import { IEntityRendererProvider } from "../i-entity-renderer-provider";
-import { IEntityRendererFactory } from "../i-entity-renderer-factory";
+import { CanvasComponentRenderer, ICanvasComponentRenderer } from "./canvas-component-renderer";
+import { IComponentRendererProvider } from "../component-renderer/i-component-renderer-provider";
+import { IComponentRendererFactory } from "../component-renderer/i-component-renderer-factory";
 import { _Dictionary } from "rc-js-util";
-import { CanvasEntityRendererProvider } from "./canvas-entity-renderer-provider";
+import { CanvasComponentRendererProvider } from "./canvas-component-renderer-provider";
 import { CanvasRendererFactory } from "./canvas-renderer-factory";
 import { ICanvasDimensions } from "../../templating/canvas-dimensions";
-import { IGraphicsComponentSpecification } from "../i-graphics-component-specification";
-import { CompositeGraphicsComponent } from "../../entities/components/composite-graphics-component";
 import { IReadonlyPlot } from "../../plot/i-plot";
 import { CanvasRendererSharedState } from "./canvas-renderer-shared-state";
-import { TExtractGcSpec } from "../t-extract-gc-spec";
+import { ITransformComponentStore, TransformComponentStore } from "../transform-components/transform-component-store";
+import { GraphicsComponentStore } from "../graphics-component-store";
 
 /**
  * @public
  * Canvas implementation of {@link IRenderer}.
  */
-export interface ICanvasRenderer extends IRenderer<ICanvasEntityRenderer>
+export interface ICanvasRenderer extends IRenderer<ICanvasComponentRenderer>
 {
+    readonly transformComponents: ITransformComponentStore<ICanvasComponentRenderer>;
 }
 
 /**
@@ -31,7 +31,7 @@ export class CanvasRenderer implements ICanvasRenderer
         context: CanvasRenderingContext2D | null,
         callbacks?: Partial<IRendererCallbacks<CanvasRenderingContext2D>>,
     )
-        : IRenderer<ICanvasEntityRenderer> | null
+        : ICanvasRenderer | null
     {
         if (context == null)
         {
@@ -42,9 +42,10 @@ export class CanvasRenderer implements ICanvasRenderer
     }
 
     public context: CanvasRenderingContext2D;
-    public entityRendererProvider: IEntityRendererProvider<ICanvasEntityRenderer>;
-    public entityRendererFactory: IEntityRendererFactory<{}, ICanvasEntityRenderer>;
-    public readonly graphicsComponents = new Map<string, IGraphicsComponentSpecification<ICanvasEntityRenderer, unknown, unknown>>();
+    public componentRendererProvider: IComponentRendererProvider<ICanvasComponentRenderer>;
+    public componentRendererFactory: IComponentRendererFactory<{}, ICanvasComponentRenderer>;
+    public readonly graphicsComponents = new GraphicsComponentStore<ICanvasComponentRenderer>();
+    public readonly transformComponents: ITransformComponentStore<ICanvasComponentRenderer>;
     public readonly sharedState: CanvasRendererSharedState;
 
     public onBeforePlotDraw(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void
@@ -58,21 +59,17 @@ export class CanvasRenderer implements ICanvasRenderer
         this.callbacks.onAfterPlotDraw(this.context);
     }
 
-    public onContextRegained(context: CanvasRenderingContext2D): void
+    public onContextLost(): void
     {
-        const { entityRendererFactory, entityRendererProvider } = this.getFactories(context);
-        this.sharedState.setContext(context);
-        this.entityRendererProvider = entityRendererProvider;
-        this.entityRendererFactory = entityRendererFactory;
+        // no action required
     }
 
-    public createCompositeGraphicsComponent<TUpdateArg, TTraits>
-    (
-        graphicsComp: IGraphicsComponentSpecification<ICanvasEntityRenderer, TUpdateArg, TTraits>,
-    )
-        : CompositeGraphicsComponent<ICanvasEntityRenderer, TUpdateArg, TTraits>
+    public onContextRegained(context: CanvasRenderingContext2D): void
     {
-        return new CompositeGraphicsComponent({} as TExtractGcSpec<ICanvasEntityRenderer>, graphicsComp);
+        const { componentRendererFactory, componentRendererProvider } = this.getFactories(context);
+        this.sharedState.setContext(context);
+        this.componentRendererProvider = componentRendererProvider;
+        this.componentRendererFactory = componentRendererFactory;
     }
 
     protected constructor
@@ -88,18 +85,19 @@ export class CanvasRenderer implements ICanvasRenderer
 
         this.context = context;
         this.sharedState = new CanvasRendererSharedState(context);
-        const { entityRendererFactory, entityRendererProvider } = this.getFactories(context);
-        this.entityRendererProvider = entityRendererProvider;
-        this.entityRendererFactory = entityRendererFactory;
+        const { componentRendererFactory, componentRendererProvider } = this.getFactories(context);
+        this.componentRendererProvider = componentRendererProvider;
+        this.componentRendererFactory = componentRendererFactory;
+        this.transformComponents = new TransformComponentStore();
     }
 
     private getFactories(context: CanvasRenderingContext2D)
     {
-        const entityRenderer = new CanvasEntityRenderer(context, this.sharedState);
+        const componentRenderer = new CanvasComponentRenderer(context, this.sharedState);
 
         return {
-            entityRendererProvider: new CanvasEntityRendererProvider(entityRenderer),
-            entityRendererFactory: new CanvasRendererFactory(entityRenderer),
+            componentRendererProvider: new CanvasComponentRendererProvider(componentRenderer),
+            componentRendererFactory: new CanvasRendererFactory(componentRenderer),
         };
     }
 
@@ -120,4 +118,6 @@ export class CanvasRenderer implements ICanvasRenderer
             // no action needed
         },
     };
+
+    public TComponentRenderer!: ICanvasComponentRenderer;
 }

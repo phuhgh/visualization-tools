@@ -6,8 +6,8 @@ import { AGlAttribute } from "./a-gl-attribute";
  * A Float32 {@link IGlAttribute}.
  */
 export class GlFloatAttribute
-    extends AGlAttribute
-    implements IGlAttribute
+    extends AGlAttribute<Float32Array>
+    implements IGlAttribute<Float32Array>
 {
     protected override getGlType(context: WebGLRenderingContext): GLenum
     {

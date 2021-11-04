@@ -1,21 +1,21 @@
 import { TGlExtensionKeys } from "../rendering/gl/i-gl-extensions";
 import { ChartComponent, IChartComponent } from "./chart-component";
 import { IGlRendererOptions } from "../rendering/gl/gl-renderer-options";
-import { EventService } from "../eventing/chart-event-service";
+import { EventService } from "../eventing/event-service";
 import { GraphAttachPoint } from "../templating/graph-attach-point";
 import { GraphAttachPointProvider } from "../templating/graph-attach-point-provider";
 import { ChartConfig, IChartConfig } from "./chart-config";
-import { GlRenderer } from "../rendering/gl/gl-renderer";
-import { TGlEntityRenderer } from "../rendering/gl/entity-renderer/gl-entity-renderer";
+import { GlRenderer, IGlRenderer } from "../rendering/gl/gl-renderer";
 import { TGlContext } from "../rendering/gl/t-gl-context";
 import { TGlContextAdapterCtor } from "../rendering/gl/t-gl-context-adapter-ctor";
+import { TGlComponentRenderer } from "../rendering/gl/component-renderer/gl-component-renderer";
 
 /**
  * @public
  * WebGL {@link IChartComponent}.
  */
-export type TGlChart<TExts extends TGlExtensionKeys, TCtx extends TGlContext> =
-    IChartComponent<TGlEntityRenderer<TCtx, TExts>>
+export type TGlChart<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>> =
+    IChartComponent<IGlRenderer<TComponentRenderer>>
     ;
 
 /**
@@ -25,15 +25,14 @@ export type TGlChart<TExts extends TGlExtensionKeys, TCtx extends TGlContext> =
 export class GlChartFactory
 {
     public static createOne<TExts extends TGlExtensionKeys
-        , TCtx extends TGlContext
-        , TAdapterCtor extends TGlContextAdapterCtor<TCtx>>
+        , TCtx extends TGlContext>
     (
         chartContainer: HTMLElement,
-        contextAdapterCtor: TAdapterCtor,
+        contextAdapterCtor: TGlContextAdapterCtor<TCtx>,
         chartConfig: IChartConfig,
         rendererOptions: IGlRendererOptions<TExts>,
     )
-        : TGlChart<TExts, TCtx> | null
+        : TGlChart<TGlComponentRenderer<TCtx, TExts>> | null
     {
         const eventService = new EventService();
         const attachPoint = new GraphAttachPoint(new GraphAttachPointProvider(chartContainer), eventService, chartConfig);

@@ -11,14 +11,14 @@ export function generateCircleGeometry
     : void
 {
     const increment = 2 * Math.PI / (writeTo.getLength() - 1);
-    const xMin = range.getXMin();
-    const yMin = range.getYMin();
-    const sf = _Math.min(range.getXRange(), range.getYRange()) * rnd.getNext();
+    const xCenter = range.getXCenter();
+    const yCenter = range.getYCenter();
+    const sf = _Math.min(range.getXRange(), range.getYRange()) * rnd.getNext() * 0.5;
 
     for (let i = writeTo.getStart(); i < writeTo.getEnd(); ++i)
     {
         const step = increment * i;
-        writeTo.setValue(i, writeTo.offsets.x, xMin + Math.cos(step) * sf);
-        writeTo.setValue(i, writeTo.offsets.y, yMin + Math.sin(step) * sf);
+        writeTo.setValue(i, writeTo.offsets.x, xCenter + Math.cos(step) * sf);
+        writeTo.setValue(i, writeTo.offsets.y, yCenter + Math.sin(step) * sf);
     }
 }

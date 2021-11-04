@@ -1,5 +1,5 @@
-import { ICanvasEntityRenderer, IGraphAttachPoint, IGraphicsComponentSpecification, SpriteLookup } from "@visualization-tools/core";
-import { ICartesian2dUpdateArg } from "../../update/cartesian2d-update-arg";
+import { EGraphicsComponentType, ICanvasComponentRenderer, IGraphAttachPoint, IGraphicsComponent, NoTransformProvider, SpriteLookup } from "@visualization-tools/core";
+import { ICartesian2dUpdateArg } from "../../update/update-arg/cartesian2d-update-arg";
 import { Cartesian2dAxisLabelGenerator } from "./cartesian-2d-axis-label-generator";
 import { TAxisLabelEntity } from "./t-axis-label-entity";
 
@@ -8,9 +8,11 @@ import { TAxisLabelEntity } from "./t-axis-label-entity";
  * Draws labels for cartesian 2d plots.
  */
 export class CanvasCartesian2dAxisLabelGraphicsComponent
-    implements IGraphicsComponentSpecification<ICanvasEntityRenderer, ICartesian2dUpdateArg<Float64Array>, TAxisLabelEntity<Float64Array>>
+    implements IGraphicsComponent<ICanvasComponentRenderer, ICartesian2dUpdateArg<Float64Array>, TAxisLabelEntity<Float64Array>>
 {
+    public readonly type = EGraphicsComponentType.Entity;
     public specification = {};
+    public transform = new NoTransformProvider();
 
     public constructor
     (
@@ -38,22 +40,25 @@ export class CanvasCartesian2dAxisLabelGraphicsComponent
     public update
     (
         entity: TAxisLabelEntity<Float64Array>,
-        entityRenderer: ICanvasEntityRenderer,
+        componentRenderer: ICanvasComponentRenderer,
         updateArg: ICartesian2dUpdateArg<Float64Array>,
     )
         : void
     {
-        const context = entityRenderer.context;
+        const context = componentRenderer.context;
         const dataToCanvasTransform = updateArg.drawTransforms.dataToInteractiveArea;
+        const userTransform = updateArg.userTransform;
         const lookup = this.axisLabelGenerator.update(entity, updateArg.canvasDimensions.dpr);
         const canvas = this.axisLabelGenerator.getCanvas();
 
         const paddingXAxis = entity.graphicsSettings.axisOptions.padding * updateArg.canvasDimensions.dpr;
-        const graphY = dataToCanvasTransform.getVec3MultiplyY(updateArg.plotRange.getYMin());
+        const graphY = dataToCanvasTransform.getVec3MultiplyY(updateArg.transformedDataRange.getYMin());
+
+        context.save();
 
         for (let i = 0, iEnd = entity.data.getXTraceCount(); i < iEnd; ++i)
         {
-            const graphX = dataToCanvasTransform.getVec3MultiplyX(entity.data.getXTick(i));
+            const graphX = dataToCanvasTransform.getVec3MultiplyX(userTransform.forwardX(entity.data.getXTick(i)));
             const spriteX = SpriteLookup.getXAtIndex(lookup, i);
             const spriteY = SpriteLookup.getYAtIndex(lookup, i);
             const spriteWidth = SpriteLookup.getWidthAtIndex(lookup, i);
@@ -75,13 +80,13 @@ export class CanvasCartesian2dAxisLabelGraphicsComponent
         }
 
         const xTraceCount = entity.data.getXTraceCount();
-        const graphX = dataToCanvasTransform.getVec3MultiplyX(updateArg.plotRange.getXMin());
+        const graphX = dataToCanvasTransform.getVec3MultiplyX(updateArg.transformedDataRange.getXMin());
         const paddingYAxis = entity.graphicsSettings.axisOptions.padding * updateArg.canvasDimensions.dpr;
 
         for (let i = 0, iEnd = entity.data.getYTraceCount(); i < iEnd; ++i)
         {
             const spriteIndex = xTraceCount + i;
-            const graphY = dataToCanvasTransform.getVec3MultiplyY(entity.data.getYTick(i));
+            const graphY = dataToCanvasTransform.getVec3MultiplyY(userTransform.forwardY(entity.data.getYTick(i)));
             const spriteX = SpriteLookup.getXAtIndex(lookup, spriteIndex);
             const spriteY = SpriteLookup.getYAtIndex(lookup, spriteIndex);
             const spriteWidth = SpriteLookup.getWidthAtIndex(lookup, spriteIndex);
@@ -101,5 +106,7 @@ export class CanvasCartesian2dAxisLabelGraphicsComponent
                 spriteHeight,
             );
         }
+
+        context.restore();
     }
 }

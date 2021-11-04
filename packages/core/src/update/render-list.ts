@@ -1,8 +1,8 @@
 import { _Debug, _Set } from "rc-js-util";
-import { EntityUpdateGrouping } from "./entity-update-grouping";
 import { TEntityTrait } from "../entities/traits/t-entity-trait";
 import { ICategoryUpdateHooks } from "../entities/categories/i-category-update-hooks";
-import { TUnknownRenderer } from "../rendering/i-renderer";
+import { IEntityUpdateGrouping } from "./entity-update-groupings/i-entity-update-grouping";
+import { TUnknownRenderer } from "../rendering/t-unknown-renderer";
 
 /**
  * @public
@@ -10,8 +10,8 @@ import { TUnknownRenderer } from "../rendering/i-renderer";
  */
 export class RenderList<TUpdateArg, TRequiredTraits>
 {
-    public readonly groupings: [EntityUpdateGrouping<TUpdateArg, TRequiredTraits>, TEntityTrait<TUpdateArg, TRequiredTraits>[]][] = [];
-    public entitiesInGroup: TEntityTrait<TUpdateArg, TRequiredTraits>[] = [];
+    public readonly groupings: [IEntityUpdateGrouping<TUpdateArg, TRequiredTraits>, TEntityTrait<TUpdateArg, TRequiredTraits>[]][] = [];
+    public uniqueEntities: TEntityTrait<TUpdateArg, TRequiredTraits>[] = [];
 
     public constructor
     (
@@ -20,7 +20,7 @@ export class RenderList<TUpdateArg, TRequiredTraits>
     {
     }
 
-    public addGrouping(grouping: EntityUpdateGrouping<TUpdateArg, TRequiredTraits>): void
+    public addGrouping(grouping: IEntityUpdateGrouping<TUpdateArg, TRequiredTraits>): void
     {
         this.currentGrouping = [grouping, []];
         this.groupings.push(this.currentGrouping);
@@ -40,10 +40,10 @@ export class RenderList<TUpdateArg, TRequiredTraits>
 
     public build(): void
     {
-        this.entitiesInGroup = _Set.valuesToArray(this.uniqueEntitiesSet);
+        this.uniqueEntities = _Set.valuesToArray(this.uniqueEntitiesSet);
         this.uniqueEntitiesSet.clear();
     }
 
-    private currentGrouping: [EntityUpdateGrouping<TUpdateArg, TRequiredTraits>, TEntityTrait<TUpdateArg, TRequiredTraits>[]] | null = null;
+    private currentGrouping: [IEntityUpdateGrouping<TUpdateArg, TRequiredTraits>, TEntityTrait<TUpdateArg, TRequiredTraits>[]] | null = null;
     private uniqueEntitiesSet = new Set<TEntityTrait<TUpdateArg, TRequiredTraits>>();
 }

@@ -13,7 +13,9 @@ export function generateRect
     const paddedRange = Margin2d.f64.factory
         .createOne(1, 1, 1, 1)
         .getInnerRange(range);
-    writeTo.setLength(4);
+
+    writeTo.setLength(5);
+
     const xMin = paddedRange.getXMin();
     const xMax = paddedRange.getXMax();
     const yMin = paddedRange.getYMin();
@@ -32,6 +34,9 @@ export function generateRect
 
     writeTo.setValue(3, xOffset, xMin);
     writeTo.setValue(3, yOffset, yMax);
+
+    writeTo.setValue(4, xOffset, xMin);
+    writeTo.setValue(4, yOffset, yMin);
 }
 
 

@@ -1,18 +1,21 @@
-import { RgbaColorPacker, TTypedArray, Vec2 } from "rc-js-util";
-import { IDrawablePoint2dOffsets } from "./i-drawable-point2d-offsets";
-import { ICartesian2dUpdateArg } from "../update/cartesian2d-update-arg";
+import { RgbaColorPacker, TF64Vec4, TTypedArray, Vec4 } from "rc-js-util";
+import { ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-arg";
 import { TInterleavedPoint2dTrait } from "../traits/t-interleaved-point2d-trait";
-import { ICanvasEntityRenderer, IGraphicsComponentSpecification, IIndexedDataConnector } from "@visualization-tools/core";
+import { EGraphicsComponentType, ICanvasComponentRenderer, IGraphicsComponent, NoTransformProvider } from "@visualization-tools/core";
+import { Indexed2dCappedLineValueProvider } from "./indexed2d-capped-line-value-provider";
+import { CanvasVariableWidthCappedLine } from "./canvas-variable-width-capped-line";
 
-// todo jack: add highlighting
+// FIXME: this needs unit tests
 /**
  * @public
  * Draws lines with or without segments of different colors and sizes.
  */
 export class CanvasLineGraphicsComponent
-    implements IGraphicsComponentSpecification<ICanvasEntityRenderer, ICartesian2dUpdateArg<TTypedArray>, TInterleavedPoint2dTrait<TTypedArray>>
+    implements IGraphicsComponent<ICanvasComponentRenderer, ICartesian2dUpdateArg<TTypedArray>, TInterleavedPoint2dTrait<TTypedArray>>
 {
+    public readonly type = EGraphicsComponentType.Entity;
     public specification = {};
+    public transform = new NoTransformProvider();
 
     public getCacheId(): string
     {
@@ -32,7 +35,7 @@ export class CanvasLineGraphicsComponent
     public update
     (
         entity: TInterleavedPoint2dTrait<TTypedArray>,
-        renderer: ICanvasEntityRenderer,
+        renderer: ICanvasComponentRenderer,
         updateArg: ICartesian2dUpdateArg<TTypedArray>,
     )
         : void
@@ -50,7 +53,7 @@ export class CanvasLineGraphicsComponent
         }
         else
         {
-            CanvasLineGraphicsComponent.drawLineWithPointSize(entity, renderer.context, updateArg, entity.data.offsets.size);
+            this.drawLineWithPointSize(entity, renderer.context, updateArg, entity.data.offsets.size);
         }
 
         renderer.context.restore();
@@ -59,7 +62,7 @@ export class CanvasLineGraphicsComponent
     /**#
      * Only works with 3 points or more.
      */
-    private static drawLineWithPointSize<TArray extends TTypedArray>
+    private drawLineWithPointSize<TArray extends TTypedArray>
     (
         entity: TInterleavedPoint2dTrait<TTypedArray>,
         context: CanvasRenderingContext2D,
@@ -68,159 +71,37 @@ export class CanvasLineGraphicsComponent
     )
         : void
     {
-        context.fillStyle = RgbaColorPacker.makeDomColorString(
-            entity.graphicsSettings.pointDisplay
-                .getColor()
-                .getPackedRGBAColor(true),
-        );
-
         const connector = entity.data;
         const xOffset = connector.offsets.x;
         const yOffset = connector.offsets.y;
-        const colorOffset = connector.offsets.color;
-        const dataWorld = updateArg.drawTransforms.dataToInteractiveArea;
+        const userTransform = updateArg.userTransform;
         const sizeTransform = entity.graphicsSettings.pointSizeNormalizer.getSizeToPixelTransform();
-        const start = connector.getStart();
 
-        const getPoint = (index: number): Vec2<TArray> =>
+        const cappedLine = this.cappedLine;
+        this.pointProvider.update(entity, 0);
+        this.valueProvider.update(entity, updateArg.drawTransforms.dataToInteractiveArea, sizeTransform, userTransform);
+        cappedLine.beginLine(context, this.pointProvider.p1, this.pointProvider.p2);
+
+        for (let i = connector.getStart() + 2, iEnd = connector.getEnd() - 1; i < iEnd; ++i)
         {
-            return Vec2.f64.factory.createOne(
-                dataWorld.getVec3MultiplyX(connector.getValue(index, xOffset)),
-                dataWorld.getVec3MultiplyY(connector.getValue(index, yOffset)),
-            ) as Vec2<TArray>;
-        };
-
-        let p1 = getPoint(start);
-        const p1size = sizeTransform.getVec2MultiplyX(connector.getValue(start, sizeOffset)) * 0.5;
-        let p2 = getPoint(start + 1);
-        let p2size = sizeTransform.getVec2MultiplyX(connector.getValue(start + 1, sizeOffset)) * 0.5;
-        let p3 = getPoint(start + 2);
-
-        let l1Normal = CanvasLineGraphicsComponent.getLineNormal(p1, p2, Vec2.f64.factory.createOneEmpty() as Vec2<TArray>);
-        let l2Normal = CanvasLineGraphicsComponent.getLineNormal(p2, p3, Vec2.f64.factory.createOneEmpty() as Vec2<TArray>);
-        const cap = CanvasLineGraphicsComponent.normalOfAddition(l1Normal, l2Normal, Vec2.f64.factory.createOneEmpty() as Vec2<TArray>);
-
-        context.beginPath();
-        CanvasLineGraphicsComponent.moveTo(context, p1, l1Normal, -p1size);
-        CanvasLineGraphicsComponent.lineTo(context, p1, l1Normal, p1size);
-
-        for (let i = start + 2, iEnd = connector.getEnd() - 1; i < iEnd; ++i)
-        {
-            CanvasLineGraphicsComponent.lineTo(context, p2, cap, p2size);
-            CanvasLineGraphicsComponent.lineTo(context, p2, cap, -p2size);
-            CanvasLineGraphicsComponent.closeSegment(connector, context, colorOffset, i);
-            CanvasLineGraphicsComponent.moveTo(context, p2, cap, -p2size);
-            CanvasLineGraphicsComponent.lineTo(context, p2, cap, p2size);
-
-            const pointTmp = p1;
-            p1 = p2;
-            p2 = p3;
-            p2size = sizeTransform.getVec2MultiplyX(connector.getValue(i, sizeOffset)) * 0.5;
-            const lineTmp = l1Normal;
-            l1Normal = l2Normal;
-            pointTmp[0] = dataWorld.getVec3MultiplyX(connector.getValue(i + 1, xOffset));
-            pointTmp[1] = dataWorld.getVec3MultiplyY(connector.getValue(i + 1, yOffset));
-            p3 = pointTmp;
-            l2Normal = CanvasLineGraphicsComponent.getLineNormal(p2, p3, lineTmp);
-            CanvasLineGraphicsComponent.normalOfAddition(l1Normal, l2Normal, cap);
+            cappedLine.setMidPoint(
+                context,
+                connector.getValue(i, xOffset),
+                connector.getValue(i, yOffset),
+                connector.getValue(i, sizeOffset),
+                getColor(entity, i),
+            );
         }
-
-        CanvasLineGraphicsComponent.lineTo(context, p2, cap, p2size);
-        CanvasLineGraphicsComponent.lineTo(context, p2, cap, -p2size);
-        CanvasLineGraphicsComponent.closeSegment(connector, context, colorOffset, connector.getEnd() - 2);
 
         const last = connector.getEnd() - 1;
-        p3 = getPoint(last);
-        const p3size = sizeTransform.getVec2MultiplyX(connector.getValue(last, sizeOffset)) * 0.5;
-        l2Normal = CanvasLineGraphicsComponent.getLineNormal(p2, p3, l2Normal);
-
-        CanvasLineGraphicsComponent.moveTo(context, p2, cap, p2size);
-        CanvasLineGraphicsComponent.lineTo(context, p2, cap, -p2size);
-        CanvasLineGraphicsComponent.lineTo(context, p3, l2Normal, -p3size);
-        CanvasLineGraphicsComponent.lineTo(context, p3, l2Normal, p3size);
-        CanvasLineGraphicsComponent.closeSegment(connector, context, colorOffset, connector.getEnd() - 1);
-
-        if (colorOffset == null)
-        {
-            context.fillStyle = RgbaColorPacker.makeDomColorString(entity.graphicsSettings.pointDisplay.getColor().getPackedRGBAColor());
-            context.fill();
-        }
+        cappedLine.endLine(
+            context,
+            connector.getValue(last, xOffset),
+            connector.getValue(last, yOffset),
+            connector.getValue(last, sizeOffset),
+            getColor(entity, last),
+        );
     }
-
-    private static closeSegment
-    (
-        connector: IIndexedDataConnector<IDrawablePoint2dOffsets>,
-        context: CanvasRenderingContext2D,
-        colorOffset: number | undefined,
-        index: number,
-    )
-        : void
-    {
-        context.closePath();
-
-        if (colorOffset != null)
-        {
-            context.fillStyle = RgbaColorPacker.makeDomColorString(connector.getValue(index, colorOffset));
-            context.fill();
-            context.beginPath();
-        }
-    }
-
-    private static normalOfAddition<TArray extends TTypedArray>
-    (
-        a: Vec2<TArray>,
-        b: Vec2<TArray>,
-        result: Vec2<TArray>,
-    )
-        : Vec2<TArray>
-    {
-        return a
-            .add(b, CanvasLineGraphicsComponent.tmp)
-            .normalize(result);
-    }
-
-    private static getLineNormal<TArray extends TTypedArray>
-    (
-        p1: Vec2<TArray>,
-        p2: Vec2<TArray>,
-        result: Vec2<TArray>,
-    )
-        : Vec2<TArray>
-    {
-        return p2
-            .subtract(p1, CanvasLineGraphicsComponent.tmp)
-            .normalize(CanvasLineGraphicsComponent.tmp)
-            .getNormal(result);
-    }
-
-    private static moveTo<TArray extends TTypedArray>
-    (
-        context: CanvasRenderingContext2D,
-        vec: Vec2<TArray>,
-        offset: Vec2<TArray>,
-        scaleFactor: number,
-    )
-        : void
-    {
-        offset.scalarMultiply(scaleFactor, CanvasLineGraphicsComponent.tmp);
-        vec.add(CanvasLineGraphicsComponent.tmp, CanvasLineGraphicsComponent.tmp);
-        context.moveTo(CanvasLineGraphicsComponent.tmp.getX(), CanvasLineGraphicsComponent.tmp.getY());
-    }
-
-    private static lineTo<TArray extends TTypedArray>
-    (
-        context: CanvasRenderingContext2D,
-        vec: Vec2<TArray>,
-        offset: Vec2<TArray>,
-        scaleFactor: number,
-    )
-    {
-        offset.scalarMultiply(scaleFactor, CanvasLineGraphicsComponent.tmp);
-        vec.add(CanvasLineGraphicsComponent.tmp, CanvasLineGraphicsComponent.tmp);
-        context.lineTo(CanvasLineGraphicsComponent.tmp.getX(), CanvasLineGraphicsComponent.tmp.getY());
-    }
-
-    private static tmp = new Vec2.f64();
 
     private static drawConstantSizeLine
     (
@@ -230,36 +111,38 @@ export class CanvasLineGraphicsComponent
     )
         : void
     {
-        const getLineColorFromData = CanvasLineGraphicsComponent.getLineColorFromData;
         const connector = entity.data;
         const xOffset = connector.offsets.x;
         const yOffset = connector.offsets.y;
         const colorOffset = connector.offsets.color;
-        const dataWorld = updateArg.drawTransforms.dataToInteractiveArea;
+        const screenTransform = updateArg.drawTransforms.dataToInteractiveArea;
+        const userTransform = updateArg.userTransform;
         const startIndex = connector.getStart();
-        let xCanvas = dataWorld.getVec3MultiplyX(connector.getValue(startIndex, xOffset));
-        let yCanvas = dataWorld.getVec3MultiplyY(connector.getValue(startIndex, yOffset));
-
-        const defaultColor = RgbaColorPacker.makeDomColorString(entity.graphicsSettings.pointDisplay
-            .getColor()
-            .getPackedRGBAColor(true));
+        let xCanvas = screenTransform.getVec3MultiplyX(userTransform.forwardX(connector.getValue(startIndex, xOffset)));
+        let yCanvas = screenTransform.getVec3MultiplyY(userTransform.forwardY(connector.getValue(startIndex, yOffset)));
+        const defaultColor = RgbaColorPacker.makeDomColorString(entity.graphicsSettings.pointDisplay.packedColor);
+        const highlightColor = RgbaColorPacker.makeDomColorString(entity.graphicsSettings.pointDisplay.packedHighlightColor);
 
         if (colorOffset == null)
         {
             context.strokeStyle = defaultColor;
         }
 
+        context.lineWidth = entity.graphicsSettings.pointDisplay.getPixelSize();
         context.beginPath();
         context.moveTo(xCanvas, yCanvas);
 
         for (let i = startIndex + 1, iEnd = connector.getEnd(); i < iEnd; ++i)
         {
-            xCanvas = dataWorld.getVec3MultiplyX(connector.getValue(i, xOffset));
-            yCanvas = dataWorld.getVec3MultiplyY(connector.getValue(i, yOffset));
-
             if (colorOffset != null)
             {
-                context.strokeStyle = getLineColorFromData(connector, i, colorOffset);
+                xCanvas = screenTransform.getVec3MultiplyX(userTransform.forwardX(connector.getValue(i, xOffset)));
+                yCanvas = screenTransform.getVec3MultiplyY(userTransform.forwardY(connector.getValue(i, yOffset)));
+
+                context.strokeStyle = isSegmentHighlighted(entity, i - 1)
+                    ? highlightColor
+                    : RgbaColorPacker.makeDomColorString(entity.data.getValue(i, colorOffset));
+
                 context.lineTo(xCanvas, yCanvas);
                 context.stroke();
                 context.beginPath();
@@ -267,18 +150,86 @@ export class CanvasLineGraphicsComponent
             }
             else
             {
-                context.lineTo(xCanvas, yCanvas);
+                if (isSegmentHighlighted(entity, i - 1))
+                {
+                    context.stroke();
+
+                    context.beginPath();
+                    context.moveTo(xCanvas, yCanvas);
+                    context.strokeStyle = highlightColor;
+                    xCanvas = screenTransform.getVec3MultiplyX(userTransform.forwardX(connector.getValue(i, xOffset)));
+                    yCanvas = screenTransform.getVec3MultiplyY(userTransform.forwardY(connector.getValue(i, yOffset)));
+                    context.lineTo(xCanvas, yCanvas);
+                    context.stroke();
+
+                    context.beginPath();
+                    context.moveTo(xCanvas, yCanvas);
+                    context.strokeStyle = defaultColor;
+                }
+                else
+                {
+                    xCanvas = screenTransform.getVec3MultiplyX(userTransform.forwardX(connector.getValue(i, xOffset)));
+                    yCanvas = screenTransform.getVec3MultiplyY(userTransform.forwardY(connector.getValue(i, yOffset)));
+                    context.lineTo(xCanvas, yCanvas);
+                }
             }
         }
 
-        if (colorOffset != null)
+        if (colorOffset == null)
         {
             context.stroke();
         }
     }
 
-    private static getLineColorFromData(this: void, connector: IIndexedDataConnector<IDrawablePoint2dOffsets>, index: number, offset: number): string
+    private pointProvider = new PointProvider();
+    private valueProvider = new Indexed2dCappedLineValueProvider();
+    private cappedLine = new CanvasVariableWidthCappedLine(this.valueProvider);
+}
+
+class PointProvider
+{
+    public p1: TF64Vec4 = new Vec4.f64();
+    public p2: TF64Vec4 = new Vec4.f64();
+
+    public update(
+        entity: TInterleavedPoint2dTrait<TTypedArray>,
+        index: number,
+    )
+        : void
     {
-        return RgbaColorPacker.makeDomColorString(connector.getValue(index, offset));
+        const connector = entity.data;
+
+        this.p1.update(
+            connector.getValue(index, connector.offsets.x),
+            connector.getValue(index, connector.offsets.y),
+            connector.offsets.size == null ? 0 : connector.getValue(index, connector.offsets.size),
+            getColor(entity, index) ?? 0,
+        );
+        this.p2.update(
+            connector.getValue(index + 1, connector.offsets.x),
+            connector.getValue(index + 1, connector.offsets.y),
+            connector.offsets.size == null ? 0 : connector.getValue(index + 1, connector.offsets.size),
+            getColor(entity, index + 1) ?? 0,
+        );
     }
+}
+
+function getColor(entity: TInterleavedPoint2dTrait<TTypedArray>, index: number): number
+{
+    if (isSegmentHighlighted(entity, index))
+    {
+        return entity.graphicsSettings.pointDisplay.packedHighlightColor;
+    }
+
+    const colorOffset = entity.data.offsets.color;
+
+    return colorOffset == null
+        ? entity.graphicsSettings.pointDisplay.packedColor
+        : entity.data.getValue(index, colorOffset);
+}
+
+function isSegmentHighlighted(entity: TInterleavedPoint2dTrait<TTypedArray>, index: number): boolean
+{
+    const pointDisplaySettings = entity.graphicsSettings.pointDisplay;
+    return pointDisplaySettings.highlightedSegments != null && pointDisplaySettings.highlightedSegments.has(index);
 }

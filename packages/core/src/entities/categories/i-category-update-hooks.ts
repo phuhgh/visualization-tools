@@ -1,4 +1,4 @@
-import { TUnknownRenderer } from "../../rendering/i-renderer";
+import { TUnknownRenderer } from "../../rendering/t-unknown-renderer";
 
 /**
  * @public

@@ -2,6 +2,7 @@ import { IRendererSharedState } from "../i-renderer-shared-state";
 import { IReadonlyRange2d, TTypedArray } from "rc-js-util";
 import { TGlContext } from "./t-gl-context";
 
+
 /**
  * @public
  * Webgl state that is shred between entity renderers.
@@ -41,6 +42,12 @@ export class GlRendererSharedState implements IGlRendererSharedState
     public onNewFrame(): void
     {
         ++this.frameCounter;
+    }
+
+    public onContextLost(): void
+    {
+        this.scissorRange = null;
+        this.textureIndex = 0;
     }
 
     public clearScissor(): void

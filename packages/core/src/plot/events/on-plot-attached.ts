@@ -1,26 +1,26 @@
 import { IChartComponent } from "../../chart/chart-component";
 import { IReadonlyPlot } from "../i-plot";
 import { TListener } from "rc-js-util";
-import { TUnknownEntityRenderer } from "../../rendering/t-unknown-entity-renderer";
+import { TUnknownRenderer } from "../../rendering/t-unknown-renderer";
 
 /**
  * @public
  * Listener for plot attach to chart.
  */
-export type TOnPlotAttached<TEntityRenderer extends TUnknownEntityRenderer> = TListener<"onPlotAttached", [IChartComponent<TEntityRenderer>]>;
+export type TOnPlotAttached<TRenderer extends TUnknownRenderer> = TListener<"onPlotAttached", [IChartComponent<TRenderer>]>;
 
 /**
  * @public
  * Emitted on plot attaching to chart.
  */
-export class OnPlotAttached<TEntityRenderer extends TUnknownEntityRenderer>
-    implements TOnPlotAttached<TEntityRenderer>
+export class OnPlotAttached<TRenderer extends TUnknownRenderer>
+    implements TOnPlotAttached<TRenderer>
 {
     public static callbackKey = "onPlotAttached" as const;
 
     public constructor
     (
-        public onPlotAttached: (chart: IChartComponent<TEntityRenderer>) => void,
+        public onPlotAttached: (chart: IChartComponent<TRenderer>) => void,
     )
     {
     }
@@ -28,7 +28,7 @@ export class OnPlotAttached<TEntityRenderer extends TUnknownEntityRenderer>
     public static registerListener
     (
         plot: IReadonlyPlot<unknown, unknown>,
-        onEvent: (chart: IChartComponent<TUnknownEntityRenderer>) => void,
+        onEvent: (chart: IChartComponent<TUnknownRenderer>) => void,
     )
         : () => void
     {
@@ -40,7 +40,7 @@ export class OnPlotAttached<TEntityRenderer extends TUnknownEntityRenderer>
     public static emit
     (
         plot: IReadonlyPlot<unknown, unknown>,
-        chart: IChartComponent<TUnknownEntityRenderer>,
+        chart: IChartComponent<TUnknownRenderer>,
     )
         : void
     {

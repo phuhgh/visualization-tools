@@ -2,9 +2,9 @@ import { IReadonlyPlot } from "../../../plot/i-plot";
 import { QuadEventTargetProvider } from "./quad-event-target-provider";
 import { ICanvasDimensions } from "../../../templating/canvas-dimensions";
 import { IDefaultInteractionGroups } from "../default-interaction-groups";
-import { IPlotEventTargetProvider } from "../hit-test/i-plot-event-target-provider";
-import { IDefaultTargets } from "../hit-test/i-default-targets";
-import { ISharedEntityQuadTree } from "../../../hit-testing/shared-quad-tree/shared-entity-quad-tree";
+import { IPlotEventTargetProvider } from "../i-plot-event-target-provider";
+import { IDefaultTargets } from "../i-default-targets";
+import { ISharedEntityQuadTree } from "../../hit-testing/shared-quad-tree/shared-entity-quad-tree";
 import { _Math } from "rc-js-util";
 import { IDraggableTrait } from "../../../entities/traits/i-draggable-trait";
 import { IClickableTrait } from "../../../entities/traits/i-clickable-trait";
@@ -51,8 +51,8 @@ export class QuadTreeEventTargetProvider<TPlotRange>
     public * update(canvasDims: ICanvasDimensions, start: number): IterableIterator<void>
     {
         const plotDimensions = this.plot.plotDimensionsOBL.cssArea.wholeRange;
-        const range = _Math.min(plotDimensions.getXRange(), plotDimensions.getYRange());
-        this.entityTree.sharedTree.setOptions(Math.floor(Math.log2(range)), 4);
+        const range = _Math.max(plotDimensions.getXRange(), plotDimensions.getYRange());
+        this.entityTree.sharedTree.setOptions(Math.ceil(Math.log2(range)), 4);
         this.entityTree.sharedTree.setTopLevel(plotDimensions);
         const entitiesByHitTester = this.interactiveGroups.hitTestable.getEntitiesByHitTester();
         const updateArg = this.interactiveGroups.hitTestable.argProvider.getUpdateArg(this.plot, canvasDims);

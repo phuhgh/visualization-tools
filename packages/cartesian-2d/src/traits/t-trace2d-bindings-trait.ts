@@ -1,11 +1,10 @@
 import { IGraphicsComponentSettingsTrait, TChangeTrackedTrait } from "@visualization-tools/core";
-import { TTypedArray } from "rc-js-util";
 
 /**
  * @public
  */
 export type TTrace2dBindingsDisplaySetting = {
-    readonly traces: TTypedArray;
+    readonly traces: Float32Array;
 };
 
 /**

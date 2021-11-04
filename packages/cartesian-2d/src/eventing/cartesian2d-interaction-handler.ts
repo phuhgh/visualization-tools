@@ -1,7 +1,8 @@
-import { ICartesian2dPlotRange } from "../update/cartesian2d-plot-range";
-import { IReadonlyVec2, Mat3, Range2d, TTypedArray, Vec2 } from "rc-js-util";
+import { ICartesian2dPlotRange } from "../update/update-arg/cartesian2d-plot-range";
+import { IReadonlyVec2, Range2d, TTypedArray, Vec2 } from "rc-js-util";
 import { PinchZoomHandlerCartesian2d } from "./pinch-zoom-handler-cartesian2d";
-import { EEntityUpdateFlag, HitTestResult, IChartComponent, IChartPointerEvent, IInteractionStateChangeCallbacks, IPlot, OnPlotRequiresUpdate, TUnknownEntityRenderer, UserEventHandlerCallbacks } from "@visualization-tools/core";
+import { EEntityUpdateFlag, HitTestResult, IChartComponent, IChartPointerEvent, IInteractionStateChangeCallbacks, IOnHoverResult, IPlot, OnPlotRequiresUpdate, TUnknownRenderer, UserEventHandlerCallbacks } from "@visualization-tools/core";
+import { CartesianUserInteractionTransformProvider } from "./cartesian-user-interaction-transform-provider";
 
 /**
  * @public
@@ -13,13 +14,16 @@ export class Cartesian2dInteractionHandler<TTraits>
 {
     public constructor
     (
-        private readonly chart: IChartComponent<TUnknownEntityRenderer>,
+        private readonly chart: IChartComponent<TUnknownRenderer>,
         private readonly plot: IPlot<ICartesian2dPlotRange<TTypedArray>, unknown>,
         listeners: Partial<IInteractionStateChangeCallbacks<TTraits>>,
     )
     {
         this.userCallbacks = new UserEventHandlerCallbacks(listeners);
-        this.tmpRange = plot.plotRange.dataRange.slice();
+        this.tmpRange2d = plot.plotRange.dataRange
+            .slice()
+            .fill(0);
+        this.userTransformProvider = new CartesianUserInteractionTransformProvider(plot);
     }
 
     public onEntityRequiresUpdate(updateFlag: EEntityUpdateFlag): void
@@ -54,14 +58,12 @@ export class Cartesian2dInteractionHandler<TTraits>
 
     public onHover
     (
-        newlyHovered: readonly HitTestResult<unknown, TTraits>[],
-        stillHovered: readonly HitTestResult<unknown, TTraits>[],
-        noLongerHovered: readonly HitTestResult<unknown, TTraits>[],
+        hoverResult: IOnHoverResult<TTraits>,
         $event: IChartPointerEvent<PointerEvent>,
     )
         : void
     {
-        this.userCallbacks.onHover(newlyHovered, stillHovered, noLongerHovered, $event);
+        this.userCallbacks.onHover(hoverResult, $event);
     }
 
     public onDragStart
@@ -87,24 +89,27 @@ export class Cartesian2dInteractionHandler<TTraits>
     public onPan($event: IChartPointerEvent<PointerEvent>, dx: number, dy: number): void
     {
         const plotRange = this.plot.plotRange;
-        const interactiveRange = this.plot.plotDimensionsOBL.pixelArea.interactiveRange;
-        const ddx = -plotRange.dataRange.getXRange() * dx / interactiveRange.getXRange();
-        const ddy = -plotRange.dataRange.getYRange() * dy / interactiveRange.getYRange();
+        const dd = this.userTransformProvider.getTransformedDelta(
+            $event.pointerCssPosition,
+            this.plot.plotDimensionsOBL.pixelArea.interactiveRange,
+            dx,
+            dy,
+        );
 
-        this.tmpRange.set(plotRange.dataRange);
-        this.tmpRange.translateBy(ddx, ddy);
-        plotRange.updateDataRange(this.tmpRange, this.chart.attachPoint.canvasDims);
+        this.tmpRange2d.set(plotRange.dataRange);
+        this.tmpRange2d.translateBy(dd.getX(), dd.getY());
+        plotRange.updateDataRange(this.tmpRange2d, this.chart.attachPoint.canvasDims);
 
         this.userCallbacks.onPan($event, dx, dy);
         this.chart.updateOnNextFrame(this.plot);
     }
 
-    public onPanZoomStart(centerPointCssCanvas: IReadonlyVec2<Float32Array>, width: number): void
+    public onPanZoomStart(cssCenterPoint: IReadonlyVec2<Float32Array>, width: number): void
     {
         this.pinchZoomHandler = new PinchZoomHandlerCartesian2d(
             this.plot,
             this.chart.attachPoint.canvasDims,
-            centerPointCssCanvas.slice(),
+            cssCenterPoint.slice(),
             width,
         );
     }
@@ -124,26 +129,28 @@ export class Cartesian2dInteractionHandler<TTraits>
 
     public onWheel($event: IChartPointerEvent<MouseEvent>, dz: number): void
     {
+        // ut - user transform
         const plotRange = this.plot.plotRange;
-        const interactiveRange = this.plot.plotDimensionsOBL.clipSpaceArea.interactiveRange;
-        interactiveRange.getRangeTransform(plotRange.dataRange, this.interactiveClipToData);
-        const dataPosition = $event.pointerClipPosition.mat3Multiply(this.interactiveClipToData);
+        const utDataPosition = this.userTransformProvider.getTransformedPosition(
+            $event.pointerClipPosition,
+            this.plot.plotDimensionsOBL.clipSpaceArea.interactiveRange,
+        );
 
-        this.tmpRange.set(plotRange.dataRange);
-        this.tmpRange.scaleRelativeTo(1 - dz * 0.001, dataPosition, this.tmpRange);
-        plotRange.updateDataRange(this.tmpRange, this.chart.attachPoint.canvasDims);
+        this.tmpRange2d.set(plotRange.dataRange);
+        this.tmpRange2d.scaleRelativeTo(1 - dz * 0.001, utDataPosition, this.tmpRange2d);
+        plotRange.updateDataRange(this.tmpRange2d, this.chart.attachPoint.canvasDims);
 
         this.userCallbacks.onWheel($event, dz);
         this.chart.updateOnNextFrame(this.plot);
     }
 
     private userCallbacks: IInteractionStateChangeCallbacks<TTraits>;
-    private readonly interactiveClipToData = Mat3.f32.factory.createOneEmpty();
     private pinchZoomHandler = new PinchZoomHandlerCartesian2d(
         this.plot,
         this.chart.attachPoint.canvasDims,
         Vec2.f32.factory.createOneEmpty(),
         0,
     );
-    private readonly tmpRange: Range2d<TTypedArray>;
+    private readonly tmpRange2d: Range2d<TTypedArray>;
+    private readonly userTransformProvider: CartesianUserInteractionTransformProvider<TTypedArray>;
 }

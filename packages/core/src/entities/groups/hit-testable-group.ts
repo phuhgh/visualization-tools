@@ -2,8 +2,8 @@ import { AEntityGroup, IReadonlyEntityGroup } from "./a-entity-group";
 import { TEntityTrait } from "../traits/t-entity-trait";
 import { IEntityUpdateArgProvider } from "../i-entity-update-arg-provider";
 import { _Debug, _Map, DirtyCheckedUniqueCollection, IDirtyCheckedUniqueCollection } from "rc-js-util";
-import { IHitAllowedComponent } from "../../eventing/user-interaction/hit-test/i-hit-allowed-component";
-import { IHitTestComponent } from "../../eventing/user-interaction/hit-test/i-hit-test-component";
+import { IHitAllowedComponent } from "../../eventing/hit-testing/i-hit-allowed-component";
+import { IHitTestComponent } from "../../eventing/hit-testing/i-hit-test-component";
 import { IWritablePlot } from "../../plot/i-plot";
 import { IHitTestableTrait } from "./i-hit-testable-trait";
 

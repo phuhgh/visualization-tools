@@ -6,7 +6,9 @@ void interleaved2dLineQuadIndexer_index
         (
                 VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T> * _arg,
                 std::uint32_t _entityId,
-                std::uint32_t _filterMask
+                std::uint32_t _filterMask,
+                VisualizationTools::Transforms::ICartesian2dUserTransform<T> * _transformX,
+                VisualizationTools::Transforms::ICartesian2dUserTransform<T> * _transformY
         )
 {
     auto & connector = *_arg->m_connector;
@@ -18,6 +20,11 @@ void interleaved2dLineQuadIndexer_index
     {
         VisualizationTools::Vec2<T> p1{ connector.GetValue(i, offsets.m_x), connector.GetValue(i, offsets.m_y) };
         VisualizationTools::Vec2<T> p2{ connector.GetValue(i + 1, offsets.m_x), connector.GetValue(i + 1, offsets.m_y) };
+
+        _transformX->ForwardTransformX(p1);
+        _transformY->ForwardTransformY(p1);
+        _transformX->ForwardTransformX(p2);
+        _transformY->ForwardTransformY(p2);
 
         p1.Mat3Multiply(worldTransform);
         p2.Mat3Multiply(worldTransform);
@@ -43,7 +50,10 @@ void f32Interleaved2dLineQuadIndexer_index
                 std::uint32_t _filterMask
         )
 {
-    return interleaved2dLineQuadIndexer_index<float>(_arg, _entityId, _filterMask);
+    auto transformX = VisualizationTools::Bindings::getUserTransform<float>(_arg->m_displayOptions.m_xTransform);
+    auto transformY = VisualizationTools::Bindings::getUserTransform<float>(_arg->m_displayOptions.m_yTransform);
+
+    return interleaved2dLineQuadIndexer_index(_arg, _entityId, _filterMask, transformX, transformY);
 }
 
 [[maybe_unused]]
@@ -54,5 +64,8 @@ void f64Interleaved2dLineQuadIndexer_index
                 std::uint32_t _filterMask
         )
 {
-    return interleaved2dLineQuadIndexer_index<double>(_arg, _entityId, _filterMask);
+    auto transformX = VisualizationTools::Bindings::getUserTransform<double>(_arg->m_displayOptions.m_xTransform);
+    auto transformY = VisualizationTools::Bindings::getUserTransform<double>(_arg->m_displayOptions.m_yTransform);
+
+    return interleaved2dLineQuadIndexer_index(_arg, _entityId, _filterMask, transformX, transformY);
 }

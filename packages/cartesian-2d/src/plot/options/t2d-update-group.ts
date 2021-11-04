@@ -1,7 +1,7 @@
 import { TTypedArray } from "rc-js-util";
-import { IUpdate2dGroup } from "../../update/update-2d-group";
-import { ICartesian2dPlotRange } from "../../update/cartesian2d-plot-range";
-import { ICartesian2dUpdateArg } from "../../update/cartesian2d-update-arg";
+import { IUpdate2dGroup } from "../../update/update-group/update-2d-group";
+import { ICartesian2dPlotRange } from "../../update/update-arg/cartesian2d-plot-range";
+import { ICartesian2dUpdateArg } from "../../update/update-arg/cartesian2d-update-arg";
 
 /**
  * @public

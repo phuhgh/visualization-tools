@@ -32,7 +32,7 @@ export class GlShader
 
     public static getShaderFlag(this: void, flagName: string, value: boolean): string
     {
-        return [`#define `, flagName, value ? "true" : "false", `\n`].join(" ");
+        return [`#define `, flagName, value ? "1" : "0", `\n`].join(" ");
     }
 
     public static getShaderInt(this: void, flagName: string, value: number): string

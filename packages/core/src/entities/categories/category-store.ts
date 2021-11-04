@@ -42,3 +42,4 @@ export class CategoryStore<TCategory> implements ICategoryStore<TCategory>
         _Array.removeOne(this.categories, category);
     }
 }
+

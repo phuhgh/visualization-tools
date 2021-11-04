@@ -46,7 +46,7 @@ export class ChartDataEntity<TUpdateArg, TConnector, TGcSettings extends object>
 
     public onDblClick?(pointerEvent: IChartPointerEvent<MouseEvent>, segmentIds: Set<number>): EEntityUpdateFlag;
 
-    public onHoverChange?(state: EHoverState, segments: ReadonlySet<number>, pointerEvent: IChartPointerEvent<MouseEvent>): EEntityUpdateFlag;
+    public onHover?(state: EHoverState, segments: ReadonlySet<number>, pointerEvent: IChartPointerEvent<MouseEvent>): EEntityUpdateFlag;
 
     public onBeforeUpdate(updateArg: TUpdateArg): void
     {

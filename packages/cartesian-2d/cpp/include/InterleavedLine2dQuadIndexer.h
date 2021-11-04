@@ -2,6 +2,7 @@
 
 #include <emscripten/em_macros.h>
 #include <cstddef>
+#include <Debug.h>
 #include "InterleavedPoint2dQuadIndexerArg.h"
 
 extern "C"

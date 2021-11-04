@@ -1,6 +1,6 @@
-import { IPlotEventTargetProvider } from "../../eventing/user-interaction/hit-test/i-plot-event-target-provider";
+import { IPlotEventTargetProvider } from "../../eventing/user-interaction/i-plot-event-target-provider";
 import { IReadonlyPlot } from "../i-plot";
-import { IEventService } from "../../eventing/chart-event-service";
+import { IEventService } from "../../eventing/event-service";
 import { ICanvasDimensions } from "../../templating/canvas-dimensions";
 import { TGetChartEventTargetProviders } from "./t-get-chart-event-target-providers";
 import { TInitialChartStateFactory } from "./t-initial-chart-state-factory";

@@ -1,4 +1,3 @@
-import { ICanvasEntityRenderer } from "../../rendering/canvas/canvas-entity-renderer";
 import { TF64Range2d } from "rc-js-util/bin/src/array/typed-array/2d/range2d/range2d";
 import { getTestCanvasOptions } from "./get-test-canvas-options";
 import { Range2d } from "rc-js-util";
@@ -9,15 +8,16 @@ import { PlotArea } from "../../plot/i-plot-area";
 import { Plot } from "../../plot/plot";
 import { PlotCtorArg } from "../../plot/plot-ctor-arg";
 import { IChartComponent } from "../../chart/chart-component";
+import { ICanvasRenderer } from "../../rendering/canvas/canvas-renderer";
 
 /**
  * @internal
  */
 export class CanvasTestPlotFactory
 {
-    public static createOne<TEntityRenderer extends ICanvasEntityRenderer>
+    public static createOne
     (
-        chart: IChartComponent<TEntityRenderer>,
+        chart: IChartComponent<ICanvasRenderer>,
         plotOptions: IPlotConstructionOptions<TF64Range2d, IEntityGroup<unknown, unknown>, unknown> = getTestCanvasOptions(),
     )
         : IPlot<TF64Range2d, unknown>

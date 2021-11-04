@@ -1,19 +1,22 @@
-import { GlCartesian2dTraceBinder, TGlTraceEntity } from "./gl-cartesian-2d-trace-binder";
+import { GlCartesian2dTraceBinder } from "./gl-cartesian-2d-trace-binder";
 import { IncrementingIdentifierFactory, Range2d, RgbaColorPacker, Vec2 } from "rc-js-util";
 import { GlCartesian2dTraceGraphicsComponent } from "./gl-cartesian-2d-trace-graphics-component";
-import { Cartesian2dTransforms } from "../../update/cartesian2d-transforms";
+import { Cartesian2dTransforms } from "../../update/update-arg/cartesian2d-transforms";
 import { GlCartesian2dCameraBinder } from "../../camera/gl-cartesian2d-camera-binder";
 import { TestTraceConnector } from "../populate-cartesian-2d-trace-bindings.spec";
-import { ICartesian2dUpdateArg } from "../../update/cartesian2d-update-arg";
+import { ICartesian2dUpdateArg } from "../../update/update-arg/cartesian2d-update-arg";
 import { populateCartesian2dTraceBindings } from "../populate-cartesian-2d-trace-bindings";
 import { debugDescribe, ExpectColor } from "rc-js-test-util";
 import { TestGl2RendererHarness } from "@visualization-tools/core/bin/test-utils/test-gl2-renderer-harness";
 import { CanvasDimensions, ChartDataEntity, fullClipSpaceRange2d, PlotArea, PlotDimensions } from "@visualization-tools/core";
+import { Cartesian2dIdentityTransform } from "../../update/user-transforms/cartesian2d-identity-transform";
+import { TGlTraceEntity } from "./t-gl-trace-entity";
+import { updateTestGc } from "@visualization-tools/core/bin/test-utils/update-test-gc";
 
 debugDescribe("GlTraceGraphicsComponent", () =>
 {
     const changeIdFactory = new IncrementingIdentifierFactory();
-    let testRendererHarness: TestGl2RendererHarness<never>;
+    let testRendererHarness: TestGl2RendererHarness;
     const traceConnector = new TestTraceConnector();
     const transforms = new Cartesian2dTransforms(Float32Array);
 
@@ -46,6 +49,8 @@ debugDescribe("GlTraceGraphicsComponent", () =>
             drawTransforms: transforms,
             interactionTransforms: transforms,
             plotRange: traceConnector.dataRange,
+            transformedDataRange: traceConnector.dataRange,
+            userTransform: new Cartesian2dIdentityTransform<Float32Array>(),
             plotDimensionsOTL: PlotDimensions.createOneOTL(
                 new PlotArea(
                     fullClipSpaceRange2d,
@@ -77,9 +82,6 @@ debugDescribe("GlTraceGraphicsComponent", () =>
     function draw(updateArg: ICartesian2dUpdateArg<Float32Array>)
     {
         const gc = new GlCartesian2dTraceGraphicsComponent(new GlCartesian2dTraceBinder(), new GlCartesian2dCameraBinder());
-        const entityRenderer = testRendererHarness.renderer.entityRendererFactory.createRenderer(gc.specification);
-        entityRenderer.onBeforeInitialization();
-        gc.initialize(entityRenderer);
         const testEntity: TGlTraceEntity = new ChartDataEntity(
             traceConnector,
             {
@@ -91,8 +93,7 @@ debugDescribe("GlTraceGraphicsComponent", () =>
             changeIdFactory,
         );
         populateCartesian2dTraceBindings(testEntity);
-        entityRenderer.onBeforeDraw();
-        gc.onBeforeUpdate(entityRenderer, updateArg);
-        gc.update(testEntity, entityRenderer, updateArg);
+
+        updateTestGc(testRendererHarness, gc, testEntity, updateArg);
     }
 });

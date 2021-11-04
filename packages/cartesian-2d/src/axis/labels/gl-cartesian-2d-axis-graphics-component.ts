@@ -1,11 +1,12 @@
 import { Cartesian2dAxisLabelGenerator } from "./cartesian-2d-axis-label-generator";
 import { TTrace2dBindingsTrait } from "../../traits/t-trace2d-bindings-trait";
-import { Mat2, Mat3 } from "rc-js-util";
+import { Mat2, Mat3, Once } from "rc-js-util";
 import { TAxisLabelEntity } from "./t-axis-label-entity";
-import { ICartesian2dUpdateArg } from "../../update/cartesian2d-update-arg";
-import { IGlTraceBinder } from "../traces/gl-cartesian-2d-trace-binder";
+import { ICartesian2dUpdateArg } from "../../update/update-arg/cartesian2d-update-arg";
+import { IGlTraceBinder, TraceBinderIdentifier } from "../traces/gl-cartesian-2d-trace-binder";
 import { IGlCartesian2dCameraBinder } from "../../camera/gl-cartesian2d-camera-binder";
-import { GlBuffer, GlFloatAttribute, GlMat2Uniform, GlMat3Uniform, GlProgramSpecification, GlShader, GlTexture2d, IGlProgramSpec, IGraphAttachPoint, IGraphicsComponentSpecification, mat3MultiplyVec2Shader, SpriteLookup, TGl2EntityRenderer } from "@visualization-tools/core";
+import { assertBinder, EGraphicsComponentType, GlFloatAttribute, GlFloatBuffer, GlMat2Uniform, GlMat3Uniform, GlProgramSpecification, GlShader, GlTexture2d, GlTransformProvider, IGlProgramSpec, IGraphAttachPoint, ILinkableBinder, ILinkableGraphicsComponent, mat3MultiplyVec2Shader, SpriteLookup, TGl2ComponentRenderer } from "@visualization-tools/core";
+import { IGlTraceTransformBinder } from "../traces/i-gl-cartesian2d-trace-transform-binder";
 
 /**
  * @public
@@ -21,9 +22,11 @@ export type TGlAxisEntity =
  * Draws labels for cartesian 2d plots.
  */
 export class GlCartesian2dAxisGraphicsComponent
-    implements IGraphicsComponentSpecification<TGl2EntityRenderer, ICartesian2dUpdateArg<Float32Array>, TGlAxisEntity>
+    implements ILinkableGraphicsComponent<TGl2ComponentRenderer, ICartesian2dUpdateArg<Float32Array>, TGlAxisEntity>
 {
+    public readonly type = EGraphicsComponentType.Entity;
     public specification: IGlProgramSpec;
+    public transform: GlTransformProvider<TGl2ComponentRenderer, IGlTraceTransformBinder, IGlTraceBinder, ICartesian2dUpdateArg<Float32Array>, TGlAxisEntity>;
 
     public constructor
     (
@@ -33,6 +36,8 @@ export class GlCartesian2dAxisGraphicsComponent
         private readonly axisLabelGenerator: Cartesian2dAxisLabelGenerator = new Cartesian2dAxisLabelGenerator(attachPoint),
     )
     {
+        DEBUG_MODE && assertBinder(traceBinder, TraceBinderIdentifier);
+        this.transform = new GlTransformProvider(this, this.traceBinder, (updateArg) => updateArg.userTransform);
         this.specification = GlProgramSpecification.mergeProgramSpecifications([
             traceBinder.specification,
             cameraBinder.specification,
@@ -45,61 +50,72 @@ export class GlCartesian2dAxisGraphicsComponent
             )]);
     }
 
+    @Once
     public getCacheId(): string
     {
-        return "GlAxisGraphicsComponent";
+        return [
+            "GlAxisGraphicsComponent",
+            this.cameraBinder.getBinderId(),
+            this.traceBinder.getBinderId(),
+        ].join("_");
     }
 
-    public initialize(entityRenderer: TGl2EntityRenderer): void
+    public getLinkableBinders(): readonly ILinkableBinder<TGl2ComponentRenderer>[]
     {
-        this.cameraBinder.initialize(entityRenderer);
-        this.traceBinder.initialize(entityRenderer);
+        return [this.traceBinder];
+    }
 
-        this.bindings.canvasToClipSizeUniform.initialize(entityRenderer);
-        this.bindings.configUniform.initialize(entityRenderer);
-        this.bindings.textureMappingAttribute.initialize(entityRenderer);
-        this.bindings.spriteGeometryAttribute.initialize(entityRenderer);
-        this.bindings.labelSpriteTexture2d.initialize(entityRenderer);
+    public initialize(componentRenderer: TGl2ComponentRenderer): void
+    {
+        this.cameraBinder.initialize(componentRenderer);
+        this.traceBinder.initialize(componentRenderer);
+
+        this.bindings.canvasToClipSizeUniform.initialize(componentRenderer);
+        this.bindings.configUniform.initialize(componentRenderer);
+        this.bindings.textureMappingAttribute.initialize(componentRenderer);
+        this.bindings.spriteGeometryAttribute.initialize(componentRenderer);
+        this.bindings.labelSpriteTexture2d.initialize(componentRenderer);
     }
 
     public onBeforeUpdate
     (
-        entityRenderer: TGl2EntityRenderer,
+        componentRenderer: TGl2ComponentRenderer,
         updateArg: ICartesian2dUpdateArg<Float32Array>,
     )
         : void
     {
-        this.bindings.spriteGeometryAttribute.bind(entityRenderer);
-        this.bindings.canvasToClipSizeUniform.setData(updateArg.canvasDimensions.pixelToClipSize);
-        this.bindings.canvasToClipSizeUniform.bind(entityRenderer);
+        this.bindings.spriteGeometryAttribute.bindArray(componentRenderer);
+        const frameId = componentRenderer.sharedState.frameCounter;
+        this.bindings.canvasToClipSizeUniform.setData(updateArg.canvasDimensions.pixelToClipSize, frameId);
+        this.bindings.canvasToClipSizeUniform.bind(componentRenderer);
     }
 
     public update
     (
         entity: TGlAxisEntity,
-        entityRenderer: TGl2EntityRenderer,
+        componentRenderer: TGl2ComponentRenderer,
         updateArg: ICartesian2dUpdateArg<Float32Array>,
     )
         : void
     {
         this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(updateArg.drawTransforms, entityRenderer);
+        this.cameraBinder.update(updateArg.drawTransforms, componentRenderer, componentRenderer.sharedState.frameCounter);
 
-        this.traceBinder.updateData(entity);
-        this.traceBinder.bindInstanced(entityRenderer, 1);
+        this.traceBinder.updateData(entity, entity.changeId);
+        this.traceBinder.bindInstanced(componentRenderer, 1);
 
         const spriteLookup = this.axisLabelGenerator.update(entity, updateArg.canvasDimensions.dpr);
         this.bindings.textureMappingAttribute.setData(SpriteLookup.toTypedArray(spriteLookup), entity.changeId);
-        this.bindings.textureMappingAttribute.bindInstanced(entityRenderer, 1);
+        this.bindings.textureMappingAttribute.bindArrayInstanced(componentRenderer, 1);
 
         const canvas = this.axisLabelGenerator.getCanvas();
         this.updateConfig(entity, canvas.width, canvas.height);
-        this.bindings.configUniform.bind(entityRenderer);
+        this.bindings.configUniform.bind(componentRenderer);
 
         this.bindings.labelSpriteTexture2d.updateData(canvas);
-        this.bindings.labelSpriteTexture2d.bind(entityRenderer);
+        this.bindings.labelSpriteTexture2d.bind(componentRenderer);
 
-        entityRenderer.drawInstancedArrays(entityRenderer.context.TRIANGLE_STRIP, 0, 4, entity.data.getTraceCount());
+        componentRenderer.drawInstancedArrays(componentRenderer.context.TRIANGLE_STRIP, 0, 4, entity.data.getTraceCount());
     }
 
     private updateConfig(entity: TGlAxisEntity, textureWidth: number, textureHeight: number): void
@@ -112,8 +128,8 @@ export class GlCartesian2dAxisGraphicsComponent
 
     private config = new Mat2.f32();
     private bindings: IAxisBindings = {
-        textureMappingAttribute: new GlFloatAttribute("axisGc_texMapping", new GlBuffer(null), 4),
-        spriteGeometryAttribute: new GlFloatAttribute("axisGc_spriteGeometry", new GlBuffer(
+        textureMappingAttribute: new GlFloatAttribute("axisGc_texMapping", new GlFloatBuffer(null), 4),
+        spriteGeometryAttribute: new GlFloatAttribute("axisGc_spriteGeometry", new GlFloatBuffer(
                 new Float32Array([
                     0, 0,
                     1, 0,

@@ -1,6 +1,5 @@
 import { AGlUniformValue } from "./a-gl-uniform-value";
-import { TGlBasicEntityRenderer } from "../entity-renderer/t-gl-basic-entity-renderer";
-import { _Debug } from "rc-js-util";
+import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 
 /**
  * @public
@@ -8,16 +7,14 @@ import { _Debug } from "rc-js-util";
  */
 export class GlFloatUniform extends AGlUniformValue
 {
-    public bind(renderer: TGlBasicEntityRenderer): void
+    public bind(renderer: TGlBasicComponentRenderer): void
     {
-        DEBUG_MODE && _Debug.runBlock(() =>
+        if (!this.isDirty)
         {
-            if (this.uniformLocation == null)
-            {
-                console.debug(`failed to bind uniform: ${this.name}`);
-            }
-        });
+            return;
+        }
 
         renderer.context.uniform1f(this.uniformLocation, this.data);
+        this.isDirty = false;
     }
 }

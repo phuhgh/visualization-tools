@@ -1,17 +1,21 @@
 import { Mat3, Once } from "rc-js-util";
-import { IGlTraceBinder, TGlTraceEntity } from "./gl-cartesian-2d-trace-binder";
-import { ICartesian2dUpdateArg } from "../../update/cartesian2d-update-arg";
+import { IGlTraceBinder, TraceBinderIdentifier } from "./gl-cartesian-2d-trace-binder";
+import { ICartesian2dUpdateArg } from "../../update/update-arg/cartesian2d-update-arg";
 import { IGlCartesian2dCameraBinder } from "../../camera/gl-cartesian2d-camera-binder";
-import { GlBuffer, GlFloatAttribute, GlMat3Uniform, GlProgramSpecification, GlShader, IGlProgramSpec, IGraphicsComponentSpecification, mat3MultiplyVec2Shader, TGlInstancedEntityRenderer } from "@visualization-tools/core";
+import { assertBinder, EGraphicsComponentType, GlFloatAttribute, GlFloatBuffer, GlMat3Uniform, GlProgramSpecification, GlShader, GlTransformProvider, IGlProgramSpec, ILinkableBinder, ILinkableGraphicsComponent, mat3MultiplyVec2Shader, TGl2ComponentRenderer, TGlInstancedComponentRenderer } from "@visualization-tools/core";
+import { TGlTraceEntity } from "./t-gl-trace-entity";
+import { IGlTraceTransformBinder } from "./i-gl-cartesian2d-trace-transform-binder";
 
 /**
  * @public
  * Draws traces for cartesian 2d plots.
  */
 export class GlCartesian2dTraceGraphicsComponent
-    implements IGraphicsComponentSpecification<TGlInstancedEntityRenderer, ICartesian2dUpdateArg<Float32Array>, TGlTraceEntity>
+    implements ILinkableGraphicsComponent<TGlInstancedComponentRenderer, ICartesian2dUpdateArg<Float32Array>, TGlTraceEntity>
 {
+    public readonly type = EGraphicsComponentType.Entity;
     public specification: IGlProgramSpec;
+    public transform: GlTransformProvider<TGl2ComponentRenderer, IGlTraceTransformBinder, IGlTraceBinder, ICartesian2dUpdateArg<Float32Array>, TGlTraceEntity>;
 
     public constructor
     (
@@ -19,6 +23,8 @@ export class GlCartesian2dTraceGraphicsComponent
         private readonly cameraBinder: IGlCartesian2dCameraBinder,
     )
     {
+        DEBUG_MODE && assertBinder(traceBinder, TraceBinderIdentifier);
+        this.transform = new GlTransformProvider(this, this.traceBinder, (updateArg) => updateArg.userTransform);
         this.specification = GlProgramSpecification.mergeProgramSpecifications([
             traceBinder.specification,
             cameraBinder.specification,
@@ -35,7 +41,7 @@ export class GlCartesian2dTraceGraphicsComponent
             // 0 min, 1 is max index
             lineGeometryAttribute: new GlFloatAttribute(
                 "traceGc_lineGeometry",
-                new GlBuffer(new Float32Array([
+                new GlFloatBuffer(new Float32Array([
                     0, 0,
                     1, 0,
                     0, 1,
@@ -50,39 +56,49 @@ export class GlCartesian2dTraceGraphicsComponent
     @Once
     public getCacheId(): string
     {
-        return ["GlTraceGraphicsComponent", this.traceBinder.getCacheId()].join("_");
+        return [
+            "GlTraceGraphicsComponent",
+            this.cameraBinder.getBinderId(),
+            this.traceBinder.getBinderId(),
+        ].join("_");
     }
 
-    public initialize(entityRenderer: TGlInstancedEntityRenderer): void
+    public getLinkableBinders(): readonly ILinkableBinder<TGlInstancedComponentRenderer>[]
     {
-        this.traceBinder.initialize(entityRenderer);
-        this.cameraBinder.initialize(entityRenderer);
-        this.bindings.lineGeometryAttribute.initialize(entityRenderer);
-        this.bindings.screenToClipSizeUniform.initialize(entityRenderer);
+        return [this.traceBinder];
     }
 
-    public onBeforeUpdate(entityRenderer: TGlInstancedEntityRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void
+    public initialize(componentRenderer: TGlInstancedComponentRenderer): void
     {
-        this.bindings.lineGeometryAttribute.bind(entityRenderer, entityRenderer.context.STATIC_DRAW);
-        this.bindings.screenToClipSizeUniform.setData(updateArg.canvasDimensions.pixelToClipSize);
-        this.bindings.screenToClipSizeUniform.bind(entityRenderer);
+        this.traceBinder.initialize(componentRenderer);
+        this.cameraBinder.initialize(componentRenderer);
+        this.bindings.lineGeometryAttribute.initialize(componentRenderer);
+        this.bindings.screenToClipSizeUniform.initialize(componentRenderer);
+    }
+
+    public onBeforeUpdate(componentRenderer: TGlInstancedComponentRenderer, updateArg: ICartesian2dUpdateArg<Float32Array>): void
+    {
+        this.bindings.lineGeometryAttribute.bindArray(componentRenderer, componentRenderer.context.STATIC_DRAW);
+        const frameId = componentRenderer.sharedState.frameCounter;
+        this.bindings.screenToClipSizeUniform.setData(updateArg.canvasDimensions.pixelToClipSize, frameId);
+        this.bindings.screenToClipSizeUniform.bind(componentRenderer);
     }
 
     public update
     (
         entity: TGlTraceEntity,
-        entityRenderer: TGlInstancedEntityRenderer,
+        componentRenderer: TGlInstancedComponentRenderer,
         updateArg: ICartesian2dUpdateArg<Float32Array>,
     )
         : void
     {
         // update dependencies
         this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(updateArg.drawTransforms, entityRenderer);
-        this.traceBinder.updateInstanced(entity, entityRenderer, 1);
+        this.cameraBinder.update(updateArg.drawTransforms, componentRenderer, componentRenderer.sharedState.frameCounter);
+        this.traceBinder.updateInstanced(entity, componentRenderer, entity.changeId, 1);
 
         // draw
-        entityRenderer.drawInstancedArrays(entityRenderer.context.TRIANGLE_STRIP, 0, 4, entity.data.getTraceCount());
+        componentRenderer.drawInstancedArrays(componentRenderer.context.TRIANGLE_STRIP, 0, 4, entity.data.getTraceCount());
     }
 
     private bindings: IGlTraceBindings;
@@ -129,7 +145,6 @@ void main()
 
 // language=GLSL prefix="#if __VERSION__ >=300 && __VERSION__ < 400 \n #define VARYING in \n #define TEXTURE2D texture \n #else \n #define VARYING varying \n #define TEXTURE2D texture2D \n #endif \n void setFragmentColor(in lowp vec4 color);"
 const fragmentShader = new GlShader(`
-
 void main()
 {
     setFragmentColor(traceConnector_getColor());

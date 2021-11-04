@@ -1,5 +1,5 @@
 import { _Production, TF32Range2d, TPickPartial, TTypedArray } from "rc-js-util";
-import { ICartesian2dPlotRange } from "../../update/cartesian2d-plot-range";
+import { ICartesian2dPlotRange } from "../../update/update-arg/cartesian2d-plot-range";
 import { IGraphAttachPoint, IPlotArea, IPlotConstructionOptions, IReadonlyPlot, PlotArea } from "@visualization-tools/core";
 import { EScreenUnit } from "./e-screen-unit";
 import { ICartesian2dGutterOptions } from "./i-cartesian2d-gutter-options";

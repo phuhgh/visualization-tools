@@ -5,7 +5,7 @@ constexpr std::uint64_t getOffsets()
 {
     static_assert(sizeof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>) < 0xFF);
     static_assert(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_connector) < 0xFF);
-    static_assert(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_displayDefaults) < 0xFF);
+    static_assert(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_displayOptions) < 0xFF);
     static_assert(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_offsets) < 0xFF);
     static_assert(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_sizeTransform) < 0xFF);
     static_assert(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_worldTransform) < 0xFF);
@@ -17,7 +17,7 @@ constexpr std::uint64_t getOffsets()
     offsets |= sizeof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>);
     // skip the first member, the offset is always zero
     offsets |= static_cast<std::uint64_t>(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_connector)) << 8;
-    offsets |= static_cast<std::uint64_t>(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_displayDefaults)) << 16;
+    offsets |= static_cast<std::uint64_t>(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_displayOptions)) << 16;
     offsets |= static_cast<std::uint64_t>(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_offsets)) << 24;
     offsets |= static_cast<std::uint64_t>(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_sizeTransform)) << 32;
     offsets |= static_cast<std::uint64_t>(offsetof(VisualizationTools::Bindings::InterleavedPoint2dQuadIndexerArg<T>, m_worldTransform)) << 40;

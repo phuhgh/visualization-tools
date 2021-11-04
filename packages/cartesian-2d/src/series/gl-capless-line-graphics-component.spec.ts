@@ -8,16 +8,16 @@ import { GlCaplessLineGraphicsComponent } from "./gl-capless-line-graphics-compo
 import { Point2dDisplaySettings } from "../traits/t-point2d-display-settings-trait";
 import { Point2dSizeNormalizer } from "../traits/t-point2d-size-normalizer-trait";
 import { debugDescribe, ExpectColor } from "rc-js-test-util";
-import { ChartDataEntity, InterleavedConnector, TGlEntityRenderer } from "@visualization-tools/core";
+import { ChartDataEntity, InterleavedConnector } from "@visualization-tools/core";
 import { TestGl2RendererHarness } from "@visualization-tools/core/bin/test-utils/test-gl2-renderer-harness";
+import { updateTestGc } from "@visualization-tools/core/bin/test-utils/update-test-gc";
 
 debugDescribe("=> GlCaplessLineGraphicsComponent", () =>
 {
     let connector: InterleavedConnector<Float32Array, IPoint2dOffsets>;
     let pointBinder: GlInterleaved2dPointBinder;
     let gc: GlCaplessLineGraphicsComponent;
-    let entityRenderer: TGlEntityRenderer<WebGL2RenderingContext, never>;
-    let testRendererHarness: TestGl2RendererHarness<never>;
+    let testRendererHarness: TestGl2RendererHarness;
     let argProvider: TestCartesian2dUpdateArgProvider<Float32ArrayConstructor>;
     const changeIdFactory = new IncrementingIdentifierFactory();
 
@@ -37,7 +37,6 @@ debugDescribe("=> GlCaplessLineGraphicsComponent", () =>
     afterEach(() =>
     {
         testRendererHarness.reset();
-        entityRenderer.onAfterDraw();
     });
 
     const sizeNormalization = new Point2dSizeNormalizer<Float32Array>(Range1d.f32.factory.createOne(2, 10));
@@ -124,9 +123,6 @@ debugDescribe("=> GlCaplessLineGraphicsComponent", () =>
         : void
     {
         gc = new GlCaplessLineGraphicsComponent(new GlCartesian2dCameraBinder(), pointBinder);
-        entityRenderer = testRendererHarness.renderer.entityRendererFactory.createRenderer(gc.specification);
-        entityRenderer.useProgram();
-        gc.initialize(entityRenderer);
         const testEntity = new ChartDataEntity(
             connector,
             {
@@ -138,7 +134,6 @@ debugDescribe("=> GlCaplessLineGraphicsComponent", () =>
             changeIdFactory,
         );
         const updateArg = argProvider.createTestCartesian2dUpdateArg();
-        gc.onBeforeUpdate(entityRenderer, updateArg);
-        gc.update(testEntity, entityRenderer, updateArg);
+        updateTestGc(testRendererHarness, gc, testEntity, updateArg);
     }
 });

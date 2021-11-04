@@ -1,14 +1,15 @@
 import { IGraphicsComponentSettingsTrait } from "@visualization-tools/core";
 import { IReadonlyVec4, Mat4, RgbaColorPacker, TF32Vec4, Vec4 } from "rc-js-util";
-import { THighlightColorOverride } from "../indexed-point-2d/i-gl-indexed-point2d-binder";
 
 /**
  * @public
- * Point config where not specified per point.
+ * Point config where not specified per point. Colors are stored normalized.
  */
 export class Point2dDisplaySettings extends Mat4.f32
 {
-    public colorOverrides: THighlightColorOverride[] | null = null;
+    public highlightedSegments: ReadonlySet<number> | null = null;
+    public packedColor: number;
+    public packedHighlightColor: number;
 
     public constructor
     (
@@ -22,8 +23,8 @@ export class Point2dDisplaySettings extends Mat4.f32
     {
         super();
         this.setSize(pixelSize);
-        this.setColor(color);
-        this.setHighlightColor(highlightColor);
+        this.packedColor = this.setColor(color);
+        this.packedHighlightColor = this.setHighlightColor(highlightColor);
     }
 
     public setSize(size: number): void
@@ -31,12 +32,15 @@ export class Point2dDisplaySettings extends Mat4.f32
         this[0] = size;
     }
 
-    public setColor(rgbaColor: number): void
+    public setColor(rgbaColor: number): number
     {
         this.setColorImpl(rgbaColor, 4);
+        return this.packedColor = this
+            .getNormalizedColor()
+            .getPackedRGBAColor(true);
     }
 
-    public getColor(): IReadonlyVec4<Float32Array>
+    public getNormalizedColor(): IReadonlyVec4<Float32Array>
     {
         if (this.color == null)
         {
@@ -46,12 +50,15 @@ export class Point2dDisplaySettings extends Mat4.f32
         return this.getRow(1, this.color);
     }
 
-    public setHighlightColor(rgbaColor: number): void
+    public setHighlightColor(rgbaColor: number): number
     {
         this.setColorImpl(rgbaColor, 8);
+        return this.packedHighlightColor = this
+            .getNormalizedHighlightColor()
+            .getPackedRGBAColor(true);
     }
 
-    public getHighlightColor(): IReadonlyVec4<Float32Array>
+    public getNormalizedHighlightColor(): IReadonlyVec4<Float32Array>
     {
         if (this.highlight == null)
         {
@@ -60,7 +67,6 @@ export class Point2dDisplaySettings extends Mat4.f32
 
         return this.getRow(2, this.highlight);
     }
-
 
     public getPixelSize(): number
     {
