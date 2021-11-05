@@ -147,7 +147,7 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
             plotName: "gl plot",
             plotRange: Cartesian2dPlotRange.createOneF32({
                 canvasDims: chart.attachPoint.canvasDims,
-                userTransform: new Cartesian2dNaturalLogTransform(false, true),
+                userTransform: new Cartesian2dNaturalLogTransform(true, true),
                 maxZoom: Infinity,
                 dataRange: dataRange.slice(),
                 maxBounds: Range2d.f32.factory.createOne(1, 100, 1, 100),
