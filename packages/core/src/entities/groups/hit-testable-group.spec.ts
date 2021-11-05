@@ -6,7 +6,7 @@ import { HitAlwaysAllowedComponent } from "../../eventing/hit-testing/hit-always
 import { TestHitTestComponent } from "../../test-utils/fakes/test-hit-test.component";
 import { setDefaultAppTestFlags } from "rc-js-util/bin/src/debug/impl/set-debug-app-test-flags";
 import { debugDescribe } from "rc-js-test-util";
-import { CanvasTestPlotFactory } from "../../test-utils/fakes/canvas-test-plot-factory";
+import { TestCanvasPlotFactory } from "../../test-utils/fakes/test-canvas-plot-factory";
 import { TestUpdateArgProvider } from "../../test-utils/fakes/test-update-arg-provider";
 
 debugDescribe("=> HitTestableGroup", () =>
@@ -32,7 +32,7 @@ debugDescribe("=> HitTestableGroup", () =>
     {
         it("| adds to the group if not already present", () =>
         {
-            const plot = CanvasTestPlotFactory.createOne(harness.chart);
+            const plot = TestCanvasPlotFactory.createOne(harness.chart);
             const group = new HitTestableGroup(new TestUpdateArgProvider(), plot);
             const entity = new ChartDataEntity({}, { zIndexAbs: 1, zIndexRel: 1 }, identifierFactory);
             plot.addEntity(entity);
@@ -44,7 +44,7 @@ debugDescribe("=> HitTestableGroup", () =>
         it("| does nothing if present (production)", () =>
         {
             _Debug.setFlag("DEBUG_MODE", false);
-            const plot = CanvasTestPlotFactory.createOne(harness.chart);
+            const plot = TestCanvasPlotFactory.createOne(harness.chart);
             const group = new HitTestableGroup(new TestUpdateArgProvider(), plot);
             const entity = new ChartDataEntity({}, { zIndexAbs: 1, zIndexRel: 1 }, identifierFactory);
             plot.addEntity(entity);
@@ -56,7 +56,7 @@ debugDescribe("=> HitTestableGroup", () =>
 
         it("| does nothing if present (debug)", () =>
         {
-            const plot = CanvasTestPlotFactory.createOne(harness.chart);
+            const plot = TestCanvasPlotFactory.createOne(harness.chart);
             const group = new HitTestableGroup(new TestUpdateArgProvider(), plot);
             const entity = new ChartDataEntity({}, { zIndexAbs: 1, zIndexRel: 1 }, identifierFactory);
             plot.addEntity(entity);
@@ -70,7 +70,7 @@ debugDescribe("=> HitTestableGroup", () =>
     {
         it("| removes the entity if ref 0", () =>
         {
-            const plot = CanvasTestPlotFactory.createOne(harness.chart);
+            const plot = TestCanvasPlotFactory.createOne(harness.chart);
             const group = new HitTestableGroup(new TestUpdateArgProvider(), plot);
             const entity = new ChartDataEntity({}, { zIndexAbs: 1, zIndexRel: 1 }, identifierFactory);
             plot.addEntity(entity);
@@ -81,7 +81,7 @@ debugDescribe("=> HitTestableGroup", () =>
 
         it("| does nothing if ref > 0", () =>
         {
-            const plot = CanvasTestPlotFactory.createOne(harness.chart);
+            const plot = TestCanvasPlotFactory.createOne(harness.chart);
             const group = new HitTestableGroup(new TestUpdateArgProvider(), plot);
             const entity = new ChartDataEntity({}, { zIndexAbs: 1, zIndexRel: 1 }, identifierFactory);
             plot.addEntity(entity);
@@ -95,7 +95,7 @@ debugDescribe("=> HitTestableGroup", () =>
 
         it("| does nothing if no entities", () =>
         {
-            const plot = CanvasTestPlotFactory.createOne(harness.chart);
+            const plot = TestCanvasPlotFactory.createOne(harness.chart);
             const group = new HitTestableGroup(new TestUpdateArgProvider(), plot);
             const entity = new ChartDataEntity({}, { zIndexAbs: 1, zIndexRel: 1 }, identifierFactory);
             plot.addEntity(entity);

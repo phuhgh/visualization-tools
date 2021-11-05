@@ -23,6 +23,9 @@ export class CartesianUserInteractionTransformProvider<TArray extends TTypedArra
             .fill(0);
     }
 
+    /**
+     * Transforms `position` into the `transformedDataRange` relative to `positionRange`.
+     */
     public getTransformedPosition
     (
         position: IReadonlyVec2<TArray>,
@@ -32,12 +35,8 @@ export class CartesianUserInteractionTransformProvider<TArray extends TTypedArra
     {
         // ut - user transform
         const plotRange = this.plot.plotRange;
-        const interactiveToUtData = positionRange.getRangeTransform(plotRange.transformedDataRange, this.tmpMat3);
-        const utDataPosition = position.mat3Multiply(interactiveToUtData, this.tmpVec2);
-        plotRange.userTransform.reverseTransformPoint(utDataPosition, utDataPosition);
-        utDataPosition.bound2d(plotRange.dataRange);
-
-        return utDataPosition;
+        const positionToUtData = positionRange.getRangeTransform(plotRange.transformedDataRange, this.tmpMat3);
+        return position.mat3Multiply(positionToUtData, this.tmpVec2);
     }
 
     public getTransformedDelta
@@ -50,13 +49,13 @@ export class CartesianUserInteractionTransformProvider<TArray extends TTypedArra
         : IReadonlyVec2<TArray>
     {
         const plotRange = this.plot.plotRange;
-        const interactiveToUtData = positionRange.getRangeTransform(plotRange.transformedDataRange, this.tmpMat3);
+        const positionToUtData = positionRange.getRangeTransform(plotRange.transformedDataRange, this.tmpMat3);
         this.tmp2Vec2.update(dx, dy);
         position.subtract(this.tmp2Vec2, this.tmp2Vec2);
 
         // position before and after in user transform space
-        this.tmp2Vec2.mat3Multiply(interactiveToUtData, this.tmpVec2);
-        position.mat3Multiply(interactiveToUtData, this.tmp2Vec2);
+        this.tmp2Vec2.mat3Multiply(positionToUtData, this.tmpVec2);
+        position.mat3Multiply(positionToUtData, this.tmp2Vec2);
 
         plotRange.userTransform.reverseTransformPoint(this.tmpVec2, this.tmpVec2);
         plotRange.userTransform.reverseTransformPoint(this.tmp2Vec2, this.tmp2Vec2);

@@ -24,8 +24,7 @@ export type TGlChart<TComponentRenderer extends TGlComponentRenderer<TGlContext,
  */
 export class GlChartFactory
 {
-    public static createOne<TExts extends TGlExtensionKeys
-        , TCtx extends TGlContext>
+    public static createOne<TExts extends TGlExtensionKeys, TCtx extends TGlContext>
     (
         chartContainer: HTMLElement,
         contextAdapterCtor: TGlContextAdapterCtor<TCtx>,

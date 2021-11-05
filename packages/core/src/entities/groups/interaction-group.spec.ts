@@ -7,7 +7,7 @@ import { setDefaultAppTestFlags } from "rc-js-util/bin/src/debug/impl/set-debug-
 import { InteractionGroup } from "./interaction-group";
 import { HitTestableGroup } from "./hit-testable-group";
 import { ChartDataEntity } from "../chart-data-entity";
-import { CanvasTestPlotFactory } from "../../test-utils/fakes/canvas-test-plot-factory";
+import { TestCanvasPlotFactory } from "../../test-utils/fakes/test-canvas-plot-factory";
 import { TestUpdateArgProvider } from "../../test-utils/fakes/test-update-arg-provider";
 
 debugDescribe("=> InteractionGroup", () =>
@@ -32,7 +32,7 @@ debugDescribe("=> InteractionGroup", () =>
     {
         it("| adds to the existing mask", () =>
         {
-            const plot = CanvasTestPlotFactory.createOne(harness.chart);
+            const plot = TestCanvasPlotFactory.createOne(harness.chart);
             const hitTestableGroup = new HitTestableGroup(new TestUpdateArgProvider(), plot);
             const interactionGroup = new InteractionGroup(1 << 0, hitTestableGroup, plot);
             const entity = new ChartDataEntity({}, { zIndexAbs: 1, zIndexRel: 1 }, identifierFactory);
@@ -50,7 +50,7 @@ debugDescribe("=> InteractionGroup", () =>
     {
         it("| adds to the existing mask", () =>
         {
-            const plot = CanvasTestPlotFactory.createOne(harness.chart);
+            const plot = TestCanvasPlotFactory.createOne(harness.chart);
             const hitTestableGroup = new HitTestableGroup(new TestUpdateArgProvider(), plot);
             const interactionGroup = new InteractionGroup(1 << 0, hitTestableGroup, plot);
             const entity = new ChartDataEntity({}, { zIndexAbs: 1, zIndexRel: 1 }, identifierFactory);

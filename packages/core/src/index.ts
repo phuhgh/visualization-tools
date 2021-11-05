@@ -1,5 +1,6 @@
 import "./globals";
 
+export { emitToAll } from "./eventing/emit-to-all";
 export { OnHoverResult, IOnHoverResult } from "./eventing/user-interaction/on-hover-result";
 export { addEntityToCategory } from "./entities/categories/add-entity-to-category";
 export { OnGraphicsComponentAdded, TGraphicsComponentAddedArgs, TOnGraphicsComponentAdded } from "./rendering/events/on-graphics-component-added";

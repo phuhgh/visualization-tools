@@ -9,7 +9,7 @@ export type TRendererOnContextLost = TListener<"onRendererContextLost", []>;
 
 /**
  * @public
- * Emitted the renderer context is lost due to e.g. resource contention. Emitted on both chart and plots.
+ * Emitted when the renderer context is lost due to e.g. resource contention. Emitted on both chart and plots.
  */
 export class OnRendererContextLost implements TRendererOnContextLost
 {
