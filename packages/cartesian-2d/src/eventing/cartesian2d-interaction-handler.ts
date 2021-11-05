@@ -136,8 +136,11 @@ export class Cartesian2dInteractionHandler<TTraits>
             this.plot.plotDimensionsOBL.clipSpaceArea.interactiveRange,
         );
 
-        this.tmpRange2d.set(plotRange.dataRange);
+        this.tmpRange2d.set(plotRange.transformedDataRange);
         this.tmpRange2d.scaleRelativeTo(1 - dz * 0.001, utDataPosition, this.tmpRange2d);
+        plotRange.userTransform.reverseTransformRange(this.tmpRange2d, this.tmpRange2d);
+        this.tmpRange2d.bound(plotRange.maxBounds);
+
         plotRange.updateDataRange(this.tmpRange2d, this.chart.attachPoint.canvasDims);
 
         this.userCallbacks.onWheel($event, dz);
