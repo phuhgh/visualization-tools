@@ -109,7 +109,7 @@ export class GlCartesian2dAxisGraphicsComponent
         this.bindings.textureMappingAttribute.bindArrayInstanced(componentRenderer, 1);
 
         const canvas = this.axisLabelGenerator.getCanvas();
-        this.updateConfig(entity, canvas.width, canvas.height);
+        this.updateConfig(entity, canvas.width, canvas.height, componentRenderer.sharedState.frameCounter);
         this.bindings.configUniform.bind(componentRenderer);
 
         this.bindings.labelSpriteTexture2d.updateData(canvas);
@@ -118,12 +118,13 @@ export class GlCartesian2dAxisGraphicsComponent
         componentRenderer.drawInstancedArrays(componentRenderer.context.TRIANGLE_STRIP, 0, 4, entity.data.getTraceCount());
     }
 
-    private updateConfig(entity: TGlAxisEntity, textureWidth: number, textureHeight: number): void
+    private updateConfig(entity: TGlAxisEntity, textureWidth: number, textureHeight: number, frameId: number): void
     {
         this.config[0] = entity.graphicsSettings.axisOptions.padding;
         this.config[1] = entity.graphicsSettings.axisOptions.padding;
         this.config[2] = 1 / textureWidth;
         this.config[3] = 1 / textureHeight;
+        this.bindings.configUniform.setData(this.config, frameId);
     }
 
     private config = new Mat2.f32();
