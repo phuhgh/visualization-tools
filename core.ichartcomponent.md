@@ -27,6 +27,7 @@ export interface IChartComponent<TRenderer extends TUnknownRenderer>
 |  --- | --- |
 |  [addPlot(plot)](./core.ichartcomponent.addplot.md) |  |
 |  [cancelNextFrame()](./core.ichartcomponent.cancelnextframe.md) |  |
+|  [getPlots()](./core.ichartcomponent.getplots.md) |  |
 |  [getTransformProvider(transformsToInitialize, missIsDebugError)](./core.ichartcomponent.gettransformprovider.md) | Subsequent calls will return the same object. |
 |  [removePlot(plot)](./core.ichartcomponent.removeplot.md) |  |
 |  [resize()](./core.ichartcomponent.resize.md) | By default resize is performed on every draw, this can be disabled and controlled manually. |

@@ -41,6 +41,7 @@ export declare class ChartComponent<TRenderer extends TUnknownRenderer> extends 
 |  --- | --- | --- |
 |  [addPlot(plot)](./core.chartcomponent.addplot.md) |  |  |
 |  [cancelNextFrame()](./core.chartcomponent.cancelnextframe.md) |  |  |
+|  [getPlots()](./core.chartcomponent.getplots.md) |  |  |
 |  [getTransformProvider(transformsToInitialize, missIsDebugError)](./core.chartcomponent.gettransformprovider.md) |  |  |
 |  [removePlot(plot)](./core.chartcomponent.removeplot.md) |  |  |
 |  [resize()](./core.chartcomponent.resize.md) |  |  |

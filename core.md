@@ -96,7 +96,7 @@
 |  [OnPlotAttached](./core.onplotattached.md) | Emitted on plot attaching to chart. |
 |  [OnPlotDetached](./core.onplotdetached.md) | Emitted on plot being removed from [IChartComponent](./core.ichartcomponent.md)<!-- -->. |
 |  [OnPlotRequiresUpdate](./core.onplotrequiresupdate.md) | Used to indicate that a redraw is required, which is performed by [IChartComponent.updateOnNextFrame()](./core.ichartcomponent.updateonnextframe.md)<!-- -->. Multiple calls will be rolled up into a single update. |
-|  [OnRendererContextLost](./core.onrenderercontextlost.md) | Emitted the renderer context is lost due to e.g. resource contention. Emitted on both chart and plots. |
+|  [OnRendererContextLost](./core.onrenderercontextlost.md) | Emitted when the renderer context is lost due to e.g. resource contention. Emitted on both chart and plots. |
 |  [Plot](./core.plot.md) | Basic drawing unit to which entities and behaviors can be attached. |
 |  [PlotArea](./core.plotarea.md) | The space a plot takes up on a chart. |
 |  [PlotCtorArg](./core.plotctorarg.md) | Default plot construction args. |
@@ -132,6 +132,7 @@
 |  --- | --- |
 |  [addEntityToCategory(category, entity, graphicsComponent, hooks)](./core.addentitytocategory.md) |  |
 |  [assertBinder(binder, id)](./core.assertbinder.md) | debug utility for checking binder type in graphics / transform component. |
+|  [emitToAll(chart, event, args)](./core.emittoall.md) | Emits the event on the chart and all connected plots. |
 |  [getChartInitialState(options, stateProviders)](./core.getchartinitialstate.md) | Provides user interaction state machine initial state. |
 |  [linkGraphicsComponents(graphicsComponents)](./core.linkgraphicscomponents.md) | Shares compatible buffers between components, so updates to one affect all. |
 

@@ -4,7 +4,7 @@
 
 ## OnRendererContextLost class
 
-Emitted the renderer context is lost due to e.g. resource contention. Emitted on both chart and plots.
+Emitted when the renderer context is lost due to e.g. resource contention. Emitted on both chart and plots.
 
 <b>Signature:</b>
 
