@@ -7,7 +7,7 @@ import { TestGroup } from "../test-utils/fakes/test-group";
 import { OnEntityRemovedFromGroup } from "./events/on-entity-removed-from-group";
 import { OnEntityAddedToGroup } from "./events/on-entity-added-to-group";
 import { debugDescribe } from "rc-js-test-util";
-import { CanvasTestPlotFactory } from "../test-utils/fakes/canvas-test-plot-factory";
+import { TestCanvasPlotFactory } from "../test-utils/fakes/test-canvas-plot-factory";
 import { IPlot } from "./i-plot";
 import { TF64Range2d } from "rc-js-util/bin/src/array/typed-array/2d/range2d/range2d";
 
@@ -21,7 +21,7 @@ debugDescribe("=> plot", () =>
     {
         harness = new TestCanvasChartHarness();
 
-        plot = harness.chart.addPlot(CanvasTestPlotFactory.createOne(harness.chart));
+        plot = harness.chart.addPlot(TestCanvasPlotFactory.createOne(harness.chart));
     });
 
     describe("=> addEntity", () =>

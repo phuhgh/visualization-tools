@@ -2,7 +2,7 @@ import { TGlExtensionKeys } from "../rendering/gl/i-gl-extensions";
 import { GraphAttachPoint, IGraphAttachPoint } from "../templating/graph-attach-point";
 import { IRenderer } from "../rendering/i-renderer";
 import { TGlComponentRenderer } from "../rendering/gl/component-renderer/gl-component-renderer";
-import { TF32Vec2 } from "rc-js-util";
+import { TF32Vec2, Vec2 } from "rc-js-util";
 import { GraphAttachPointProvider } from "../templating/graph-attach-point-provider";
 import { EventService } from "../eventing/event-service";
 import { ChartConfig } from "../chart/chart-config";
@@ -22,7 +22,7 @@ export class TestGl2RendererHarness<TExts extends TGlExtensionKeys = never>
     public constructor
     (
         exts: TExts[],
-        dims: TF32Vec2,
+        dims: TF32Vec2 = Vec2.f32.factory.createOne(20, 20),
         featureFlags: TGlFeatureFlags[] = [],
     )
     {

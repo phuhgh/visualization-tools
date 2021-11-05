@@ -1,6 +1,6 @@
 import { IGraphAttachPoint } from "../templating/graph-attach-point";
 import { IChartConfig } from "./chart-config";
-import { _Array, _Iterator, AOnDestroy, DirtyCheckedUniqueCollection, IIdentifierFactory } from "rc-js-util";
+import { _Iterator, AOnDestroy, DirtyCheckedUniqueCollection, IIdentifierFactory } from "rc-js-util";
 import { FrameProvider } from "../update/frame-provider";
 import { ICanvasDimensions } from "../templating/canvas-dimensions";
 import { IPlot, IReadonlyPlot } from "../plot/i-plot";
@@ -14,9 +14,11 @@ import { OnPlotRequiresUpdate } from "../plot/events/on-plot-requires-update";
 import { OnDprChanged } from "../templating/events/on-dpr-changed";
 import { EEntityUpdateFlag } from "../update/e-entity-update-flag";
 import { ChartTransformFactory, IChartTransformFactory } from "./chart-transform-factory";
-import { OnRendererContextLost } from "../rendering/events/on-renderer-context-lost";
 import { TUnknownRenderer } from "../rendering/t-unknown-renderer";
 import { OnGraphicsComponentAdded } from "../rendering/events/on-graphics-component-added";
+import { OnRendererContextRestored } from "../rendering/events/on-renderer-context-restored";
+import { OnRendererContextLost } from "../rendering/events/on-renderer-context-lost";
+import { emitToAll } from "../eventing/emit-to-all";
 
 /**
  * @public
@@ -49,6 +51,7 @@ export interface IChartComponent<TRenderer extends TUnknownRenderer>
 
     addPlot<TPlot extends IPlot<unknown, unknown>>(plot: TPlot): TPlot;
     removePlot(plot: IPlot<unknown, unknown>): void;
+    getPlots(): readonly IReadonlyPlot<unknown, unknown>[];
 
     /**
      * Subsequent calls will return the same object.
@@ -248,6 +251,11 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
         OnPlotDetached.emit(plot, this);
     }
 
+    public getPlots(): readonly IReadonlyPlot<unknown, unknown>[]
+    {
+        return this.plotCollection.getArray();
+    }
+
     public getTransformProvider
     (
         transformsToInitialize: readonly symbol[],
@@ -294,11 +302,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
             {
                 this.contextLost = true;
                 this.renderer.onContextLost();
-                OnRendererContextLost.emit(this.eventService);
-                _Array.forEach(this.plotCollection.getArray(), (plot) =>
-                {
-                    OnRendererContextLost.emit(plot.eventService);
-                });
+                emitToAll(this, OnRendererContextLost);
             },
             () =>
             {
@@ -308,6 +312,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
                 {
                     this.contextLost = false;
                     this.renderer.onContextRegained(context);
+                    emitToAll(this, OnRendererContextRestored);
                 }
             },
         );
@@ -368,3 +373,4 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
     private transformProvider: ChartTransformFactory<TRenderer["TComponentRenderer"]> | null = null;
     protected contextLost = false;
 }
+
