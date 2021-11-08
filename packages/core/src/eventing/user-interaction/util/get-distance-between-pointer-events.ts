@@ -1,3 +1,5 @@
+import { _Math } from "rc-js-util";
+
 /**
  * In css pixels.
  */
@@ -6,5 +8,5 @@ export function getDistanceBetweenPointerEvents(firstEvent: PointerEvent, second
     const adjacent = firstEvent.clientX - secondEvent.clientX;
     const opposite = firstEvent.clientY - secondEvent.clientY;
 
-    return Math.hypot(adjacent, opposite);
+    return _Math.hypot2(adjacent, opposite);
 }
