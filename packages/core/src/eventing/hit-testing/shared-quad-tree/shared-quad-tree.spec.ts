@@ -110,4 +110,19 @@ debugDescribe("=> SharedQuadTree", () =>
 
         tree.sharedObject.release();
     });
+
+    it("| handles deep nesting", () =>
+    {
+        const tree = SharedQuadTree.createOneF32(emscriptenTestModule.wrapper, 13, 1);
+        tree.setTopLevel(Range2d.f32.factory.createOne(0, 1, 0, 1));
+
+        for (let i = 0, iEnd = 16; i < iEnd; ++i)
+        {
+            tree.addBoundingBox(Range2d.f32.factory.createOne(0, 0.03125, 0.0, 0.03125), 1, i, 1);
+        }
+
+        expect(tree.queryPoint(Vec2.f32.factory.createOne(0.03125 / 2, 0.03125 / 2), 1)).toBe(13);
+
+        tree.sharedObject.release();
+    });
 });

@@ -15,7 +15,7 @@ void VisualizationTools::QuadTree<T>::SetOptions(std::uint32_t _maxDepth, std::u
 }
 
 template<typename T>
-void VisualizationTools::QuadTree<T>::SetTopLevel(Range2d <T> _aabb)
+void VisualizationTools::QuadTree<T>::SetTopLevel(Range2d<T> _aabb)
 {
     JsUtil::Debug::OnBeforeAllocate();
     delete m_root;
@@ -31,7 +31,7 @@ std::uint32_t VisualizationTools::QuadTree<T>::GetTotalElementCount() const
 // FIXME assumes little endian, provide compile option
 // FIXME allow differing sizes in x & y + differing max depths
 template<typename T>
-void VisualizationTools::QuadTree<T>::InsertRange(Range2d <T> & _aabb, QuadElement && _element)
+void VisualizationTools::QuadTree<T>::InsertRange(Range2d<T> & _aabb, QuadElement && _element)
 {
     // 3 bits per depth level, values correspond to:
     // 4 - nothing checked
@@ -40,9 +40,9 @@ void VisualizationTools::QuadTree<T>::InsertRange(Range2d <T> & _aabb, QuadEleme
     // 1 - nw, ne, se checked
     // 0 - node cleared
     std::uint64_t iterationState = 0;
-    std::uint32_t depthShift = 0;
+    std::uint64_t depthShift = 0;
     std::uint64_t nodeIterationState = 0b100;
-    QuadNode <T> * node = m_root;
+    QuadNode<T> * node = m_root;
 
     JsUtil::Debug::OnBeforeAllocate();
 
@@ -53,8 +53,10 @@ void VisualizationTools::QuadTree<T>::InsertRange(Range2d <T> & _aabb, QuadEleme
         JsUtil::Debug::Error("InsertRange: a filter mask of zero will always produce no results");
     }
 
-    // FIXME no way to "evict" lower elements at the deepest quad, store a priority and check that
-    // need not be done in the loop, check on the way out
+    // FIXME no way to "evict" lower elements at the deepest quad
+    // FIXME this bails as soon as max depth is exceeded, we could continue filling lower depth quads
+    // either document this or "fix", neither behavior will result in consistent interaction handling...
+    // the maximum depth is 21, document / assert that too
     for (; depthShift < m_maxDepth * 3;)
     {
         if (nodeIterationState == 0)
@@ -65,9 +67,9 @@ void VisualizationTools::QuadTree<T>::InsertRange(Range2d <T> & _aabb, QuadEleme
             }
             else
             {
-                node = node->m_parent;
-                nodeIterationState = (iterationState >> depthShift) & 0b111;
                 depthShift -= 3;
+                node = node->m_parent;
+                nodeIterationState = iterationState >> depthShift;
                 continue;
             }
         }
@@ -78,18 +80,18 @@ void VisualizationTools::QuadTree<T>::InsertRange(Range2d <T> & _aabb, QuadEleme
             // this will underflow on the root node, but that's OK because we check for max depth when looping
             if (!node->m_bounds.DoesRangeIntersect(_aabb))
             {
-                node = node->m_parent;
-                nodeIterationState = (iterationState >> depthShift) & 0b111;
                 depthShift -= 3;
+                node = node->m_parent;
+                nodeIterationState = iterationState >> depthShift;
                 continue;
             }
 
             if (node->GetElementCount() < m_maxElementsPerNode)
             {
+                depthShift -= 3;
                 node->PushElement(_element);
                 node = node->m_parent;
-                nodeIterationState = (iterationState >> depthShift) & 0b111;
-                depthShift -= 3;
+                nodeIterationState = iterationState >> depthShift;
                 continue;
             }
         }
@@ -102,8 +104,10 @@ void VisualizationTools::QuadTree<T>::InsertRange(Range2d <T> & _aabb, QuadEleme
             node->m_quads[nodeIterationState] = new VisualizationTools::QuadNode<T>(node, node->SubdivideRange(static_cast<std::uint8_t>(nodeIterationState)));
         }
 
+        // 0x7fffffffffffffff first bit zero, shifting by 64 is UB
+        iterationState &= 0x7fffffffffffffff >> (63ull - depthShift);
+        iterationState |= nodeIterationState << depthShift;
         depthShift += 3;
-        iterationState = (iterationState & ~(0b111 << depthShift)) | (nodeIterationState << depthShift);
         node = node->m_quads[nodeIterationState];
         nodeIterationState = 0b100;
     }
@@ -115,10 +119,10 @@ inline void appendElements
                 const VisualizationTools::QuadNode<T> & _quadNode,
                 std::uint32_t _filterMask,
                 std::uint32_t & o_foundElements,
-                std::span <VisualizationTools::QuadElement> & o_elements
+                std::span<VisualizationTools::QuadElement> & o_elements
         )
 {
-    const std::vector <VisualizationTools::QuadElement> & _nodeElements = _quadNode.GetElements();
+    const std::vector<VisualizationTools::QuadElement> & _nodeElements = _quadNode.GetElements();
 
     for (auto & nodeElement: _nodeElements)
     {
@@ -140,12 +144,12 @@ bool isPointInRange(VisualizationTools::Range2d<T> & _range, VisualizationTools:
 }
 
 template<typename T>
-std::uint32_t VisualizationTools::QuadTree<T>::QueryPoint(Vec2 <T> & _point, std::uint32_t _filterMask, std::span <QuadElement> & o_elements) const
+std::uint32_t VisualizationTools::QuadTree<T>::QueryPoint(Vec2<T> & _point, std::uint32_t _filterMask, std::span<QuadElement> & o_elements) const
 {
     JsUtil::Debug::Assert(_filterMask != 0, "QueryPoint: a filter mask of zero will always produce no results");
     JsUtil::Debug::Assert(m_root != nullptr, "QueryPoint: SetTopLevel must be called first");
 
-    QuadNode <T> const * node = m_root;
+    QuadNode<T> const * node = m_root;
     std::uint32_t foundElements = 0;
 
     if (o_elements.size() < m_maxElementsPerNode * m_maxDepth)
@@ -205,7 +209,7 @@ static VisualizationTools::QuadElement s_elementArray[4096 * 4]{};
 std::uint32_t f32QuadTree_queryPoint(VisualizationTools::QuadTree<float> * _tree, float _pointX, float _pointY, std::uint32_t _filterMask)
 {
     // good for a 4k screen with 4 elements per quad
-    static std::span <VisualizationTools::QuadElement> elements{ s_elementArray, 4096 * 4 };
+    static std::span<VisualizationTools::QuadElement> elements{ s_elementArray, 4096 * 4 };
     VisualizationTools::Vec2<float> point{ _pointX, _pointY };
 
     return _tree->QueryPoint(point, _filterMask, elements);

@@ -11,7 +11,7 @@ VisualizationTools::QuadNode<T>::QuadNode()
 template<typename T>
 VisualizationTools::QuadNode<T>::QuadNode
         (
-                QuadNode <T> * _parent,
+                QuadNode<T> * _parent,
                 VisualizationTools::Range2d<T> _bounds
         )
         : m_parent(_parent),
@@ -79,7 +79,7 @@ void VisualizationTools::QuadNode<T>::PushElement(VisualizationTools::QuadElemen
 }
 
 template<typename T>
-const std::vector <VisualizationTools::QuadElement> & VisualizationTools::QuadNode<T>::GetElements() const
+const std::vector<VisualizationTools::QuadElement> & VisualizationTools::QuadNode<T>::GetElements() const
 {
     return m_elements;
 }
