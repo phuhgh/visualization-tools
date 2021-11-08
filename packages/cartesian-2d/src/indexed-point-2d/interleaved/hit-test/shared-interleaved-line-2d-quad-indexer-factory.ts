@@ -39,4 +39,21 @@ export class SharedInterleavedLine2dQuadIndexerFactory
     {
         return SharedInterleavedPoint2dQuadIndexer.createOne(wrapper, "f64Interleaved2dLineQuadIndexer", Float64Array);
     }
+
+    public static createOne<TTypedArrayCtor extends Float32ArrayConstructor | Float64ArrayConstructor>
+    (
+        wrapper: IEmscriptenWrapper<IInterleavedLine2dQuadIndexerBindings>,
+        ctor: TTypedArrayCtor,
+    )
+        : ISharedInterleavedPoint2dQuadIndexer<InstanceType<TTypedArrayCtor>>
+    {
+        if (ctor === Float32Array)
+        {
+            return SharedInterleavedLine2dQuadIndexerFactory.createOneF32(wrapper) as ISharedInterleavedPoint2dQuadIndexer<InstanceType<TTypedArrayCtor>>;
+        }
+        else
+        {
+            return SharedInterleavedLine2dQuadIndexerFactory.createOneF64(wrapper) as ISharedInterleavedPoint2dQuadIndexer<InstanceType<TTypedArrayCtor>>;
+        }
+    }
 }

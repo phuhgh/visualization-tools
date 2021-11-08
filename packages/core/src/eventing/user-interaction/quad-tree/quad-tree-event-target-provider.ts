@@ -57,7 +57,7 @@ export class QuadTreeEventTargetProvider<TPlotRange extends IPlotRange>
         this.entityTree.sharedTree.setTopLevel(plotDimensions);
         const entitiesByHitTester = this.interactiveGroups.hitTestable.getEntitiesByHitTester();
         const updateArg = this.interactiveGroups.hitTestable.argProvider.getUpdateArg(this.plot, canvasDims);
-        this.entityTree.update(updateArg);
+        this.entityTree.setHitTestArg(updateArg);
         const quadTree = this.entityTree;
         const yieldTime = this.options.yieldTime;
 

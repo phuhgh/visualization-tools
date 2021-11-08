@@ -12,7 +12,6 @@ export interface ICartesian2dPlotConstructorOptions<TArray extends TTypedArray>
     maxBounds: Range2d<TArray>,
     dataRange: Range2d<TArray>,
     maxZoom: number,
-    canvasDims: ICanvasDimensions,
     userTransform: ICartesian2dUserTransform,
 }
 
@@ -80,7 +79,6 @@ export class Cartesian2dPlotRange<TArray extends TTypedArray>
             options.maxBounds,
             options.dataRange,
             options.maxZoom,
-            options.canvasDims,
             new Cartesian2dFloatPrecisionRangeBounder(_F32, 0.1),
             options.userTransform,
         );
@@ -96,7 +94,6 @@ export class Cartesian2dPlotRange<TArray extends TTypedArray>
             options.maxBounds,
             options.dataRange,
             options.maxZoom,
-            options.canvasDims,
             new Cartesian2dFloatPrecisionRangeBounder(_F64, 0.1),
             options.userTransform,
         );
@@ -107,7 +104,6 @@ export class Cartesian2dPlotRange<TArray extends TTypedArray>
         maxBounds: Range2d<TArray>,
         dataRange: Range2d<TArray>,
         maxZoom: number,
-        canvasDims: ICanvasDimensions,
         interactionBounder: ICartesian2dInteractionBounder<TArray>,
         userTransform: ICartesian2dUserTransform,
     )
@@ -120,7 +116,6 @@ export class Cartesian2dPlotRange<TArray extends TTypedArray>
             .slice()
             .fill(0);
         this.updateBounds(maxBounds, maxZoom);
-        this.updateDataRange(dataRange, canvasDims);
         this.transformedDataRange = this.userTransform.forwardTransformRange(dataRange);
     }
 

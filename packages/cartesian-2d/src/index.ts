@@ -29,7 +29,7 @@ export { GlCartesian2dUpdateArgProvider } from "./update/update-arg/gl-cartesian
 export { Cartesian2dInteractionHandler } from "./eventing/cartesian2d-interaction-handler";
 export { PinchZoomHandlerCartesian2d } from "./eventing/pinch-zoom-handler-cartesian2d";
 export { GlInterleaved2dPointBinder, TGlInterleavedPointBinderConfig, IInterleavedPointGlBindings } from "./indexed-point-2d/interleaved/gl-interleaved-2d-point-binder";
-export { SharedInterleavedPoint2dHitTestComponent } from "./indexed-point-2d/interleaved/hit-test/shared-interleaved-point-2d-hit-test-component";
+export { SharedInterleavedLine2dHitTestComponent } from "./indexed-point-2d/interleaved/hit-test/shared-interleaved-line2d-hit-test-component";
 export { IGlIndexedPoint2dBinder } from "./indexed-point-2d/i-gl-indexed-point2d-binder";
 export { InterleavedLine2dHitTestComponent } from "./indexed-point-2d/interleaved/hit-test/interleaved-line-2d-hit-test-component";
 export { THitTestableIndexedPoint2dTrait } from "./traits/t-hit-testable-indexed-point-2d-trait";

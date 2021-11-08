@@ -4,7 +4,7 @@ import { IInteractionGroup } from "../../../entities/groups/interaction-group";
 import { ISharedEntityQuadTree } from "../../hit-testing/shared-quad-tree/shared-entity-quad-tree";
 import { HitTestResult } from "../../hit-testing/hit-test-result";
 import { QuadElementSharedObject } from "../../hit-testing/shared-quad-tree/quad-element-shared-object";
-import { _Debug, _Map, _Production } from "rc-js-util";
+import { _Array, _Debug, _Map } from "rc-js-util";
 import { TEntityTrait } from "../../../entities/traits/t-entity-trait";
 import { IHitTestableTrait } from "../../../entities/groups/i-hit-testable-trait";
 
@@ -27,19 +27,21 @@ export class QuadEventTargetProvider<TTraits extends IHitTestableTrait>
     (
         pointerEvent: IChartPointerEvent<MouseEvent>,
     )
-        : HitTestResult<unknown, TTraits>[]
+        : readonly HitTestResult<unknown, TTraits>[]
     {
+        const updateArg = this.quadTree.hitTestArg;
+
+        if (updateArg == null)
+        {
+            // Possible for queries to come in during the initial rollup period
+            return _Array.emptyArray;
+        }
+
         const hitTestableGroup = this.hitTestableGroup;
         const resultCount = this.quadTree.sharedTree.queryPoint(pointerEvent.pointerCssPosition, hitTestableGroup.groupMask);
         const entities = this.quadTree.entities;
         const quadTreeResults = this.quadTree.sharedTree.getResults();
-        const updateArg = this.quadTree.hitTestArg;
         const hitTestResults = new Map<TEntityTrait<unknown, TTraits>, HitTestResult<unknown, TTraits>>();
-
-        if (updateArg == null)
-        {
-            throw _Production.createError("updateArg must be set before query");
-        }
 
         for (let i = 0, iEnd = resultCount * QuadElementSharedObject.elementCount; i < iEnd; i += QuadElementSharedObject.elementCount)
         {

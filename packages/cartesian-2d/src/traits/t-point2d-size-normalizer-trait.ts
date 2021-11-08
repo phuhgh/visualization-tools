@@ -1,4 +1,4 @@
-import { IReadonlyMat2, Mat2, Range1d, TTypedArray } from "rc-js-util";
+import { _Debug, IReadonlyMat2, Mat2, Range1d, TTypedArray } from "rc-js-util";
 import { IGraphicsComponentSettingsTrait } from "@visualization-tools/core";
 
 /**
@@ -21,6 +21,8 @@ export class Point2dSizeNormalizer<TArray extends TTypedArray>
 
     public getSizeToPixelTransform(): IReadonlyMat2<TArray>
     {
+        DEBUG_MODE && _Debug.assert(Boolean(this.debugHasRange), "range not initialized");
+
         if (this.requiresInitialization)
         {
             this.sizeRange.getRangeTransform(this.pixelSizeRange, this.transform as Mat2<TArray>);
@@ -32,6 +34,7 @@ export class Point2dSizeNormalizer<TArray extends TTypedArray>
 
     public extendDataRange(min: number, max: number): void
     {
+        DEBUG_MODE && _Debug.runBlock(() => this.debugHasRange = true);
         this.tmpRange.update(min, max);
         this.sizeRange.unionRange(this.tmpRange, this.sizeRange);
         this.requiresInitialization = true;
@@ -41,6 +44,7 @@ export class Point2dSizeNormalizer<TArray extends TTypedArray>
     private readonly sizeRange: Range1d<TArray>;
     private readonly tmpRange: Range1d<TArray>;
     private requiresInitialization: boolean;
+    private debugHasRange: true | undefined;
 }
 
 /**

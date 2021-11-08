@@ -18,12 +18,12 @@ describe("=> GlChartFactory", () =>
                 return;
             }
 
-            const chart = GlChartFactory.createOne(
-                element,
-                Gl2ContextAdapter,
-                new ChartConfig(),
-                new GlRendererOptions([], { preserveDrawingBuffer: true }),
-            );
+            const chart = GlChartFactory.createOne({
+                chartContainer: element,
+                contextAdapterCtor: Gl2ContextAdapter,
+                chartConfig: new ChartConfig(),
+                rendererOptions: new GlRendererOptions([], { preserveDrawingBuffer: true }),
+            });
 
             if (chart != null)
             {
@@ -42,12 +42,12 @@ describe("=> GlChartFactory", () =>
                 return;
             }
 
-            const chart = GlChartFactory.createOne(
-                element,
-                Gl1ContextAdapter,
-                new ChartConfig(),
-                new GlRendererOptions(["OES_vertex_array_object"], { preserveDrawingBuffer: true }),
-            );
+            const chart = GlChartFactory.createOne({
+                chartContainer: element,
+                contextAdapterCtor: Gl1ContextAdapter,
+                chartConfig: new ChartConfig(),
+                rendererOptions: new GlRendererOptions(["OES_vertex_array_object"], { preserveDrawingBuffer: true }),
+            });
 
             if (chart != null)
             {

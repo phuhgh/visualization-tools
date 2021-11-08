@@ -34,7 +34,7 @@
     },
     {
       "name": "rollup-docs",
-      "shellCommand": "node common/scripts/copy-api-docs.js && api-documenter markdown --input-folder tmp --output-folder docs",
+      "shellCommand": "node common/scripts/copy-api-docs.js && api-documenter markdown --input-folder tmp --output-folder docs/api",
       "commandKind": "global",
       "summary": "To be run after ci-build or generate-docs, produces the human readable docs."
     },

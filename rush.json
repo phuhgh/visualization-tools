@@ -23,9 +23,21 @@
       "shouldPublish": true
     },
     {
-      "packageName": "sandbox",
-      "projectFolder": "sandbox",
+      "packageName": "@visualization-tools/sandbox",
+      "projectFolder": "extras/sandbox",
       "reviewCategory": "tools",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@visualization-tools/test-data",
+      "projectFolder": "extras/test-data",
+      "reviewCategory": "tools",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@visualization-tools/docs-site",
+      "projectFolder": "extras/docs-site",
+      "reviewCategory": "production",
       "shouldPublish": false
     }
   ]

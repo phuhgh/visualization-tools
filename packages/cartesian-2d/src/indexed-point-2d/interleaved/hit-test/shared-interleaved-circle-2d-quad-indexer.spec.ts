@@ -39,6 +39,8 @@ debugDescribe("=> SharedInterleavedCircle2dQuadIndexerFactory", () =>
 
     beforeEach(() =>
     {
+        const sizeNormalizer = new Point2dSizeNormalizer(Range1d.f32.factory.createOne(1, 2));
+        sizeNormalizer.extendDataRange(0, 1);
         tree = new SharedEntityQuadTree(emscriptenTestModule.wrapper, 4, 1);
         indexer = SharedInterleavedCircle2dQuadIndexerFactory.createOneF32(emscriptenTestModule.wrapper);
         sharedArray = SharedArray.createOneF32(emscriptenTestModule.wrapper, 9);
@@ -52,7 +54,7 @@ debugDescribe("=> SharedInterleavedCircle2dQuadIndexerFactory", () =>
             connector,
             {
                 pointDisplay: new Point2dDisplaySettings(1, 0),
-                pointSizeNormalizer: new Point2dSizeNormalizer(Range1d.f32.factory.createOne(1, 2)),
+                pointSizeNormalizer: sizeNormalizer,
                 zIndexAbs: 0,
                 zIndexRel: 0,
             },

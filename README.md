@@ -1,8 +1,6 @@
 # Visualization tools
-Visualization tools for the web.
-
-## Sandbox
-See the [sandbox](https://phuhgh.github.io/visualization-tools/sandbox/) for a little demo.
+A JavaScript and WebAssembly library for visualizing millions of data points
+interactively in real time.
 
 ## Documentation
-See [API reference](https://phuhgh.github.io/visualization-tools/) for the latest API docs.
+See [API reference](https://phuhgh.github.io/visualization-tools/api/) for the latest API docs.

@@ -13,4 +13,4 @@ if (NOT "VisualizationToolsCore" IN_LIST RC_JS_BUILD_LIST)
 endif ()
 
 # the sandbox may not be exported
-add_subdirectory(sandbox)
+add_subdirectory(extras/sandbox)

@@ -21,14 +21,17 @@ export interface IChartConfig
  */
 export class ChartConfig implements IChartConfig
 {
+    public readonly interactionOptions: IChartWideInteractionOptions = { disableLongPressContext: true, scrollZooms: true, disableAllInteraction: false };
+    public readonly updateOptions: IChartUpdateOptions = { updateDimsOnDraw: true, updateAllPlotsOnDraw: false, interactionRollupTime: 500 };
+    public readonly changeDetectionConfig: IChangeDetectionConfig = noChangeDetectionConfig;
+    public readonly changeIdFactory: IIdentifierFactory = new IncrementingIdentifierFactory();
+
     constructor
     (
-        public readonly interactionOptions: IChartWideInteractionOptions = { disableLongPressContext: true, scrollZooms: true, disableAllInteraction: false },
-        public readonly updateOptions: IChartUpdateOptions = { updateDimsOnDraw: true, updateAllPlotsOnDraw: false, interactionRollupTime: 500 },
-        public readonly changeDetectionConfig: IChangeDetectionConfig = noChangeDetectionConfig,
-        public readonly changeIdFactory: IIdentifierFactory = new IncrementingIdentifierFactory(),
+        overrides?: Partial<IChartConfig>,
     )
     {
+        Object.assign(this, overrides);
     }
 }
 

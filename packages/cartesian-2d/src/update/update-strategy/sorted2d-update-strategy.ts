@@ -7,7 +7,7 @@ import { _Array, _Debug, _Production } from "rc-js-util";
 /**
  * @public
  * Sorts entities according to {@link IScene2d} and then batches entities to minimize draw calls. Respects
- * {@link @visualization-tools/core#IGraphicsComponentSpecification.groupUpdatesByEntity} flag.
+ * {@link @visualization-tools/core#ICompositeGraphicsComponent.groupUpdatesByEntity} flag.
  */
 export class Sorted2dUpdateStrategy<TPlotRange extends IPlotRange, TUpdateArg, TRequiredTraits>
     implements IPlotUpdateStrategy<IUpdate2dGroup<TPlotRange, TUpdateArg, TRequiredTraits>>

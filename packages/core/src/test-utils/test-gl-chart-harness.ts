@@ -39,7 +39,12 @@ export class TestGlChartHarness<TExts extends TGlExtensionKeys = never>
                 clearWithColor: new Vec4.f32(),
             },
         };
-        const chartComp = GlChartFactory.createOne(this.div, Gl2ContextAdapter, config, rendererConfig);
+        const chartComp = GlChartFactory.createOne({
+            chartContainer: this.div,
+            contextAdapterCtor: Gl2ContextAdapter,
+            chartConfig: config,
+            rendererOptions: rendererConfig,
+        });
 
         if (chartComp == null)
         {

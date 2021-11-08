@@ -14,7 +14,7 @@ export interface ISharedEntityQuadTree<TUpdateArg, TTraits extends IHitTestableT
     readonly entities: TEntityTrait<TUpdateArg, TTraits>[];
     readonly sharedTree: ISharedQuadTree<Float32Array>;
 
-    update(hitTestArg: TUpdateArg): void;
+    setHitTestArg(hitTestArg: TUpdateArg): void;
     addEntity(entity: TEntityTrait<TUpdateArg, TTraits>): void;
     removeEntity(entity: TEntityTrait<TUpdateArg, TTraits>): void;
 }
@@ -41,7 +41,7 @@ export class SharedEntityQuadTree<TUpdateArg, TTraits extends IHitTestableTrait>
         this.sharedObject = this.sharedTree.sharedObject;
     }
 
-    public update(hitTestArg: TUpdateArg): void
+    public setHitTestArg(hitTestArg: TUpdateArg): void
     {
         this.hitTestArg = hitTestArg;
 

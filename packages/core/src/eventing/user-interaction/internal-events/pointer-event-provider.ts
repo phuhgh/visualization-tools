@@ -19,6 +19,7 @@ export class PointerEventProvider implements IPointerEventProvider
 
     public updatePointerEvent<TEvent extends MouseEvent>($event: TEvent, writeTo: ChartPointerEvent<TEvent>): void
     {
+        this.attachPoint.updateBoundingRects();
         writeTo.$event = $event;
         const offsetX = $event.clientX - this.attachPoint.canvasDims.boundingRect.getXMin();
         const offsetY = $event.clientY - this.attachPoint.canvasDims.boundingRect.getYMin();

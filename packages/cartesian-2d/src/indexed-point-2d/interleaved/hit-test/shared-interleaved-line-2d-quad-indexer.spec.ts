@@ -45,11 +45,13 @@ debugDescribe("=> SharedInterleavedLine2dQuadIndexer", () =>
         );
 
         tree.sharedTree.setTopLevel(Range2d.f32.factory.createOne(0, 2, 0, 2));
+        const sizeNormalizer = new Point2dSizeNormalizer(Range1d.f32.factory.createOne(1, 2));
+        sizeNormalizer.extendDataRange(0, 1);
         const entity: IHitTestableTrait & TSharedInterleavedPoint2dTrait<Float32Array, IDrawablePoint2dOffsets> = new ChartDataEntity(
             connector,
             {
                 pointDisplay: new Point2dDisplaySettings(10, 0),
-                pointSizeNormalizer: new Point2dSizeNormalizer(Range1d.f32.factory.createOne(0, 1)),
+                pointSizeNormalizer: sizeNormalizer,
                 zIndexAbs: 0,
                 zIndexRel: 0,
             },

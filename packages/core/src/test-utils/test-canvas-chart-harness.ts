@@ -15,7 +15,10 @@ export class TestCanvasChartHarness
     {
         this.div = document.createElement("div");
         const config = new ChartConfig();
-        const chartComp = CanvasChartFactory.createOne(this.div, config);
+        const chartComp = CanvasChartFactory.createOne({
+            chartContainer: this.div,
+            chartConfig: config,
+        });
 
         if (chartComp == null)
         {

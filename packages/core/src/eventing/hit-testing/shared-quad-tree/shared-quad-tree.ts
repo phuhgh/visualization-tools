@@ -103,6 +103,7 @@ export class SharedQuadTree<TArray extends TTypedArray>
     {
         this.sharedRange2d.update(range2d);
         this.wrapper.instance._f32QuadTree_setTopLevel(this.sharedObject.getPtr(), this.sharedRange2d.sharedObject.getPtr());
+        this.isInitialized = true;
     }
 
     public setOptions(maxDepth: number, maxElementsPerNode: number): void
@@ -112,6 +113,11 @@ export class SharedQuadTree<TArray extends TTypedArray>
 
     public queryPoint(point: IReadonlyVec2<TArray>, filterMask: number): number
     {
+        if (!this.isInitialized)
+        {
+            return 0;
+        }
+
         return this.wrapper.instance._f32QuadTree_queryPoint(
             this.sharedObject.getPtr(),
             point.getX(),
@@ -174,5 +180,6 @@ export class SharedQuadTree<TArray extends TTypedArray>
     private readonly sharedQuadElement: IQuadElementSharedObject;
     private readonly sharedRange2d: IRange2dSharedObject<Float32Array>;
     private results: Uint32Array;
+    private isInitialized = false;
 }
 
