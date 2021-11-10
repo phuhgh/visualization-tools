@@ -4,7 +4,7 @@ import { IRenderer } from "../rendering/i-renderer";
 import { TGlComponentRenderer } from "../rendering/gl/component-renderer/gl-component-renderer";
 import { TF32Vec2, Vec2 } from "rc-js-util";
 import { GraphAttachPointProvider } from "../templating/graph-attach-point-provider";
-import { EventService } from "../eventing/event-service";
+import { EventService, IEventService } from "../eventing/event-service";
 import { ChartConfig } from "../chart/chart-config";
 import { Gl2ContextAdapter } from "../rendering/gl/context/gl2-context-adapter";
 import { GlRenderer } from "../rendering/gl/gl-renderer";
@@ -18,6 +18,7 @@ export class TestGl2RendererHarness<TExts extends TGlExtensionKeys = never>
 {
     public attachPoint: IGraphAttachPoint;
     public renderer: IRenderer<TGlComponentRenderer<WebGL2RenderingContext, TExts>>;
+    public eventService: IEventService;
 
     public constructor
     (
@@ -26,11 +27,16 @@ export class TestGl2RendererHarness<TExts extends TGlExtensionKeys = never>
         featureFlags: TGlFeatureFlags[] = [],
     )
     {
+        this.eventService = new EventService();
         this.div = document.createElement("div");
         const config = new ChartConfig();
         this.attachPoint = new GraphAttachPoint(new GraphAttachPointProvider(this.div), new EventService(), config);
         const options = new GlRendererOptions(exts, { preserveDrawingBuffer: true, antialias: false }, featureFlags);
-        const contextAdapter = new Gl2ContextAdapter(this.attachPoint.canvasElement, options.onCreate.contextAttributes);
+        const contextAdapter = new Gl2ContextAdapter(
+            this.attachPoint.canvasElement,
+            this.eventService,
+            options.onCreate.contextAttributes,
+        );
         const renderer = GlRenderer.createOne(contextAdapter.getContext(), options);
 
         if (renderer == null)
@@ -86,4 +92,3 @@ export class TestGl2RendererHarness<TExts extends TGlExtensionKeys = never>
     private readonly div: HTMLDivElement;
     private readonly context: WebGL2RenderingContext;
 }
-

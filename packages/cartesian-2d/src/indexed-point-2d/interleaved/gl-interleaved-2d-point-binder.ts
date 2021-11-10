@@ -2,7 +2,8 @@ import { _Array, _Debug, Mat2, Mat4, Once, Vec4 } from "rc-js-util";
 import { IDrawablePoint2dOffsets } from "../../series/i-drawable-point2d-offsets";
 import { TInterleavedPoint2dTrait } from "../../traits/t-interleaved-point2d-trait";
 import { IGlIndexedPoint2dBinder, IndexedPoint2dIdentifier } from "../i-gl-indexed-point2d-binder";
-import { AGlInstancedBinder, emptyShader, GlFloatAttribute, GlFloatBuffer, GlIVec4Uniform, GlMat2Uniform, GlMat4Uniform, GlProgramSpecification, GlShader, IGlAttribute, IGlProgramSpec, IGlShader, IInterleavedBindingDescriptor, mat2MultiplyValueShader, TGl2ComponentRenderer, unpackColorShader } from "@visualization-tools/core";
+import { AGlInstancedBinder, BufferLayout, emptyShader, GlBuffer, GlFloatAttribute, GlFloatBuffer, GlIVec4Uniform, GlMat2Uniform, GlMat4Uniform, GlProgramSpecification, GlShader, IGlAttribute, IGlProgramSpec, IGlShader, IInterleavedBindingDescriptor, mat2MultiplyValueShader, TChangeTrackedTrait, TGl2ComponentRenderer, TGlF32BufferLayout, unpackColorShader } from "@visualization-tools/core";
+import { IGlIndexedPoint2dTransformBinder } from "../i-gl-indexed-point2d-transform-binder";
 
 /**
  * @public
@@ -14,6 +15,17 @@ export type TGlInterleavedPointBinderConfig =
 
 /**
  * @public
+ */
+export interface IInterleavedPointGlBindings
+{
+    pointAttributes: IGlAttribute<Float32Array>[];
+    displayConfigUniform: GlMat4Uniform;
+    sizeTransformUniform: GlMat2Uniform;
+    offsetUniform: GlIVec4Uniform;
+}
+
+/**
+ * @public
  * Provides bindings for an interleaved buffer that described points in 2d.
  *
  * @remarks
@@ -21,7 +33,7 @@ export type TGlInterleavedPointBinderConfig =
  * will be supplied in instead. The type of buffer may not be changed after creation (e.g. adding size).
  **/
 export class GlInterleaved2dPointBinder
-    extends AGlInstancedBinder<TGl2ComponentRenderer, TInterleavedPoint2dTrait<Float32Array>>
+    extends AGlInstancedBinder<TGl2ComponentRenderer, TInterleavedPoint2dTrait<Float32Array>, TGlF32BufferLayout>
     implements IGlIndexedPoint2dBinder<Float32Array>
 {
     public specification: IGlProgramSpec;
@@ -31,7 +43,7 @@ export class GlInterleaved2dPointBinder
 
     public constructor
     (
-        private readonly bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>,
+        protected readonly bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>,
         protected readonly binderConfig: TGlInterleavedPointBinderConfig = { pointsToBind: 1, bindsOutput: false },
     )
     {
@@ -40,12 +52,6 @@ export class GlInterleaved2dPointBinder
         this.bindings = this.getBindings(bindingDescriptor, binderConfig);
         this.specification = GlInterleaved2dPointBinder.generateProgram(bindingDescriptor, binderConfig);
         this.pointsBound = GlInterleaved2dPointBinder.isTransformConfig(binderConfig) ? 1 : binderConfig.pointsToBind;
-    }
-
-    public getTransformId(): string
-    {
-        // a vec4 is always used and copied before hand, so it's safe to share the transform regardless
-        return "interleavedPoint2d";
     }
 
     @Once
@@ -59,6 +65,11 @@ export class GlInterleaved2dPointBinder
         ];
 
         return preprocessorStatements.join("_");
+    }
+
+    public getTransformBinder(): IGlIndexedPoint2dTransformBinder<Float32Array>
+    {
+        return new GlInterleaved2dPointTransformBinder(this.bindingDescriptor, { ...this.binderConfig, bindsOutput: true });
     }
 
     public link(binders: GlInterleaved2dPointBinder[]): void
@@ -76,38 +87,22 @@ export class GlInterleaved2dPointBinder
         }
     }
 
-    public swapBuffers(binder: GlInterleaved2dPointBinder): void
+    public setBufferLayout(bufferLayout: TGlF32BufferLayout): void
     {
-        // all attributes share the same buffer, only 1 swap is required
-        this.bindings.pointAttributes[0].swapBuffer(binder.bindings.pointAttributes[0]);
+        const attribute = this.bindings.pointAttributes[0];
+        const theirBuffer = bufferLayout.swapBuffer(attribute.getBuffer(), 0);
+        attribute.setBuffer(theirBuffer);
     }
 
-    public setResultBuffers
-    (
-        entity: TInterleavedPoint2dTrait<Float32Array>,
-        binder: GlInterleaved2dPointBinder,
-        componentRenderer: TGl2ComponentRenderer,
-        usage: GLenum,
-    )
-        : void
+    public getBufferLayout(): TGlF32BufferLayout
     {
-        const theirAttributes = binder.bindings.pointAttributes;
-        const bufferByteSize = entity.data.getBlockByteSize() * entity.data.getLength();
-        const changeId = entity.changeId;
-
-        // only 1 buffer used during transform as the buffer is shared
-        theirAttributes[0].setSize(componentRenderer.context, bufferByteSize, usage, changeId);
-        theirAttributes[0].bindTransform(componentRenderer, 0);
+        return new BufferLayout([new GlBuffer(null, Float32Array)]);
     }
 
-    public getTransformBinder(): IGlIndexedPoint2dBinder<Float32Array>
+    public areAttributesDirty(entity: TInterleavedPoint2dTrait<Float32Array>): boolean
     {
-        return new GlInterleaved2dPointBinder(this.bindingDescriptor, { ...this.binderConfig, bindsOutput: true });
-    }
-
-    public clearResultBuffers(componentRenderer: TGl2ComponentRenderer): void
-    {
-        componentRenderer.context.bindBufferBase(componentRenderer.context.TRANSFORM_FEEDBACK_BUFFER, 0, null);
+        const changeId = this.getChangeId(entity);
+        return this.bindings.pointAttributes[0].getBuffer().changeId !== changeId;
     }
 
     public initialize(componentRenderer: TGl2ComponentRenderer): void
@@ -132,9 +127,11 @@ export class GlInterleaved2dPointBinder
         this.bindings.offsetUniform.initialize(componentRenderer);
     }
 
-    public updateData(entity: TInterleavedPoint2dTrait<Float32Array>, changeId: number): void
+    public updateData(entity: TInterleavedPoint2dTrait<Float32Array>): void
     {
         const data = entity.data;
+        const changeId = this.getChangeId(entity);
+
         this.bindings.pointAttributes[0].setData(data.getInterleavedBuffer(), changeId);
 
         if (this.uniformsToBind & EUniformBinding.BindDisplaySettings)
@@ -160,6 +157,8 @@ export class GlInterleaved2dPointBinder
         {
             this.offsets[3] = data.offsets.color;
         }
+
+        this.bindings.offsetUniform.setData(this.offsets, entity.changeId);
     }
 
     public overrideColors
@@ -285,6 +284,11 @@ export class GlInterleaved2dPointBinder
         };
     }
 
+    protected getChangeId(entity: TChangeTrackedTrait): number
+    {
+        return entity.changeId;
+    }
+
     private static generateProgram
     (
         bindingDescriptor: IInterleavedBindingDescriptor<IDrawablePoint2dOffsets>,
@@ -370,17 +374,9 @@ export class GlInterleaved2dPointBinder
         return colorOverrides;
     }
 
-    private readonly bindings: IInterleavedPointGlBindings;
+    protected readonly bindings: IInterleavedPointGlBindings;
     private readonly uniformsToBind: EUniformBinding;
     private readonly offsets = Vec4.i32.factory.createOneEmpty();
-}
-
-interface IInterleavedPointGlBindings
-{
-    pointAttributes: IGlAttribute<Float32Array>[];
-    displayConfigUniform: GlMat4Uniform;
-    sizeTransformUniform: GlMat2Uniform;
-    offsetUniform: GlIVec4Uniform;
 }
 
 const pointConnectorShader = new GlShader
@@ -462,3 +458,48 @@ enum EUniformBinding
 }
 
 const linkId = Symbol("cart-trace-2d");
+
+/**
+ * @internal
+ */
+class GlInterleaved2dPointTransformBinder
+    extends GlInterleaved2dPointBinder
+    implements IGlIndexedPoint2dTransformBinder<Float32Array>
+{
+    public getTransformId(): string
+    {
+        // a vec4 is always used and copied before hand, so it's safe to share the transform regardless
+        return "interleavedPoint2d";
+    }
+
+    public setResultBuffers
+    (
+        entity: TInterleavedPoint2dTrait<Float32Array>,
+        binder: GlInterleaved2dPointTransformBinder,
+        componentRenderer: TGl2ComponentRenderer,
+        usage: GLenum,
+    )
+        : void
+    {
+        const theirAttributes = binder.bindings.pointAttributes;
+        const bufferByteSize = entity.data.getBlockByteSize() * entity.data.getLength();
+        const changeId = entity.changeId;
+
+        // only 1 buffer used during transform as the buffer is shared
+        theirAttributes[0].setSize(componentRenderer.context, bufferByteSize, usage, changeId);
+        theirAttributes[0].bindTransform(componentRenderer, 0);
+    }
+
+    public clearResultBuffers(componentRenderer: TGl2ComponentRenderer): void
+    {
+        componentRenderer.context.bindBufferBase(componentRenderer.context.TRANSFORM_FEEDBACK_BUFFER, 0, null);
+    }
+
+    public resetState(): void
+    {
+        // all attributes share the same buffer
+        this.bindings.pointAttributes[0]
+            .getBuffer()
+            .resetState();
+    }
+}

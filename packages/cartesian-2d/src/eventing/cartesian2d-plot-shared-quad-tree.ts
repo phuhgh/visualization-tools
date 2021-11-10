@@ -3,7 +3,7 @@ import { ICartesian2dPlotRange } from "../update/update-arg/cartesian2d-plot-ran
 import { ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-arg";
 import { ICartesian2dPlot } from "../plot/i-cartesian2d-plot";
 import { Cartesian2dInteractionHandler } from "./cartesian2d-interaction-handler";
-import { DefaultInteractionGroups, getChartInitialState, IChartComponent, IDefaultInteractionGroups, IHitTestableTrait, IInteractionStateChangeCallbacks, IQuadTreeTargetOptions, ISharedEntityQuadTree, ISharedQuadTreeBindings, OnEntityAddedToGroup, OnEntityRemoved, OnEntityRemovedFromGroup, OnPlotDetached, PlotInteractionConnector, QuadTreeEventTargetProvider, SharedEntityQuadTree, TUnknownComponentRenderer, TUnknownRenderer } from "@visualization-tools/core";
+import { DefaultInteractionGroups, getChartInitialState, IChartComponent, IDefaultInteractionGroups, IHitTestableTrait, IInteractionStateChangeCallbacks, IQuadTreeTargetOptions, ISharedEntityQuadTree, ISharedQuadTreeBindings, OnEntityAddedToGroup, OnEntityRemoved, OnEntityRemovedFromGroup, OnPlotAttachChanged, PlotInteractionConnector, QuadTreeEventTargetProvider, SharedEntityQuadTree, TUnknownComponentRenderer, TUnknownRenderer } from "@visualization-tools/core";
 
 /**
  * @public
@@ -83,10 +83,13 @@ export class Cartesian2dPlotSharedQuadTree<TArray extends TTypedArray, TRequired
     )
         : void
     {
-        OnPlotDetached.registerOneTimeListener(this.plot, () =>
+        OnPlotAttachChanged.registerOneTimeListener(this.plot, (isAttached) =>
         {
-            entityTree.sharedObject.release();
-            this.temporaryListeners.clearListeners();
+            if (!isAttached)
+            {
+                entityTree.sharedObject.release();
+                this.temporaryListeners.clearListeners();
+            }
         });
 
         this.temporaryListeners.addListener(OnEntityAddedToGroup.registerListener(this.plot, (entity) =>

@@ -1,16 +1,19 @@
 import { TTypedArray } from "rc-js-util";
-import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 import { TGlContext } from "../t-gl-context";
+import { IBuffer } from "../../buffers/i-buffer";
 
 /**
  * @public
  * Dirty checked wrapper of `WebGLBuffer`. Modify via {@link IGlAttribute}.
  */
-export interface IGlBuffer<TArray extends TTypedArray>
+export interface IGlBuffer<TArray extends TTypedArray> extends IBuffer
 {
-    isDirty: boolean;
+    readonly isDirty: boolean;
+    readonly changeId: number;
+
     onContextLost(): void;
-    initialize(componentRenderer: TGlBasicComponentRenderer): void;
+    initialize(context: TGlContext): void;
+    destroy(context: TGlContext): void;
     setSize
     (
         context: WebGL2RenderingContext,

@@ -7,34 +7,46 @@ import { IUserTransform } from "../../../plot/i-user-transform";
 import { ITransformBinderProvider } from "../../transform-components/i-transform-binder-provider";
 import { IRenderer } from "../../i-renderer";
 import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
-import { IGlBinder } from "../bindings/a-gl-binder";
+import { IGlBinder, TGlUnknownBinder } from "../bindings/a-gl-binder";
 import { IGlTransformBinder } from "../bindings/i-gl-transform-binder";
+import { TChangeTrackedTrait } from "../../../entities/traits/t-change-tracked-trait";
+import { ITransformProviderBufferProvider, TransformBufferProvider } from "../../transform-components/transform-buffer-provider";
+import { TUnknownBufferLayout } from "../../buffers/buffer-layout";
 
-// FIXME: overkill generics
 /**
  * @public
  */
 export class GlTransformProvider<TTransformRenderer extends TGl2ComponentRenderer
-    , TTransformBinder extends IGlTransformBinder<unknown, TSwapBinder, TTransformRenderer>
-    , TSwapBinder extends IGlBinder<TGlBasicComponentRenderer, unknown>
+    , TTransformBinder extends IGlTransformBinder<unknown, TGlUnknownBinder<TTransformRenderer>, TTransformRenderer>
     , TUpdateArg
-    , TEntityTraits>
+    , TEntityTraits extends TChangeTrackedTrait>
     implements ITransformProvider<TTransformRenderer, TUpdateArg, TEntityTraits>
 {
-    public transformComponent: IGlTransformComponent<TTransformRenderer, TSwapBinder, TUpdateArg, TEntityTraits> | null = null;
-
-    /**
-     * Components in the same group share transform results (they should also share buffers).
-     */
+    public transformComponent: IGlTransformComponent<TTransformRenderer, TGlUnknownBinder<TTransformRenderer>, TUpdateArg, TEntityTraits> | null = null;
+    public readonly bufferLayoutProvider: ITransformProviderBufferProvider<TUnknownBufferLayout>;
     public groupId: number = _Identifier.getNextIncrementingId();
 
-    public constructor
+    public static createOne<TTransformRenderer extends TGl2ComponentRenderer
+        , TBufferLayout extends TUnknownBufferLayout
+        , TConnector
+        , TTransformBinder extends IGlTransformBinder<TConnector, TBinder, TTransformRenderer>
+        , TBinder extends IGlBinder<TGlBasicComponentRenderer, TConnector, TBufferLayout>
+        , TUpdateArg
+        , TEntityTraits extends TChangeTrackedTrait>
     (
-        private transformKey: ICacheable,
-        private binder: TSwapBinder & ITransformBinderProvider<TTransformBinder>,
-        private getUserTransform: (updateArg: TUpdateArg) => IUserTransform,
+        transformKey: ICacheable,
+        binder: TBinder & ITransformBinderProvider<TTransformBinder>,
+        getUserTransform: (updateArg: TUpdateArg) => IUserTransform,
+        getEntityChangeId: (entity: TEntityTraits, updateArg: TUpdateArg) => TConnector,
     )
+        : GlTransformProvider<TTransformRenderer, TTransformBinder, TUpdateArg, TEntityTraits>
     {
+        return new GlTransformProvider(
+            transformKey,
+            binder as TGlUnknownBinder<TTransformRenderer> & ITransformBinderProvider<TTransformBinder>,
+            getUserTransform,
+            getEntityChangeId,
+        );
     }
 
     public getTransformBinder(): TTransformBinder
@@ -44,7 +56,9 @@ export class GlTransformProvider<TTransformRenderer extends TGl2ComponentRendere
 
     public updateTransform(renderer: IRenderer<TTransformRenderer>, updateArg: TUpdateArg): void
     {
-        type TGlTc = IGlTransformComponent<TTransformRenderer, TSwapBinder, TUpdateArg, TEntityTraits> | null;
+        type TGlTc =
+            | IGlTransformComponent<TTransformRenderer, TGlUnknownBinder<TTransformRenderer>, TUpdateArg, TEntityTraits>
+            | null;
         const userTransformId = this.getUserTransform(updateArg).userTransformId;
         this.transformComponent = _Fp.normalizeToNull(renderer.transformComponents.getTransform(userTransformId, this.transformKey)) as TGlTc;
     }
@@ -62,5 +76,28 @@ export class GlTransformProvider<TTransformRenderer extends TGl2ComponentRendere
     public setGroupId(id: number): void
     {
         this.groupId = id;
+    }
+
+    public isTransformRequired(entity: TEntityTraits, updateArg: TUpdateArg): boolean
+    {
+        if (this.transformComponent == null)
+        {
+            return false;
+        }
+
+        const connector = this.getBinderConnector(entity, updateArg);
+
+        return this.binder.areAttributesDirty(connector);
+    }
+
+    protected constructor
+    (
+        private transformKey: ICacheable,
+        private binder: TGlUnknownBinder<TTransformRenderer> & ITransformBinderProvider<TTransformBinder>,
+        private getUserTransform: (updateArg: TUpdateArg) => IUserTransform,
+        private getBinderConnector: (entity: TEntityTraits, updateArg: TUpdateArg) => unknown,
+    )
+    {
+        this.bufferLayoutProvider = new TransformBufferProvider(binder);
     }
 }

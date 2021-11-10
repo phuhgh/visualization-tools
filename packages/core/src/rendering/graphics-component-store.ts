@@ -36,7 +36,6 @@ export class GraphicsComponentStore<TComponentRenderer extends TUnknownComponent
         this.graphicsComponents.forEach((gc) =>
         {
             initializeGraphicsComponent(renderer, gc);
-
         });
     }
 

@@ -43,6 +43,9 @@ export interface IRenderer<TComponentRenderer extends TUnknownComponentRenderer>
     onContextLost(): void;
     onContextRegained(context: TExtractGcContext<TComponentRenderer>): void;
 
+    initializeBuffers(buffers: readonly unknown[]): void;
+    destroyBuffers(buffers: readonly unknown[]): void;
+
     onBeforePlotDraw(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void;
     onAfterPlotDraw(): void;
 

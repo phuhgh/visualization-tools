@@ -39,6 +39,11 @@ export class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer
         this.updateHooks = updateHooks;
     }
 
+    public setBufferPerEntity(enabled: boolean): void
+    {
+        this.bufferPerEntity = enabled;
+    }
+
     public addEntity<TGraphicsTraits extends object, TSubcategoryTraits extends object>
     (
         entity: TEntityTrait<TUpdateArg, TGraphicsTraits & TSubcategoryTraits & TRequiredTraits>,
@@ -51,16 +56,23 @@ export class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer
         {
             case EGraphicsComponentType.Composite:
             {
-                graphicsComponent.recurseIterate(EGraphicsComponentType.Entity, (component, containingComponent, index) =>
+                graphicsComponent.recurseIterate(EGraphicsComponentType.Entity, (
+                    component,
+                    containingComponent,
+                    index,
+                ) =>
                 {
                     const initializedComponent = this.getInitializedGraphicsComponent(component);
                     containingComponent.subComponents.setSubComponent(initializedComponent, index);
+                    this.initializeEntityBuffers(initializedComponent, entity);
                 });
                 break;
             }
             case EGraphicsComponentType.Entity:
             {
                 graphicsComponent = this.getInitializedGraphicsComponent(graphicsComponent);
+                this.initializeEntityBuffers(graphicsComponent, entity);
+
                 break;
             }
             default:
@@ -120,7 +132,28 @@ export class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer
         }
     }
 
+    private initializeEntityBuffers
+    (
+        graphicsComponent: IGraphicsComponent<TComponentRenderer, TUpdateArg, unknown>,
+        entity: TUnknownEntity,
+    )
+        : void
+    {
+        if (!this.bufferPerEntity || graphicsComponent.transform.bufferLayoutProvider == null)
+        {
+            return;
+        }
+
+        const layout = graphicsComponent.transform.bufferLayoutProvider.getBufferLayout();
+
+        if (this.renderer.sharedState.entityBuffers.setNewLayout(entity, graphicsComponent.transform.groupId, layout))
+        {
+            this.renderer.initializeBuffers(layout.getBuffers());
+        }
+    }
+
     private entities = new DirtyCheckedUniqueCollection<TEntityTrait<TUpdateArg, TRequiredTraits>>();
     private hooks: WeakMap<TUnknownEntity, IEntityChangeHooks<TUnknownEntity>> = new WeakMap();
+    private bufferPerEntity = false;
     public TComponentRenderer!: TComponentRenderer;
 }

@@ -18,7 +18,7 @@
     "ci-test": "karma start karma.conf.js --single-run --browsers ChromeHeadless"
   },
   "dependencies": {
-    "rc-js-util": "8.14.1",
+    "rc-js-util": "8.16.0",
     "tslib": "^2.3.1"
   },
   "author": "Jack Bromley",

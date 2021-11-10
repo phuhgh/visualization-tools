@@ -8,4 +8,5 @@ export interface ITransformBinder<TComponentRenderer extends TUnknownComponentRe
     extends IBinder<TComponentRenderer>
 {
     getTransformId(): string;
+    resetState(): void;
 }

@@ -15,7 +15,7 @@ export class GlCartesian2dTraceGraphicsComponent
 {
     public readonly type = EGraphicsComponentType.Entity;
     public specification: IGlProgramSpec;
-    public transform: GlTransformProvider<TGl2ComponentRenderer, IGlTraceTransformBinder, IGlTraceBinder, ICartesian2dUpdateArg<Float32Array>, TGlTraceEntity>;
+    public transform: GlTransformProvider<TGl2ComponentRenderer, IGlTraceTransformBinder, ICartesian2dUpdateArg<Float32Array>, TGlTraceEntity>;
 
     public constructor
     (
@@ -24,7 +24,12 @@ export class GlCartesian2dTraceGraphicsComponent
     )
     {
         DEBUG_MODE && assertBinder(traceBinder, TraceBinderIdentifier);
-        this.transform = new GlTransformProvider(this, this.traceBinder, (updateArg) => updateArg.userTransform);
+        this.transform = GlTransformProvider.createOne(
+            this,
+            this.traceBinder,
+            (updateArg) => updateArg.userTransform,
+            (entity) => entity,
+        );
         this.specification = GlProgramSpecification.mergeProgramSpecifications([
             traceBinder.specification,
             cameraBinder.specification,
@@ -94,8 +99,8 @@ export class GlCartesian2dTraceGraphicsComponent
     {
         // update dependencies
         this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(updateArg.drawTransforms, componentRenderer, componentRenderer.sharedState.frameCounter);
-        this.traceBinder.updateInstanced(entity, componentRenderer, entity.changeId, 1);
+        this.cameraBinder.update(this.cameraBinder.getBinderData(updateArg, componentRenderer), componentRenderer);
+        this.traceBinder.updateInstanced(entity, componentRenderer, 1);
 
         // draw
         componentRenderer.drawInstancedArrays(componentRenderer.context.TRIANGLE_STRIP, 0, 4, entity.data.getTraceCount());

@@ -5,12 +5,12 @@ import { ChartComponent } from "../chart/chart-component";
 
 /**
  * @public
- * Emits the event on the chart and all connected plots.
+ * Emits the event on all connected plots.
  *
  * @remarks
  * Has a higher overhead due to arg spreading so shouldn't be used in performance critical sections.
  */
-export function emitToAll<TKey extends string, TArgs extends unknown[]>
+export function emitToPlots<TKey extends string, TArgs extends unknown[]>
 (
     chart: ChartComponent<TUnknownRenderer>,
     event: IEventCategoryCtor<TKey, TArgs>,
@@ -18,10 +18,6 @@ export function emitToAll<TKey extends string, TArgs extends unknown[]>
 )
     : void
 {
-    chart.eventService
-        .getCategory(event)
-        .emit(...args);
-
     _Array.forEach(chart.getPlots(), (plot) =>
     {
         plot.eventService

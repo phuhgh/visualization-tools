@@ -4,7 +4,7 @@ import { TGlInstancedComponentRenderer } from "../component-renderer/t-gl-instan
 import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 import { TGlContext } from "../t-gl-context";
 import { TGl2ComponentRenderer } from "../component-renderer/t-gl2-component-renderer";
-import { IGlBuffer } from "./i-gl-buffer";
+import { IGlBuffer } from "../buffers/i-gl-buffer";
 import { AttributeState, IAttributeState } from "./attribute-state";
 
 /**
@@ -46,7 +46,7 @@ export abstract class AGlAttribute<TArray extends TTypedArray>
         : void
     {
         componentRenderer.addAttribute(this);
-        this.sharableState.buffer.initialize(componentRenderer);
+        this.sharableState.buffer.initialize(componentRenderer.context);
         this.attributeLocation = componentRenderer.getAttributeLocation(this.name);
         this.type = this.getGlType(componentRenderer.context);
 

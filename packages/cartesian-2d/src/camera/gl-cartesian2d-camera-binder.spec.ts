@@ -106,13 +106,13 @@ class GlTestGraphicsComponent
         // no action needed
     }
 
-    public update(entity: IDataTrait<Float32Array>, componentRenderer: TGlBasicComponentRenderer, camera: ICartesian2dTransforms<Float32Array>): void
+    public update(entity: IDataTrait<Float32Array>, componentRenderer: TGlBasicComponentRenderer, transforms: ICartesian2dTransforms<Float32Array>): void
     {
         this.testDataAttribute.setData(entity.data, 0);
 
         const ctx = componentRenderer.context;
         this.testDataAttribute.bindArray(componentRenderer);
-        this.cameraBinder.update(camera, componentRenderer, componentRenderer.sharedState.frameCounter);
+        this.cameraBinder.update({ transforms: transforms, changeId: componentRenderer.sharedState.frameCounter }, componentRenderer);
 
         ctx.drawArrays(ctx.TRIANGLES, 0, entity.data.length / this.testDataAttribute.componentsPerVertex);
     }

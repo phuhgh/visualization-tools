@@ -1,12 +1,11 @@
 import { IGraphAttachPoint } from "../templating/graph-attach-point";
 import { IChartConfig } from "./chart-config";
-import { _Iterator, AOnDestroy, DirtyCheckedUniqueCollection, IIdentifierFactory } from "rc-js-util";
+import { _Iterator, AOnDestroy, DirtyCheckedUniqueCollection, IIdentifierFactory, ReferenceCounter } from "rc-js-util";
 import { FrameProvider } from "../update/frame-provider";
 import { ICanvasDimensions } from "../templating/canvas-dimensions";
 import { IPlot, IReadonlyPlot } from "../plot/i-plot";
 import { IChartUpdateOptions } from "../update/i-chart-update-options";
-import { OnPlotAttached } from "../plot/events/on-plot-attached";
-import { OnPlotDetached } from "../plot/events/on-plot-detached";
+import { OnPlotAttachChanged } from "../plot/events/on-plot-attach-changed";
 import { IEventService } from "../eventing/event-service";
 import { OnCanvasResized } from "../templating/events/on-canvas-resized";
 import { IContextAdapter } from "../rendering/i-context-adapter";
@@ -18,7 +17,10 @@ import { TUnknownRenderer } from "../rendering/t-unknown-renderer";
 import { OnGraphicsComponentAdded } from "../rendering/events/on-graphics-component-added";
 import { OnRendererContextRestored } from "../rendering/events/on-renderer-context-restored";
 import { OnRendererContextLost } from "../rendering/events/on-renderer-context-lost";
-import { emitToAll } from "../eventing/emit-to-all";
+import { emitToPlots } from "../eventing/emit-to-plots";
+import { OnEntityRemoved } from "../plot/events/on-entity-removed";
+import { OnEntityAdded } from "../plot/events/on-entity-added";
+import { TUnknownEntity } from "../entities/t-unknown-entity";
 
 /**
  * @public
@@ -234,7 +236,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
             .getCategory(OnCanvasResized)
             .addListener(plot);
 
-        OnPlotAttached.emit(plot, this);
+        OnPlotAttachChanged.emit(plot, this, true);
 
         return plot;
     }
@@ -248,7 +250,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
         plot.clearInteractionHandler();
         this.plotCollection.delete(plot);
 
-        OnPlotDetached.emit(plot, this);
+        OnPlotAttachChanged.emit(plot, this, false);
     }
 
     public getPlots(): readonly IReadonlyPlot<unknown, unknown>[]
@@ -297,25 +299,24 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
 
     private registerEventHandlers(): void
     {
-        this.contextAdapter.graphContextChangeHooks.registerCallbacks(
-            () =>
-            {
-                this.contextLost = true;
-                this.renderer.onContextLost();
-                emitToAll(this, OnRendererContextLost);
-            },
-            () =>
-            {
-                const context = this.contextAdapter.getContext();
+        OnRendererContextLost.registerListener(this.eventService, () =>
+        {
+            this.contextLost = true;
+            this.renderer.onContextLost();
+            emitToPlots(this, OnRendererContextLost);
+        });
 
-                if (context != null)
-                {
-                    this.contextLost = false;
-                    this.renderer.onContextRegained(context);
-                    emitToAll(this, OnRendererContextRestored);
-                }
-            },
-        );
+        OnRendererContextRestored.registerListener(this.eventService, () =>
+        {
+            const context = this.contextAdapter.getContext();
+
+            if (context != null)
+            {
+                this.contextLost = false;
+                this.renderer.onContextRegained(context);
+                emitToPlots(this, OnRendererContextRestored);
+            }
+        });
 
         // local listeners
         OnPlotRequiresUpdate.registerListener(this.eventService, (plot, updateFlag) =>
@@ -333,6 +334,9 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
                 this.updateInteractionHandlers(plot);
             }
         });
+
+        OnEntityAdded.registerListener(this, (entity) => this.attachedEntities.add(entity));
+        OnEntityRemoved.registerListener(this, (entity) => this.attachedEntities.remove(entity));
 
         // events to proxy to plots
         OnCanvasResized.registerListener(this.eventService, (canvasDims) =>
@@ -370,7 +374,22 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
     protected readonly contextAdapter: IContextAdapter<unknown>;
     protected readonly updateOptions: IChartUpdateOptions;
     protected readonly plotCollection = new DirtyCheckedUniqueCollection<IReadonlyPlot<unknown, unknown>>();
-    private transformProvider: ChartTransformFactory<TRenderer["TComponentRenderer"]> | null = null;
     protected contextLost = false;
-}
+    private transformProvider: ChartTransformFactory<TRenderer["TComponentRenderer"]> | null = null;
+    private readonly attachedEntities = new ReferenceCounter<TUnknownEntity>((entity) =>
+    {
+        const layouts = this.renderer.sharedState.entityBuffers.getLayouts(entity);
 
+        if (layouts == null)
+        {
+            return;
+        }
+
+        layouts.forEach((layout) =>
+        {
+            this.renderer.destroyBuffers(layout.getBuffers());
+        });
+
+        this.renderer.sharedState.entityBuffers.clearLayouts(entity);
+    });
+}

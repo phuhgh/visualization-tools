@@ -6,8 +6,8 @@ import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-comp
  * @public
  * Instanced data binder for webgl graphics components.
  */
-export interface IGlInstancedBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector>
-    extends IGlBinder<TComponentRenderer, TConnector>
+export interface IGlInstancedBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector, TBufferLayout>
+    extends IGlBinder<TComponentRenderer, TConnector, TBufferLayout>
 {
     bindInstanced
     (
@@ -24,7 +24,6 @@ export interface IGlInstancedBinder<TComponentRenderer extends TGlBasicComponent
     (
         connector: TConnector,
         componentRenderer: TComponentRenderer,
-        changeId: number,
         divisor: number,
         usage?: GLenum,
     )
@@ -35,9 +34,9 @@ export interface IGlInstancedBinder<TComponentRenderer extends TGlBasicComponent
  * @public
  * Instanced data binder for webgl graphics components.
  */
-export abstract class AGlInstancedBinder<TComponentRenderer extends TGlInstancedComponentRenderer, TConnector>
-    extends AGlBinder<TComponentRenderer, TConnector>
-    implements IGlInstancedBinder<TComponentRenderer, TConnector>
+export abstract class AGlInstancedBinder<TComponentRenderer extends TGlInstancedComponentRenderer, TConnector, TBufferLayout>
+    extends AGlBinder<TComponentRenderer, TConnector, TBufferLayout>
+    implements IGlInstancedBinder<TComponentRenderer, TConnector, TBufferLayout>
 {
     public abstract bindInstanced(componentRenderer: TComponentRenderer, divisor: number, usage?: GLenum): void;
 
@@ -45,13 +44,12 @@ export abstract class AGlInstancedBinder<TComponentRenderer extends TGlInstanced
     (
         connector: TConnector,
         componentRenderer: TComponentRenderer,
-        changeId: number,
         divisor: number,
         usage?: GLenum,
     )
         : void
     {
-        this.updateData(connector, changeId);
+        this.updateData(connector);
         this.updatePointers(connector);
         this.bindUniforms(componentRenderer);
         this.bindInstanced(componentRenderer, divisor, usage);

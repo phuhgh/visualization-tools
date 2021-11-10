@@ -25,8 +25,8 @@ export class Cartesian2dNaturalLogTransform<TArray extends TTypedArray>
 
         if (xTransformEnabled)
         {
-            this.forwardX = this.forwardTransform;
-            this.reverseX = this.reverseTransform;
+            this.forwardX = Cartesian2dNaturalLogTransform.forwardTransform;
+            this.reverseX = Cartesian2dNaturalLogTransform.reverseTransform;
         }
         else
         {
@@ -36,8 +36,8 @@ export class Cartesian2dNaturalLogTransform<TArray extends TTypedArray>
 
         if (yTransformEnabled)
         {
-            this.forwardY = this.forwardTransform;
-            this.reverseY = this.reverseTransform;
+            this.forwardY = Cartesian2dNaturalLogTransform.forwardTransform;
+            this.reverseY = Cartesian2dNaturalLogTransform.reverseTransform;
         }
         else
         {
@@ -52,13 +52,13 @@ export class Cartesian2dNaturalLogTransform<TArray extends TTypedArray>
     public reverseX: (x: number) => number;
     public reverseY: (y: number) => number;
 
-    private forwardTransform(value: number): number
+    private static forwardTransform(value: number): number
     {
         DEBUG_MODE && _Debug.assert(value > 0, "range must be greater than 0");
         return Math.log(value);
     }
 
-    private reverseTransform(value: number): number
+    private static reverseTransform(value: number): number
     {
         return Math.pow(Math.E, value);
     }

@@ -64,6 +64,16 @@ export class CanvasRenderer implements ICanvasRenderer
         // no action required
     }
 
+    public initializeBuffers(): void
+    {
+        // no action required
+    }
+
+    public destroyBuffers(): void
+    {
+        // no action required
+    }
+
     public onContextRegained(context: CanvasRenderingContext2D): void
     {
         const { componentRendererFactory, componentRendererProvider } = this.getFactories(context);

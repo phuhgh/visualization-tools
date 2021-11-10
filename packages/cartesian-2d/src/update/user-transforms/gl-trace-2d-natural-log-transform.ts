@@ -6,7 +6,6 @@ import { point2dNaturalLogTransformShader } from "./point2d-natural-log-transfor
 import { Cartesian2dNaturalLogTransform } from "./cartesian2d-natural-log-transform";
 import { TGlTraceEntity } from "../../axis/traces/t-gl-trace-entity";
 import { IGlTraceTransformBinder } from "../../axis/traces/i-gl-cartesian2d-trace-transform-binder";
-import { getTransformChangeId } from "./get-transform-change-id";
 
 /**
  * @public
@@ -51,6 +50,11 @@ export class GlTrace2dNaturalLogTransform
         this.bindings.configUniform.initialize(transformRenderer);
     }
 
+    public resetState(): void
+    {
+        this.traceBinder.resetState();
+    }
+
     public setOutputBuffers
     (
         entity: TGlTraceEntity,
@@ -61,7 +65,6 @@ export class GlTrace2dNaturalLogTransform
     {
         DEBUG_MODE && _Debug.assert(this.traceBinder.binderClassificationId === binder.binderClassificationId, "attempted to transform inappropriate binder");
         this.bindings.feedbackTransform.bind(transformRenderer);
-        this.traceBinder.swapBuffers(binder);
         this.traceBinder.setResultBuffers(entity, binder, transformRenderer, transformRenderer.context.STREAM_DRAW);
     }
 
@@ -79,7 +82,7 @@ export class GlTrace2dNaturalLogTransform
         this.bindings.configUniform.bind(transformRenderer);
 
         this.bindings.feedbackTransform.beginTransform(transformRenderer);
-        this.traceBinder.update(entity, transformRenderer, getTransformChangeId(entity));
+        this.traceBinder.update(entity, transformRenderer);
         transformRenderer.context.drawArrays(transformRenderer.context.POINTS, 0, entity.data.getTraceCount());
         this.bindings.feedbackTransform.endTransform(transformRenderer);
         this.traceBinder.clearResultBuffers(transformRenderer);

@@ -117,7 +117,8 @@ export class Plot<TPlotRange, TRequiredTraits>
         }
 
         this.entities.add(entity);
-        OnEntityAdded.emit(this, entity);
+        OnEntityAdded.emit(this.eventService, entity);
+        OnEntityAdded.emit(this.chartEventService, entity);
     }
 
     public removeEntity(entity: TUnknownEntity): void
@@ -145,9 +146,10 @@ export class Plot<TPlotRange, TRequiredTraits>
                     OnEntityRemovedFromGroup.emit(this, entity as TEntityTrait<unknown, TRequiredTraits>, group);
                 }
             });
-
         }
-        OnEntityRemoved.emit(this, entity as TEntityTrait<unknown, TRequiredTraits>);
+
+        OnEntityRemoved.emit(this.eventService, entity as TEntityTrait<unknown, TRequiredTraits>);
+        OnEntityRemoved.emit(this.chartEventService, entity as TEntityTrait<unknown, TRequiredTraits>);
     }
 
     public addToGroup<TUpdateArg, TOptions, TGroupTraits>

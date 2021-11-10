@@ -1,5 +1,5 @@
 import { _Debug, TTypedArray } from "rc-js-util";
-import { IGlBuffer } from "./i-gl-buffer";
+import { IGlBuffer } from "../buffers/i-gl-buffer";
 import { IGlAttribute } from "./i-gl-attribute";
 
 /**

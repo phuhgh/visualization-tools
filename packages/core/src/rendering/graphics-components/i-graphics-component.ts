@@ -10,6 +10,7 @@ import { EGraphicsComponentType } from "./e-graphics-component-type";
 export interface IGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TEntityTraits>
     extends IGraphicsComponentSpecification<TComponentRenderer>
 {
+    // FIXME: groupId must be extracted, it is usage dependent (conflicts with one gc instance per usage category)
     readonly transform: ITransformProvider<TUnknownComponentRenderer, TUpdateArg, TEntityTraits>;
     readonly type: EGraphicsComponentType.Entity;
 
@@ -33,7 +34,7 @@ export interface IGraphicsComponent<TComponentRenderer extends TUnknownComponent
     (
         entity: TEntityTraits,
         componentRenderer: TComponentRenderer,
-        updateParameter: TUpdateArg,
+        updateArg: TUpdateArg,
     )
         : void;
 }

@@ -4,6 +4,7 @@ import { ITransformComponent } from "../../rendering/transform-components/i-tran
 import { TEntityTrait } from "../../entities/traits/t-entity-trait";
 import { IEntityUpdateGrouping } from "./i-entity-update-grouping";
 import { _Debug, _Equality } from "rc-js-util";
+import { swapBufferLayout } from "./swap-buffer-layout";
 
 /**
  * @public
@@ -56,22 +57,34 @@ export class UpdateTransformGroupingByEntity<TUpdateArg, TRequiredTraits>
                 const componentRenderer = entityRenderers[j];
                 const transformComponent = transformComponents[j];
                 const transformRenderer = transformRenderers[j];
+                const entityBufferLayout = componentRenderer.sharedState.entityBuffers.getLayout(entity, graphicsComponent.transform.groupId);
 
+                // if the entity has buffers, use them
+                swapBufferLayout(graphicsComponent, entityBufferLayout);
+
+                // only perform the transform if the update group changes
                 if (transformComponent != null && !reuseTransforms[j])
                 {
                     DEBUG_MODE && _Debug.assert(transformRenderer != null, "precondition fail");
-                    /* eslint-disable @typescript-eslint/no-non-null-assertion */
-                    transformRenderer!.onBeforeDraw();
-                    graphicsComponent.transform.setOutputBuffers(entity, transformRenderer!);
-                    transformComponent.performTransform(entity, transformRenderer!, updateArg);
-                    transformRenderer!.onAfterDraw();
-                    /* eslint-enable @typescript-eslint/no-non-null-assertion */
+
+                    if (graphicsComponent.transform.isTransformRequired(entity, updateArg))
+                    {
+                        /* eslint-disable @typescript-eslint/no-non-null-assertion */
+                        transformRenderer!.onBeforeDraw();
+                        graphicsComponent.transform.setOutputBuffers(entity, transformRenderer!);
+                        transformComponent.performTransform(entity, transformRenderer!, updateArg);
+                        transformRenderer!.onAfterDraw();
+                        /* eslint-enable @typescript-eslint/no-non-null-assertion */
+                    }
                 }
                 // gc update
                 componentRenderer.onBeforeDraw();
                 graphicsComponent.onBeforeUpdate(componentRenderer, updateArg);
                 graphicsComponent.update(entity, componentRenderer, updateArg);
                 componentRenderer.onAfterDraw();
+
+                // swap back
+                swapBufferLayout(graphicsComponent, entityBufferLayout);
             }
         }
     }

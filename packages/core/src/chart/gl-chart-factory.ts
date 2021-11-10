@@ -35,7 +35,11 @@ export class GlChartFactory
     {
         const eventService = new EventService();
         const attachPoint = new GraphAttachPoint(new GraphAttachPointProvider(chartContainer), eventService, chartConfig);
-        const contextAdapter = new contextAdapterCtor(attachPoint.canvasElement, rendererOptions.onCreate.contextAttributes);
+        const contextAdapter = new contextAdapterCtor(
+            attachPoint.canvasElement,
+            eventService,
+            rendererOptions.onCreate.contextAttributes,
+        );
         const config = new ChartConfig();
         const renderer = GlRenderer.createOne(contextAdapter.getContext(), rendererOptions);
 

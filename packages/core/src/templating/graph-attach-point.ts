@@ -3,7 +3,7 @@ import { _Debug, AOnDestroy, IDictionary, Range2d } from "rc-js-util";
 import { EMouseEventType } from "../eventing/user-interaction/internal-events/e-mouse-event-type";
 import { EPointerEventType } from "../eventing/user-interaction/internal-events/e-pointer-event-type";
 import { CanvasDimensions, ICanvasDimensions } from "./canvas-dimensions";
-import { EventService } from "../eventing/event-service";
+import { IEventService } from "../eventing/event-service";
 import { OnCanvasPointerEvent } from "./events/on-canvas-pointer-event";
 import { OnCanvasMouseEvent } from "./events/on-canvas-mouse-event";
 import { IChartConfig } from "../chart/chart-config";
@@ -46,7 +46,7 @@ export class GraphAttachPoint
     public constructor
     (
         attachPointProvider: IGraphAttachPointProvider,
-        private readonly chartEventService: EventService,
+        private readonly chartEventService: IEventService,
         private readonly chartConfig: IChartConfig,
         private readonly $window: Window = window,
     )
