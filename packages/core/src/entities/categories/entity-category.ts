@@ -51,9 +51,10 @@ export class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer
         {
             case EGraphicsComponentType.Composite:
             {
-                graphicsComponent.recurseIterate(EGraphicsComponentType.Entity, (component) =>
+                graphicsComponent.recurseIterate(EGraphicsComponentType.Entity, (component, containingComponent, index) =>
                 {
-                    this.getInitializedGraphicsComponent(component);
+                    const initializedComponent = this.getInitializedGraphicsComponent(component);
+                    containingComponent.subComponents.setSubComponent(initializedComponent, index);
                 });
                 break;
             }

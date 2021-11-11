@@ -182,7 +182,7 @@ export { TUnknownComponentRenderer } from "./rendering/t-unknown-component-rende
 export { IBaseComponentRenderer } from "./rendering/component-renderer/i-base-component-renderer";
 export { IComponentRendererFactory } from "./rendering/component-renderer/i-component-renderer-factory";
 export { IGraphicsComponentSpecification } from "./rendering/graphics-components/i-graphics-component-specification";
-export { CompositeGraphicsComponent, ICompositeGraphicsComponent, ICompositeGraphicsComponentFactory, ILinkableCompositeGraphicsComponentFactory, TCompositeGraphicsComponent, TLinkableCompositeGraphicsComponent } from "./entities/components/composite-graphics-component";
+export { CompositeGraphicsComponent, ICompositeGraphicsComponent, ICompositeGraphicsComponentFactory, ILinkableCompositeGraphicsComponentFactory, TCompositeGraphicsComponent} from "./entities/components/composite-graphics-component";
 export { CanvasNoOpGraphicsComponent } from "./entities/components/canvas-no-op-graphics-component";
 export { GlNoOpGraphicsComponent } from "./entities/components/gl-no-op-graphics-component";
 export { IRendererCallbacks, IRenderer } from "./rendering/i-renderer";
@@ -211,3 +211,4 @@ export { GlTransformComponentFactory } from "./rendering/gl/transform-components
 export { ITransformBinder } from "./rendering/generic-binders/i-transform-binder";
 export { TUnknownRenderer } from "./rendering/t-unknown-renderer";
 export { IGraphicsComponentStore, GraphicsComponentStore } from "./rendering/graphics-component-store";
+export { TLinkableCompositeGraphicsComponent } from "./entities/components/t-linkable-composite-graphics-component";

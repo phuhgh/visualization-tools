@@ -5,7 +5,7 @@ import { ICompositeGraphicsComponent } from "../../entities/components/composite
 /**
  * @public
  */
-export type TGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TEntityTraits> =
-    | IGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>
-    | ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>
+export type TGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits> =
+    | IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>
+    | ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>
     ;

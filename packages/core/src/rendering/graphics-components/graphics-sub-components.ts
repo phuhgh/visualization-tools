@@ -1,5 +1,6 @@
 import { TUnknownComponentRenderer } from "../t-unknown-component-renderer";
 import { TGraphicsComponent } from "./t-graphics-component";
+import { _Debug } from "rc-js-util";
 
 /**
  * @public
@@ -9,6 +10,7 @@ export interface IGraphicsSubComponents<TComponentRenderer extends TUnknownCompo
 {
     getSubComponents(): readonly TGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>[];
     addComponent(graphicsComp: TGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>): void;
+    setSubComponent(graphicsComp: TGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>, index: number): void;
 }
 
 /**
@@ -33,5 +35,12 @@ export class GraphicsSubComponents<TComponentRenderer extends TUnknownComponentR
     public getSubComponents(): readonly TGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>[]
     {
         return this.graphicsComponents;
+    }
+
+    public setSubComponent(graphicsComp: TGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>, index: number): void
+    {
+        DEBUG_MODE && _Debug.assert(this.graphicsComponents.length > index, "index OOB");
+
+        this.graphicsComponents[index] = graphicsComp;
     }
 }
