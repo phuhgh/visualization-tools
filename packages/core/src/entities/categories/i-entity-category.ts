@@ -44,6 +44,6 @@ export interface IEntityCategoryWrite<TComponentRenderer extends TUnknownCompone
  */
 export interface IEntityCategoryRead<TUpdateArg, TTraits>
 {
-    getEntities(): TEntityTrait<TUpdateArg, TTraits>[];
+    getEntities(): readonly TEntityTrait<TUpdateArg, TTraits>[];
     readonly updateHooks: ICategoryUpdateHooks<TUnknownRenderer, TUpdateArg>;
 }

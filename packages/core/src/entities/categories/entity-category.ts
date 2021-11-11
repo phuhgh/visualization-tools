@@ -1,7 +1,7 @@
 import { IPlot } from "../../plot/i-plot";
 import { IChartEntity } from "../chart-entity";
 import { IRenderer } from "../../rendering/i-renderer";
-import { _Array, _Production } from "rc-js-util";
+import { _Production, DirtyCheckedUniqueCollection } from "rc-js-util";
 import { TEntityTrait } from "../traits/t-entity-trait";
 import { TUnknownEntity } from "../t-unknown-entity";
 import { IEntityGroup } from "../groups/a-entity-group";
@@ -68,7 +68,7 @@ export class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer
 
         this.plot.addEntity(entity);
         this.plot.addToGroup(entity, this.updateGroup, { graphicsComponent: graphicsComponent });
-        this.entities.push(entity);
+        this.entities.add(entity);
 
         if (hooks != null)
         {
@@ -78,7 +78,7 @@ export class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer
 
     public removeEntity(entity: IChartEntity<TUpdateArg>): void
     {
-        const removedOne = _Array.removeOne(this.entities, entity);
+        const removedOne = this.entities.delete(entity as TEntityTrait<TUpdateArg, TRequiredTraits>);
 
         if (!removedOne)
         {
@@ -93,9 +93,9 @@ export class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer
         }
     }
 
-    public getEntities(): TEntityTrait<TUpdateArg, TRequiredTraits>[]
+    public getEntities(): readonly TEntityTrait<TUpdateArg, TRequiredTraits>[]
     {
-        return this.entities;
+        return this.entities.getArray();
     }
 
     private getInitializedGraphicsComponent<TGraphicsTraits extends object>
@@ -119,7 +119,7 @@ export class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer
         }
     }
 
-    private entities: TEntityTrait<TUpdateArg, TRequiredTraits>[] = [];
+    private entities = new DirtyCheckedUniqueCollection<TEntityTrait<TUpdateArg, TRequiredTraits>>();
     private hooks: WeakMap<TUnknownEntity, IEntityChangeHooks<TUnknownEntity>> = new WeakMap();
     public TComponentRenderer!: TComponentRenderer;
 }
