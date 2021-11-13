@@ -2,7 +2,7 @@ import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-comp
 import { TTypedArray } from "rc-js-util";
 import { TGlInstancedComponentRenderer } from "../component-renderer/t-gl-instanced-component-renderer";
 import { TGl2ComponentRenderer } from "../component-renderer/t-gl2-component-renderer";
-import { IGlBuffer } from "./i-gl-buffer";
+import { IGlBuffer } from "../buffers/i-gl-buffer";
 import { IAttributeState } from "./attribute-state";
 
 /**
@@ -99,7 +99,7 @@ export interface IGlAttribute<TArray extends TTypedArray>
 
     /**
      * Reset the state of this attribute. If `OES_vertex_array_object` is enabled or the context is webgl2 this is a no-op.
-     * Called after update as part of the update strategy.
+     * Called after update as part of the update strategy. Does not affect buffer state.
      */
     reset(componentRenderer: TGlBasicComponentRenderer): void;
 

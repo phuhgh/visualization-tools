@@ -10,5 +10,6 @@ export interface ITransformComponent<TTransformRenderer extends TUnknownComponen
     extends IGraphicsComponentSpecification<TTransformRenderer>
 {
     initialize(componentRenderer: TTransformRenderer): void;
-    performTransform(entity: TEntityTraits, transformRenderer: TTransformRenderer, updateParameter: TUpdateArg): void;
+    performTransform(entity: TEntityTraits, transformRenderer: TTransformRenderer, updateArg: TUpdateArg): void;
+    resetState(): void;
 }

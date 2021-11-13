@@ -1,4 +1,4 @@
-import { GlBuffer } from "./gl-buffer";
+import { GlBuffer } from "../buffers/gl-buffer";
 
 /**
  * @public

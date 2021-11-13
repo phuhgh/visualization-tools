@@ -1,4 +1,4 @@
-import { _Map } from "rc-js-util";
+import { _Map, DirtyCheckedUniqueCollection } from "rc-js-util";
 import { TUnknownTransformComponent } from "./t-unknown-transform-component";
 import { ICacheable } from "../i-cacheable";
 import { IBaseComponentRenderer } from "../component-renderer/i-base-component-renderer";
@@ -11,6 +11,7 @@ export interface ITransformComponentStore<TComponentRenderer extends IBaseCompon
 {
     setTransform(userTransformId: symbol, graphicsComponent: ICacheable, transform: TUnknownTransformComponent<TComponentRenderer>): void;
     getTransform(userTransformId: symbol, graphicsComponent: ICacheable): TUnknownTransformComponent<TComponentRenderer> | undefined;
+    getAllTransforms(): readonly TUnknownTransformComponent<TComponentRenderer>[];
 }
 
 /**
@@ -27,7 +28,7 @@ export class TransformComponentStore<TComponentRenderer extends IBaseComponentRe
     )
         : TUnknownTransformComponent<TComponentRenderer> | undefined
     {
-        const associatedTransforms = this.transforms.get(userTransformId);
+        const associatedTransforms = this.transformsById.get(userTransformId);
 
         if (associatedTransforms == null)
         {
@@ -45,13 +46,21 @@ export class TransformComponentStore<TComponentRenderer extends IBaseComponentRe
     )
         : void
     {
-        const p1 = _Map.initializeGet(this.transforms, userTransformId, () => new Map<ICacheable, TUnknownTransformComponent<TComponentRenderer>>());
+        const p1 = _Map.initializeGet(this.transformsById, userTransformId, () => new Map<ICacheable, TUnknownTransformComponent<TComponentRenderer>>());
 
         if (!p1.has(transform))
         {
             p1.set(graphicsComponent, transform);
         }
+
+        this.transforms.add(transform);
     }
 
-    private transforms = new Map<symbol, WeakMap<ICacheable, TUnknownTransformComponent<TComponentRenderer>>>();
+    public getAllTransforms(): readonly TUnknownTransformComponent<TComponentRenderer>[]
+    {
+        return this.transforms.getArray();
+    }
+
+    private transformsById = new Map<symbol, WeakMap<ICacheable, TUnknownTransformComponent<TComponentRenderer>>>();
+    private transforms = new DirtyCheckedUniqueCollection<TUnknownTransformComponent<TComponentRenderer>>();
 }

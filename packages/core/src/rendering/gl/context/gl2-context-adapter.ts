@@ -1,6 +1,5 @@
-import { IContextChangeHooks } from "../../i-context-change-hooks";
-import { ContextChangeHooks } from "../../context-change-hooks";
 import { GlContextAdapter } from "./gl-context-adapter";
+import { IEventService } from "../../../eventing/event-service";
 
 /**
  * @public
@@ -11,10 +10,10 @@ export class Gl2ContextAdapter extends GlContextAdapter<WebGL2RenderingContext>
     public constructor
     (
         canvasElement: HTMLCanvasElement,
+        eventService: IEventService,
         options?: WebGLContextAttributes,
-        graphContextChangeHooks: IContextChangeHooks = new ContextChangeHooks(),
     )
     {
-        super(canvasElement, "webgl2", options, graphContextChangeHooks);
+        super(canvasElement, eventService, "webgl2", options);
     }
 }

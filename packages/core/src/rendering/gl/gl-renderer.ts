@@ -1,6 +1,6 @@
 import { TGlContext } from "./t-gl-context";
 import { IRenderer, IRendererCallbacks } from "../i-renderer";
-import { _Array, _Dictionary, TF32Vec4 } from "rc-js-util";
+import { _Array, _Dictionary, TF32Vec4, TTypedArray } from "rc-js-util";
 import { IComponentRendererProvider } from "../component-renderer/i-component-renderer-provider";
 import { IComponentRendererFactory } from "../component-renderer/i-component-renderer-factory";
 import { TGlComponentRenderer } from "./component-renderer/gl-component-renderer";
@@ -18,6 +18,9 @@ import { TExtractGcContext } from "../component-renderer/t-extract-gc-context";
 import { TGl2ComponentRenderer } from "./component-renderer/t-gl2-component-renderer";
 import { ITransformComponentStore, TransformComponentStore } from "../transform-components/transform-component-store";
 import { GraphicsComponentStore } from "../graphics-component-store";
+import { IGlBuffer } from "./buffers/i-gl-buffer";
+import { emitContextLossOnEntityGlBuffers } from "./buffers/emit-context-loss-on-entity-gl-buffers";
+import { reinitializeBufferLayouts } from "./buffers/reinitialize-buffer-layouts";
 
 /**
  * @public
@@ -29,6 +32,9 @@ export interface IGlRenderer<TComponentRenderer extends TGlComponentRenderer<TGl
 {
     readonly transformComponents: ITransformComponentStore<TGl2ComponentRenderer>;
     readonly sharedState: IGlRendererSharedState;
+
+    initializeBuffers(buffers: readonly IGlBuffer<TTypedArray>[]): void;
+    destroyBuffers(buffers: readonly IGlBuffer<TTypedArray>[]): void;
 }
 
 /**
@@ -85,6 +91,7 @@ export class GlRenderer<TComponentRenderer extends TGlComponentRenderer<TGlConte
     {
         this.componentRendererProvider.onContextLost();
         this.sharedState.onContextLost();
+        emitContextLossOnEntityGlBuffers(this.sharedState.entityBuffers);
     }
 
     public onContextRegained(context: TExtractGcContext<TComponentRenderer>): void
@@ -94,6 +101,23 @@ export class GlRenderer<TComponentRenderer extends TGlComponentRenderer<TGlConte
         (this.componentRendererFactory as GlComponentRendererFactory<TComponentRenderer>).setContext(context);
         this.componentRendererProvider.reinitializeRenderers(this.componentRendererFactory);
         this.graphicsComponents.reinitializeGraphicsComponents(this);
+        reinitializeBufferLayouts(this.context, this.sharedState.entityBuffers);
+    }
+
+    public initializeBuffers(buffers: readonly IGlBuffer<TTypedArray>[]): void
+    {
+        for (let i = 0, iEnd = buffers.length; i < iEnd; ++i)
+        {
+            buffers[i].initialize(this.context);
+        }
+    }
+
+    public destroyBuffers(buffers: readonly IGlBuffer<TTypedArray>[]): void
+    {
+        for (let i = 0, iEnd = buffers.length; i < iEnd; ++i)
+        {
+            buffers[i].destroy(this.context);
+        }
     }
 
     protected constructor

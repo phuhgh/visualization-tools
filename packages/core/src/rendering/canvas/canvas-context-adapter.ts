@@ -1,5 +1,3 @@
-import { IContextChangeHooks } from "../i-context-change-hooks";
-import { ContextChangeHooks } from "../context-change-hooks";
 import { IContextAdapter } from "../i-context-adapter";
 
 /**
@@ -11,7 +9,6 @@ export class CanvasContextAdapter implements IContextAdapter<CanvasRenderingCont
     public constructor
     (
         private readonly canvasElement: HTMLCanvasElement,
-        public readonly graphContextChangeHooks: IContextChangeHooks = new ContextChangeHooks(),
     )
     {
     }

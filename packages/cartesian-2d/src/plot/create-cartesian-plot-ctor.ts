@@ -6,7 +6,7 @@ import { ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-a
 import { EntityCategory2d } from "../update/update-group/entity-category2d";
 import { ICartesian2dPlotCtor } from "./i-cartesian2d-plot-ctor";
 import { ICartesian2dPlotCtorArg } from "./cartesian2d-plot-ctor-arg";
-import { ICategoryUpdateHooks, IChartComponent, IEntityCategory, IRenderer, OnCanvasResized, OnDprChanged, OnPlotDetached, Plot, TUnknownComponentRenderer, TUnknownRenderer } from "@visualization-tools/core";
+import { ICategoryUpdateHooks, IChartComponent, IEntityCategory, IRenderer, OnCanvasResized, OnDprChanged, OnPlotAttachChanged, Plot, TUnknownComponentRenderer, TUnknownRenderer } from "@visualization-tools/core";
 import { ICartesian2dPlot } from "./i-cartesian2d-plot";
 
 /**
@@ -77,7 +77,13 @@ export function createCartesianPlotCtor<TComponentRenderer extends TUnknownCompo
 
         private registerEventHandlers(options: ICartesian2dPlotConstructionOptions<TArray, TRequiredTraits>): void
         {
-            OnPlotDetached.registerListener(this, () => this.plotListeners.clearingEmit());
+            OnPlotAttachChanged.registerListener(this, (isAttached) =>
+            {
+                if (!isAttached)
+                {
+                    this.plotListeners.clearingEmit();
+                }
+            });
 
             this.plotListeners.addListener(OnCanvasResized.registerListener(this.eventService, () =>
             {

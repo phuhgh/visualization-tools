@@ -1,8 +1,9 @@
-import { EGraphicsComponentType, EntityUpdateGrouping, EntityUpdateTransformGrouping, ICanvasDimensions, IEntityUpdateGrouping, IGraphicsComponent, IPlotUpdateStrategy, IReadonlyPlot, ITransformComponent, IUserTransform, OnEntityAddedToGroup, OnEntityModified, OnEntityRemovedFromGroup, OnRendererContextLost, RenderList, TGraphicsComponent, TUnknownComponentRenderer, TUnknownRenderer, UpdateTransformGroupingByEntity } from "@visualization-tools/core";
+import { EGraphicsComponentType, EntityUpdateGrouping, EntityUpdateTransformGrouping, ICanvasDimensions, IEntityUpdateGrouping, IGraphicsComponent, IPlotUpdateStrategy, IReadonlyPlot, ITransformComponent, IUserTransform, OnEntityAddedToGroup, OnEntityModified, OnEntityRemovedFromGroup, OnRendererContextLost, RenderList, resetEntityBuffers, resetTransformComponents, TGraphicsComponent, TUnknownComponentRenderer, TUnknownRenderer, UpdateTransformGroupingByEntity } from "@visualization-tools/core";
 import { IUpdate2dGroup } from "../update-group/update-2d-group";
 import { IScene2d } from "./i-scene2d";
 import { _Array, _Debug, _Production } from "rc-js-util";
 
+// FIXME: split this up, add tests
 /**
  * @public
  * Sorts entities according to {@link IScene2d} and then batches entities to minimize draw calls. Respects
@@ -44,6 +45,8 @@ export class Sorted2dUpdateStrategy<TPlotRange, TUpdateArg, TRequiredTraits>
         {
             this.isDirty = true;
             this.lastUserTransform = currentUserTransform;
+            resetEntityBuffers(renderer);
+            resetTransformComponents(renderer);
         }
 
         if (this.isDirty)
@@ -54,6 +57,39 @@ export class Sorted2dUpdateStrategy<TPlotRange, TUpdateArg, TRequiredTraits>
         }
 
         this.drawRenderList(renderer, updateArg);
+    }
+
+    private drawRenderList
+    (
+        renderer: TUnknownRenderer,
+        updateArg: TUpdateArg,
+    )
+        : void
+    {
+        const renderLists = this.renderLists;
+
+        for (let i = 0, iEnd = renderLists.length; i < iEnd; ++i)
+        {
+            const renderList = renderLists[i];
+            renderList.updateGroupHooks.onBeforeUpdate(renderer, updateArg);
+
+            const entitiesInGroup = renderList.uniqueEntities;
+
+            for (let j = 0, jEnd = entitiesInGroup.length; j < jEnd; ++j)
+            {
+                entitiesInGroup[j].onBeforeUpdate(updateArg);
+            }
+
+            const updateGroupings = renderList.groupings;
+
+            for (let j = 0, jEnd = updateGroupings.length; j < jEnd; ++j)
+            {
+                const updateGrouping = updateGroupings[j];
+                updateGrouping[0].drawUpdateGroup(updateGrouping[1], updateArg);
+            }
+
+            renderList.updateGroupHooks.onAfterUpdate(renderer, updateArg);
+        }
     }
 
     private updateRenderList
@@ -157,39 +193,6 @@ export class Sorted2dUpdateStrategy<TPlotRange, TUpdateArg, TRequiredTraits>
             }
             default:
                 _Production.assertValueIsNever(graphicsComponent);
-        }
-    }
-
-    private drawRenderList
-    (
-        renderer: TUnknownRenderer,
-        updateArg: TUpdateArg,
-    )
-        : void
-    {
-        const renderLists = this.renderLists;
-
-        for (let i = 0, iEnd = renderLists.length; i < iEnd; ++i)
-        {
-            const renderList = renderLists[i];
-            renderList.updateGroupHooks.onBeforeUpdate(renderer, updateArg);
-
-            const entitiesInGroup = renderList.uniqueEntities;
-
-            for (let j = 0, jEnd = entitiesInGroup.length; j < jEnd; ++j)
-            {
-                entitiesInGroup[j].onBeforeUpdate(updateArg);
-            }
-
-            const updateGroupings = renderList.groupings;
-
-            for (let j = 0, jEnd = updateGroupings.length; j < jEnd; ++j)
-            {
-                const updateGrouping = updateGroupings[j];
-                updateGrouping[0].drawUpdateGroup(updateGrouping[1], updateArg);
-            }
-
-            renderList.updateGroupHooks.onAfterUpdate(renderer, updateArg);
         }
     }
 

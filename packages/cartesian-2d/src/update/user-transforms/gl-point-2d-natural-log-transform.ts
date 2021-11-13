@@ -5,7 +5,7 @@ import { IGlIndexedPoint2dBinder, IndexedPoint2dIdentifier } from "../../indexed
 import { ICartesian2dUpdateArg } from "../update-arg/cartesian2d-update-arg";
 import { point2dNaturalLogTransformShader } from "./point2d-natural-log-transform-shader";
 import { Cartesian2dNaturalLogTransform } from "./cartesian2d-natural-log-transform";
-import { getTransformChangeId } from "./get-transform-change-id";
+import { IGlIndexedPoint2dTransformBinder } from "../../indexed-point-2d/i-gl-indexed-point2d-transform-binder";
 
 /**
  * @public
@@ -19,7 +19,7 @@ export class GlPoint2dNaturalLogTransform
 
     public constructor
     (
-        private point2dBinder: IGlIndexedPoint2dBinder<Float32Array>,
+        private point2dBinder: IGlIndexedPoint2dTransformBinder<Float32Array>,
     )
     {
         this.specification = GlProgramSpecification.mergeProgramSpecifications([
@@ -50,6 +50,11 @@ export class GlPoint2dNaturalLogTransform
         this.bindings.configUniform.initialize(transformRenderer);
     }
 
+    public resetState(): void
+    {
+        this.point2dBinder.resetState();
+    }
+
     public setOutputBuffers
     (
         entity: TInterleavedPoint2dTrait<Float32Array>,
@@ -60,7 +65,6 @@ export class GlPoint2dNaturalLogTransform
     {
         DEBUG_MODE && _Debug.assert(this.point2dBinder.binderClassificationId === binder.binderClassificationId, "attempted to transform inappropriate binder");
         this.bindings.feedbackTransform.bind(transformRenderer);
-        this.point2dBinder.swapBuffers(binder);
         this.point2dBinder.setResultBuffers(entity, binder, transformRenderer, transformRenderer.context.STREAM_DRAW);
     }
 
@@ -80,7 +84,7 @@ export class GlPoint2dNaturalLogTransform
         this.bindings.configUniform.bind(transformRenderer);
 
         this.bindings.feedbackTransform.beginTransform(transformRenderer);
-        this.point2dBinder.update(entity, transformRenderer, getTransformChangeId(entity));
+        this.point2dBinder.update(entity, transformRenderer);
         ctx.drawArrays(ctx.POINTS, entity.data.getStart(), entity.data.getLength());
         this.bindings.feedbackTransform.endTransform(transformRenderer);
         this.point2dBinder.clearResultBuffers(transformRenderer);
@@ -110,4 +114,3 @@ void main()
 `,
     300,
 );
-

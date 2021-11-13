@@ -23,6 +23,7 @@ export class CanvasVariableWidthCappedLine
     )
     {
     }
+
     /**
      * Begins a multi-segment line of variable width, call initialize with the first 2 points first.
      */

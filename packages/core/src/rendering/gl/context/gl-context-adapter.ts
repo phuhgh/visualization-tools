@@ -1,7 +1,9 @@
-import { IContextChangeHooks } from "../../i-context-change-hooks";
 import { TGlContext } from "../t-gl-context";
 import { ICanvasDimensions } from "../../../templating/canvas-dimensions";
 import { IContextAdapter } from "../../i-context-adapter";
+import { IEventService } from "../../../eventing/event-service";
+import { OnRendererContextRestored } from "../../events/on-renderer-context-restored";
+import { OnRendererContextLost } from "../../events/on-renderer-context-lost";
 
 /**
  * @public
@@ -12,9 +14,9 @@ export abstract class GlContextAdapter<TCtx extends TGlContext> implements ICont
     protected constructor
     (
         private readonly canvasElement: HTMLCanvasElement,
+        private readonly eventService: IEventService,
         private readonly ctxId: "webgl" | "webgl2",
         private readonly options: WebGLContextAttributes | undefined,
-        public readonly graphContextChangeHooks: IContextChangeHooks,
     )
     {
         this.registerEventHandlers();
@@ -48,7 +50,7 @@ export abstract class GlContextAdapter<TCtx extends TGlContext> implements ICont
         {
             e.preventDefault();
             this.context = null;
-            this.graphContextChangeHooks.onContextLost();
+            OnRendererContextLost.emit(this.eventService);
         });
 
         this.canvasElement.addEventListener("webglcontextrestored", (e) =>
@@ -61,7 +63,7 @@ export abstract class GlContextAdapter<TCtx extends TGlContext> implements ICont
                 this.onResize(this.lastCanvasDims);
             }
 
-            this.graphContextChangeHooks.onContextRestored();
+            OnRendererContextRestored.emit(this.eventService);
         });
     }
 

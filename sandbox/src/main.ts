@@ -2,7 +2,7 @@ import { addEntityToCategory, CanvasChartFactory, ChartConfig, ChartDataEntity, 
 import { CanvasCartesian2dPlotFactory, CanvasCartesian2dUpdateArgProvider, CanvasLineGraphicsComponent, Cartesian2dIdentityTransform, Cartesian2dNaturalLogTransform, Cartesian2dPlotRange, Cartesian2dPlotSharedQuadTree, GlCaplessLineGraphicsComponent, GlCartesian2dCameraBinder, GlCartesian2dPlotFactory, GlCartesian2dUpdateArgProvider, GlInterleaved2dPointBinder, GlLineFlatCapGraphicsComponent, GlPoint2dNaturalLogTransform, GlTrace2dNaturalLogTransform, hoverHighlightLineSegment, ICartesian2dBindings, Point2dDisplaySettings, Point2dSubcategory, SharedInterleavedLine2dQuadIndexerFactory, SharedInterleavedPoint2dHitTestComponent, TPoint2dSettings } from "@visualization-tools/cartesian-2d";
 import { getTestPlotOptions } from "./test-data/get-test-plot-options";
 import { populateTestData } from "./test-data/populate-test-data";
-import { _Fp, Emscripten, getEmscriptenWrapper, IEmscriptenWrapper, Mulberry32Generator, Range1d, Range2d, RgbaColorPacker } from "rc-js-util";
+import { _Array, _Fp, Emscripten, getEmscriptenWrapper, IEmscriptenWrapper, Mulberry32Generator, Range1d, Range2d, RgbaColorPacker } from "rc-js-util";
 
 declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<ICartesian2dBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -125,16 +125,6 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
     GlTrace2dNaturalLogTransform.factory.addToChart(transformProvider);
 
     const pointSubcategory = new Point2dSubcategory(Range1d.f32.factory.createOne(10, 20));
-    const graphicsSettings: TPoint2dSettings<Float32Array> = {
-        pointDisplay: new Point2dDisplaySettings(
-            1,
-            RgbaColorPacker.packColor(255, 0, 0, 255),
-            RgbaColorPacker.packColor(255, 0, 255, 255),
-        ),
-        pointSizeNormalizer: pointSubcategory.normalization,
-        zIndexAbs: 0,
-        zIndexRel: 0,
-    };
     const interleavedPointTester = {
         hitAllowedComponent: new HitAlwaysAllowedComponent(),
         hitTestComponent: new SharedInterleavedPoint2dHitTestComponent(SharedInterleavedLine2dQuadIndexerFactory.createOneF32(emscriptenModule)),
@@ -147,7 +137,7 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
             plotName: "gl plot",
             plotRange: Cartesian2dPlotRange.createOneF32({
                 canvasDims: chart.attachPoint.canvasDims,
-                userTransform: new Cartesian2dNaturalLogTransform(true, true),
+                userTransform: new Cartesian2dNaturalLogTransform(false, true),
                 maxZoom: Infinity,
                 dataRange: dataRange.slice(),
                 maxBounds: Range2d.f32.factory.createOne(1, 100, 1, 100),
@@ -156,6 +146,7 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
             updateArgProvider: new GlCartesian2dUpdateArgProvider(),
         }),
     ));
+    plot.dataCategory.setBufferPerEntity(true);
     const plotInteractionHandler = new Cartesian2dPlotSharedQuadTree(plot, { yieldTime: 16 });
     plotInteractionHandler.setQuadTreeInteractionHandler(emscriptenModule, chart);
 
@@ -163,26 +154,45 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
     const interleavedBindingDescriptor = SharedInterleavedConnector.getDescriptor(interleavedConfig, Float32Array);
 
     const lineGc = CompositeGraphicsComponent
-        .createOneLinked(new GlLineFlatCapGraphicsComponent(new GlCartesian2dCameraBinder(), new GlInterleaved2dPointBinder(interleavedBindingDescriptor, { pointsToBind: 3 })))
-        .addComponent(new GlCaplessLineGraphicsComponent(new GlCartesian2dCameraBinder(), new GlInterleaved2dPointBinder(interleavedBindingDescriptor, { pointsToBind: 2 })))
+        .createOneLinked(new GlCaplessLineGraphicsComponent(new GlCartesian2dCameraBinder(), new GlInterleaved2dPointBinder(interleavedBindingDescriptor, { pointsToBind: 2 })))
+        .addComponent(new GlLineFlatCapGraphicsComponent(new GlCartesian2dCameraBinder(), new GlInterleaved2dPointBinder(interleavedBindingDescriptor, { pointsToBind: 3 })))
         .build();
 
-    for (let i = 0; i < 100; ++i)
+    const settings: TPoint2dSettings<Float32Array>[] = _Array.mapRange(0, 9, () => ({
+        pointDisplay: new Point2dDisplaySettings(
+            1,
+            RgbaColorPacker.packColor(255, 0, 0, 255),
+            RgbaColorPacker.packColor(255, 0, 255, 255),
+        ),
+        pointSizeNormalizer: pointSubcategory.normalization,
+        zIndexAbs: 0,
+        zIndexRel: 0,
+    }));
+
+
+    const dataEntities = _Array.mapRange(0, 99, (index) =>
     {
-        const someData = SharedInterleavedConnector.createOneF32(emscriptenModule, 400, interleavedConfig);
+        const someData = SharedInterleavedConnector.createOneF32(emscriptenModule, 4000, interleavedConfig);
         populateTestData(someData, dataRange, 0, rnd);
 
-        const entity = new ChartDataEntity(someData, graphicsSettings, chart.changeIdFactory);
+        const entity = new ChartDataEntity(someData, settings[index * 0.1 | 0], chart.changeIdFactory);
         entity.onHover = function (state, segments)
         {
+            const groupStart = (index * 0.1 | 0) * 10;
             hoverHighlightLineSegment(this, state, segments);
+            _Array.forEachRange(groupStart, groupStart + 9, (index) => dataEntities[index].updateChangeId());
             return EEntityUpdateFlag.DrawRequired;
         };
 
+        return entity;
+    });
+
+    _Array.forEach(dataEntities, (entity) =>
+    {
         addEntityToCategory(plot.dataCategory, entity, lineGc, pointSubcategory);
         plotInteractionHandler.interactionGroups.clickable.addToGroup(entity, interleavedPointTester);
         plotInteractionHandler.interactionGroups.hoverable.addToGroup(entity, interleavedPointTester);
-    }
+    });
 
     chart.updateImmediate();
     chart.updateInteractionHandlers();

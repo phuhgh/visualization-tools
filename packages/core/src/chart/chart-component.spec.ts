@@ -1,13 +1,14 @@
-import { OnPlotAttached } from "../plot/events/on-plot-attached";
+import { OnPlotAttachChanged } from "../plot/events/on-plot-attach-changed";
 import { IChartComponent } from "./chart-component";
-import { OnPlotDetached } from "../plot/events/on-plot-detached";
-import { _Production, _Promise, Range2d } from "rc-js-util";
+import { _Production, _Promise, IncrementingIdentifierFactory, Range2d } from "rc-js-util";
 import { debugDescribe } from "rc-js-test-util";
 import { TestGlChartHarness } from "../test-utils/test-gl-chart-harness";
 import { TestGlPlotFactory } from "../test-utils/fakes/test-gl-plot-factory";
 import { TUnknownRenderer } from "../rendering/t-unknown-renderer";
 import { OnRendererContextLost } from "../rendering/events/on-renderer-context-lost";
 import { OnRendererContextRestored } from "../rendering/events/on-renderer-context-restored";
+import { ChartEntity } from "../entities/chart-entity";
+import { BufferLayout } from "../rendering/buffers/buffer-layout";
 
 debugDescribe("=> ChartComponent", () =>
 {
@@ -30,7 +31,7 @@ debugDescribe("=> ChartComponent", () =>
         {
             let emittedChart: IChartComponent<TUnknownRenderer> | undefined;
             const plot = TestGlPlotFactory.createOne(harness.chart);
-            OnPlotAttached.registerListener(plot, chart => emittedChart = chart);
+            OnPlotAttachChanged.registerListener(plot, (isAttached, chart) => isAttached && (emittedChart = chart));
             harness.chart.addPlot(plot);
             expect(emittedChart).toBe(harness.chart);
         });
@@ -47,7 +48,7 @@ debugDescribe("=> ChartComponent", () =>
             let emittedChart: IChartComponent<TUnknownRenderer> | undefined;
             const plot = TestGlPlotFactory.createOne(harness.chart);
             harness.chart.addPlot(plot);
-            OnPlotAttached.registerListener(plot, chart => emittedChart = chart);
+            OnPlotAttachChanged.registerListener(plot, (isAttached, chart) => isAttached && (emittedChart = chart));
             harness.chart.addPlot(plot);
             expect(emittedChart).toBe(undefined);
         });
@@ -60,7 +61,7 @@ debugDescribe("=> ChartComponent", () =>
             let emittedChart: IChartComponent<TUnknownRenderer> | undefined;
             const plot = TestGlPlotFactory.createOne(harness.chart);
             harness.chart.addPlot(plot);
-            OnPlotDetached.registerListener(plot, chart => emittedChart = chart);
+            OnPlotAttachChanged.registerListener(plot, (isAttached, chart) => !isAttached && (emittedChart = chart));
             harness.chart.removePlot(plot);
             expect(emittedChart).toBe(harness.chart);
         });
@@ -71,7 +72,7 @@ debugDescribe("=> ChartComponent", () =>
             const plot = TestGlPlotFactory.createOne(harness.chart);
             harness.chart.addPlot(plot);
             harness.chart.removePlot(plot);
-            OnPlotDetached.registerListener(plot, chart => emittedChart = chart);
+            OnPlotAttachChanged.registerListener(plot, (isAttached, chart) => !isAttached && (emittedChart = chart));
             harness.chart.removePlot(plot);
             expect(emittedChart).toBe(harness.chart);
         });
@@ -166,6 +167,37 @@ debugDescribe("=> ChartComponent", () =>
             // allow for arbitrary call ordering
             await _Promise.delay(undefined);
             expect(eventEmitted).toBe(false);
+        });
+    });
+
+    describe("=> entity buffers", () =>
+    {
+        it("| deletes buffers when an entity is removed from all plots", () =>
+        {
+            const getLayoutsSpy = spyOn(harness.chart.renderer.sharedState.entityBuffers, "getLayouts").and.callThrough();
+            const clearLayoutsSpy = spyOn(harness.chart.renderer.sharedState.entityBuffers, "clearLayouts").and.callThrough();
+
+            const p1 = TestGlPlotFactory.createOne(harness.chart);
+            const p2 = TestGlPlotFactory.createOne(harness.chart);
+            harness.chart.addPlot(p1);
+            harness.chart.addPlot(p2);
+            const entity = new ChartEntity(new IncrementingIdentifierFactory());
+            p1.addEntity(entity);
+            p2.addEntity(entity);
+            harness.chart.renderer.sharedState.entityBuffers.setNewLayout(
+                entity,
+                0,
+                new BufferLayout([]),
+            );
+            p1.removeEntity(entity);
+
+            expect(getLayoutsSpy).not.toHaveBeenCalled();
+            expect(clearLayoutsSpy).not.toHaveBeenCalled();
+
+            p2.removeEntity(entity);
+
+            expect(getLayoutsSpy).toHaveBeenCalled();
+            expect(clearLayoutsSpy).toHaveBeenCalled();
         });
     });
 });

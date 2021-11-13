@@ -7,8 +7,9 @@ import { _Identifier } from "rc-js-util";
  */
 export class NoTransformProvider implements ITransformProvider<TUnknownComponentRenderer, unknown, unknown>
 {
-    readonly groupId = _Identifier.getNextIncrementingId();
-    readonly transformComponent = null;
+    public readonly groupId = _Identifier.getNextIncrementingId();
+    public readonly transformComponent = null;
+    public readonly bufferLayoutProvider = null;
 
     public getTransformBinder(): null
     {
@@ -28,5 +29,10 @@ export class NoTransformProvider implements ITransformProvider<TUnknownComponent
     public setGroupId(_groupId: number): void
     {
         // change is not permissible
+    }
+
+    public isTransformRequired(): boolean
+    {
+        return false;
     }
 }

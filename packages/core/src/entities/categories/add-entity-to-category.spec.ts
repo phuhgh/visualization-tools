@@ -194,6 +194,11 @@ class TestCategory<TComponentRenderer extends TUnknownComponentRenderer>
 {
     public readonly updateHooks!: ICategoryUpdateHooks<TUnknownRenderer, unknown>;
 
+    public setBufferPerEntity(): void
+    {
+        // no action needed
+    }
+
     public addEntity(): void
     {
         // no action needed

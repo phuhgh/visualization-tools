@@ -1,5 +1,4 @@
 import { _Debug, DebugProtectedView, TTypedArrayCtor } from "rc-js-util";
-import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 import { TGlContext } from "../t-gl-context";
 import { IGlBuffer } from "./i-gl-buffer";
 
@@ -9,6 +8,7 @@ import { IGlBuffer } from "./i-gl-buffer";
  */
 export class GlBuffer<TCtor extends TTypedArrayCtor> implements IGlBuffer<InstanceType<TCtor>>
 {
+    public changeId = -1;
     public isDirty: boolean = true;
 
     public constructor
@@ -22,20 +22,35 @@ export class GlBuffer<TCtor extends TTypedArrayCtor> implements IGlBuffer<Instan
 
     public onContextLost(): void
     {
+        this.resetState();
         this.buffer = null;
+    }
+
+    public initialize(context: TGlContext): void
+    {
+        if (this.buffer == null)
+        {
+            this.buffer = context.createBuffer();
+        }
+
+        DEBUG_MODE && _Debug.assert(this.buffer != null, "failed to create buffer");
+    }
+
+    public destroy(context: TGlContext): void
+    {
+        context.deleteBuffer(this.buffer);
+        // resetting the state allows the state to be reinitialized
+        this.resetState();
+        this.buffer = null;
+    }
+
+    public resetState(): void
+    {
         this.isDirty = true;
         this.changeId = -1;
         this.mutatorId = -1;
         this.modificationId = -1;
         this.byteSize = -1;
-    }
-
-    public initialize(componentRenderer: TGlBasicComponentRenderer): void
-    {
-        if (this.buffer == null)
-        {
-            this.buffer = componentRenderer.context.createBuffer();
-        }
     }
 
     public setSize
@@ -47,7 +62,11 @@ export class GlBuffer<TCtor extends TTypedArrayCtor> implements IGlBuffer<Instan
     )
         : void
     {
-        DEBUG_MODE && _Debug.assert(changeId !== -1, "found changeId that was not initialized");
+        DEBUG_MODE && _Debug.runBlock(() =>
+        {
+            _Debug.assert(changeId !== -1, "found changeId that was not initialized");
+            _Debug.assert(this.buffer != null, "expected buffer to be initialized");
+        });
 
         if (this.changeId === changeId)
         {
@@ -105,6 +124,7 @@ export class GlBuffer<TCtor extends TTypedArrayCtor> implements IGlBuffer<Instan
     )
         : void
     {
+        DEBUG_MODE && _Debug.assert(this.buffer != null, "expected buffer to be initialized");
         context.bindBufferBase(context.TRANSFORM_FEEDBACK_BUFFER, index, this.buffer);
         this.isDirty = false;
     }
@@ -159,7 +179,6 @@ export class GlBuffer<TCtor extends TTypedArrayCtor> implements IGlBuffer<Instan
     }
 
     private buffer: WebGLBuffer | null = null;
-    private changeId = -1;
     private mutatorId = -1;
     private modificationId = -1;
     private byteSize = -1;

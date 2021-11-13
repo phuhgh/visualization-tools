@@ -1,6 +1,6 @@
 import { Mat4, Vec4 } from "rc-js-util";
-import { AGlInstancedBinder, GlFloatAttribute, GlFloatBuffer, GlMat4Uniform, GlProgramSpecification, GlShader, IGlAttribute, IGlInstancedBinder, IGlProgramSpec, ILinkableBinder, ITransformBinderProvider, TGl2ComponentRenderer, TGlInstancedComponentRenderer } from "@visualization-tools/core";
 import { IGlTraceTransformBinder } from "./i-gl-cartesian2d-trace-transform-binder";
+import { AGlInstancedBinder, BufferLayout, GlBuffer, GlFloatAttribute, GlFloatBuffer, GlMat4Uniform, GlProgramSpecification, GlShader, IGlAttribute, IGlInstancedBinder, IGlProgramSpec, ILinkableBinder, ITransformBinderProvider, TChangeTrackedTrait, TGl2ComponentRenderer, TGlF32BufferLayout, TGlInstancedComponentRenderer } from "@visualization-tools/core";
 import { TGlTraceEntity } from "./t-gl-trace-entity";
 
 /**
@@ -13,7 +13,7 @@ export const TraceBinderIdentifier = Symbol("trace binder");
  * Binds trace data to WebGL buffers.
  */
 export interface IGlTraceBinder
-    extends IGlInstancedBinder<TGlInstancedComponentRenderer, TGlTraceEntity>,
+    extends IGlInstancedBinder<TGlInstancedComponentRenderer, TGlTraceEntity, TGlF32BufferLayout>,
             ILinkableBinder<TGlInstancedComponentRenderer>,
             ITransformBinderProvider<IGlTraceTransformBinder>
 {
@@ -25,7 +25,7 @@ export interface IGlTraceBinder
  * {@inheritDoc IGlTraceBinder}
  */
 export class GlCartesian2dTraceBinder
-    extends AGlInstancedBinder<TGlInstancedComponentRenderer, TGlTraceEntity>
+    extends AGlInstancedBinder<TGlInstancedComponentRenderer, TGlTraceEntity, TGlF32BufferLayout>
     implements IGlTraceBinder
 {
     public specification: IGlProgramSpec;
@@ -75,14 +75,32 @@ export class GlCartesian2dTraceBinder
         }
     }
 
+    public setBufferLayout(bufferLayout: TGlF32BufferLayout): void
+    {
+        const theirBuffer = bufferLayout.swapBuffer(this.bindings.positionAttribute.getBuffer(), 0);
+        this.bindings.positionAttribute.setBuffer(theirBuffer);
+    }
+
+    public getBufferLayout(): TGlF32BufferLayout
+    {
+        return new BufferLayout([new GlBuffer(null, Float32Array)]);
+    }
+
+    public areAttributesDirty(entity: TGlTraceEntity): boolean
+    {
+        const changeId = this.getChangeId(entity);
+        return this.bindings.positionAttribute.getBuffer().changeId !== changeId;
+    }
+
     public initialize(componentRenderer: TGlInstancedComponentRenderer): void
     {
         this.bindings.positionAttribute.initialize(componentRenderer);
         this.bindings.configUniform.initialize(componentRenderer);
     }
 
-    public updateData(entity: TGlTraceEntity, changeId: number): void
+    public updateData(entity: TGlTraceEntity): void
     {
+        const changeId = this.getChangeId(entity);
         this.bindings.positionAttribute.setData(entity.graphicsSettings.traces, changeId);
         this.config.setRow(1, this.colorCache.setRGBAColor(entity.graphicsSettings.traceColor, true));
         this.config[0] = entity.graphicsSettings.traceLinePixelSize;
@@ -113,6 +131,11 @@ export class GlCartesian2dTraceBinder
         : void
     {
         this.bindings.positionAttribute.bindArrayInstanced(componentRenderer, divisor, usage);
+    }
+
+    protected getChangeId(entity: TChangeTrackedTrait): number
+    {
+        return entity.changeId;
     }
 
     protected readonly bindings: {
@@ -173,11 +196,6 @@ export class GlCartesian2dTraceTransformBinder
     extends GlCartesian2dTraceBinder
     implements IGlTraceTransformBinder
 {
-    public swapBuffers(binder: this): void
-    {
-        binder.bindings.positionAttribute.swapBuffer(this.bindings.positionAttribute);
-    }
-
     public setResultBuffers
     (
         entity: TGlTraceEntity,
@@ -200,5 +218,12 @@ export class GlCartesian2dTraceTransformBinder
     public getTransformId(): string
     {
         return "cartesianTrace2d";
+    }
+
+    public resetState(): void
+    {
+        this.bindings.positionAttribute
+            .getBuffer()
+            .resetState();
     }
 }

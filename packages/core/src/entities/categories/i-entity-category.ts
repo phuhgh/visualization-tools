@@ -25,6 +25,12 @@ export interface IEntityCategoryWrite<TComponentRenderer extends TUnknownCompone
     , TUpdateArg
     , TRequiredTraits>
 {
+    /**
+     * Entities that are added after this has been enabled will receive a buffer layout per {@link ITransformProvider.groupId}.
+     * This can provide a substantial performance increase in conjunction with transforms, in exchange increased memory usage.
+     */
+    setBufferPerEntity(enabled: boolean): void;
+
     addEntity<TGraphicsTraits extends object, TCategoryTraits extends object>
     (
         entity: IChartEntity<TUpdateArg> & TGraphicsTraits & TCategoryTraits & TRequiredTraits,
@@ -44,6 +50,6 @@ export interface IEntityCategoryWrite<TComponentRenderer extends TUnknownCompone
  */
 export interface IEntityCategoryRead<TUpdateArg, TTraits>
 {
-    getEntities(): TEntityTrait<TUpdateArg, TTraits>[];
+    getEntities(): readonly TEntityTrait<TUpdateArg, TTraits>[];
     readonly updateHooks: ICategoryUpdateHooks<TUnknownRenderer, TUpdateArg>;
 }

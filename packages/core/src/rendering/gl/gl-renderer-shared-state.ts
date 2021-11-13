@@ -1,7 +1,9 @@
 import { IRendererSharedState } from "../i-renderer-shared-state";
 import { IReadonlyRange2d, TTypedArray } from "rc-js-util";
 import { TGlContext } from "./t-gl-context";
-
+import { IGlBuffer } from "./buffers/i-gl-buffer";
+import { EntityBufferStore, IEntityBufferStore } from "../buffers/entity-buffer-store";
+import { IBufferLayout } from "../buffers/buffer-layout";
 
 /**
  * @public
@@ -9,6 +11,7 @@ import { TGlContext } from "./t-gl-context";
  */
 export interface IGlRendererSharedState extends IRendererSharedState
 {
+    readonly entityBuffers: IEntityBufferStore<IBufferLayout<IGlBuffer<TTypedArray>>>;
     readonly maxTextureCount: number;
     claimTextureUnit(): number;
     clearScissor(): void;
@@ -24,7 +27,8 @@ export class GlRendererSharedState implements IGlRendererSharedState
     public textureIndex = 0;
     public frameCounter: number = 0;
     public scissorRange: IReadonlyRange2d<TTypedArray> | null = null;
-    public maxTextureCount: number;
+    public readonly maxTextureCount: number;
+    public readonly entityBuffers: IEntityBufferStore<IBufferLayout<IGlBuffer<TTypedArray>>> = new EntityBufferStore();
 
     public constructor
     (

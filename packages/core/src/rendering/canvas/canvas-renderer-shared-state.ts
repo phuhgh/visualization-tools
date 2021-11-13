@@ -1,5 +1,7 @@
 import { IRendererSharedState } from "../i-renderer-shared-state";
 import { IReadonlyRange2d, TTypedArray } from "rc-js-util";
+import { EntityBufferStore, IEntityBufferStore } from "../buffers/entity-buffer-store";
+import { TUnknownBufferLayout } from "../buffers/buffer-layout";
 
 /**
  * @public
@@ -10,6 +12,7 @@ export class CanvasRendererSharedState implements IRendererSharedState
 {
     public frameCounter: number = 0;
     public scissorRange: IReadonlyRange2d<TTypedArray> | null = null;
+    public readonly entityBuffers: IEntityBufferStore<TUnknownBufferLayout> = new EntityBufferStore();
 
     public constructor
     (

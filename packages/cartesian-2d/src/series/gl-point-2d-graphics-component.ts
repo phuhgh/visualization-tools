@@ -3,6 +3,7 @@ import { _Debug, Mat3, Once } from "rc-js-util";
 import { TInterleavedPoint2dTrait } from "../traits/t-interleaved-point2d-trait";
 import { assertBinder, EGraphicsComponentType, GlFloatAttribute, GlFloatBuffer, GlMat3Uniform, GlProgramSpecification, GlShader, GlTransformProvider, IGlAttribute, IGlProgramSpec, ILinkableGraphicsComponent, IUpdateArg, mat2MultiplyValueShader, TGl2ComponentRenderer } from "@visualization-tools/core";
 import { IGlCamera2dBinder } from "../camera/i-gl-camera2d-binder";
+import { IGlIndexedPoint2dTransformBinder } from "../indexed-point-2d/i-gl-indexed-point2d-transform-binder";
 
 /**
  * @public
@@ -13,7 +14,7 @@ export class GlPoint2dGraphicsComponent<TUpdateArg extends IUpdateArg>
 {
     public readonly type = EGraphicsComponentType.Entity;
     public specification: IGlProgramSpec;
-    public transform: GlTransformProvider<TGl2ComponentRenderer, IGlIndexedPoint2dBinder<Float32Array>, IGlIndexedPoint2dBinder<Float32Array>, TUpdateArg, TInterleavedPoint2dTrait<Float32Array>>;
+    public transform: GlTransformProvider<TGl2ComponentRenderer, IGlIndexedPoint2dTransformBinder<Float32Array>, TUpdateArg, TInterleavedPoint2dTrait<Float32Array>>;
 
     public constructor
     (
@@ -29,7 +30,12 @@ export class GlPoint2dGraphicsComponent<TUpdateArg extends IUpdateArg>
 
         this.specification = this.getSpec();
         this.bindings = this.getBindings();
-        this.transform = new GlTransformProvider(this, this.indexedBinder, (updateArg) => updateArg.userTransform);
+        this.transform = GlTransformProvider.createOne(
+            this,
+            this.indexedBinder,
+            (updateArg) => updateArg.userTransform,
+            (entity) => entity,
+        );
     }
 
     @Once
@@ -71,11 +77,11 @@ export class GlPoint2dGraphicsComponent<TUpdateArg extends IUpdateArg>
     )
         : void
     {
-        this.indexedBinder.updateInstanced(entity, componentRenderer, entity.changeId, 1);
+        this.indexedBinder.updateInstanced(entity, componentRenderer, 1);
         this.indexedBinder.overrideColors(componentRenderer, entity, entity.changeId);
 
         this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(this.cameraBinder.getBinderData(updateArg), componentRenderer, componentRenderer.sharedState.frameCounter);
+        this.cameraBinder.update(this.cameraBinder.getBinderData(updateArg, componentRenderer), componentRenderer);
 
         // draw
         componentRenderer.drawInstancedArrays(componentRenderer.context.TRIANGLE_FAN, 0, this.outerVertices + 1, entity.data.getLength());

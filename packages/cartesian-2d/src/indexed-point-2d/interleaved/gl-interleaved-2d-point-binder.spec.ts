@@ -9,7 +9,7 @@ import { Point2dSizeNormalizer } from "../../traits/t-point2d-size-normalizer-tr
 import { debugDescribe, ExpectColor } from "rc-js-test-util";
 import { TestGl2RendererHarness } from "@visualization-tools/core/bin/test-utils/test-gl2-renderer-harness";
 import { updateTestGc } from "@visualization-tools/core/bin/test-utils/update-test-gc";
-import { ChartDataEntity, EGraphicsComponentType, GlProgramSpecification, GlShader, IGlInstancedBinder, IGraphicsComponent, InterleavedConnector, NoTransformProvider, TGlInstancedComponentRenderer } from "@visualization-tools/core";
+import { ChartDataEntity, EGraphicsComponentType, GlProgramSpecification, GlShader, IGlInstancedBinder, IGraphicsComponent, InterleavedConnector, NoTransformProvider, TGlF32BufferLayout, TGlInstancedComponentRenderer } from "@visualization-tools/core";
 import { debugFragmentShader } from "@visualization-tools/core/bin/test-utils/debug-fragment-shader";
 
 const changeIdFactory = new IncrementingIdentifierFactory();
@@ -220,7 +220,7 @@ class SinglePointTestGraphicsComponent
 
     public constructor
     (
-        private readonly dataBinder: IGlInstancedBinder<TGlInstancedComponentRenderer, TInterleavedPoint2dTrait<Float32Array>>,
+        private readonly dataBinder: IGlInstancedBinder<TGlInstancedComponentRenderer, TInterleavedPoint2dTrait<Float32Array>, TGlF32BufferLayout>,
     )
     {
     }
@@ -242,7 +242,7 @@ class SinglePointTestGraphicsComponent
 
     public update(entity: TInterleavedPoint2dTrait<Float32Array>, componentRenderer: TGlInstancedComponentRenderer): void
     {
-        this.dataBinder.update(entity, componentRenderer, changeIdFactory.getNextId());
+        this.dataBinder.update(entity, componentRenderer);
         const ctx = componentRenderer.context;
         ctx.drawArrays(ctx.TRIANGLES, 0, entity.data.getLength());
     }
@@ -283,8 +283,8 @@ class TwoPointTestGraphicsComponent
 
     public constructor
     (
-        private readonly dataBinder: IGlInstancedBinder<TGlInstancedComponentRenderer, TIndexedPointTrait<Float32Array, IDrawablePoint2dOffsets>>,
-        private useSecondPoint: boolean,
+        private readonly dataBinder: IGlInstancedBinder<TGlInstancedComponentRenderer, TIndexedPointTrait<Float32Array, IDrawablePoint2dOffsets>, TGlF32BufferLayout>,
+        private readonly useSecondPoint: boolean,
     )
     {
     }
@@ -306,7 +306,7 @@ class TwoPointTestGraphicsComponent
 
     public update(entity: TIndexedPointTrait<Float32Array, IDrawablePoint2dOffsets>, componentRenderer: TGlInstancedComponentRenderer): void
     {
-        this.dataBinder.update(entity, componentRenderer, changeIdFactory.getNextId());
+        this.dataBinder.update(entity, componentRenderer);
         const ctx = componentRenderer.context;
         const loc = componentRenderer.context.getUniformLocation(componentRenderer.program, "test_useSecond");
         componentRenderer.context.uniform1i(loc, this.useSecondPoint ? 1 : 0);

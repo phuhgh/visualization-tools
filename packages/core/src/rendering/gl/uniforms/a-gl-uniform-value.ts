@@ -1,5 +1,6 @@
 import { TGlBasicComponentRenderer } from "../component-renderer/t-gl-basic-component-renderer";
 import { IGlUniform } from "./i-gl-uniform";
+import { _Debug } from "rc-js-util";
 
 /**
  * @public
@@ -29,6 +30,14 @@ export abstract class AGlUniformValue implements IGlUniform
     {
         componentRenderer.addUniform(this);
         this.uniformLocation = componentRenderer.context.getUniformLocation(componentRenderer.program, this.name);
+
+        DEBUG_MODE && _Debug.runBlock(() =>
+        {
+            if (this.uniformLocation == null)
+            {
+                _Debug.verboseLog(`failed to bind uniform "${this.name}" of type "${this.data.constructor.name}"`);
+            }
+        });
     }
 
     public setData(data: number): void

@@ -5,7 +5,7 @@ import { TEntityTrait } from "@visualization-tools/core";
 
 /**
  * @internal
- * Hit tests a ${@link TIndexedPointTrait} drawn as a circle.
+ * Hit tests a {@link TIndexedPointTrait} drawn as a circle.
  */
 export class IndexablePointEntityCircleHitTester
 {

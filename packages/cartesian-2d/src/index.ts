@@ -1,4 +1,3 @@
-export { getTransformChangeId } from "./update/user-transforms/get-transform-change-id";
 export { IGlTraceTransformBinder } from "./axis/traces/i-gl-cartesian2d-trace-transform-binder";
 export { IGlCamera2dBinder } from "./camera/i-gl-camera2d-binder";
 export { ECartesian2dUserTransform } from "./update/user-transforms/e-cartesian2d-user-transform";
@@ -29,7 +28,7 @@ export { Cartesian2dUpdateArg, ICartesian2dUpdateArg } from "./update/update-arg
 export { GlCartesian2dUpdateArgProvider } from "./update/update-arg/gl-cartesian2d-update-arg-provider";
 export { Cartesian2dInteractionHandler } from "./eventing/cartesian2d-interaction-handler";
 export { PinchZoomHandlerCartesian2d } from "./eventing/pinch-zoom-handler-cartesian2d";
-export { GlInterleaved2dPointBinder, TGlInterleavedPointBinderConfig } from "./indexed-point-2d/interleaved/gl-interleaved-2d-point-binder";
+export { GlInterleaved2dPointBinder, TGlInterleavedPointBinderConfig, IInterleavedPointGlBindings } from "./indexed-point-2d/interleaved/gl-interleaved-2d-point-binder";
 export { SharedInterleavedPoint2dHitTestComponent } from "./indexed-point-2d/interleaved/hit-test/shared-interleaved-point-2d-hit-test-component";
 export { IGlIndexedPoint2dBinder } from "./indexed-point-2d/i-gl-indexed-point2d-binder";
 export { InterleavedLine2dHitTestComponent } from "./indexed-point-2d/interleaved/hit-test/interleaved-line-2d-hit-test-component";
@@ -58,7 +57,7 @@ export { CategoryStack2d } from "./update/category-stack2d";
 export { createCartesianPlotCtor, ICartesian2dAxisFactory } from "./plot/create-cartesian-plot-ctor";
 export { EntityCategory2d } from "./update/update-group/entity-category2d";
 export { getRangeFromIndexedConnector } from "./indexed-point-2d/get-range-from-indexed-connector";
-export { GlCartesian2dCameraBinder, IGlCartesian2dCameraBinder } from "./camera/gl-cartesian2d-camera-binder";
+export { GlCartesian2dCameraBinder, IGlCartesian2dCameraBinder, TGlCartesian2dUpdateArg } from "./camera/gl-cartesian2d-camera-binder";
 export { GlCartesian2dPlotFactory, TGlCartesianPlot } from "./plot/gl-cartesian2d-plot-factory";
 export { GlCartesianUpdateHooks } from "./update/update-arg/gl-cartesian-update-hooks";
 export { hoverHighlightLineSegment } from "./series/hover-highlight-line-segment";
@@ -89,3 +88,4 @@ export { ICartesian2dInteractionBounder } from "./eventing/i-cartesian2d-interac
 export { ACartesian2dUserTransform } from "./update/user-transforms/a-cartesian2d-user-transform";
 export { THighlightColorOverride } from "./indexed-point-2d/t-highlight-color-override";
 export { TGlTraceEntity } from "./axis/traces/t-gl-trace-entity";
+export { IGlIndexedPoint2dTransformBinder } from "./indexed-point-2d/i-gl-indexed-point2d-transform-binder";
