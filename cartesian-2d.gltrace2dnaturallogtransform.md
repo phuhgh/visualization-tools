@@ -33,5 +33,6 @@ export declare class GlTrace2dNaturalLogTransform implements IGlTransformCompone
 |  [getCacheId()](./cartesian-2d.gltrace2dnaturallogtransform.getcacheid.md) |  |  |
 |  [initialize(transformRenderer)](./cartesian-2d.gltrace2dnaturallogtransform.initialize.md) |  |  |
 |  [performTransform(entity, transformRenderer, updateArg)](./cartesian-2d.gltrace2dnaturallogtransform.performtransform.md) |  |  |
+|  [resetState()](./cartesian-2d.gltrace2dnaturallogtransform.resetstate.md) |  |  |
 |  [setOutputBuffers(entity, binder, transformRenderer)](./cartesian-2d.gltrace2dnaturallogtransform.setoutputbuffers.md) |  |  |
 

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-addComponent<TAddedComponentRenderer extends TUnknownComponentRenderer, TComponentTraits>(graphicsComp: ILinkableGraphicsComponent<TAddedComponentRenderer, TUpdateArg, TComponentTraits>): ILinkableCompositeGraphicsComponentFactory<TComponentRenderer & TAddedComponentRenderer, TUpdateArg, TTraits & TComponentTraits>;
+addComponent<TAddedComponentRenderer extends TUnknownComponentRenderer, TComponentTraits>(graphicsComp: ILinkableGraphicsComponent<TAddedComponentRenderer, TUpdateArg, TComponentTraits> | ICompositeGraphicsComponent<TAddedComponentRenderer, TUpdateArg, TComponentTraits>): ILinkableCompositeGraphicsComponentFactory<TComponentRenderer & TAddedComponentRenderer, TUpdateArg, TTraits & TComponentTraits>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  graphicsComp | [ILinkableGraphicsComponent](./core.ilinkablegraphicscomponent.md)<!-- -->&lt;TAddedComponentRenderer, TUpdateArg, TComponentTraits&gt; |  |
+|  graphicsComp | [ILinkableGraphicsComponent](./core.ilinkablegraphicscomponent.md)<!-- -->&lt;TAddedComponentRenderer, TUpdateArg, TComponentTraits&gt; \| [ICompositeGraphicsComponent](./core.icompositegraphicscomponent.md)<!-- -->&lt;TAddedComponentRenderer, TUpdateArg, TComponentTraits&gt; |  |
 
 <b>Returns:</b>
 

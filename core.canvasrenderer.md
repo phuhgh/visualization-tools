@@ -36,6 +36,8 @@ export declare class CanvasRenderer implements ICanvasRenderer
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [createOne(context, callbacks)](./core.canvasrenderer.createone.md) | <code>static</code> |  |
+|  [destroyBuffers()](./core.canvasrenderer.destroybuffers.md) |  |  |
+|  [initializeBuffers()](./core.canvasrenderer.initializebuffers.md) |  |  |
 |  [onAfterPlotDraw()](./core.canvasrenderer.onafterplotdraw.md) |  |  |
 |  [onBeforePlotDraw(plot, canvasDims)](./core.canvasrenderer.onbeforeplotdraw.md) |  |  |
 |  [onContextLost()](./core.canvasrenderer.oncontextlost.md) |  |  |

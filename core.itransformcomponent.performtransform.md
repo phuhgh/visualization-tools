@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-performTransform(entity: TEntityTraits, transformRenderer: TTransformRenderer, updateParameter: TUpdateArg): void;
+performTransform(entity: TEntityTraits, transformRenderer: TTransformRenderer, updateArg: TUpdateArg): void;
 ```
 
 ## Parameters
@@ -16,7 +16,7 @@ performTransform(entity: TEntityTraits, transformRenderer: TTransformRenderer, u
 |  --- | --- | --- |
 |  entity | TEntityTraits |  |
 |  transformRenderer | TTransformRenderer |  |
-|  updateParameter | TUpdateArg |  |
+|  updateArg | TUpdateArg |  |
 
 <b>Returns:</b>
 

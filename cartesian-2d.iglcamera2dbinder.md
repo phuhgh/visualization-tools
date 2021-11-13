@@ -9,14 +9,14 @@ Provides coordinate system invariant WebGL bindings for 2d graphics components.
 <b>Signature:</b>
 
 ```typescript
-export interface IGlCamera2dBinder<TBinderData, TUpdateArg> extends IGlBinder<TGlBasicComponentRenderer, TBinderData> 
+export interface IGlCamera2dBinder<TConnector, TUpdateArg> extends IGlBinder<TGlBasicComponentRenderer, TConnector, TGlF32BufferLayout> 
 ```
-<b>Extends:</b> [IGlBinder](./core.iglbinder.md)<!-- -->&lt;[TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md)<!-- -->, TBinderData&gt;
+<b>Extends:</b> [IGlBinder](./core.iglbinder.md)<!-- -->&lt;[TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md)<!-- -->, TConnector, [TGlF32BufferLayout](./core.tglf32bufferlayout.md)<!-- -->&gt;
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [getBinderData(updateArg)](./cartesian-2d.iglcamera2dbinder.getbinderdata.md) | Get the parameter for setData from the plot's update arg. |
+|  [getBinderData(updateArg, renderer)](./cartesian-2d.iglcamera2dbinder.getbinderdata.md) | Get the parameter for setData from the plot's update arg. |
 |  [setZ(entity)](./cartesian-2d.iglcamera2dbinder.setz.md) |  |
 

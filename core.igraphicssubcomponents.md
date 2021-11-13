@@ -18,4 +18,5 @@ export interface IGraphicsSubComponents<TComponentRenderer extends TUnknownCompo
 |  --- | --- |
 |  [addComponent(graphicsComp)](./core.igraphicssubcomponents.addcomponent.md) |  |
 |  [getSubComponents()](./core.igraphicssubcomponents.getsubcomponents.md) |  |
+|  [setSubComponent(graphicsComp, index)](./core.igraphicssubcomponents.setsubcomponent.md) |  |
 

@@ -9,9 +9,9 @@ Provides WebGL bindings for cartesian 2d graphics components.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlCartesian2dCameraBinder extends AGlBinder<TGlBasicComponentRenderer, ICartesian2dTransforms<Float32Array>> implements IGlCartesian2dCameraBinder 
+export declare class GlCartesian2dCameraBinder extends AGlBinder<TGlBasicComponentRenderer, TGlCartesian2dUpdateArg, TGlF32BufferLayout> implements IGlCartesian2dCameraBinder 
 ```
-<b>Extends:</b> [AGlBinder](./core.aglbinder.md)<!-- -->&lt;[TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md)<!-- -->, [ICartesian2dTransforms](./cartesian-2d.icartesian2dtransforms.md)<!-- -->&lt;Float32Array&gt;&gt;
+<b>Extends:</b> [AGlBinder](./core.aglbinder.md)<!-- -->&lt;[TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md)<!-- -->, [TGlCartesian2dUpdateArg](./cartesian-2d.tglcartesian2dupdatearg.md)<!-- -->, [TGlF32BufferLayout](./core.tglf32bufferlayout.md)<!-- -->&gt;
 
 <b>Implements:</b> [IGlCartesian2dCameraBinder](./cartesian-2d.iglcartesian2dcamerabinder.md)
 
@@ -26,12 +26,15 @@ export declare class GlCartesian2dCameraBinder extends AGlBinder<TGlBasicCompone
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [areAttributesDirty()](./cartesian-2d.glcartesian2dcamerabinder.areattributesdirty.md) |  |  |
 |  [bindAttributes()](./cartesian-2d.glcartesian2dcamerabinder.bindattributes.md) |  |  |
 |  [bindUniforms(componentRenderer)](./cartesian-2d.glcartesian2dcamerabinder.binduniforms.md) |  |  |
-|  [getBinderData(updateArg)](./cartesian-2d.glcartesian2dcamerabinder.getbinderdata.md) |  |  |
+|  [getBinderData(updateArg, renderer)](./cartesian-2d.glcartesian2dcamerabinder.getbinderdata.md) |  |  |
 |  [getBinderId()](./cartesian-2d.glcartesian2dcamerabinder.getbinderid.md) |  |  |
+|  [getBufferLayout()](./cartesian-2d.glcartesian2dcamerabinder.getbufferlayout.md) |  |  |
 |  [initialize(componentRenderer)](./cartesian-2d.glcartesian2dcamerabinder.initialize.md) |  |  |
+|  [setBufferLayout()](./cartesian-2d.glcartesian2dcamerabinder.setbufferlayout.md) |  |  |
 |  [setZ(entity)](./cartesian-2d.glcartesian2dcamerabinder.setz.md) |  |  |
-|  [updateData(transforms, changeId)](./cartesian-2d.glcartesian2dcamerabinder.updatedata.md) |  |  |
+|  [updateData(updateArg)](./cartesian-2d.glcartesian2dcamerabinder.updatedata.md) |  |  |
 |  [updatePointers()](./cartesian-2d.glcartesian2dcamerabinder.updatepointers.md) |  |  |
 

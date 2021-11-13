@@ -9,9 +9,9 @@ Binds trace data to WebGL transform feedback.
 <b>Signature:</b>
 
 ```typescript
-export interface IGlTraceTransformBinder extends IGlInstancedBinder<TGl2ComponentRenderer, TGlTraceEntity>, IGlTransformBinder<TGlTraceEntity, IGlTraceBinder, TGl2ComponentRenderer> 
+export interface IGlTraceTransformBinder extends IGlInstancedBinder<TGl2ComponentRenderer, TGlTraceEntity, TGlF32BufferLayout>, IGlTransformBinder<TGlTraceEntity, IGlTraceBinder, TGl2ComponentRenderer> 
 ```
-<b>Extends:</b> [IGlInstancedBinder](./core.iglinstancedbinder.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->&gt;, [IGlTransformBinder](./core.igltransformbinder.md)<!-- -->&lt;[TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->, [IGlTraceBinder](./cartesian-2d.igltracebinder.md)<!-- -->, [TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->&gt;
+<b>Extends:</b> [IGlInstancedBinder](./core.iglinstancedbinder.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->, [TGlF32BufferLayout](./core.tglf32bufferlayout.md)<!-- -->&gt;, [IGlTransformBinder](./core.igltransformbinder.md)<!-- -->&lt;[TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->, [IGlTraceBinder](./cartesian-2d.igltracebinder.md)<!-- -->, [TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->&gt;
 
 ## Properties
 

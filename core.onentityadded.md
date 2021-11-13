@@ -9,9 +9,9 @@ Emitted on entity added to plot.
 <b>Signature:</b>
 
 ```typescript
-export declare class OnEntityAdded<TPlotRange, TRequiredTraits> implements TOnEntityAdded<TPlotRange, TRequiredTraits> 
+export declare class OnEntityAdded<TRequiredTraits> implements TOnEntityAdded<TRequiredTraits> 
 ```
-<b>Implements:</b> [TOnEntityAdded](./core.tonentityadded.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt;
+<b>Implements:</b> [TOnEntityAdded](./core.tonentityadded.md)<!-- -->&lt;TRequiredTraits&gt;
 
 ## Constructors
 
@@ -24,13 +24,13 @@ export declare class OnEntityAdded<TPlotRange, TRequiredTraits> implements TOnEn
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [callbackKey](./core.onentityadded.callbackkey.md) | <code>static</code> | "onEntityAdded" |  |
-|  [onEntityAdded](./core.onentityadded.onentityadded.md) |  | (...args: [TEntityAddedArgs](./core.tentityaddedargs.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt;) =&gt; void |  |
+|  [onEntityAdded](./core.onentityadded.onentityadded.md) |  | (...args: [TEntityAddedArgs](./core.tentityaddedargs.md)<!-- -->&lt;TRequiredTraits&gt;) =&gt; void |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [emit(plot, entity)](./core.onentityadded.emit.md) | <code>static</code> |  |
-|  [registerListener(plot, onEvent)](./core.onentityadded.registerlistener.md) | <code>static</code> |  |
-|  [registerOneTimeListener(plot, onEvent)](./core.onentityadded.registeronetimelistener.md) | <code>static</code> |  |
+|  [emit(eventService, entity)](./core.onentityadded.emit.md) | <code>static</code> |  |
+|  [registerListener(owner, onEvent)](./core.onentityadded.registerlistener.md) | <code>static</code> |  |
+|  [registerOneTimeListener(owner, onEvent)](./core.onentityadded.registeronetimelistener.md) | <code>static</code> |  |
 

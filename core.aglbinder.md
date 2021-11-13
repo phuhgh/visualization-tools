@@ -9,9 +9,9 @@ Data binder for webgl graphics components.
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class AGlBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector> implements IGlBinder<TComponentRenderer, TConnector> 
+export declare abstract class AGlBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector, TBufferLayout> implements IGlBinder<TComponentRenderer, TConnector, TBufferLayout> 
 ```
-<b>Implements:</b> [IGlBinder](./core.iglbinder.md)<!-- -->&lt;TComponentRenderer, TConnector&gt;
+<b>Implements:</b> [IGlBinder](./core.iglbinder.md)<!-- -->&lt;TComponentRenderer, TConnector, TBufferLayout&gt;
 
 ## Properties
 
@@ -24,11 +24,14 @@ export declare abstract class AGlBinder<TComponentRenderer extends TGlBasicCompo
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [areAttributesDirty(connector)](./core.aglbinder.areattributesdirty.md) |  |  |
 |  [bindAttributes(componentRenderer)](./core.aglbinder.bindattributes.md) |  |  |
 |  [bindUniforms(componentRenderer)](./core.aglbinder.binduniforms.md) |  |  |
 |  [getBinderId()](./core.aglbinder.getbinderid.md) |  |  |
+|  [getBufferLayout()](./core.aglbinder.getbufferlayout.md) |  |  |
 |  [initialize(componentRenderer)](./core.aglbinder.initialize.md) |  |  |
-|  [update(connector, componentRenderer, changeId)](./core.aglbinder.update.md) |  |  |
-|  [updateData(connector, changeId)](./core.aglbinder.updatedata.md) |  |  |
+|  [setBufferLayout(bufferLayout)](./core.aglbinder.setbufferlayout.md) |  |  |
+|  [update(connector, componentRenderer)](./core.aglbinder.update.md) |  |  |
+|  [updateData(connector)](./core.aglbinder.updatedata.md) |  |  |
 |  [updatePointers(connector)](./core.aglbinder.updatepointers.md) |  |  |
 

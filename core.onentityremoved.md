@@ -9,9 +9,9 @@ Emitted on entity removed from plot, if the entity is not present this is not em
 <b>Signature:</b>
 
 ```typescript
-export declare class OnEntityRemoved<TPlotRange, TRequiredTraits> implements TOnEntityRemoved<TPlotRange, TRequiredTraits> 
+export declare class OnEntityRemoved<TRequiredTraits> implements TOnEntityRemoved<TRequiredTraits> 
 ```
-<b>Implements:</b> [TOnEntityRemoved](./core.tonentityremoved.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt;
+<b>Implements:</b> [TOnEntityRemoved](./core.tonentityremoved.md)<!-- -->&lt;TRequiredTraits&gt;
 
 ## Constructors
 
@@ -24,13 +24,13 @@ export declare class OnEntityRemoved<TPlotRange, TRequiredTraits> implements TOn
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [callbackKey](./core.onentityremoved.callbackkey.md) | <code>static</code> | "onEntityRemoved" |  |
-|  [onEntityRemoved](./core.onentityremoved.onentityremoved.md) |  | (...args: [TEntityRemovedArgs](./core.tentityremovedargs.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt;) =&gt; void |  |
+|  [onEntityRemoved](./core.onentityremoved.onentityremoved.md) |  | (...args: [TEntityRemovedArgs](./core.tentityremovedargs.md)<!-- -->&lt;TRequiredTraits&gt;) =&gt; void |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [emit(plot, entity)](./core.onentityremoved.emit.md) | <code>static</code> |  |
-|  [registerListener(plot, onEvent)](./core.onentityremoved.registerlistener.md) | <code>static</code> |  |
-|  [registerOneTimeListener(plot, onEvent)](./core.onentityremoved.registeronetimelistener.md) | <code>static</code> |  |
+|  [emit(eventService, entity)](./core.onentityremoved.emit.md) | <code>static</code> |  |
+|  [registerListener(owner, onEvent)](./core.onentityremoved.registerlistener.md) | <code>static</code> |  |
+|  [registerOneTimeListener(owner, onEvent)](./core.onentityremoved.registeronetimelistener.md) | <code>static</code> |  |
 

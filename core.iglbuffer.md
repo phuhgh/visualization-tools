@@ -9,13 +9,15 @@ Dirty checked wrapper of `WebGLBuffer`<!-- -->. Modify via [IGlAttribute](./core
 <b>Signature:</b>
 
 ```typescript
-export interface IGlBuffer<TArray extends TTypedArray> 
+export interface IGlBuffer<TArray extends TTypedArray> extends IBuffer 
 ```
+<b>Extends:</b> [IBuffer](./core.ibuffer.md)
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [changeId](./core.iglbuffer.changeid.md) | number |  |
 |  [isDirty](./core.iglbuffer.isdirty.md) | boolean |  |
 
 ## Methods
@@ -24,8 +26,9 @@ export interface IGlBuffer<TArray extends TTypedArray>
 |  --- | --- |
 |  [bindArray(context, usage)](./core.iglbuffer.bindarray.md) |  |
 |  [bindTransform(context, index)](./core.iglbuffer.bindtransform.md) |  |
+|  [destroy(context)](./core.iglbuffer.destroy.md) |  |
 |  [getSubBufferData(context, result)](./core.iglbuffer.getsubbufferdata.md) |  |
-|  [initialize(componentRenderer)](./core.iglbuffer.initialize.md) |  |
+|  [initialize(context)](./core.iglbuffer.initialize.md) |  |
 |  [onContextLost()](./core.iglbuffer.oncontextlost.md) |  |
 |  [setData(data, changeId)](./core.iglbuffer.setdata.md) |  |
 |  [setSize(context, byteSize, usage, changeId)](./core.iglbuffer.setsize.md) |  |

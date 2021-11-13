@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-static registerListener<TPlotRange, TRequiredTraits>(plot: IReadonlyPlot<TPlotRange, TRequiredTraits>, onEvent: (...args: TEntityRemovedArgs<TPlotRange, TRequiredTraits>) => void): () => void;
+static registerListener<TRequiredTraits>(owner: IReadonlyPlot<unknown, TRequiredTraits> | IChartComponent<TUnknownRenderer>, onEvent: (...args: TEntityRemovedArgs<TRequiredTraits>) => void): () => void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  plot | [IReadonlyPlot](./core.ireadonlyplot.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt; |  |
-|  onEvent | (...args: [TEntityRemovedArgs](./core.tentityremovedargs.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt;) =&gt; void |  |
+|  owner | [IReadonlyPlot](./core.ireadonlyplot.md)<!-- -->&lt;unknown, TRequiredTraits&gt; \| [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
+|  onEvent | (...args: [TEntityRemovedArgs](./core.tentityremovedargs.md)<!-- -->&lt;TRequiredTraits&gt;) =&gt; void |  |
 
 <b>Returns:</b>
 

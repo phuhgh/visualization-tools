@@ -17,14 +17,13 @@ export declare abstract class GlContextAdapter<TCtx extends TGlContext> implemen
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(canvasElement, ctxId, options, graphContextChangeHooks)](./core.glcontextadapter._constructor_.md) |  | Constructs a new instance of the <code>GlContextAdapter</code> class |
+|  [(constructor)(canvasElement, eventService, ctxId, options)](./core.glcontextadapter._constructor_.md) |  | Constructs a new instance of the <code>GlContextAdapter</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [context](./core.glcontextadapter.context.md) |  | TCtx \| null |  |
-|  [graphContextChangeHooks](./core.glcontextadapter.graphcontextchangehooks.md) |  | [IContextChangeHooks](./core.icontextchangehooks.md) |  |
 
 ## Methods
 

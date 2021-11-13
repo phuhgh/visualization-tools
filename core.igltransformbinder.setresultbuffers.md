@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-setResultBuffers(connector: TConnector, exchangeBinder: TSwapBinder, transformRenderer: TTransformRenderer, usage?: GLenum): void;
+setResultBuffers(connector: TConnector, exchangeBinder: TBinder, transformRenderer: TTransformRenderer, usage?: GLenum): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ setResultBuffers(connector: TConnector, exchangeBinder: TSwapBinder, transformRe
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  connector | TConnector |  |
-|  exchangeBinder | TSwapBinder |  |
+|  exchangeBinder | TBinder |  |
 |  transformRenderer | TTransformRenderer |  |
 |  usage | GLenum |  |
 

@@ -16,6 +16,7 @@ export interface ITransformComponentStore<TComponentRenderer extends IBaseCompon
 
 |  Method | Description |
 |  --- | --- |
+|  [getAllTransforms()](./core.itransformcomponentstore.getalltransforms.md) |  |
 |  [getTransform(userTransformId, graphicsComponent)](./core.itransformcomponentstore.gettransform.md) |  |
 |  [setTransform(userTransformId, graphicsComponent, transform)](./core.itransformcomponentstore.settransform.md) |  |
 

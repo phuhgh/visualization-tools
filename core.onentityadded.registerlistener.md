@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-static registerListener<TPlotRange, TRequiredTraits>(plot: IReadonlyPlot<TPlotRange, TRequiredTraits>, onEvent: (...args: TEntityAddedArgs<TPlotRange, TRequiredTraits>) => void): () => void;
+static registerListener<TRequiredTraits>(owner: IReadonlyPlot<unknown, TRequiredTraits> | IChartComponent<TUnknownRenderer>, onEvent: (...args: TEntityAddedArgs<TRequiredTraits>) => void): () => void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  plot | [IReadonlyPlot](./core.ireadonlyplot.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt; |  |
-|  onEvent | (...args: [TEntityAddedArgs](./core.tentityaddedargs.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt;) =&gt; void |  |
+|  owner | [IReadonlyPlot](./core.ireadonlyplot.md)<!-- -->&lt;unknown, TRequiredTraits&gt; \| [IChartComponent](./core.ichartcomponent.md)<!-- -->&lt;[TUnknownRenderer](./core.tunknownrenderer.md)<!-- -->&gt; |  |
+|  onEvent | (...args: [TEntityAddedArgs](./core.tentityaddedargs.md)<!-- -->&lt;TRequiredTraits&gt;) =&gt; void |  |
 
 <b>Returns:</b>
 

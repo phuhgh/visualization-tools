@@ -9,12 +9,12 @@ Constructs a new instance of the `OnEntityAdded` class
 <b>Signature:</b>
 
 ```typescript
-constructor(onEntityAdded: (...args: TEntityAddedArgs<TPlotRange, TRequiredTraits>) => void);
+constructor(onEntityAdded: (...args: TEntityAddedArgs<TRequiredTraits>) => void);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  onEntityAdded | (...args: [TEntityAddedArgs](./core.tentityaddedargs.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt;) =&gt; void |  |
+|  onEntityAdded | (...args: [TEntityAddedArgs](./core.tentityaddedargs.md)<!-- -->&lt;TRequiredTraits&gt;) =&gt; void |  |
 

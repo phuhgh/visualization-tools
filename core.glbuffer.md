@@ -23,6 +23,7 @@ export declare class GlBuffer<TCtor extends TTypedArrayCtor> implements IGlBuffe
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [changeId](./core.glbuffer.changeid.md) |  | number |  |
 |  [isDirty](./core.glbuffer.isdirty.md) |  | boolean |  |
 
 ## Methods
@@ -31,9 +32,11 @@ export declare class GlBuffer<TCtor extends TTypedArrayCtor> implements IGlBuffe
 |  --- | --- | --- |
 |  [bindArray(context, usage)](./core.glbuffer.bindarray.md) |  |  |
 |  [bindTransform(context, index)](./core.glbuffer.bindtransform.md) |  |  |
+|  [destroy(context)](./core.glbuffer.destroy.md) |  |  |
 |  [getSubBufferData(context, result)](./core.glbuffer.getsubbufferdata.md) |  |  |
-|  [initialize(componentRenderer)](./core.glbuffer.initialize.md) |  |  |
+|  [initialize(context)](./core.glbuffer.initialize.md) |  |  |
 |  [onContextLost()](./core.glbuffer.oncontextlost.md) |  |  |
+|  [resetState()](./core.glbuffer.resetstate.md) |  |  |
 |  [setData(data, changeId)](./core.glbuffer.setdata.md) |  |  |
 |  [setSize(context, byteSize, usage, changeId)](./core.glbuffer.setsize.md) |  |  |
 |  [setSubBufferData(context, byteOffset, data, changeId, modificationId)](./core.glbuffer.setsubbufferdata.md) |  |  |

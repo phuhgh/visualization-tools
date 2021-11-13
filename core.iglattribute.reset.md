@@ -4,7 +4,7 @@
 
 ## IGlAttribute.reset() method
 
-Reset the state of this attribute. If `OES_vertex_array_object` is enabled or the context is webgl2 this is a no-op. Called after update as part of the update strategy.
+Reset the state of this attribute. If `OES_vertex_array_object` is enabled or the context is webgl2 this is a no-op. Called after update as part of the update strategy. Does not affect buffer state.
 
 <b>Signature:</b>
 

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-initialize(componentRenderer: TGlBasicComponentRenderer): void;
+initialize(context: TGlContext): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  componentRenderer | [TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md) |  |
+|  context | [TGlContext](./core.tglcontext.md) |  |
 
 <b>Returns:</b>
 

@@ -17,4 +17,5 @@ export interface ITransformBinder<TComponentRenderer extends TUnknownComponentRe
 |  Method | Description |
 |  --- | --- |
 |  [getTransformId()](./core.itransformbinder.gettransformid.md) |  |
+|  [resetState()](./core.itransformbinder.resetstate.md) |  |
 

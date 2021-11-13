@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-isDirty: boolean;
+readonly isDirty: boolean;
 ```

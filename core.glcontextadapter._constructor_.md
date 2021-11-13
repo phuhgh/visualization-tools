@@ -9,7 +9,7 @@ Constructs a new instance of the `GlContextAdapter` class
 <b>Signature:</b>
 
 ```typescript
-protected constructor(canvasElement: HTMLCanvasElement, ctxId: "webgl" | "webgl2", options: WebGLContextAttributes | undefined, graphContextChangeHooks: IContextChangeHooks);
+protected constructor(canvasElement: HTMLCanvasElement, eventService: IEventService, ctxId: "webgl" | "webgl2", options: WebGLContextAttributes | undefined);
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ protected constructor(canvasElement: HTMLCanvasElement, ctxId: "webgl" | "webgl2
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  canvasElement | HTMLCanvasElement |  |
+|  eventService | [IEventService](./core.ieventservice.md) |  |
 |  ctxId | "webgl" \| "webgl2" |  |
 |  options | WebGLContextAttributes \| undefined |  |
-|  graphContextChangeHooks | [IContextChangeHooks](./core.icontextchangehooks.md) |  |
 

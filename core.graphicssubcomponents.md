@@ -25,4 +25,5 @@ export declare class GraphicsSubComponents<TComponentRenderer extends TUnknownCo
 |  --- | --- | --- |
 |  [addComponent(graphicsComp)](./core.graphicssubcomponents.addcomponent.md) |  |  |
 |  [getSubComponents()](./core.graphicssubcomponents.getsubcomponents.md) |  |  |
+|  [setSubComponent(graphicsComp, index)](./core.graphicssubcomponents.setsubcomponent.md) |  |  |
 

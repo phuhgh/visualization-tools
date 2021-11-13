@@ -9,7 +9,7 @@ Perform all possible updates.
 <b>Signature:</b>
 
 ```typescript
-updateInstanced(connector: TConnector, componentRenderer: TComponentRenderer, changeId: number, divisor: number, usage?: GLenum): void;
+updateInstanced(connector: TConnector, componentRenderer: TComponentRenderer, divisor: number, usage?: GLenum): void;
 ```
 
 ## Parameters
@@ -18,7 +18,6 @@ updateInstanced(connector: TConnector, componentRenderer: TComponentRenderer, ch
 |  --- | --- | --- |
 |  connector | TConnector |  |
 |  componentRenderer | TComponentRenderer |  |
-|  changeId | number |  |
 |  divisor | number |  |
 |  usage | GLenum |  |
 

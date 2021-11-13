@@ -24,7 +24,7 @@ export declare class GlCartesian2dTraceGraphicsComponent implements ILinkableGra
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./cartesian-2d.glcartesian2dtracegraphicscomponent.specification.md) |  | [IGlProgramSpec](./core.iglprogramspec.md) |  |
-|  [transform](./cartesian-2d.glcartesian2dtracegraphicscomponent.transform.md) |  | [GlTransformProvider](./core.gltransformprovider.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [IGlTraceTransformBinder](./cartesian-2d.igltracetransformbinder.md)<!-- -->, [IGlTraceBinder](./cartesian-2d.igltracebinder.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->&gt; |  |
+|  [transform](./cartesian-2d.glcartesian2dtracegraphicscomponent.transform.md) |  | [GlTransformProvider](./core.gltransformprovider.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [IGlTraceTransformBinder](./cartesian-2d.igltracetransformbinder.md)<!-- -->, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->&gt; |  |
 |  [type](./cartesian-2d.glcartesian2dtracegraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods

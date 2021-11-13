@@ -23,6 +23,7 @@ export declare class CanvasRendererSharedState implements IRendererSharedState
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [entityBuffers](./core.canvasrenderersharedstate.entitybuffers.md) |  | [IEntityBufferStore](./core.ientitybufferstore.md)<!-- -->&lt;[TUnknownBufferLayout](./core.tunknownbufferlayout.md)<!-- -->&gt; |  |
 |  [frameCounter](./core.canvasrenderersharedstate.framecounter.md) |  | number |  |
 |  [scissorRange](./core.canvasrenderersharedstate.scissorrange.md) |  | IReadonlyRange2d&lt;TTypedArray&gt; \| null |  |
 

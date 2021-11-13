@@ -23,7 +23,7 @@ export declare class GlPoint2dNaturalLogTransform implements IGlTransformCompone
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [factory](./cartesian-2d.glpoint2dnaturallogtransform.factory.md) | <code>static</code> | [GlTransformComponentFactory](./core.gltransformcomponentfactory.md)<!-- -->&lt;[IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt;, [TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->&lt;never&gt;&gt; |  |
+|  [factory](./cartesian-2d.glpoint2dnaturallogtransform.factory.md) | <code>static</code> | [GlTransformComponentFactory](./core.gltransformcomponentfactory.md)<!-- -->&lt;[IGlIndexedPoint2dTransformBinder](./cartesian-2d.iglindexedpoint2dtransformbinder.md)<!-- -->&lt;Float32Array&gt;, [TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->&lt;never&gt;&gt; |  |
 |  [specification](./cartesian-2d.glpoint2dnaturallogtransform.specification.md) |  | [IGlProgramSpec](./core.iglprogramspec.md) |  |
 
 ## Methods
@@ -33,5 +33,6 @@ export declare class GlPoint2dNaturalLogTransform implements IGlTransformCompone
 |  [getCacheId()](./cartesian-2d.glpoint2dnaturallogtransform.getcacheid.md) |  |  |
 |  [initialize(transformRenderer)](./cartesian-2d.glpoint2dnaturallogtransform.initialize.md) |  |  |
 |  [performTransform(entity, transformRenderer, updateArg)](./cartesian-2d.glpoint2dnaturallogtransform.performtransform.md) |  |  |
+|  [resetState()](./cartesian-2d.glpoint2dnaturallogtransform.resetstate.md) |  |  |
 |  [setOutputBuffers(entity, binder, transformRenderer)](./cartesian-2d.glpoint2dnaturallogtransform.setoutputbuffers.md) |  |  |
 

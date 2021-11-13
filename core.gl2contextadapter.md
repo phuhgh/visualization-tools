@@ -17,5 +17,5 @@ export declare class Gl2ContextAdapter extends GlContextAdapter<WebGL2RenderingC
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(canvasElement, options, graphContextChangeHooks)](./core.gl2contextadapter._constructor_.md) |  | Constructs a new instance of the <code>Gl2ContextAdapter</code> class |
+|  [(constructor)(canvasElement, eventService, options)](./core.gl2contextadapter._constructor_.md) |  | Constructs a new instance of the <code>Gl2ContextAdapter</code> class |
 

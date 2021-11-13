@@ -9,7 +9,7 @@ Data binder for webgl transform feedback components.
 <b>Signature:</b>
 
 ```typescript
-export interface IGlTransformBinder<TConnector, TSwapBinder extends IGlBinder<TGlBasicComponentRenderer, TConnector>, TTransformRenderer extends TGl2ComponentRenderer> extends ITransformBinder<TTransformRenderer> 
+export interface IGlTransformBinder<TConnector, TBinder extends IGlBinder<TGlBasicComponentRenderer, TConnector, TUnknownBufferLayout>, TTransformRenderer extends TGl2ComponentRenderer> extends ITransformBinder<TTransformRenderer> 
 ```
 <b>Extends:</b> [ITransformBinder](./core.itransformbinder.md)<!-- -->&lt;TTransformRenderer&gt;
 
@@ -19,5 +19,4 @@ export interface IGlTransformBinder<TConnector, TSwapBinder extends IGlBinder<TG
 |  --- | --- |
 |  [clearResultBuffers(transformRenderer)](./core.igltransformbinder.clearresultbuffers.md) |  |
 |  [setResultBuffers(connector, exchangeBinder, transformRenderer, usage)](./core.igltransformbinder.setresultbuffers.md) |  |
-|  [swapBuffers(binder)](./core.igltransformbinder.swapbuffers.md) | Swap their buffers with ours, using their buffers as inputs and ours as outputs. |
 

@@ -35,6 +35,8 @@ export declare class GlRenderer<TComponentRenderer extends TGlComponentRenderer<
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [createOne(context, options, localizations, callbacks)](./core.glrenderer.createone.md) | <code>static</code> |  |
+|  [destroyBuffers(buffers)](./core.glrenderer.destroybuffers.md) |  |  |
+|  [initializeBuffers(buffers)](./core.glrenderer.initializebuffers.md) |  |  |
 |  [onAfterPlotDraw()](./core.glrenderer.onafterplotdraw.md) |  |  |
 |  [onBeforePlotDraw(plot, canvasDims)](./core.glrenderer.onbeforeplotdraw.md) |  |  |
 |  [onContextLost()](./core.glrenderer.oncontextlost.md) |  |  |

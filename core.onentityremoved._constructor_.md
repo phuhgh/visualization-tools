@@ -9,12 +9,12 @@ Constructs a new instance of the `OnEntityRemoved` class
 <b>Signature:</b>
 
 ```typescript
-constructor(onEntityRemoved: (...args: TEntityRemovedArgs<TPlotRange, TRequiredTraits>) => void);
+constructor(onEntityRemoved: (...args: TEntityRemovedArgs<TRequiredTraits>) => void);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  onEntityRemoved | (...args: [TEntityRemovedArgs](./core.tentityremovedargs.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt;) =&gt; void |  |
+|  onEntityRemoved | (...args: [TEntityRemovedArgs](./core.tentityremovedargs.md)<!-- -->&lt;TRequiredTraits&gt;) =&gt; void |  |
 

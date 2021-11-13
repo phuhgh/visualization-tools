@@ -17,5 +17,6 @@ export interface ITransformComponent<TTransformRenderer extends TUnknownComponen
 |  Method | Description |
 |  --- | --- |
 |  [initialize(componentRenderer)](./core.itransformcomponent.initialize.md) |  |
-|  [performTransform(entity, transformRenderer, updateParameter)](./core.itransformcomponent.performtransform.md) |  |
+|  [performTransform(entity, transformRenderer, updateArg)](./core.itransformcomponent.performtransform.md) |  |
+|  [resetState()](./core.itransformcomponent.resetstate.md) |  |
 

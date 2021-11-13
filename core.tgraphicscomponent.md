@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type TGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TEntityTraits> = IGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits> | ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TEntityTraits>;
+export declare type TGraphicsComponent<TComponentRenderer extends TUnknownComponentRenderer, TUpdateArg, TTraits> = IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits> | ICompositeGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>;
 ```
 <b>References:</b> [TUnknownComponentRenderer](./core.tunknowncomponentrenderer.md)<!-- -->, [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->, [ICompositeGraphicsComponent](./core.icompositegraphicscomponent.md)
 

@@ -20,3 +20,10 @@ export interface IGlRenderer<TComponentRenderer extends TGlComponentRenderer<TGl
 |  [sharedState](./core.iglrenderer.sharedstate.md) | [IGlRendererSharedState](./core.iglrenderersharedstate.md) |  |
 |  [transformComponents](./core.iglrenderer.transformcomponents.md) | [ITransformComponentStore](./core.itransformcomponentstore.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->&gt; |  |
 
+## Methods
+
+|  Method | Description |
+|  --- | --- |
+|  [destroyBuffers(buffers)](./core.iglrenderer.destroybuffers.md) |  |
+|  [initializeBuffers(buffers)](./core.iglrenderer.initializebuffers.md) |  |
+

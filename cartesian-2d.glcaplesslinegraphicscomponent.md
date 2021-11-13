@@ -24,7 +24,7 @@ export declare class GlCaplessLineGraphicsComponent implements ILinkableGraphics
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./cartesian-2d.glcaplesslinegraphicscomponent.specification.md) |  | [IGlProgramSpec](./core.iglprogramspec.md) |  |
-|  [transform](./cartesian-2d.glcaplesslinegraphicscomponent.transform.md) |  | [GlTransformProvider](./core.gltransformprovider.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt;, [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt;&gt; |  |
+|  [transform](./cartesian-2d.glcaplesslinegraphicscomponent.transform.md) |  | [GlTransformProvider](./core.gltransformprovider.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [IGlIndexedPoint2dTransformBinder](./cartesian-2d.iglindexedpoint2dtransformbinder.md)<!-- -->&lt;Float32Array&gt;, [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt;, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt;&gt; |  |
 |  [type](./cartesian-2d.glcaplesslinegraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods

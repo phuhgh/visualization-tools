@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-transform: GlTransformProvider<TGl2ComponentRenderer, IGlTraceTransformBinder, IGlTraceBinder, ICartesian2dUpdateArg<Float32Array>, TGlTraceEntity>;
+transform: GlTransformProvider<TGl2ComponentRenderer, IGlTraceTransformBinder, ICartesian2dUpdateArg<Float32Array>, TGlTraceEntity>;
 ```

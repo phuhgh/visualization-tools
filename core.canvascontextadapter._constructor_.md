@@ -9,7 +9,7 @@ Constructs a new instance of the `CanvasContextAdapter` class
 <b>Signature:</b>
 
 ```typescript
-constructor(canvasElement: HTMLCanvasElement, graphContextChangeHooks?: IContextChangeHooks);
+constructor(canvasElement: HTMLCanvasElement);
 ```
 
 ## Parameters
@@ -17,5 +17,4 @@ constructor(canvasElement: HTMLCanvasElement, graphContextChangeHooks?: IContext
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  canvasElement | HTMLCanvasElement |  |
-|  graphContextChangeHooks | [IContextChangeHooks](./core.icontextchangehooks.md) |  |
 

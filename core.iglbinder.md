@@ -9,7 +9,7 @@ Data binder for webgl graphics components.
 <b>Signature:</b>
 
 ```typescript
-export interface IGlBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector> extends IBinder<TComponentRenderer> 
+export interface IGlBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector, TBufferLayout> extends IBinder<TComponentRenderer> 
 ```
 <b>Extends:</b> [IBinder](./core.ibinder.md)<!-- -->&lt;TComponentRenderer&gt;
 
@@ -23,9 +23,12 @@ export interface IGlBinder<TComponentRenderer extends TGlBasicComponentRenderer,
 
 |  Method | Description |
 |  --- | --- |
+|  [areAttributesDirty(connector)](./core.iglbinder.areattributesdirty.md) |  |
 |  [bindAttributes(componentRenderer)](./core.iglbinder.bindattributes.md) |  |
 |  [bindUniforms(componentRenderer)](./core.iglbinder.binduniforms.md) |  |
-|  [update(connector, componentRenderer, changeId)](./core.iglbinder.update.md) | Perform all possible updates. |
-|  [updateData(connector, changeId)](./core.iglbinder.updatedata.md) |  |
+|  [getBufferLayout()](./core.iglbinder.getbufferlayout.md) |  |
+|  [setBufferLayout(bufferLayout)](./core.iglbinder.setbufferlayout.md) |  |
+|  [update(connector, componentRenderer)](./core.iglbinder.update.md) | Perform all possible updates. |
+|  [updateData(connector)](./core.iglbinder.updatedata.md) |  |
 |  [updatePointers(connector)](./core.iglbinder.updatepointers.md) |  |
 

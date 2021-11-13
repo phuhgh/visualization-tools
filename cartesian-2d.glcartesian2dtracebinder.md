@@ -9,9 +9,9 @@ Binds trace data to WebGL buffers.
 <b>Signature:</b>
 
 ```typescript
-export declare class GlCartesian2dTraceBinder extends AGlInstancedBinder<TGlInstancedComponentRenderer, TGlTraceEntity> implements IGlTraceBinder 
+export declare class GlCartesian2dTraceBinder extends AGlInstancedBinder<TGlInstancedComponentRenderer, TGlTraceEntity, TGlF32BufferLayout> implements IGlTraceBinder 
 ```
-<b>Extends:</b> [AGlInstancedBinder](./core.aglinstancedbinder.md)<!-- -->&lt;[TGlInstancedComponentRenderer](./core.tglinstancedcomponentrenderer.md)<!-- -->, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->&gt;
+<b>Extends:</b> [AGlInstancedBinder](./core.aglinstancedbinder.md)<!-- -->&lt;[TGlInstancedComponentRenderer](./core.tglinstancedcomponentrenderer.md)<!-- -->, [TGlTraceEntity](./cartesian-2d.tgltraceentity.md)<!-- -->, [TGlF32BufferLayout](./core.tglf32bufferlayout.md)<!-- -->&gt;
 
 <b>Implements:</b> [IGlTraceBinder](./cartesian-2d.igltracebinder.md)
 
@@ -35,13 +35,17 @@ export declare class GlCartesian2dTraceBinder extends AGlInstancedBinder<TGlInst
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [areAttributesDirty(entity)](./cartesian-2d.glcartesian2dtracebinder.areattributesdirty.md) |  |  |
 |  [bindAttributes(componentRenderer)](./cartesian-2d.glcartesian2dtracebinder.bindattributes.md) |  |  |
 |  [bindInstanced(componentRenderer, divisor, usage)](./cartesian-2d.glcartesian2dtracebinder.bindinstanced.md) |  |  |
 |  [bindUniforms(componentRenderer)](./cartesian-2d.glcartesian2dtracebinder.binduniforms.md) |  |  |
 |  [getBinderId()](./cartesian-2d.glcartesian2dtracebinder.getbinderid.md) |  |  |
+|  [getBufferLayout()](./cartesian-2d.glcartesian2dtracebinder.getbufferlayout.md) |  |  |
+|  [getChangeId(entity)](./cartesian-2d.glcartesian2dtracebinder.getchangeid.md) |  |  |
 |  [getTransformBinder()](./cartesian-2d.glcartesian2dtracebinder.gettransformbinder.md) |  |  |
 |  [initialize(componentRenderer)](./cartesian-2d.glcartesian2dtracebinder.initialize.md) |  |  |
 |  [link(binders)](./cartesian-2d.glcartesian2dtracebinder.link.md) |  |  |
-|  [updateData(entity, changeId)](./cartesian-2d.glcartesian2dtracebinder.updatedata.md) |  |  |
+|  [setBufferLayout(bufferLayout)](./cartesian-2d.glcartesian2dtracebinder.setbufferlayout.md) |  |  |
+|  [updateData(entity)](./cartesian-2d.glcartesian2dtracebinder.updatedata.md) |  |  |
 |  [updatePointers()](./cartesian-2d.glcartesian2dtracebinder.updatepointers.md) |  |  |
 

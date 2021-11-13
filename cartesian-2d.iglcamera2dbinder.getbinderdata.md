@@ -9,7 +9,7 @@ Get the parameter for setData from the plot's update arg.
 <b>Signature:</b>
 
 ```typescript
-getBinderData(updateArg: TUpdateArg): TBinderData;
+getBinderData(updateArg: TUpdateArg, renderer: TGlBasicComponentRenderer): TConnector;
 ```
 
 ## Parameters
@@ -17,8 +17,9 @@ getBinderData(updateArg: TUpdateArg): TBinderData;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  updateArg | TUpdateArg |  |
+|  renderer | [TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md) |  |
 
 <b>Returns:</b>
 
-TBinderData
+TConnector
 

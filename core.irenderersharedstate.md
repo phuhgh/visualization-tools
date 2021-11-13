@@ -16,6 +16,7 @@ export interface IRendererSharedState
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [entityBuffers](./core.irenderersharedstate.entitybuffers.md) | [IEntityBufferStore](./core.ientitybufferstore.md)<!-- -->&lt;[TUnknownBufferLayout](./core.tunknownbufferlayout.md)<!-- -->&gt; |  |
 |  [frameCounter](./core.irenderersharedstate.framecounter.md) | number |  |
 |  [scissorRange](./core.irenderersharedstate.scissorrange.md) | IReadonlyRange2d&lt;TTypedArray&gt; \| null |  |
 

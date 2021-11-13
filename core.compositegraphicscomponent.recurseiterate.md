@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-recurseIterate(callback: (component: TGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void): void;
+recurseIterate(callback: TUnfilteredIterateCallback<TComponentRenderer, TUpdateArg, TTraits>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | (component: [TGraphicsComponent](./core.tgraphicscomponent.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt;) =&gt; void |  |
+|  callback | [TUnfilteredIterateCallback](./core.tunfilterediteratecallback.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt; |  |
 
 <b>Returns:</b>
 

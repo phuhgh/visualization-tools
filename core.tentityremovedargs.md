@@ -9,7 +9,7 @@ Args for [TOnEntityRemoved](./core.tonentityremoved.md)<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-export declare type TEntityRemovedArgs<TPlotRange, TRequiredTraits> = [entity: TEntityTrait<unknown, TRequiredTraits>, plot: IPlot<TPlotRange, TRequiredTraits>];
+export declare type TEntityRemovedArgs<TRequiredTraits> = [entity: TEntityTrait<unknown, TRequiredTraits>];
 ```
-<b>References:</b> [TEntityTrait](./core.tentitytrait.md)<!-- -->, [IPlot](./core.iplot.md)
+<b>References:</b> [TEntityTrait](./core.tentitytrait.md)
 

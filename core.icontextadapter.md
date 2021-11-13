@@ -4,19 +4,13 @@
 
 ## IContextAdapter interface
 
-Hooks for context loss etc.
+Wrapper of renderer context.
 
 <b>Signature:</b>
 
 ```typescript
 export interface IContextAdapter<TCtx> 
 ```
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [graphContextChangeHooks](./core.icontextadapter.graphcontextchangehooks.md) | [IContextChangeHooks](./core.icontextchangehooks.md) |  |
 
 ## Methods
 

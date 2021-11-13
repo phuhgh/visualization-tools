@@ -9,7 +9,7 @@ Listener for entity added to plot.
 <b>Signature:</b>
 
 ```typescript
-export declare type TOnEntityAdded<TPlotRange, TRequiredTraits> = TListener<"onEntityAdded", TEntityAddedArgs<TPlotRange, TRequiredTraits>>;
+export declare type TOnEntityAdded<TRequiredTraits> = TListener<"onEntityAdded", TEntityAddedArgs<TRequiredTraits>>;
 ```
 <b>References:</b> [TEntityAddedArgs](./core.tentityaddedargs.md)
 

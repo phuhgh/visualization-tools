@@ -9,14 +9,14 @@ Instanced data binder for webgl graphics components.
 <b>Signature:</b>
 
 ```typescript
-export interface IGlInstancedBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector> extends IGlBinder<TComponentRenderer, TConnector> 
+export interface IGlInstancedBinder<TComponentRenderer extends TGlBasicComponentRenderer, TConnector, TBufferLayout> extends IGlBinder<TComponentRenderer, TConnector, TBufferLayout> 
 ```
-<b>Extends:</b> [IGlBinder](./core.iglbinder.md)<!-- -->&lt;TComponentRenderer, TConnector&gt;
+<b>Extends:</b> [IGlBinder](./core.iglbinder.md)<!-- -->&lt;TComponentRenderer, TConnector, TBufferLayout&gt;
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
 |  [bindInstanced(componentRenderer, divisor, usage)](./core.iglinstancedbinder.bindinstanced.md) |  |
-|  [updateInstanced(connector, componentRenderer, changeId, divisor, usage)](./core.iglinstancedbinder.updateinstanced.md) | Perform all possible updates. |
+|  [updateInstanced(connector, componentRenderer, divisor, usage)](./core.iglinstancedbinder.updateinstanced.md) | Perform all possible updates. |
 

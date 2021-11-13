@@ -16,6 +16,7 @@ export declare class NoTransformProvider implements ITransformProvider<TUnknownC
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [bufferLayoutProvider](./core.notransformprovider.bufferlayoutprovider.md) |  | null |  |
 |  [groupId](./core.notransformprovider.groupid.md) |  | number |  |
 |  [transformComponent](./core.notransformprovider.transformcomponent.md) |  | null |  |
 
@@ -24,6 +25,7 @@ export declare class NoTransformProvider implements ITransformProvider<TUnknownC
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [getTransformBinder()](./core.notransformprovider.gettransformbinder.md) |  |  |
+|  [isTransformRequired()](./core.notransformprovider.istransformrequired.md) |  |  |
 |  [setGroupId(\_groupId)](./core.notransformprovider.setgroupid.md) |  |  |
 |  [setOutputBuffers()](./core.notransformprovider.setoutputbuffers.md) |  |  |
 |  [updateTransform()](./core.notransformprovider.updatetransform.md) |  |  |

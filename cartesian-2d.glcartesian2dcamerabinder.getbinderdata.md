@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-getBinderData(updateArg: ICartesian2dUpdateArg<Float32Array>): ICartesian2dTransforms<Float32Array>;
+getBinderData(updateArg: ICartesian2dUpdateArg<Float32Array>, renderer: TGlBasicComponentRenderer): TGlCartesian2dUpdateArg;
 ```
 
 ## Parameters
@@ -15,8 +15,9 @@ getBinderData(updateArg: ICartesian2dUpdateArg<Float32Array>): ICartesian2dTrans
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  updateArg | [ICartesian2dUpdateArg](./cartesian-2d.icartesian2dupdatearg.md)<!-- -->&lt;Float32Array&gt; |  |
+|  renderer | [TGlBasicComponentRenderer](./core.tglbasiccomponentrenderer.md) |  |
 
 <b>Returns:</b>
 
-[ICartesian2dTransforms](./cartesian-2d.icartesian2dtransforms.md)<!-- -->&lt;Float32Array&gt;
+[TGlCartesian2dUpdateArg](./cartesian-2d.tglcartesian2dupdatearg.md)
 

@@ -9,7 +9,7 @@ Constructs a new instance of the `GlTransformProvider` class
 <b>Signature:</b>
 
 ```typescript
-constructor(transformKey: ICacheable, binder: TSwapBinder & ITransformBinderProvider<TTransformBinder>, getUserTransform: (updateArg: TUpdateArg) => IUserTransform);
+protected constructor(transformKey: ICacheable, binder: TGlUnknownBinder<TTransformRenderer> & ITransformBinderProvider<TTransformBinder>, getUserTransform: (updateArg: TUpdateArg) => IUserTransform, getBinderConnector: (entity: TEntityTraits, updateArg: TUpdateArg) => unknown);
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ constructor(transformKey: ICacheable, binder: TSwapBinder & ITransformBinderProv
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  transformKey | [ICacheable](./core.icacheable.md) |  |
-|  binder | TSwapBinder &amp; [ITransformBinderProvider](./core.itransformbinderprovider.md)<!-- -->&lt;TTransformBinder&gt; |  |
+|  binder | [TGlUnknownBinder](./core.tglunknownbinder.md)<!-- -->&lt;TTransformRenderer&gt; &amp; [ITransformBinderProvider](./core.itransformbinderprovider.md)<!-- -->&lt;TTransformBinder&gt; |  |
 |  getUserTransform | (updateArg: TUpdateArg) =&gt; [IUserTransform](./core.iusertransform.md) |  |
+|  getBinderConnector | (entity: TEntityTraits, updateArg: TUpdateArg) =&gt; unknown |  |
 

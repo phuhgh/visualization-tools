@@ -4,8 +4,6 @@
 
 ## GlTransformProvider.groupId property
 
-Components in the same group share transform results (they should also share buffers).
-
 <b>Signature:</b>
 
 ```typescript

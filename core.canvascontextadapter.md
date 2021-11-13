@@ -17,13 +17,7 @@ export declare class CanvasContextAdapter implements IContextAdapter<CanvasRende
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(canvasElement, graphContextChangeHooks)](./core.canvascontextadapter._constructor_.md) |  | Constructs a new instance of the <code>CanvasContextAdapter</code> class |
-
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [graphContextChangeHooks](./core.canvascontextadapter.graphcontextchangehooks.md) |  | [IContextChangeHooks](./core.icontextchangehooks.md) |  |
+|  [(constructor)(canvasElement)](./core.canvascontextadapter._constructor_.md) |  | Constructs a new instance of the <code>CanvasContextAdapter</code> class |
 
 ## Methods
 

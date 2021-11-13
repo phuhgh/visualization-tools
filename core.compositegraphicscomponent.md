@@ -4,7 +4,7 @@
 
 ## CompositeGraphicsComponent class
 
-Provided as a means to compose graphics components; it does not infer / bestow any behaviors. Refer to update strategy documentation for draw call behavior.
+Refer to update strategy documentation for draw call behavior.
 
 <b>Signature:</b>
 

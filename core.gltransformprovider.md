@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class GlTransformProvider<TTransformRenderer extends TGl2ComponentRenderer, TTransformBinder extends IGlTransformBinder<unknown, TSwapBinder, TTransformRenderer>, TSwapBinder extends IGlBinder<TGlBasicComponentRenderer, unknown>, TUpdateArg, TEntityTraits> implements ITransformProvider<TTransformRenderer, TUpdateArg, TEntityTraits> 
+export declare class GlTransformProvider<TTransformRenderer extends TGl2ComponentRenderer, TTransformBinder extends IGlTransformBinder<unknown, TGlUnknownBinder<TTransformRenderer>, TTransformRenderer>, TUpdateArg, TEntityTraits extends TChangeTrackedTrait> implements ITransformProvider<TTransformRenderer, TUpdateArg, TEntityTraits> 
 ```
 <b>Implements:</b> [ITransformProvider](./core.itransformprovider.md)<!-- -->&lt;TTransformRenderer, TUpdateArg, TEntityTraits&gt;
 
@@ -16,20 +16,23 @@ export declare class GlTransformProvider<TTransformRenderer extends TGl2Componen
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(transformKey, binder, getUserTransform)](./core.gltransformprovider._constructor_.md) |  | Constructs a new instance of the <code>GlTransformProvider</code> class |
+|  [(constructor)(transformKey, binder, getUserTransform, getBinderConnector)](./core.gltransformprovider._constructor_.md) |  | Constructs a new instance of the <code>GlTransformProvider</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [groupId](./core.gltransformprovider.groupid.md) |  | number | Components in the same group share transform results (they should also share buffers). |
-|  [transformComponent](./core.gltransformprovider.transformcomponent.md) |  | [IGlTransformComponent](./core.igltransformcomponent.md)<!-- -->&lt;TTransformRenderer, TSwapBinder, TUpdateArg, TEntityTraits&gt; \| null |  |
+|  [bufferLayoutProvider](./core.gltransformprovider.bufferlayoutprovider.md) |  | [ITransformProviderBufferProvider](./core.itransformproviderbufferprovider.md)<!-- -->&lt;[TUnknownBufferLayout](./core.tunknownbufferlayout.md)<!-- -->&gt; |  |
+|  [groupId](./core.gltransformprovider.groupid.md) |  | number |  |
+|  [transformComponent](./core.gltransformprovider.transformcomponent.md) |  | [IGlTransformComponent](./core.igltransformcomponent.md)<!-- -->&lt;TTransformRenderer, [TGlUnknownBinder](./core.tglunknownbinder.md)<!-- -->&lt;TTransformRenderer&gt;, TUpdateArg, TEntityTraits&gt; \| null |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [createOne(transformKey, binder, getUserTransform, getEntityChangeId)](./core.gltransformprovider.createone.md) | <code>static</code> |  |
 |  [getTransformBinder()](./core.gltransformprovider.gettransformbinder.md) |  |  |
+|  [isTransformRequired(entity, updateArg)](./core.gltransformprovider.istransformrequired.md) |  |  |
 |  [setGroupId(id)](./core.gltransformprovider.setgroupid.md) |  |  |
 |  [setOutputBuffers(entity, transformRenderer)](./core.gltransformprovider.setoutputbuffers.md) |  |  |
 |  [updateTransform(renderer, updateArg)](./core.gltransformprovider.updatetransform.md) |  |  |

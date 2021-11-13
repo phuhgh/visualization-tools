@@ -9,12 +9,12 @@ Constructs a new instance of the `GlPoint2dNaturalLogTransform` class
 <b>Signature:</b>
 
 ```typescript
-constructor(point2dBinder: IGlIndexedPoint2dBinder<Float32Array>);
+constructor(point2dBinder: IGlIndexedPoint2dTransformBinder<Float32Array>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  point2dBinder | [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt; |  |
+|  point2dBinder | [IGlIndexedPoint2dTransformBinder](./cartesian-2d.iglindexedpoint2dtransformbinder.md)<!-- -->&lt;Float32Array&gt; |  |
 

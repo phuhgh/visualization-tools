@@ -9,7 +9,7 @@ Constructor signature for [Gl1ContextAdapter](./core.gl1contextadapter.md) or [G
 <b>Signature:</b>
 
 ```typescript
-export declare type TGlContextAdapterCtor<TCtx> = new (canvas: HTMLCanvasElement, attributes?: WebGLContextAttributes) => IContextAdapter<TCtx>;
+export declare type TGlContextAdapterCtor<TCtx> = new (canvas: HTMLCanvasElement, eventService: IEventService, attributes?: WebGLContextAttributes) => IContextAdapter<TCtx>;
 ```
-<b>References:</b> [IContextAdapter](./core.icontextadapter.md)
+<b>References:</b> [IEventService](./core.ieventservice.md)<!-- -->, [IContextAdapter](./core.icontextadapter.md)
 

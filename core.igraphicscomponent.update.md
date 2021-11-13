@@ -9,7 +9,7 @@ Called once per entity per frame.
 <b>Signature:</b>
 
 ```typescript
-update(entity: TEntityTraits, componentRenderer: TComponentRenderer, updateParameter: TUpdateArg): void;
+update(entity: TEntityTraits, componentRenderer: TComponentRenderer, updateArg: TUpdateArg): void;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ update(entity: TEntityTraits, componentRenderer: TComponentRenderer, updateParam
 |  --- | --- | --- |
 |  entity | TEntityTraits |  |
 |  componentRenderer | TComponentRenderer |  |
-|  updateParameter | TUpdateArg |  |
+|  updateArg | TUpdateArg |  |
 
 <b>Returns:</b>
 

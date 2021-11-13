@@ -9,16 +9,16 @@ Instanced data binder for webgl graphics components.
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class AGlInstancedBinder<TComponentRenderer extends TGlInstancedComponentRenderer, TConnector> extends AGlBinder<TComponentRenderer, TConnector> implements IGlInstancedBinder<TComponentRenderer, TConnector> 
+export declare abstract class AGlInstancedBinder<TComponentRenderer extends TGlInstancedComponentRenderer, TConnector, TBufferLayout> extends AGlBinder<TComponentRenderer, TConnector, TBufferLayout> implements IGlInstancedBinder<TComponentRenderer, TConnector, TBufferLayout> 
 ```
-<b>Extends:</b> [AGlBinder](./core.aglbinder.md)<!-- -->&lt;TComponentRenderer, TConnector&gt;
+<b>Extends:</b> [AGlBinder](./core.aglbinder.md)<!-- -->&lt;TComponentRenderer, TConnector, TBufferLayout&gt;
 
-<b>Implements:</b> [IGlInstancedBinder](./core.iglinstancedbinder.md)<!-- -->&lt;TComponentRenderer, TConnector&gt;
+<b>Implements:</b> [IGlInstancedBinder](./core.iglinstancedbinder.md)<!-- -->&lt;TComponentRenderer, TConnector, TBufferLayout&gt;
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [bindInstanced(componentRenderer, divisor, usage)](./core.aglinstancedbinder.bindinstanced.md) |  |  |
-|  [updateInstanced(connector, componentRenderer, changeId, divisor, usage)](./core.aglinstancedbinder.updateinstanced.md) |  |  |
+|  [updateInstanced(connector, componentRenderer, divisor, usage)](./core.aglinstancedbinder.updateinstanced.md) |  |  |
 

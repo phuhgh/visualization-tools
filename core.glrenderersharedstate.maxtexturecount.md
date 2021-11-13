@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-maxTextureCount: number;
+readonly maxTextureCount: number;
 ```

@@ -69,7 +69,6 @@
 |  --- | --- |
 |  [createCartesianPlotCtor(axisFactory, metaUpdateHooks, dataUpdateHooks)](./cartesian-2d.createcartesianplotctor.md) | Generates the constructor of [ICartesian2dPlot](./cartesian-2d.icartesian2dplot.md)<!-- -->. Use a factory to create an instance ([CanvasCartesian2dPlotFactory](./cartesian-2d.canvascartesian2dplotfactory.md)<!-- -->, [GlCartesian2dPlotFactory](./cartesian-2d.glcartesian2dplotfactory.md) etc) unless extending. |
 |  [getRangeFromIndexedConnector(connector, result)](./cartesian-2d.getrangefromindexedconnector.md) | Provides the AABB (in data space) of an indexed point connector. The last parameter is an optional out parameter, if not supplied F64 will be assumed. |
-|  [getTransformChangeId(entity)](./cartesian-2d.gettransformchangeid.md) |  |
 |  [hoverHighlightLineSegment(entity, state, segments)](./cartesian-2d.hoverhighlightlinesegment.md) | Updates the state of an entity that receives a hover event. |
 |  [populateCartesian2dTraceBindings(entity)](./cartesian-2d.populatecartesian2dtracebindings.md) | Generates a typed array buffer of the entities current traces. Output structure is of the form \[xMin, yMin, xMax, yMax\] per trace, where min and max are the extrema of the data range being drawn. Vertical traces come first. |
 
@@ -101,14 +100,17 @@
 |  [IGlCamera2dBinder](./cartesian-2d.iglcamera2dbinder.md) | Provides coordinate system invariant WebGL bindings for 2d graphics components. |
 |  [IGlCartesian2dCameraBinder](./cartesian-2d.iglcartesian2dcamerabinder.md) | Provides WebGL bindings for cartesian 2d graphics components. |
 |  [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md) |  |
+|  [IGlIndexedPoint2dTransformBinder](./cartesian-2d.iglindexedpoint2dtransformbinder.md) |  |
 |  [IGlTraceBinder](./cartesian-2d.igltracebinder.md) | Binds trace data to WebGL buffers. |
 |  [IGlTraceTransformBinder](./cartesian-2d.igltracetransformbinder.md) | Binds trace data to WebGL transform feedback. |
 |  [IInterleavedCircle2dQuadIndexerBindings](./cartesian-2d.iinterleavedcircle2dquadindexerbindings.md) |  |
 |  [IInterleavedLine2dQuadIndexerBindings](./cartesian-2d.iinterleavedline2dquadindexerbindings.md) |  |
+|  [IInterleavedPointGlBindings](./cartesian-2d.iinterleavedpointglbindings.md) |  |
 |  [IPoint2dOffsets](./cartesian-2d.ipoint2doffsets.md) | Offsets into a <code>IIndexedDataConnector</code> that represent a 2d point. |
 |  [IScene2d](./cartesian-2d.iscene2d.md) |  |
 |  [ISharedInterleavedPoint2dQuadIndexer](./cartesian-2d.isharedinterleavedpoint2dquadindexer.md) | Indexes a [ISharedInterleavedConnector](./core.isharedinterleavedconnector.md) which describes a collection of 2d points representing a continuous line. |
 |  [IUpdate2dGroup](./cartesian-2d.iupdate2dgroup.md) | Update group for drawable entities part of a 2d plot. |
+|  [TGlCartesian2dUpdateArg](./cartesian-2d.tglcartesian2dupdatearg.md) |  |
 
 ## Type Aliases
 

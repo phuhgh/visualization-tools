@@ -23,6 +23,7 @@ export declare class GlRendererSharedState implements IGlRendererSharedState
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [entityBuffers](./core.glrenderersharedstate.entitybuffers.md) |  | [IEntityBufferStore](./core.ientitybufferstore.md)<!-- -->&lt;[IBufferLayout](./core.ibufferlayout.md)<!-- -->&lt;[IGlBuffer](./core.iglbuffer.md)<!-- -->&lt;TTypedArray&gt;&gt;&gt; |  |
 |  [frameCounter](./core.glrenderersharedstate.framecounter.md) |  | number |  |
 |  [maxTextureCount](./core.glrenderersharedstate.maxtexturecount.md) |  | number |  |
 |  [scissorRange](./core.glrenderersharedstate.scissorrange.md) |  | IReadonlyRange2d&lt;TTypedArray&gt; \| null |  |

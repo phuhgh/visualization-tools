@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-getTransformBinder(): IGlIndexedPoint2dBinder<Float32Array>;
+getTransformBinder(): IGlIndexedPoint2dTransformBinder<Float32Array>;
 ```
 <b>Returns:</b>
 
-[IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt;
+[IGlIndexedPoint2dTransformBinder](./cartesian-2d.iglindexedpoint2dtransformbinder.md)<!-- -->&lt;Float32Array&gt;
 

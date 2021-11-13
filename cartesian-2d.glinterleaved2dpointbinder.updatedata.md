@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-updateData(entity: TInterleavedPoint2dTrait<Float32Array>, changeId: number): void;
+updateData(entity: TInterleavedPoint2dTrait<Float32Array>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,6 @@ updateData(entity: TInterleavedPoint2dTrait<Float32Array>, changeId: number): vo
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entity | [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt; |  |
-|  changeId | number |  |
 
 <b>Returns:</b>
 

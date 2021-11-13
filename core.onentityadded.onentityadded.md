@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-onEntityAdded: (...args: TEntityAddedArgs<TPlotRange, TRequiredTraits>) => void;
+onEntityAdded: (...args: TEntityAddedArgs<TRequiredTraits>) => void;
 ```

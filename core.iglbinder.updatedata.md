@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-updateData(connector: TConnector, changeId: number): void;
+updateData(connector: TConnector): void;
 ```
 
 ## Parameters
@@ -15,7 +15,6 @@ updateData(connector: TConnector, changeId: number): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  connector | TConnector |  |
-|  changeId | number |  |
 
 <b>Returns:</b>
 

@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-getEntities(): TEntityTrait<TUpdateArg, TTraits>[];
+getEntities(): readonly TEntityTrait<TUpdateArg, TTraits>[];
 ```
 <b>Returns:</b>
 
-[TEntityTrait](./core.tentitytrait.md)<!-- -->&lt;TUpdateArg, TTraits&gt;\[\]
+readonly [TEntityTrait](./core.tentitytrait.md)<!-- -->&lt;TUpdateArg, TTraits&gt;\[\]
 

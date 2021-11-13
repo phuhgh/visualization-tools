@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-recurseIterate(filter: EGraphicsComponentType.Entity, callback: (component: IGraphicsComponent<TComponentRenderer, TUpdateArg, TTraits>) => void): void;
+recurseIterate(filter: EGraphicsComponentType.Entity, callback: TFilteredIterateCallback<TComponentRenderer, TUpdateArg, TTraits>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  filter | [EGraphicsComponentType.Entity](./core.egraphicscomponenttype.entity.md) |  |
-|  callback | (component: [IGraphicsComponent](./core.igraphicscomponent.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt;) =&gt; void |  |
+|  filter | [EGraphicsComponentType.Entity](./core.egraphicscomponenttype.md) |  |
+|  callback | [TFilteredIterateCallback](./core.tfilterediteratecallback.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt; |  |
 
 <b>Returns:</b>
 

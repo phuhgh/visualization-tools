@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-transform: GlTransformProvider<TGl2ComponentRenderer, IGlIndexedPoint2dBinder<Float32Array>, IGlIndexedPoint2dBinder<Float32Array>, TUpdateArg, TInterleavedPoint2dTrait<Float32Array>>;
+transform: GlTransformProvider<TGl2ComponentRenderer, IGlIndexedPoint2dTransformBinder<Float32Array>, TUpdateArg, TInterleavedPoint2dTrait<Float32Array>>;
 ```

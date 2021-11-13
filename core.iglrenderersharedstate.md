@@ -17,6 +17,7 @@ export interface IGlRendererSharedState extends IRendererSharedState
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [entityBuffers](./core.iglrenderersharedstate.entitybuffers.md) | [IEntityBufferStore](./core.ientitybufferstore.md)<!-- -->&lt;[IBufferLayout](./core.ibufferlayout.md)<!-- -->&lt;[IGlBuffer](./core.iglbuffer.md)<!-- -->&lt;TTypedArray&gt;&gt;&gt; |  |
 |  [maxTextureCount](./core.iglrenderersharedstate.maxtexturecount.md) | number |  |
 
 ## Methods

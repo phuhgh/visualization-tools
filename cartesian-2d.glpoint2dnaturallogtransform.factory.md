@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static factory: GlTransformComponentFactory<IGlIndexedPoint2dBinder<Float32Array>, TGl2ComponentRenderer<never>>;
+static factory: GlTransformComponentFactory<IGlIndexedPoint2dTransformBinder<Float32Array>, TGl2ComponentRenderer<never>>;
 ```

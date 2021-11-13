@@ -9,7 +9,7 @@ Constructs a new instance of the `GraphAttachPoint` class
 <b>Signature:</b>
 
 ```typescript
-constructor(attachPointProvider: IGraphAttachPointProvider, chartEventService: EventService, chartConfig: IChartConfig, $window?: Window);
+constructor(attachPointProvider: IGraphAttachPointProvider, chartEventService: IEventService, chartConfig: IChartConfig, $window?: Window);
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ constructor(attachPointProvider: IGraphAttachPointProvider, chartEventService: E
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  attachPointProvider | [IGraphAttachPointProvider](./core.igraphattachpointprovider.md) |  |
-|  chartEventService | [EventService](./core.eventservice.md) |  |
+|  chartEventService | [IEventService](./core.ieventservice.md) |  |
 |  chartConfig | [IChartConfig](./core.ichartconfig.md) |  |
 |  $window | Window |  |
 

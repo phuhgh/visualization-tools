@@ -17,6 +17,7 @@ export declare class TransformComponentStore<TComponentRenderer extends IBaseCom
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [getAllTransforms()](./core.transformcomponentstore.getalltransforms.md) |  |  |
 |  [getTransform(userTransformId, graphicsComponent)](./core.transformcomponentstore.gettransform.md) |  |  |
 |  [setTransform(userTransformId, graphicsComponent, transform)](./core.transformcomponentstore.settransform.md) |  |  |
 

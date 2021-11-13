@@ -4,7 +4,7 @@
 
 ## ICompositeGraphicsComponent interface
 
-Provided as a means to compose graphics components; it does not infer / bestow any behaviors. Refer to update strategy documentation for draw call behavior.
+Refer to update strategy documentation for draw call behavior.
 
 <b>Signature:</b>
 
@@ -22,7 +22,7 @@ Any duplicate graphics components (by instance) will be eliminated, regardless o
 |  --- | --- | --- |
 |  [groupUpdatesByEntity](./core.icompositegraphicscomponent.groupupdatesbyentity.md) | boolean | Instead of batching entities into update groups based on the subcomponents, update entities in turn cycling through the subcomponents. With large shared buffers and few entities this can significantly improve performance. |
 |  [subComponents](./core.icompositegraphicscomponent.subcomponents.md) | [IGraphicsSubComponents](./core.igraphicssubcomponents.md)<!-- -->&lt;TComponentRenderer, TUpdateArg, TTraits&gt; |  |
-|  [type](./core.icompositegraphicscomponent.type.md) | [EGraphicsComponentType.Composite](./core.egraphicscomponenttype.composite.md) |  |
+|  [type](./core.icompositegraphicscomponent.type.md) | [EGraphicsComponentType.Composite](./core.egraphicscomponenttype.md) |  |
 
 ## Methods
 
@@ -30,4 +30,5 @@ Any duplicate graphics components (by instance) will be eliminated, regardless o
 |  --- | --- |
 |  [recurseIterate(callback)](./core.icompositegraphicscomponent.recurseiterate.md) |  |
 |  [recurseIterate(filter, callback)](./core.icompositegraphicscomponent.recurseiterate_1.md) |  |
+|  [recurseIterate(filter, callback)](./core.icompositegraphicscomponent.recurseiterate_2.md) |  |
 

@@ -24,7 +24,7 @@ export declare class GlPoint2dGraphicsComponent<TUpdateArg extends IUpdateArg> i
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [specification](./cartesian-2d.glpoint2dgraphicscomponent.specification.md) |  | [IGlProgramSpec](./core.iglprogramspec.md) |  |
-|  [transform](./cartesian-2d.glpoint2dgraphicscomponent.transform.md) |  | [GlTransformProvider](./core.gltransformprovider.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt;, [IGlIndexedPoint2dBinder](./cartesian-2d.iglindexedpoint2dbinder.md)<!-- -->&lt;Float32Array&gt;, TUpdateArg, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt;&gt; |  |
+|  [transform](./cartesian-2d.glpoint2dgraphicscomponent.transform.md) |  | [GlTransformProvider](./core.gltransformprovider.md)<!-- -->&lt;[TGl2ComponentRenderer](./core.tgl2componentrenderer.md)<!-- -->, [IGlIndexedPoint2dTransformBinder](./cartesian-2d.iglindexedpoint2dtransformbinder.md)<!-- -->&lt;Float32Array&gt;, TUpdateArg, [TInterleavedPoint2dTrait](./cartesian-2d.tinterleavedpoint2dtrait.md)<!-- -->&lt;Float32Array&gt;&gt; |  |
 |  [type](./cartesian-2d.glpoint2dgraphicscomponent.type.md) |  | (not declared) |  |
 
 ## Methods

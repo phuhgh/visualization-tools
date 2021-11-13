@@ -9,7 +9,7 @@ Listener for entity removed form plot.
 <b>Signature:</b>
 
 ```typescript
-export declare type TOnEntityRemoved<TPlotRange, TRequiredTraits> = TListener<"onEntityRemoved", TEntityRemovedArgs<TPlotRange, TRequiredTraits>>;
+export declare type TOnEntityRemoved<TRequiredTraits> = TListener<"onEntityRemoved", TEntityRemovedArgs<TRequiredTraits>>;
 ```
 <b>References:</b> [TEntityRemovedArgs](./core.tentityremovedargs.md)
 

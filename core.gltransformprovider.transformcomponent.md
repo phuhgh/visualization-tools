@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-transformComponent: IGlTransformComponent<TTransformRenderer, TSwapBinder, TUpdateArg, TEntityTraits> | null;
+transformComponent: IGlTransformComponent<TTransformRenderer, TGlUnknownBinder<TTransformRenderer>, TUpdateArg, TEntityTraits> | null;
 ```

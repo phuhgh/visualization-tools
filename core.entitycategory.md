@@ -32,4 +32,5 @@ export declare class EntityCategory<TComponentRenderer extends TUnknownComponent
 |  [addEntity(entity, graphicsComponent, hooks)](./core.entitycategory.addentity.md) |  |  |
 |  [getEntities()](./core.entitycategory.getentities.md) |  |  |
 |  [removeEntity(entity)](./core.entitycategory.removeentity.md) |  |  |
+|  [setBufferPerEntity(enabled)](./core.entitycategory.setbufferperentity.md) |  |  |
 

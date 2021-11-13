@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-static emit<TPlotRange, TRequiredTraits>(plot: IPlot<TPlotRange, TRequiredTraits>, entity: TEntityTrait<unknown, TRequiredTraits>): void;
+static emit<TRequiredTraits>(eventService: IEventService, entity: TEntityTrait<unknown, TRequiredTraits>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  plot | [IPlot](./core.iplot.md)<!-- -->&lt;TPlotRange, TRequiredTraits&gt; |  |
+|  eventService | [IEventService](./core.ieventservice.md) |  |
 |  entity | [TEntityTrait](./core.tentitytrait.md)<!-- -->&lt;unknown, TRequiredTraits&gt; |  |
 
 <b>Returns:</b>

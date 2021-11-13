@@ -15,7 +15,8 @@ export interface ITransformProvider<TTransformRenderer extends TUnknownComponent
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [groupId](./core.itransformprovider.groupid.md) | number |  |
+|  [bufferLayoutProvider](./core.itransformprovider.bufferlayoutprovider.md) | [ITransformProviderBufferProvider](./core.itransformproviderbufferprovider.md)<!-- -->&lt;[TUnknownBufferLayout](./core.tunknownbufferlayout.md)<!-- -->&gt; \| null |  |
+|  [groupId](./core.itransformprovider.groupid.md) | number | Components in the same group share transform results (they should also share buffers). |
 |  [transformComponent](./core.itransformprovider.transformcomponent.md) | [ITransformComponent](./core.itransformcomponent.md)<!-- -->&lt;TTransformRenderer, TUpdateArg, TEntityTraits&gt; \| null |  |
 
 ## Methods
@@ -23,6 +24,7 @@ export interface ITransformProvider<TTransformRenderer extends TUnknownComponent
 |  Method | Description |
 |  --- | --- |
 |  [getTransformBinder()](./core.itransformprovider.gettransformbinder.md) |  |
+|  [isTransformRequired(entity, updateArg)](./core.itransformprovider.istransformrequired.md) |  |
 |  [setGroupId(id)](./core.itransformprovider.setgroupid.md) |  |
 |  [setOutputBuffers(entity, transformRenderer)](./core.itransformprovider.setoutputbuffers.md) |  |
 |  [updateTransform(componentRenderer, updateArg)](./core.itransformprovider.updatetransform.md) | Either a entityRenderer or shared renderer may be used. |

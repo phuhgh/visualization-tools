@@ -31,7 +31,7 @@ export interface IGlAttribute<TArray extends TTypedArray>
 |  [initialize(componentRenderer)](./core.iglattribute.initialize.md) | Called once on creation or context restored. |
 |  [link(sharedState)](./core.iglattribute.link.md) | Links this attribute to shared state, such that a change to one attribute results in a change to all attributes. |
 |  [onContextLost()](./core.iglattribute.oncontextlost.md) | Called once on context loss. |
-|  [reset(componentRenderer)](./core.iglattribute.reset.md) | Reset the state of this attribute. If <code>OES_vertex_array_object</code> is enabled or the context is webgl2 this is a no-op. Called after update as part of the update strategy. |
+|  [reset(componentRenderer)](./core.iglattribute.reset.md) | Reset the state of this attribute. If <code>OES_vertex_array_object</code> is enabled or the context is webgl2 this is a no-op. Called after update as part of the update strategy. Does not affect buffer state. |
 |  [setBuffer(buffer)](./core.iglattribute.setbuffer.md) |  |
 |  [setData(data, changeId)](./core.iglattribute.setdata.md) | Copy new data into the buffer. |
 |  [setOffset(byteOffset)](./core.iglattribute.setoffset.md) | Set the byte offset into the buffer. |

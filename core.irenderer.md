@@ -27,6 +27,8 @@ export interface IRenderer<TComponentRenderer extends TUnknownComponentRenderer>
 
 |  Method | Description |
 |  --- | --- |
+|  [destroyBuffers(buffers)](./core.irenderer.destroybuffers.md) |  |
+|  [initializeBuffers(buffers)](./core.irenderer.initializebuffers.md) |  |
 |  [onAfterPlotDraw()](./core.irenderer.onafterplotdraw.md) |  |
 |  [onBeforePlotDraw(plot, canvasDims)](./core.irenderer.onbeforeplotdraw.md) |  |
 |  [onContextLost()](./core.irenderer.oncontextlost.md) |  |

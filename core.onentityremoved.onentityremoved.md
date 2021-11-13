@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-onEntityRemoved: (...args: TEntityRemovedArgs<TPlotRange, TRequiredTraits>) => void;
+onEntityRemoved: (...args: TEntityRemovedArgs<TRequiredTraits>) => void;
 ```

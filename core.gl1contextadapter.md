@@ -17,5 +17,5 @@ export declare class Gl1ContextAdapter extends GlContextAdapter<WebGLRenderingCo
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(canvasElement, options, graphContextChangeHooks)](./core.gl1contextadapter._constructor_.md) |  | Constructs a new instance of the <code>Gl1ContextAdapter</code> class |
+|  [(constructor)(canvasElement, eventService, options)](./core.gl1contextadapter._constructor_.md) |  | Constructs a new instance of the <code>Gl1ContextAdapter</code> class |
 
