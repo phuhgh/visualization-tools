@@ -158,11 +158,11 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
         .addComponent(new GlLineFlatCapGraphicsComponent(new GlCartesian2dCameraBinder(), new GlInterleaved2dPointBinder(interleavedBindingDescriptor, { pointsToBind: 3 })))
         .build();
 
-    const settings: TPoint2dSettings<Float32Array>[] = _Array.mapRange(0, 9, () => ({
+    const settings: TPoint2dSettings<Float32Array>[] = _Array.mapRange(0, 24, () => ({
         pointDisplay: new Point2dDisplaySettings(
             1,
             RgbaColorPacker.packColor(255, 0, 0, 255),
-            RgbaColorPacker.packColor(255, 0, 255, 255),
+            RgbaColorPacker.packColor(rnd.getNext() * 255, rnd.getNext() * 255, rnd.getNext() * 255, 0),
         ),
         pointSizeNormalizer: pointSubcategory.normalization,
         zIndexAbs: 0,
@@ -170,9 +170,9 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
     }));
 
 
-    const dataEntities = _Array.mapRange(0, 99, (index) =>
+    const dataEntities = _Array.mapRange(0, 249, (index) =>
     {
-        const someData = SharedInterleavedConnector.createOneF32(emscriptenModule, 4000, interleavedConfig);
+        const someData = SharedInterleavedConnector.createOneF32(emscriptenModule, 2000, interleavedConfig);
         populateTestData(someData, dataRange, 0, rnd);
 
         const entity = new ChartDataEntity(someData, settings[index * 0.1 | 0], chart.changeIdFactory);
