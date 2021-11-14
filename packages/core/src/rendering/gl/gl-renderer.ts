@@ -58,10 +58,11 @@ export class GlRenderer<TComponentRenderer extends TGlComponentRenderer<TGlConte
             return null;
         }
 
-        const sharedState = new GlRendererSharedState(context);
-        const factory = GlComponentRendererFactory.createOne(context, options.onCreate.requiredExtensionsToGet, localizations, sharedState);
+        const extensions = GlComponentRendererFactory.getExtensions(context, options.onCreate.requiredExtensionsToGet);
+        const sharedState = GlRendererSharedState.createOne(context, extensions, context instanceof WebGL2RenderingContext);
+        const factory = GlComponentRendererFactory.createOne(context, extensions, sharedState, localizations);
 
-        if (factory == null)
+        if (factory == null || sharedState == null)
         {
             return null;
         }

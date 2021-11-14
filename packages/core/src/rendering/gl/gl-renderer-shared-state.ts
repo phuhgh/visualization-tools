@@ -4,6 +4,8 @@ import { TGlContext } from "./t-gl-context";
 import { IGlBuffer } from "./buffers/i-gl-buffer";
 import { EntityBufferStore, IEntityBufferStore } from "../buffers/entity-buffer-store";
 import { IBufferLayout } from "../buffers/buffer-layout";
+import { IGlExtensions } from "./i-gl-extensions";
+import { TGlExtensions } from "./component-renderer/gl-component-renderer";
 
 /**
  * @public
@@ -16,6 +18,13 @@ export interface IGlRendererSharedState extends IRendererSharedState
     claimTextureUnit(): number;
     clearScissor(): void;
     setContext(context: TGlContext): void;
+
+    isProgramActive(program: WebGLProgram): boolean;
+    useProgram(program: WebGLProgram): void;
+    /**
+     * Usages outside of component renderer must ensure that the extension is loaded before calling (if GL1).
+     */
+    bindVao(vao: WebGLVertexArrayObject | WebGLVertexArrayObjectOES | null): void;
 }
 
 /**
@@ -30,9 +39,28 @@ export class GlRendererSharedState implements IGlRendererSharedState
     public readonly maxTextureCount: number;
     public readonly entityBuffers: IEntityBufferStore<IBufferLayout<IGlBuffer<TTypedArray>>> = new EntityBufferStore();
 
+    public static createOne
+    (
+        context: TGlContext | null,
+        extensions: TGlExtensions<never> | null,
+        isGl2: boolean,
+    )
+        : IGlRendererSharedState | null
+    {
+        if (context == null || extensions == null)
+        {
+            return null;
+        }
+
+        // shared state is not type checked
+        return new GlRendererSharedState(context, extensions as IGlExtensions, isGl2);
+    }
+
     public constructor
     (
         private context: TGlContext,
+        private extensions: IGlExtensions,
+        private readonly isGl2: boolean,
     )
     {
         this.maxTextureCount = context.getParameter(context.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
@@ -90,4 +118,42 @@ export class GlRendererSharedState implements IGlRendererSharedState
     {
         return this.textureIndex++;
     }
+
+    public isProgramActive(program: WebGLProgram): boolean
+    {
+        return this.activeProgram === program;
+    }
+
+    public useProgram(program: WebGLProgram): void
+    {
+        if (this.activeProgram === program)
+        {
+            return;
+        }
+
+        this.context.useProgram(program);
+        this.activeProgram = program;
+    }
+
+    public bindVao(vao: WebGLVertexArrayObject | WebGLVertexArrayObjectOES | null): void
+    {
+        if (this.activeVao === vao)
+        {
+            return;
+        }
+
+        if (this.isGl2)
+        {
+            (this.context as WebGL2RenderingContext).bindVertexArray(vao);
+        }
+        else
+        {
+            this.extensions.OES_vertex_array_object.bindVertexArrayOES(vao);
+        }
+
+        this.activeVao = vao;
+    }
+
+    private activeProgram: WebGLProgram | null = null;
+    private activeVao: WebGLVertexArrayObject | WebGLVertexArrayObjectOES | null = null;
 }

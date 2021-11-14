@@ -1,6 +1,6 @@
 import { TGlContext } from "./t-gl-context";
 import { IGlProgramSpec } from "./gl-program-specification";
-import { GlComponentRenderer, TGlComponentRenderer } from "./component-renderer/gl-component-renderer";
+import { GlComponentRenderer, TGlComponentRenderer, TGlExtensions } from "./component-renderer/gl-component-renderer";
 import { _Array, _Debug, _Production } from "rc-js-util";
 import { IGlExtensions, TGlExtensionKeys } from "./i-gl-extensions";
 import { IComponentRendererFactory } from "../component-renderer/i-component-renderer-factory";
@@ -17,15 +17,12 @@ import { TExtractGcContext } from "../component-renderer/t-extract-gc-context";
 export class GlComponentRendererFactory<TComponentRenderer extends TGlComponentRenderer<TGlContext, never>>
     implements IComponentRendererFactory<IGlProgramSpec, TComponentRenderer>
 {
-    public static createOne<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
+    public static getExtensions<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
     (
         context: TCtx | null,
         requiredExtensions: TExts[],
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        localizations: IErrorLocalization<any> = developerErrorLocalization,
-        sharedState: IGlRendererSharedState,
     )
-        : GlComponentRendererFactory<TGlComponentRenderer<TCtx, TExts>> | null
+        : TGlExtensions<TExts> | null
     {
         if (context == null)
         {
@@ -33,24 +30,45 @@ export class GlComponentRendererFactory<TComponentRenderer extends TGlComponentR
         }
 
         const isGl2 = context instanceof WebGL2RenderingContext;
+        const extensions = {} as IGlExtensions;
 
         for (let i = 0, iEnd = requiredExtensions.length; i < iEnd; ++i)
         {
-            const extension = requiredExtensions[i];
+            const name = requiredExtensions[i];
+            const ext = context.getExtension(name);
 
-            if (context.getExtension(extension) == null)
+            if (ext == null)
             {
-                if (isGl2 && GlComponentRendererFactory.gl2StandardExtensions.has(extension))
+                if (isGl2 && GlComponentRendererFactory.gl2StandardExtensions.has(name))
                 {
                     continue;
                 }
 
-                DEBUG_MODE && _Debug.verboseLog(`required extension "${extension}" not available`);
-                return null;
+                throw _Production.createError(`extension "${name}" is required but not available`);
             }
+
+            extensions[name] = ext;
         }
 
-        return new GlComponentRendererFactory(context, isGl2, localizations, sharedState);
+        return extensions;
+    }
+
+    public static createOne<TCtx extends TGlContext, TExts extends TGlExtensionKeys>
+    (
+        context: TCtx | null,
+        extensions: TGlExtensions<TExts> | null,
+        sharedState: IGlRendererSharedState | null,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        localizations: IErrorLocalization<any> = developerErrorLocalization,
+    )
+        : GlComponentRendererFactory<TGlComponentRenderer<TCtx, TExts>> | null
+    {
+        if (context == null || extensions == null || sharedState == null)
+        {
+            return null;
+        }
+
+        return new GlComponentRendererFactory(context, localizations, sharedState, extensions);
     }
 
     public createRenderer
@@ -66,27 +84,7 @@ export class GlComponentRendererFactory<TComponentRenderer extends TGlComponentR
             specification.fragmentShader.source,
             specification.outAttributes,
         );
-        const extensions = {} as IGlExtensions;
-
-        for (let i = 0, iEnd = specification.requiredExtensions.length; i < iEnd; ++i)
-        {
-            const name = specification.requiredExtensions[i];
-            const ext = this.context.getExtension(name);
-
-            if (ext == null)
-            {
-                if (this.isGl2 && GlComponentRendererFactory.gl2StandardExtensions.has(name))
-                {
-                    continue;
-                }
-
-                throw _Production.createError(`extension "${name}" is required but not available`);
-            }
-
-            extensions[name] = ext;
-        }
-
-        _Array.forEach(specification.optionalExtensions, (name) =>
+        const optionalExts = _Array.collect(specification.optionalExtensions, {} as IGlExtensions, (extensions, name) =>
         {
             const ext = this.context.getExtension(name);
 
@@ -99,7 +97,7 @@ export class GlComponentRendererFactory<TComponentRenderer extends TGlComponentR
         return new GlComponentRenderer(
             this.context as TExtractGcContext<TComponentRenderer>,
             program,
-            extensions,
+            { ...this.extensions, ...optionalExts },
             specification,
             this.sharedState,
         ) as TGlComponentRenderer<TGlContext, never> as TComponentRenderer;
@@ -191,9 +189,9 @@ export class GlComponentRendererFactory<TComponentRenderer extends TGlComponentR
     protected constructor
     (
         private context: TGlContext,
-        private isGl2: boolean,
         private localizations: IErrorLocalization<unknown>,
         private readonly sharedState: IGlRendererSharedState,
+        private readonly extensions: TGlExtensions<never>,
     )
     {
     }

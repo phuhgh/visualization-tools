@@ -91,7 +91,6 @@ export interface IGlComponentVAORenderer
     vao: WebGLVertexArrayObject | WebGLVertexArrayObjectOES | null;
     createVao(): WebGLVertexArrayObject | WebGLVertexArrayObjectOES | null;
     bindVao(vao: WebGLVertexArrayObject | WebGLVertexArrayObjectOES | null): void;
-    unbindVao(): void;
 }
 
 /**
@@ -162,7 +161,7 @@ export class GlComponentRenderer<TCtx extends TGlContext, TExts extends TGlExten
     {
         if (this.vao != null)
         {
-            this.unbindVao();
+            this.bindVao(null);
         }
     }
 
@@ -173,7 +172,7 @@ export class GlComponentRenderer<TCtx extends TGlContext, TExts extends TGlExten
 
     public useProgram(): void
     {
-        this.context.useProgram(this.program);
+        this.sharedState.useProgram(this.program);
     }
 
     public isVaoActive(): boolean
@@ -202,21 +201,7 @@ export class GlComponentRenderer<TCtx extends TGlContext, TExts extends TGlExten
 
     public bindVao(vao: WebGLVertexArrayObject | WebGLVertexArrayObjectOES | null): void
     {
-        const toBind = vao === undefined ? this.vao : vao;
-
-        if (this.isGl2)
-        {
-            (this.context as WebGL2RenderingContext).bindVertexArray(toBind);
-        }
-        else
-        {
-            (this.extensions as TGlExtensions<"OES_vertex_array_object">).OES_vertex_array_object.bindVertexArrayOES(toBind);
-        }
-    }
-
-    public unbindVao(): void
-    {
-        this.bindVao(null);
+        this.sharedState.bindVao(vao);
     }
 
     public createVao(): WebGLVertexArrayObject | WebGLVertexArrayObjectOES | null
