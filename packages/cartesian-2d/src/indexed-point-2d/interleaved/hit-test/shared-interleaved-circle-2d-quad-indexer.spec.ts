@@ -25,7 +25,7 @@ debugDescribe("=> SharedInterleavedCircle2dQuadIndexerFactory", () =>
     let sharedArray: TF32SharedArray;
     let connector: SharedInterleavedConnector<Float32ArrayConstructor, IDrawablePoint2dOffsets>;
     let entity: IHitTestableTrait & TSharedInterleavedPoint2dTrait<Float32Array, IDrawablePoint2dOffsets>;
-    const identityTransform = new Cartesian2dIdentityTransform<Float32Array>();
+    const identityTransform = new Cartesian2dIdentityTransform();
 
     beforeAll(async () =>
     {

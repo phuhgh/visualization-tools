@@ -1,5 +1,4 @@
 import { ICartesian2dUserTransform } from "./i-cartesian2d-user-transform";
-import { TTypedArray } from "rc-js-util";
 import { ACartesian2dUserTransform } from "./a-cartesian2d-user-transform";
 import { ECartesian2dUserTransform } from "./e-cartesian2d-user-transform";
 
@@ -7,9 +6,9 @@ import { ECartesian2dUserTransform } from "./e-cartesian2d-user-transform";
  * @public
  * Apply no transform.
  */
-export class Cartesian2dIdentityTransform<TArray extends TTypedArray>
-    extends ACartesian2dUserTransform<TArray>
-    implements ICartesian2dUserTransform<TArray>
+export class Cartesian2dIdentityTransform
+    extends ACartesian2dUserTransform
+    implements ICartesian2dUserTransform
 {
     public static transformId = Symbol("identity");
     public readonly transformId: ECartesian2dUserTransform = ECartesian2dUserTransform.Identity;

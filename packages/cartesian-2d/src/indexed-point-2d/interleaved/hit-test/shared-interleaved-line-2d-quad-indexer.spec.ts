@@ -19,7 +19,7 @@ debugDescribe("=> SharedInterleavedLine2dQuadIndexer", () =>
 {
     const emscriptenTestModule = new SanitizedEmscriptenTestModule(testModule, emscriptenAsanTestModuleOptions, testModuleExtension);
     const changeIdFactory = new IncrementingIdentifierFactory();
-    const identityTransform = new Cartesian2dIdentityTransform<Float32Array>();
+    const identityTransform = new Cartesian2dIdentityTransform();
 
     beforeAll(async () =>
     {

@@ -15,7 +15,7 @@ export class Indexed2dCappedLineValueProvider<TArray extends TTypedArray> implem
         entity: TInterleavedPoint2dTrait<TTypedArray>,
         screenTransform: IReadonlyMat3<TArray>,
         sizeTransform: IReadonlyMat2<TArray>,
-        userTransform: ICartesian2dUserTransform<TArray>,
+        userTransform: ICartesian2dUserTransform,
     )
         : void
     {
@@ -40,5 +40,5 @@ export class Indexed2dCappedLineValueProvider<TArray extends TTypedArray> implem
 
     private sizeTransform!: IReadonlyMat2<TArray>;
     private screenTransform!: IReadonlyMat3<TArray>;
-    private userTransform!: ICartesian2dUserTransform<TArray>;
+    private userTransform!: ICartesian2dUserTransform;
 }

@@ -17,7 +17,7 @@ export interface ICartesian2dUpdateArg<TArray extends TTypedArray>
     readonly plotRange: IReadonlyRange2d<TArray>;
     readonly transformedDataRange: IReadonlyRange2d<TArray>;
 
-    readonly userTransform: ICartesian2dUserTransform<TArray>;
+    readonly userTransform: ICartesian2dUserTransform;
     readonly drawTransforms: ICartesian2dTransforms<TArray>;
     readonly interactionTransforms: ICartesian2dTransforms<TArray>;
     readonly canvasDimensions: ICanvasDimensions;
@@ -39,7 +39,7 @@ export class Cartesian2dUpdateArg<TCtor extends TTypedArrayCtor> implements ICar
 {
     public plotRange: IReadonlyRange2d<InstanceType<TCtor>>;
     public transformedDataRange: IReadonlyRange2d<InstanceType<TCtor>>;
-    public userTransform: ICartesian2dUserTransform<InstanceType<TCtor>>;
+    public userTransform: ICartesian2dUserTransform;
     public drawTransforms: ICartesian2dTransforms<InstanceType<TCtor>>;
     public interactionTransforms: ICartesian2dTransforms<InstanceType<TCtor>>;
     public canvasDimensions: ICanvasDimensions;
@@ -64,6 +64,12 @@ export class Cartesian2dUpdateArg<TCtor extends TTypedArrayCtor> implements ICar
 
     public update(plot: IReadonlyPlot<ICartesian2dPlotRange<InstanceType<TCtor>>, unknown>, canvasDims: ICanvasDimensions): void
     {
+        if (this.userTransformId !== plot.plotRange.userTransform.changeId)
+        {
+            plot.plotRange.updateUserTransform(plot.plotRange.userTransform);
+            this.userTransformId = plot.plotRange.userTransform.changeId;
+        }
+
         this.userTransform = plot.plotRange.userTransform;
         this.plotRange = plot.plotRange.dataRange;
         this.transformedDataRange = plot.plotRange.transformedDataRange;
@@ -77,4 +83,6 @@ export class Cartesian2dUpdateArg<TCtor extends TTypedArrayCtor> implements ICar
             plot.plotDimensionsOBL.cssArea.interactiveRange,
         );
     }
+
+    private userTransformId: number = -1;
 }

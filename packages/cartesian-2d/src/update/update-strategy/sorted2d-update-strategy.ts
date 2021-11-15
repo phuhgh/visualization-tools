@@ -41,10 +41,10 @@ export class Sorted2dUpdateStrategy<TPlotRange, TUpdateArg, TRequiredTraits>
 
         const currentUserTransform = this.getUserTransform(updateArg);
 
-        if (this.lastUserTransform !== currentUserTransform)
+        if (this.lastUserTransformId !== currentUserTransform.changeId)
         {
             this.isDirty = true;
-            this.lastUserTransform = currentUserTransform;
+            this.lastUserTransformId = currentUserTransform.changeId;
             resetEntityBuffers(renderer);
             resetTransformComponents(renderer);
         }
@@ -198,5 +198,5 @@ export class Sorted2dUpdateStrategy<TPlotRange, TUpdateArg, TRequiredTraits>
 
     private renderLists: RenderList<TUpdateArg, TRequiredTraits>[] = [];
     private isDirty: boolean = true;
-    private lastUserTransform: IUserTransform | null = null;
+    private lastUserTransformId: number = -1;
 }

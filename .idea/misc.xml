@@ -6,6 +6,11 @@
       <file path="$PROJECT_DIR$/cmake-build-debug" />
       <file path="$PROJECT_DIR$/common/temp" />
       <file path="$PROJECT_DIR$/docs" />
+      <file path="$PROJECT_DIR$/extras/docs-site/bin" />
+      <file path="$PROJECT_DIR$/extras/docs-site/build" />
+      <file path="$PROJECT_DIR$/extras/sandbox/bin" />
+      <file path="$PROJECT_DIR$/extras/sandbox/build" />
+      <file path="$PROJECT_DIR$/extras/test-data/bin" />
       <file path="$PROJECT_DIR$/packages/cartesian-2d/.rush" />
       <file path="$PROJECT_DIR$/packages/cartesian-2d/bin" />
       <file path="$PROJECT_DIR$/packages/cartesian-2d/build" />

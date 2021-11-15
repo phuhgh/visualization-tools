@@ -1,4 +1,4 @@
-import { IReadonlyRange2d, IReadonlyVec2, Range2d, TTypedArray, Vec2 } from "rc-js-util";
+import { _Identifier, IReadonlyRange2d, IReadonlyVec2, Range2d, TTypedArray, Vec2 } from "rc-js-util";
 import { ICartesian2dUserTransform } from "./i-cartesian2d-user-transform";
 import { ECartesian2dUserTransform } from "./e-cartesian2d-user-transform";
 
@@ -6,18 +6,20 @@ import { ECartesian2dUserTransform } from "./e-cartesian2d-user-transform";
  * @public
  * Provides a user transform that assumes maxes and mins will remain extrema.
  */
-export abstract class ACartesian2dUserTransform<TArray extends TTypedArray>
-    implements ICartesian2dUserTransform<TArray>
+export abstract class ACartesian2dUserTransform
+    implements ICartesian2dUserTransform
 {
     public abstract readonly userTransformId: symbol;
     public abstract readonly transformId: ECartesian2dUserTransform;
     public abstract xTransformEnabled: boolean;
     public abstract yTransformEnabled: boolean;
+    public changeId: number = _Identifier.getNextIncrementingId();
 
     public updateTransform(xTransformEnabled: boolean, yTransformEnabled: boolean): void
     {
         this.xTransformEnabled = xTransformEnabled;
         this.yTransformEnabled = yTransformEnabled;
+        this.changeId = _Identifier.getNextIncrementingId();
     }
 
     public abstract forwardX(x: number): number;
@@ -28,7 +30,7 @@ export abstract class ACartesian2dUserTransform<TArray extends TTypedArray>
 
     public abstract reverseY(y: number): number;
 
-    public forwardTransformRange
+    public forwardTransformRange<TArray extends TTypedArray>
     (
         range: IReadonlyRange2d<TArray>,
         result: Range2d<TArray> = range.slice(),
@@ -43,7 +45,7 @@ export abstract class ACartesian2dUserTransform<TArray extends TTypedArray>
         return result;
     }
 
-    public forwardTransformPoint
+    public forwardTransformPoint<TArray extends TTypedArray>
     (
         range: IReadonlyVec2<TArray>,
         result: Vec2<TArray> = range.slice(),
@@ -56,7 +58,7 @@ export abstract class ACartesian2dUserTransform<TArray extends TTypedArray>
         return result;
     }
 
-    public reverseTransformRange
+    public reverseTransformRange<TArray extends TTypedArray>
     (
         range: IReadonlyRange2d<TArray>,
         result: Range2d<TArray> = range.slice(),
@@ -71,7 +73,7 @@ export abstract class ACartesian2dUserTransform<TArray extends TTypedArray>
         return result;
     }
 
-    public reverseTransformPoint
+    public reverseTransformPoint<TArray extends TTypedArray>
     (
         range: IReadonlyVec2<TArray>,
         result: Vec2<TArray> = range.slice(),

@@ -26,7 +26,7 @@ export interface ISharedInterleavedPoint2dQuadIndexer<TArray extends TTypedArray
         tree: ISharedEntityQuadTree<unknown, IHitTestableTrait>,
         entity: IHitTestableTrait & TSharedInterleavedPoint2dTrait<TArray, IDrawablePoint2dOffsets>,
         worldTransform: Mat3<TArray>,
-        userTransform: ICartesian2dUserTransform<TArray>,
+        userTransform: ICartesian2dUserTransform,
     )
         : void;
 }
@@ -64,7 +64,7 @@ export class SharedInterleavedPoint2dQuadIndexer<TArray extends TTypedArray, TPr
         tree: ISharedEntityQuadTree<unknown, IHitTestableTrait>,
         entity: IHitTestableTrait & TSharedInterleavedPoint2dTrait<TArray, IDrawablePoint2dOffsets>,
         worldTransform: Mat3<TArray>,
-        userTransform: ICartesian2dUserTransform<TArray>,
+        userTransform: ICartesian2dUserTransform,
     )
         : void
     {

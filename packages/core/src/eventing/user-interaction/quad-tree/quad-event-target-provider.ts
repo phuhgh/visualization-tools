@@ -17,7 +17,7 @@ export class QuadEventTargetProvider<TTraits extends IHitTestableTrait>
 {
     public constructor
     (
-        private readonly hitTestableEntities: IInteractionGroup<unknown, ISharedEntityQuadTree<unknown, TTraits>, TTraits>,
+        private readonly hitTestableGroup: IInteractionGroup<unknown, ISharedEntityQuadTree<unknown, TTraits>, TTraits>,
         private readonly quadTree: ISharedEntityQuadTree<unknown, TTraits>,
     )
     {
@@ -29,7 +29,8 @@ export class QuadEventTargetProvider<TTraits extends IHitTestableTrait>
     )
         : HitTestResult<unknown, TTraits>[]
     {
-        const resultCount = this.quadTree.sharedTree.queryPoint(pointerEvent.pointerCssPosition, this.hitTestableEntities.groupMask);
+        const hitTestableGroup = this.hitTestableGroup;
+        const resultCount = this.quadTree.sharedTree.queryPoint(pointerEvent.pointerCssPosition, hitTestableGroup.groupMask);
         const entities = this.quadTree.entities;
         const quadTreeResults = this.quadTree.sharedTree.getResults();
         const updateArg = this.quadTree.hitTestArg;
@@ -37,7 +38,7 @@ export class QuadEventTargetProvider<TTraits extends IHitTestableTrait>
 
         if (updateArg == null)
         {
-            _Production.error("updateArg must be set before query");
+            throw _Production.createError("updateArg must be set before query");
         }
 
         for (let i = 0, iEnd = resultCount * QuadElementSharedObject.elementCount; i < iEnd; i += QuadElementSharedObject.elementCount)
@@ -46,7 +47,14 @@ export class QuadEventTargetProvider<TTraits extends IHitTestableTrait>
 
             DEBUG_MODE && _Debug.assert(entity != null, "failed entity lookup");
 
-            const isHitAllowed = this.hitTestableEntities.hitAllowedComponentStore
+            if (!hitTestableGroup.isEntityInGroup(entity))
+            {
+                // it's possible that the entity was removed from the group after the tree was created
+                // invalidating the tree for a removal would be needlessly expensive (regenerate), so just filter them out
+                continue;
+            }
+
+            const isHitAllowed = hitTestableGroup.hitAllowedComponentStore
                 .getComponent(entity)
                 .isHitAllowed(entity, pointerEvent, updateArg);
 
@@ -56,7 +64,7 @@ export class QuadEventTargetProvider<TTraits extends IHitTestableTrait>
             }
 
             const dataId = quadTreeResults[i + 1];
-            const isHit = this.hitTestableEntities.hitTestableGroup
+            const isHit = hitTestableGroup.hitTestableGroup
                 .getHitTester(entity)
                 .hitTest(entity, dataId, pointerEvent.pointerCssPosition, updateArg);
 
