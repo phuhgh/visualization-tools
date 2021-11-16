@@ -80,9 +80,9 @@ export class GlTrace2dNaturalLogTransformComponent
         this.config[1] = Number(updateArg.userTransform.yTransformEnabled);
         this.bindings.configUniform.setData(this.config, transformRenderer.sharedState.frameCounter);
         this.bindings.configUniform.bind(transformRenderer);
+        this.traceBinder.update(entity, transformRenderer);
 
         this.bindings.feedbackTransform.beginTransform(transformRenderer);
-        this.traceBinder.update(entity, transformRenderer);
         transformRenderer.context.drawArrays(transformRenderer.context.POINTS, 0, entity.data.getTraceCount());
         this.bindings.feedbackTransform.endTransform(transformRenderer);
         this.traceBinder.clearResultBuffers(transformRenderer);

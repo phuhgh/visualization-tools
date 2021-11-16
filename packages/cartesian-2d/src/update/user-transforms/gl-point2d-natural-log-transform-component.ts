@@ -82,9 +82,9 @@ export class GlPoint2dNaturalLogTransformComponent
         this.config[1] = Number(updateArg.userTransform.yTransformEnabled);
         this.bindings.configUniform.setData(this.config, transformRenderer.sharedState.frameCounter);
         this.bindings.configUniform.bind(transformRenderer);
+        this.point2dBinder.update(entity, transformRenderer);
 
         this.bindings.feedbackTransform.beginTransform(transformRenderer);
-        this.point2dBinder.update(entity, transformRenderer);
         ctx.drawArrays(ctx.POINTS, entity.data.getStart(), entity.data.getLength());
         this.bindings.feedbackTransform.endTransform(transformRenderer);
         this.point2dBinder.clearResultBuffers(transformRenderer);
