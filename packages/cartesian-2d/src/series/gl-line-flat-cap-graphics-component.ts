@@ -89,8 +89,7 @@ export class GlLineFlatCapGraphicsComponent
             return;
         }
 
-        this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(this.cameraBinder.getBinderData(updateArg, componentRenderer), componentRenderer);
+        this.cameraBinder.update(this.cameraBinder.getBinderData(entity, updateArg, componentRenderer), componentRenderer);
 
         // draw 1st set
         this.indexedBinder.updateInstanced(entity, componentRenderer, 1);

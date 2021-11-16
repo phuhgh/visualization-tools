@@ -88,8 +88,7 @@ export class GlCaplessLineGraphicsComponent
             return;
         }
 
-        this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(this.cameraBinder.getBinderData(updateArg, componentRenderer), componentRenderer);
+        this.cameraBinder.update(this.cameraBinder.getBinderData(entity, updateArg, componentRenderer), componentRenderer);
         this.indexedBinder.updateInstanced(entity, componentRenderer, 1);
         this.indexedBinder.overrideColors(componentRenderer, entity, entity.changeId);
 

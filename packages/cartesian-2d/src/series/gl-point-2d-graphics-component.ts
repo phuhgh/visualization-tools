@@ -80,8 +80,7 @@ export class GlPoint2dGraphicsComponent<TUpdateArg extends IUpdateArg>
         this.indexedBinder.updateInstanced(entity, componentRenderer, 1);
         this.indexedBinder.overrideColors(componentRenderer, entity, entity.changeId);
 
-        this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(this.cameraBinder.getBinderData(updateArg, componentRenderer), componentRenderer);
+        this.cameraBinder.update(this.cameraBinder.getBinderData(entity, updateArg, componentRenderer), componentRenderer);
 
         // draw
         componentRenderer.drawInstancedArrays(componentRenderer.context.TRIANGLE_FAN, 0, this.outerVertices + 1, entity.data.getLength());
