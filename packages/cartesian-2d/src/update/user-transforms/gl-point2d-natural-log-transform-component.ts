@@ -1,33 +1,33 @@
 import { dummyGlProgramSpecification, GlProgramSpecification, GlShader, GlTransformComponentFactory, GlTransformFeedback, GlVec2Uniform, IGlProgramSpec, IGlTransformComponent, TGl2ComponentRenderer } from "@visualization-tools/core";
+import { TInterleavedPoint2dTrait } from "../../traits/t-interleaved-point2d-trait";
 import { _Debug, Once, Vec2 } from "rc-js-util";
+import { IGlIndexedPoint2dBinder, IndexedPoint2dIdentifier } from "../../indexed-point-2d/i-gl-indexed-point2d-binder";
 import { ICartesian2dUpdateArg } from "../update-arg/cartesian2d-update-arg";
-import { IGlTraceBinder, TraceBinderIdentifier } from "../../axis/traces/gl-cartesian-2d-trace-binder";
 import { point2dNaturalLogTransformShader } from "./point2d-natural-log-transform-shader";
 import { Cartesian2dNaturalLogTransform } from "./cartesian2d-natural-log-transform";
-import { TGlTraceEntity } from "../../axis/traces/t-gl-trace-entity";
-import { IGlTraceTransformBinder } from "../../axis/traces/i-gl-cartesian2d-trace-transform-binder";
+import { IGlIndexedPoint2dTransformBinder } from "../../indexed-point-2d/i-gl-indexed-point2d-transform-binder";
 
 /**
  * @public
- * Applies natural log to a trace gl connector. The behavior of the transform is undefined if the range is less than 0.
+ * Applies natural log to an indexable gl connector. The behavior of the transform is undefined if any point is less than 0.
  */
-export class GlTrace2dNaturalLogTransform
-    implements IGlTransformComponent<TGl2ComponentRenderer, IGlTraceBinder, ICartesian2dUpdateArg<Float32Array>, unknown>
+export class GlPoint2dNaturalLogTransformComponent
+    implements IGlTransformComponent<TGl2ComponentRenderer, IGlIndexedPoint2dBinder<Float32Array>, ICartesian2dUpdateArg<Float32Array>, unknown>
 {
-    public static factory = new GlTransformComponentFactory(Cartesian2dNaturalLogTransform.transformId, TraceBinderIdentifier, GlTrace2dNaturalLogTransform);
+    public static factory = new GlTransformComponentFactory(Cartesian2dNaturalLogTransform.transformId, IndexedPoint2dIdentifier, GlPoint2dNaturalLogTransformComponent);
     public readonly specification: IGlProgramSpec;
 
     public constructor
     (
-        private traceBinder: IGlTraceTransformBinder,
+        private point2dBinder: IGlIndexedPoint2dTransformBinder<Float32Array>,
     )
     {
         this.specification = GlProgramSpecification.mergeProgramSpecifications([
-            this.traceBinder.specification,
+            this.point2dBinder.specification,
             new GlProgramSpecification(
                 GlShader.combineShaders([
                     point2dNaturalLogTransformShader,
-                    vertexShader,
+                    transformShader,
                 ]),
                 dummyGlProgramSpecification.fragmentShader,
             ),
@@ -38,60 +38,62 @@ export class GlTrace2dNaturalLogTransform
     public getCacheId(): string
     {
         return [
-            "trace2dLogTransform",
-            this.traceBinder.getTransformId(),
+            "logFeedbackTransform",
+            this.point2dBinder.getTransformId(),
         ].join("_");
     }
 
     public initialize(transformRenderer: TGl2ComponentRenderer): void
     {
-        this.traceBinder.initialize(transformRenderer);
+        this.point2dBinder.initialize(transformRenderer);
         this.bindings.feedbackTransform.initialize(transformRenderer);
         this.bindings.configUniform.initialize(transformRenderer);
     }
 
     public resetState(): void
     {
-        this.traceBinder.resetState();
+        this.point2dBinder.resetState();
     }
 
     public setOutputBuffers
     (
-        entity: TGlTraceEntity,
-        binder: IGlTraceBinder,
+        entity: TInterleavedPoint2dTrait<Float32Array>,
+        binder: IGlIndexedPoint2dBinder<Float32Array>,
         transformRenderer: TGl2ComponentRenderer,
     )
         : void
     {
-        DEBUG_MODE && _Debug.assert(this.traceBinder.binderClassificationId === binder.binderClassificationId, "attempted to transform inappropriate binder");
+        DEBUG_MODE && _Debug.assert(this.point2dBinder.binderClassificationId === binder.binderClassificationId, "attempted to transform inappropriate binder");
         this.bindings.feedbackTransform.bind(transformRenderer);
-        this.traceBinder.setResultBuffers(entity, binder, transformRenderer, transformRenderer.context.STREAM_DRAW);
+        this.point2dBinder.setResultBuffers(entity, binder, transformRenderer, transformRenderer.context.STREAM_DRAW);
     }
 
     public performTransform
     (
-        entity: TGlTraceEntity,
+        entity: TInterleavedPoint2dTrait<Float32Array>,
         transformRenderer: TGl2ComponentRenderer,
         updateArg: ICartesian2dUpdateArg<Float32Array>,
     )
         : void
     {
+        const ctx = transformRenderer.context;
+
         this.config[0] = Number(updateArg.userTransform.xTransformEnabled);
         this.config[1] = Number(updateArg.userTransform.yTransformEnabled);
         this.bindings.configUniform.setData(this.config, transformRenderer.sharedState.frameCounter);
         this.bindings.configUniform.bind(transformRenderer);
 
         this.bindings.feedbackTransform.beginTransform(transformRenderer);
-        this.traceBinder.update(entity, transformRenderer);
-        transformRenderer.context.drawArrays(transformRenderer.context.POINTS, 0, entity.data.getTraceCount());
+        this.point2dBinder.update(entity, transformRenderer);
+        ctx.drawArrays(ctx.POINTS, entity.data.getStart(), entity.data.getLength());
         this.bindings.feedbackTransform.endTransform(transformRenderer);
-        this.traceBinder.clearResultBuffers(transformRenderer);
+        this.point2dBinder.clearResultBuffers(transformRenderer);
     }
 
     private config = new Vec2.f32();
     private bindings: IBindings = {
         feedbackTransform: new GlTransformFeedback(),
-        configUniform: new GlVec2Uniform("traceNaturalLogTransform_config", this.config),
+        configUniform: new GlVec2Uniform("point2dNaturalLogTransform_config", this.config),
     };
 }
 
@@ -101,19 +103,14 @@ interface IBindings
     configUniform: GlVec2Uniform;
 }
 
-// @formatter:off
-// language=GLSL prefix="#if __VERSION__ >=300 && __VERSION__ < 400 \n #define ATTRIBUTE in \n #define VARYING out \n #else \n #define ATTRIBUTE attribute \n #define VARYING varying \n #endif"
-const vertexShader = new GlShader(`
-uniform vec2 traceNaturalLogTransform_config;
-
+const transformShader = new GlShader(
+    `
+uniform vec2 point2dNaturalLogTransform_config;
 void main()
 {
-    mat2 position = traceConnector_getPosition();
-    vec2 lowerPoint = point2dNaturalLogTransform(position[0], traceNaturalLogTransform_config);
-    vec2 upperPoint = point2dNaturalLogTransform(position[1], traceNaturalLogTransform_config);
-
-    traceConnector_setPosition(lowerPoint, upperPoint);
+    pointConnector_copyAllOutputs();
+    pointConnector_setPosition(point2dNaturalLogTransform(pointConnector_getPosition(), point2dNaturalLogTransform_config));
 }
 `,
-    300);
-// @formatter:on
+    300,
+);

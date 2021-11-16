@@ -42,7 +42,10 @@ export class BufferLayout<TBuffer extends IBuffer> implements IBufferLayout<TBuf
      */
     public swapBuffer(buffer: TBuffer, index: number): TBuffer
     {
-        DEBUG_MODE && _Debug.assert(this.buffers.length > index, "index OOB");
+        DEBUG_MODE && _Debug.runBlock(() => {
+            _Debug.assert(this.buffers.length > index, "index OOB");
+            _Debug.assert(this.buffers[index] !== buffer, "attempted self swap");
+        });
         const stored = this.buffers[index];
         this.buffers[index] = buffer;
 

@@ -481,6 +481,12 @@ class GlInterleaved2dPointTransformBinder
     )
         : void
     {
+        DEBUG_MODE && _Debug.runBlock(() =>
+        {
+            const buffersAreDifferent = this.bindings.pointAttributes[0].getBuffer() !== binder.bindings.pointAttributes[0].getBuffer();
+            _Debug.assert(buffersAreDifferent, "attempted to bind input to output");
+        });
+
         const theirAttributes = binder.bindings.pointAttributes;
         const bufferByteSize = entity.data.getBlockByteSize() * entity.data.getLength();
         const changeId = entity.changeId;

@@ -1,5 +1,5 @@
 import { addEntityToCategory, CanvasChartFactory, ChartConfig, ChartDataEntity, CompositeGraphicsComponent, EEntityUpdateFlag, Gl2ContextAdapter, GlChartFactory, GlRendererOptions, HitAlwaysAllowedComponent, SharedInterleavedConnector } from "@visualization-tools/core";
-import { CanvasCartesian2dPlotFactory, CanvasCartesian2dUpdateArgProvider, CanvasLineGraphicsComponent, Cartesian2dIdentityTransform, Cartesian2dNaturalLogTransform, Cartesian2dPlotRange, Cartesian2dPlotSharedQuadTree, GlCaplessLineGraphicsComponent, GlCartesian2dCameraBinder, GlCartesian2dPlotFactory, GlCartesian2dUpdateArgProvider, GlInterleaved2dPointBinder, GlLineFlatCapGraphicsComponent, GlPoint2dNaturalLogTransform, GlTrace2dNaturalLogTransform, hoverHighlightLineSegment, ICartesian2dBindings, Point2dDisplaySettings, Point2dSubcategory, SharedInterleavedLine2dQuadIndexerFactory, SharedInterleavedPoint2dHitTestComponent, TPoint2dSettings } from "@visualization-tools/cartesian-2d";
+import { CanvasCartesian2dPlotFactory, CanvasCartesian2dUpdateArgProvider, CanvasLineGraphicsComponent, Cartesian2dIdentityTransform, Cartesian2dNaturalLogTransform, Cartesian2dPlotRange, Cartesian2dPlotSharedQuadTree, GlCaplessLineGraphicsComponent, GlCartesian2dCameraBinder, GlCartesian2dPlotFactory, GlCartesian2dUpdateArgProvider, GlInterleaved2dPointBinder, GlLineFlatCapGraphicsComponent, GlPoint2dNaturalLogTransformComponent, GlTrace2dNaturalLogTransformComponent, hoverHighlightLineSegment, ICartesian2dBindings, Point2dDisplaySettings, Point2dSubcategory, SharedInterleavedLine2dQuadIndexerFactory, SharedInterleavedPoint2dHitTestComponent, TPoint2dSettings } from "@visualization-tools/cartesian-2d";
 import { getTestPlotOptions } from "./test-data/get-test-plot-options";
 import { populateTestData } from "./test-data/populate-test-data";
 import { _Array, _Fp, Emscripten, getEmscriptenWrapper, IEmscriptenWrapper, Mulberry32Generator, Range1d, Range2d, RgbaColorPacker } from "rc-js-util";
@@ -121,8 +121,8 @@ export function glTestChartGo(emscriptenModule: IEmscriptenWrapper<ICartesian2dB
     }
 
     const transformProvider = chart.getTransformProvider([Cartesian2dNaturalLogTransform.transformId], true);
-    GlPoint2dNaturalLogTransform.factory.addToChart(transformProvider);
-    GlTrace2dNaturalLogTransform.factory.addToChart(transformProvider);
+    GlTrace2dNaturalLogTransformComponent.factory.addToChart(transformProvider);
+    GlPoint2dNaturalLogTransformComponent.factory.addToChart(transformProvider);
 
     const pointSubcategory = new Point2dSubcategory(Range1d.f32.factory.createOne(10, 20));
     const interleavedPointTester = {

@@ -1,8 +1,8 @@
 export { IGlTraceTransformBinder } from "./axis/traces/i-gl-cartesian2d-trace-transform-binder";
 export { IGlCamera2dBinder } from "./camera/i-gl-camera2d-binder";
 export { ECartesian2dUserTransform } from "./update/user-transforms/e-cartesian2d-user-transform";
-export { GlTrace2dNaturalLogTransform } from "./update/user-transforms/gl-trace-2d-natural-log-transform";
-export { GlPoint2dNaturalLogTransform } from "./update/user-transforms/gl-point-2d-natural-log-transform";
+export { GlTrace2dNaturalLogTransformComponent } from "./update/user-transforms/gl-trace2d-natural-log-transform-component";
+export { GlPoint2dNaturalLogTransformComponent } from "./update/user-transforms/gl-point2d-natural-log-transform-component";
 export { ICartesian2dUserTransform } from "./update/user-transforms/i-cartesian2d-user-transform";
 export { Cartesian2dNaturalLogTransform } from "./update/user-transforms/cartesian2d-natural-log-transform";
 export { Cartesian2dIdentityTransform } from "./update/user-transforms/cartesian2d-identity-transform";
