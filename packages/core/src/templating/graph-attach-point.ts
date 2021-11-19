@@ -64,14 +64,14 @@ export class GraphAttachPoint
 
         const w = this.canvasElement.clientWidth | 0;
         const h = this.canvasElement.clientHeight | 0;
+        const dpr = this.$window.devicePixelRatio;
 
-        if (this.canvasDims.cssDims.getXMax() === w && this.canvasDims.cssDims.getYMax() === h)
+        if (this.canvasDims.cssDims.getXMax() === w && this.canvasDims.cssDims.getYMax() === h && dpr === this.canvasDims.dpr)
         {
             return this.canvasDims;
         }
 
         // update dims
-        const dpr = this.$window.devicePixelRatio;
         const boundingRect = this.canvasElement.getBoundingClientRect();
         this.canvasDims = new CanvasDimensions(
             dpr,
