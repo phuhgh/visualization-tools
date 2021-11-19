@@ -2,6 +2,7 @@ import { IChartComponent } from "../../chart/chart-component";
 import { IReadonlyPlot } from "../i-plot";
 import { TListener } from "rc-js-util";
 import { TUnknownRenderer } from "../../rendering/t-unknown-renderer";
+import { IPlotRange } from "../i-plot-range";
 
 /**
  * @public
@@ -33,7 +34,7 @@ export class OnPlotAttachChanged<TRenderer extends TUnknownRenderer>
 
     public static registerListener
     (
-        plot: IReadonlyPlot<unknown, unknown>,
+        plot: IReadonlyPlot<IPlotRange, unknown>,
         onEvent: (...args: TOnPlotAttachChangedArgs<TUnknownRenderer>) => void,
     )
         : () => void
@@ -43,7 +44,7 @@ export class OnPlotAttachChanged<TRenderer extends TUnknownRenderer>
             .addTemporaryListener(new OnPlotAttachChanged(onEvent));
     }
 
-    public static registerOneTimeListener<TRenderer extends TUnknownRenderer, TPlotRange>
+    public static registerOneTimeListener<TRenderer extends TUnknownRenderer, TPlotRange extends IPlotRange>
     (
         plot: IReadonlyPlot<TPlotRange, unknown>,
         onEvent: (...args: TOnPlotAttachChangedArgs<TRenderer>) => void,
@@ -57,7 +58,7 @@ export class OnPlotAttachChanged<TRenderer extends TUnknownRenderer>
 
     public static emit
     (
-        plot: IReadonlyPlot<unknown, unknown>,
+        plot: IReadonlyPlot<IPlotRange, unknown>,
         chart: IChartComponent<TUnknownRenderer>,
         isAttached: boolean,
     )

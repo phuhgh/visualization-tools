@@ -1,5 +1,6 @@
 import { _Fp, IIncrementallyUpdatable, IncrementalUpdater, TDebouncedFn } from "rc-js-util";
 import { IReadonlyPlot } from "../plot/i-plot";
+import { IPlotRange } from "../plot/i-plot-range";
 
 /**
  * @internal
@@ -7,7 +8,7 @@ import { IReadonlyPlot } from "../plot/i-plot";
 export interface IInteractionHandlerUpdater
 {
     cancelAll(): void;
-    addPlotToUpdateQueue(plot: IReadonlyPlot<unknown, unknown>): void;
+    addPlotToUpdateQueue(plot: IReadonlyPlot<IPlotRange, unknown>): void;
     updateInteractionHandlers(): void;
 }
 
@@ -20,13 +21,13 @@ export class InteractionHandlerUpdater
 {
     public constructor
     (
-        private readonly updateInteractionHandlersCallback: (plot: IReadonlyPlot<unknown, unknown>) => IterableIterator<void>,
+        private readonly updateInteractionHandlersCallback: (plot: IReadonlyPlot<IPlotRange, unknown>) => IterableIterator<void>,
         private readonly rollupTime: number,
     )
     {
     }
 
-    public addPlotToUpdateQueue(plot: IReadonlyPlot<unknown, unknown>): void
+    public addPlotToUpdateQueue(plot: IReadonlyPlot<IPlotRange, unknown>): void
     {
         if (this.incrementalUpdater.isUpdating)
         {
@@ -109,6 +110,6 @@ export class InteractionHandlerUpdater
     }
 
     private incrementalUpdater = new IncrementalUpdater(this);
-    private plotsToUpdate = new Set<IReadonlyPlot<unknown, unknown>>();
-    private nextPlotsToUpdate = new Set<IReadonlyPlot<unknown, unknown>>();
+    private plotsToUpdate = new Set<IReadonlyPlot<IPlotRange, unknown>>();
+    private nextPlotsToUpdate = new Set<IReadonlyPlot<IPlotRange, unknown>>();
 }

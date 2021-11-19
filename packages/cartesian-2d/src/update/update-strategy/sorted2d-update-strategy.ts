@@ -1,4 +1,4 @@
-import { EGraphicsComponentType, EntityUpdateGrouping, EntityUpdateTransformGrouping, ICanvasDimensions, IEntityUpdateGrouping, IGraphicsComponent, IPlotUpdateStrategy, IReadonlyPlot, ITransformComponent, IUserTransform, OnEntityAddedToGroup, OnEntityModified, OnEntityRemovedFromGroup, OnRendererContextLost, RenderList, resetEntityBuffers, resetTransformComponents, TGraphicsComponent, TUnknownComponentRenderer, TUnknownRenderer, UpdateTransformGroupingByEntity } from "@visualization-tools/core";
+import { EGraphicsComponentType, EntityUpdateGrouping, EntityUpdateTransformGrouping, ICanvasDimensions, IEntityUpdateGrouping, IGraphicsComponent, IPlotRange, IPlotUpdateStrategy, IReadonlyPlot, ITransformComponent, IUserTransform, OnEntityAddedToGroup, OnEntityModified, OnEntityRemovedFromGroup, OnRendererContextLost, RenderList, resetEntityBuffers, resetTransformComponents, TGraphicsComponent, TUnknownComponentRenderer, TUnknownRenderer, UpdateTransformGroupingByEntity } from "@visualization-tools/core";
 import { IUpdate2dGroup } from "../update-group/update-2d-group";
 import { IScene2d } from "./i-scene2d";
 import { _Array, _Debug, _Production } from "rc-js-util";
@@ -9,7 +9,7 @@ import { _Array, _Debug, _Production } from "rc-js-util";
  * Sorts entities according to {@link IScene2d} and then batches entities to minimize draw calls. Respects
  * {@link @visualization-tools/core#IGraphicsComponentSpecification.groupUpdatesByEntity} flag.
  */
-export class Sorted2dUpdateStrategy<TPlotRange, TUpdateArg, TRequiredTraits>
+export class Sorted2dUpdateStrategy<TPlotRange extends IPlotRange, TUpdateArg, TRequiredTraits>
     implements IPlotUpdateStrategy<IUpdate2dGroup<TPlotRange, TUpdateArg, TRequiredTraits>>
 {
     public updateGroup: IUpdate2dGroup<TPlotRange, TUpdateArg, TRequiredTraits>;

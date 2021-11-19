@@ -1,5 +1,5 @@
 import { _F32, _F64, _Math, IReadonlyRange2d, Range2d, TTypedArray } from "rc-js-util";
-import { ICanvasDimensions } from "@visualization-tools/core";
+import { ICanvasDimensions, IPlotRange } from "@visualization-tools/core";
 import { Cartesian2dFloatPrecisionRangeBounder } from "../../eventing/cartesian2d-float-precision-range-bounder";
 import { ICartesian2dInteractionBounder } from "../../eventing/i-cartesian2d-interaction-bounder";
 import { ICartesian2dUserTransform } from "../user-transforms/i-cartesian2d-user-transform";
@@ -20,7 +20,7 @@ export interface ICartesian2dPlotConstructorOptions<TArray extends TTypedArray>
  * @public
  * Cartesian 2d data range, range is bounded by {@link Cartesian2dInteractionHandler}.
  */
-export interface ICartesian2dPlotRange<TArray extends TTypedArray>
+export interface ICartesian2dPlotRange<TArray extends TTypedArray> extends IPlotRange
 {
     readonly userTransform: ICartesian2dUserTransform;
     /**
@@ -40,12 +40,7 @@ export interface ICartesian2dPlotRange<TArray extends TTypedArray>
      */
     readonly minRange: IReadonlyRange2d<TArray>;
 
-    updateDataRange
-    (
-        dataRange: IReadonlyRange2d<TArray>,
-        canvasDims: ICanvasDimensions,
-    )
-        : void;
+    updateDataRange(dataRange: IReadonlyRange2d<TArray>): void;
 
     /**
      * @param bounds - Defines the max extent of the plot, will be modified.
@@ -68,6 +63,7 @@ export interface ICartesian2dPlotRange<TArray extends TTypedArray>
 export class Cartesian2dPlotRange<TArray extends TTypedArray>
     implements ICartesian2dPlotRange<TArray>
 {
+    public isDirty: boolean = true;
     public dataRange: Range2d<TArray>;
     public transformedDataRange: IReadonlyRange2d<TArray>;
     public maxBounds: Range2d<TArray>;
@@ -128,37 +124,37 @@ export class Cartesian2dPlotRange<TArray extends TTypedArray>
         this.transformedDataRange = this.userTransform.forwardTransformRange(dataRange);
     }
 
-    public updateDataRange
-    (
-        unclampedDataRange: IReadonlyRange2d<TArray>,
-        canvasDims: ICanvasDimensions,
-    )
-        : void
+    public updateDataRange(unclampedDataRange: IReadonlyRange2d<TArray>): void
     {
         this.dataRange.set(unclampedDataRange);
-        this.dataRange.ensureMinRange(this.minRange.getXMax(), this.minRange.getYRange());
-        this.interactionBounder.boundRange(this.dataRange, canvasDims.pixelDims, this.maxBounds);
-        this.userTransform.forwardTransformRange(this.dataRange, this.transformedDataRange as Range2d<TArray>);
+        this.isDirty = true;
     }
 
-    public updateBounds
-    (
-        bounds: IReadonlyRange2d<TArray>,
-        maxZoom: number,
-    )
-        : void
+    public updateBounds(bounds: IReadonlyRange2d<TArray>, maxZoom: number): void
     {
         maxZoom = _Math.bound(maxZoom, 1, this.interactionBounder.maxZoom);
-
         this.maxBounds.set(bounds);
         this.maxBounds.bound(this.interactionBounder.maxBounds);
         this.minRange.update(0, bounds.getXRange() / maxZoom, 0, bounds.getYRange() / maxZoom);
+        this.isDirty = true;
     }
 
     public updateUserTransform(userTransform: ICartesian2dUserTransform): void
     {
         this.userTransform = userTransform;
         this.transformedDataRange = this.userTransform.forwardTransformRange(this.dataRange);
+    }
+
+    public update(canvasDims: ICanvasDimensions): void
+    {
+        if (!this.isDirty)
+        {
+            return;
+        }
+
+        this.dataRange.ensureMinRange(this.minRange.getXMax(), this.minRange.getYRange());
+        this.interactionBounder.boundRange(this.dataRange, canvasDims.pixelDims, this.maxBounds);
+        this.userTransform.forwardTransformRange(this.dataRange, this.transformedDataRange as Range2d<TArray>);
     }
 
     private interactionBounder: ICartesian2dInteractionBounder<TArray>;

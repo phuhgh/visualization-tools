@@ -6,6 +6,7 @@ import { IHitAllowedComponent } from "../../eventing/hit-testing/i-hit-allowed-c
 import { IHitTestComponent } from "../../eventing/hit-testing/i-hit-test-component";
 import { IWritablePlot } from "../../plot/i-plot";
 import { IHitTestableTrait } from "./i-hit-testable-trait";
+import { IPlotRange } from "../../plot/i-plot-range";
 
 /**
  * @public
@@ -34,7 +35,7 @@ export interface IHitTestableGroupOptions<TUpdateArg, TTraits extends IHitTestab
  * the interaction group. When implementing an interaction group these should use the reference counting methods
  * `refCountingAddEntity` and `refCountingRemoveEntity`.
  */
-export interface IHitTestableGroup<TPlotRange, TUpdateArg, TComponentState>
+export interface IHitTestableGroup<TPlotRange  extends IPlotRange, TUpdateArg, TComponentState>
     extends IReadonlyEntityGroup<IHitTestableTrait>
 {
     argProvider: IEntityUpdateArgProvider<TPlotRange, TUpdateArg, unknown>;
@@ -59,7 +60,7 @@ export interface IHitTestableGroup<TPlotRange, TUpdateArg, TComponentState>
  * @public
  * {@inheritDoc IHitTestableGroup}
  */
-export class HitTestableGroup<TPlotRange, TUpdateArg, TComponentState>
+export class HitTestableGroup<TPlotRange extends IPlotRange, TUpdateArg, TComponentState>
     extends AEntityGroup<IHitTestableGroupOptions<TUpdateArg, IHitTestableTrait, TComponentState>, IHitTestableTrait>
     implements IHitTestableGroup<TPlotRange, TUpdateArg, TComponentState>
 {

@@ -8,6 +8,7 @@ import { setDefaultAppTestFlags } from "rc-js-util/bin/src/debug/impl/set-debug-
 import { debugDescribe } from "rc-js-test-util";
 import { TestCanvasPlotFactory } from "../../test-utils/fakes/test-canvas-plot-factory";
 import { TestUpdateArgProvider } from "../../test-utils/fakes/test-update-arg-provider";
+import { IPlotRange } from "../../plot/i-plot-range";
 
 debugDescribe("=> HitTestableGroup", () =>
 {
@@ -107,7 +108,7 @@ debugDescribe("=> HitTestableGroup", () =>
     function expectDummyTester
     (
         entity: ChartDataEntity<unknown, {}, {}>,
-        group: HitTestableGroup<unknown, unknown, unknown>,
+        group: HitTestableGroup<IPlotRange, unknown, unknown>,
     )
         : void
     {
@@ -122,7 +123,7 @@ debugDescribe("=> HitTestableGroup", () =>
     function expectEmpty
     (
         entity: ChartDataEntity<unknown, {}, {}>,
-        group: HitTestableGroup<unknown, unknown, unknown>,
+        group: HitTestableGroup<IPlotRange, unknown, unknown>,
     )
         : void
     {

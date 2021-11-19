@@ -1,12 +1,13 @@
 import { TListener } from "rc-js-util";
 import { TEntityTrait } from "../../entities/traits/t-entity-trait";
 import { IPlot, IReadonlyPlot } from "../i-plot";
+import { IPlotRange } from "../i-plot-range";
 
 /**
  * @public
  * Args for {@link TOnEntityModified}.
  */
-export type TEntityModifiedArgs<TPlotRange, TRequiredTraits>
+export type TEntityModifiedArgs<TPlotRange extends IPlotRange, TRequiredTraits>
     = [entity: TEntityTrait<unknown, TRequiredTraits>, plot: IPlot<TPlotRange, TRequiredTraits>]
     ;
 
@@ -14,7 +15,7 @@ export type TEntityModifiedArgs<TPlotRange, TRequiredTraits>
  * @public
  * Listener for entity modification.
  */
-export type TOnEntityModified<TPlotRange, TRequiredTraits> =
+export type TOnEntityModified<TPlotRange extends IPlotRange, TRequiredTraits> =
     TListener<"onEntityModified", TEntityModifiedArgs<TPlotRange, TRequiredTraits>>
     ;
 
@@ -23,7 +24,7 @@ export type TOnEntityModified<TPlotRange, TRequiredTraits> =
  * Emit on a plot to indicate that an entity has been modified and that caches should be regenerated. Refer to the group's
  * documentation as to the conditions where this is required.
  */
-export class OnEntityModified<TPlotRange, TRequiredTraits>
+export class OnEntityModified<TPlotRange extends IPlotRange, TRequiredTraits>
     implements TOnEntityModified<TPlotRange, TRequiredTraits>
 {
     public static callbackKey = "onEntityModified" as const;
@@ -35,7 +36,7 @@ export class OnEntityModified<TPlotRange, TRequiredTraits>
     {
     }
 
-    public static registerListener<TPlotRange, TRequiredTraits>
+    public static registerListener<TPlotRange extends IPlotRange, TRequiredTraits>
     (
         plot: IReadonlyPlot<TPlotRange, TRequiredTraits>,
         onEvent: (...args: TEntityModifiedArgs<TPlotRange, TRequiredTraits>) => void,
@@ -47,7 +48,7 @@ export class OnEntityModified<TPlotRange, TRequiredTraits>
             .addTemporaryListener(new OnEntityModified(onEvent));
     }
 
-    public static registerOneTimeListener<TPlotRange, TRequiredTraits>
+    public static registerOneTimeListener<TPlotRange extends IPlotRange, TRequiredTraits>
     (
         plot: IReadonlyPlot<TPlotRange, TRequiredTraits>,
         onEvent: (...args: TEntityModifiedArgs<TPlotRange, TRequiredTraits>) => void,
@@ -59,7 +60,7 @@ export class OnEntityModified<TPlotRange, TRequiredTraits>
             .addOneTimeListener(new OnEntityModified(onEvent));
     }
 
-    public static emit<TPlotRange, TRequiredTraits>
+    public static emit<TPlotRange extends IPlotRange, TRequiredTraits>
     (
         plot: IPlot<TPlotRange, TRequiredTraits>,
         entity: TEntityTrait<unknown, TRequiredTraits>,

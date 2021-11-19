@@ -1,13 +1,13 @@
 import { I2dEntityCategoryRead } from "./i2d-entity-category-read";
 import { IUpdate2dGroup } from "./update-2d-group";
-import { EntityCategory, ICategoryUpdateHooks, IPlot, IRenderer, TUnknownComponentRenderer } from "@visualization-tools/core";
+import { EntityCategory, ICategoryUpdateHooks, IPlot, IPlotRange, IRenderer, TUnknownComponentRenderer } from "@visualization-tools/core";
 
 /**
  * @public
  * Update category for 2d plots. Provides Z-ordering.
  */
 export class EntityCategory2d<TComponentRenderer extends TUnknownComponentRenderer
-    , TPlotRange
+    , TPlotRange extends IPlotRange
     , TUpdateArg
     , TRequiredTraits>
     extends EntityCategory<TComponentRenderer, TUpdateArg, TRequiredTraits>

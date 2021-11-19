@@ -1,11 +1,11 @@
-import { TEntityTrait, TGraphicsComponent, TUnknownComponentRenderer } from "@visualization-tools/core";
+import { IPlotRange, TEntityTrait, TGraphicsComponent, TUnknownComponentRenderer } from "@visualization-tools/core";
 import { I2dEntityCategoryRead } from "../update-group/i2d-entity-category-read";
 import { IUpdate2dGroup } from "../update-group/update-2d-group";
 
 /**
  * @public
  */
-export interface IScene2d<TPlotRange, TUpdateArg, TRequiredTraits>
+export interface IScene2d<TPlotRange extends IPlotRange, TUpdateArg, TRequiredTraits>
 {
     getSortedCategories
     (

@@ -21,6 +21,7 @@ import { emitToPlots } from "../eventing/emit-to-plots";
 import { OnEntityRemoved } from "../plot/events/on-entity-removed";
 import { OnEntityAdded } from "../plot/events/on-entity-added";
 import { TUnknownEntity } from "../entities/t-unknown-entity";
+import { IPlotRange } from "../plot/i-plot-range";
 
 /**
  * @public
@@ -38,22 +39,22 @@ export interface IChartComponent<TRenderer extends TUnknownRenderer>
      * @param plot - The plot to update.
      * @param updateInteractionHandler - Whether the plot's interaction handler should be updated, default `true`.
      */
-    updateOnNextFrame(plot?: IPlot<unknown, unknown>, updateInteractionHandler?: boolean): void;
+    updateOnNextFrame(plot?: IPlot<IPlotRange, unknown>, updateInteractionHandler?: boolean): void;
     cancelNextFrame(): void;
     /**
      * Does not update interaction handlers.
      */
-    updateImmediate(plot?: IPlot<unknown, unknown>): void;
-    updateInteractionHandlers(plot?: IReadonlyPlot<unknown, unknown>): void;
+    updateImmediate(plot?: IPlot<IPlotRange, unknown>): void;
+    updateInteractionHandlers(plot?: IReadonlyPlot<IPlotRange, unknown>): void;
 
     /**
      * By default resize is performed on every draw, this can be disabled and controlled manually.
      */
     resize(): ICanvasDimensions;
 
-    addPlot<TPlot extends IPlot<unknown, unknown>>(plot: TPlot): TPlot;
-    removePlot(plot: IPlot<unknown, unknown>): void;
-    getPlots(): readonly IReadonlyPlot<unknown, unknown>[];
+    removePlot(plot: IPlot<IPlotRange, unknown>): void;
+    addPlot<TPlot extends IPlot<IPlotRange, unknown>>(plot: TPlot): TPlot;
+    getPlots(): readonly IReadonlyPlot<IPlotRange, unknown>[];
 
     /**
      * Subsequent calls will return the same object.
@@ -106,7 +107,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
         this.frameProvider.cancelNextFrame();
     }
 
-    public updateOnNextFrame(plot?: IPlot<unknown, unknown>, updateInteractionHandler: boolean = true): void
+    public updateOnNextFrame(plot?: IPlot<IPlotRange, unknown>, updateInteractionHandler: boolean = true): void
     {
         updateInteractionHandler = Boolean(updateInteractionHandler);
 
@@ -125,7 +126,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
         }
     }
 
-    public updateImmediate(plot?: IReadonlyPlot<unknown, unknown>): void
+    public updateImmediate(plot?: IReadonlyPlot<IPlotRange, unknown>): void
     {
         if (this.contextLost)
         {
@@ -158,19 +159,20 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
         }
     }
 
-    private drawPlot(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void
+    private drawPlot(plot: IReadonlyPlot<IPlotRange, unknown>, canvasDims: ICanvasDimensions): void
     {
+        ChartComponent.updatePlotRange(plot, this.attachPoint.canvasDims);
         this.renderer.onBeforePlotDraw(plot, canvasDims);
         plot.updateStrategy.update(canvasDims, this.renderer);
         this.renderer.onAfterPlotDraw();
     }
 
-    public updateInteractionHandlers(plot?: IReadonlyPlot<unknown, unknown>): void
+    public updateInteractionHandlers(plot?: IReadonlyPlot<IPlotRange, unknown>): void
     {
         _Iterator.consumeAll(this.updateInteractionHandlersIncremental(plot));
     }
 
-    private * updateInteractionHandlersIncremental(plot?: IReadonlyPlot<unknown, unknown>): IterableIterator<void>
+    private * updateInteractionHandlersIncremental(plot?: IReadonlyPlot<IPlotRange, unknown>): IterableIterator<void>
     {
         const startTime = performance.now();
         const canvasDims = this.attachPoint.canvasDims;
@@ -223,7 +225,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
         return canvasDims;
     }
 
-    public addPlot<TPlot extends IPlot<unknown, unknown>>(plot: TPlot): TPlot
+    public addPlot<TPlot extends IPlot<IPlotRange, unknown>>(plot: TPlot): TPlot
     {
         if (this.plotCollection.has(plot))
         {
@@ -241,7 +243,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
         return plot;
     }
 
-    public removePlot(plot: IPlot<unknown, unknown>): void
+    public removePlot(plot: IPlot<IPlotRange, unknown>): void
     {
         this.eventService
             .getCategory(OnCanvasResized)
@@ -253,7 +255,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
         OnPlotAttachChanged.emit(plot, this, false);
     }
 
-    public getPlots(): readonly IReadonlyPlot<unknown, unknown>[]
+    public getPlots(): readonly IReadonlyPlot<IPlotRange, unknown>[]
     {
         return this.plotCollection.getArray();
     }
@@ -275,17 +277,26 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
 
     private static updateInteractionHandler
     (
-        plot: IReadonlyPlot<unknown, unknown>,
+        plot: IReadonlyPlot<IPlotRange, unknown>,
         canvasDims: ICanvasDimensions,
         startTime: number,
     )
         : IterableIterator<void>
     {
+        ChartComponent.updatePlotRange(plot, canvasDims);
         const interactionHandler = plot.getInteractionHandler();
 
         return interactionHandler == null
             ? _Iterator.emptyIterator
             : interactionHandler.update(canvasDims, startTime);
+    }
+
+    private static updatePlotRange(plot: IReadonlyPlot<IPlotRange, unknown>, canvasDims: ICanvasDimensions): void
+    {
+        if (plot.plotRange.isDirty)
+        {
+            plot.plotRange.update(canvasDims);
+        }
     }
 
     private createDefaultFrameProvider(config: IChartConfig): FrameProvider
@@ -373,7 +384,7 @@ export class ChartComponent<TRenderer extends TUnknownRenderer>
     protected readonly frameProvider: FrameProvider;
     protected readonly contextAdapter: IContextAdapter<unknown>;
     protected readonly updateOptions: IChartUpdateOptions;
-    protected readonly plotCollection = new DirtyCheckedUniqueCollection<IReadonlyPlot<unknown, unknown>>();
+    protected readonly plotCollection = new DirtyCheckedUniqueCollection<IReadonlyPlot<IPlotRange, unknown>>();
     protected contextLost = false;
     private transformProvider: ChartTransformFactory<TRenderer["TComponentRenderer"]> | null = null;
     private readonly attachedEntities = new ReferenceCounter<TUnknownEntity>((entity) =>

@@ -5,6 +5,7 @@ import { TEntityTrait } from "../traits/t-entity-trait";
 import { IHitAllowedComponent } from "../../eventing/hit-testing/i-hit-allowed-component";
 import { IWritablePlot } from "../../plot/i-plot";
 import { IHitTestableTrait } from "./i-hit-testable-trait";
+import { IPlotRange } from "../../plot/i-plot-range";
 
 /**
  * @public
@@ -18,7 +19,7 @@ import { IHitTestableTrait } from "./i-hit-testable-trait";
 export interface IInteractionGroup<TUpdateArg, TStore, TTraits extends IHitTestableTrait>
     extends IEntityGroup<IHitTestableGroupOptions<TUpdateArg, TTraits, TStore>, IHitTestableTrait>
 {
-    hitTestableGroup: HitTestableGroup<unknown, TUpdateArg, TStore>;
+    hitTestableGroup: HitTestableGroup<IPlotRange, TUpdateArg, TStore>;
     /**
      * Must be unique to identify the group.
      */
@@ -46,12 +47,12 @@ export class InteractionGroup<TUpdateArg, TStore, TTraits extends IHitTestableTr
 {
     public groupMask: number;
     public hitAllowedComponentStore: IEntityComponentStore<TEntityTrait<TUpdateArg, IHitTestableTrait>, IHitAllowedComponent<TUpdateArg, IHitTestableTrait>>;
-    public hitTestableGroup: HitTestableGroup<unknown, TUpdateArg, TStore>;
+    public hitTestableGroup: HitTestableGroup<IPlotRange, TUpdateArg, TStore>;
 
     public constructor
     (
         groupMask: number,
-        hitTestableGroup: HitTestableGroup<unknown, TUpdateArg, TStore>,
+        hitTestableGroup: HitTestableGroup<IPlotRange, TUpdateArg, TStore>,
         private plot: IWritablePlot<unknown>,
     )
     {

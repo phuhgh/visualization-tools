@@ -14,6 +14,7 @@ import { ICanvasDimensions } from "../../templating/canvas-dimensions";
 import { TGetChartEventTargetProviders } from "./t-get-chart-event-target-providers";
 import { TInitialChartStateFactory } from "./t-initial-chart-state-factory";
 import { _Iterator, TemporaryListener } from "rc-js-util";
+import { IPlotRange } from "../i-plot-range";
 
 /**
  * @public
@@ -27,7 +28,8 @@ export type TAttachPointListeners =
 /**
  * @public
  */
-export type TChartEventHandlerProvider<TPlotRange> = (initialState: IChartState<TPlotRange>, plot: IReadonlyPlot<TPlotRange, unknown>) => TAttachPointListeners;
+export type TChartEventHandlerProvider<TPlotRange extends IPlotRange> =
+    (initialState: IChartState<TPlotRange>, plot: IReadonlyPlot<TPlotRange, unknown>) => TAttachPointListeners;
 
 /**
  * @public
@@ -37,7 +39,7 @@ export type TChartEventHandlerProvider<TPlotRange> = (initialState: IChartState<
  * @remarks
  * The default state machine can be extended by providing supplying a custom initial state, pointing to the extension.
  */
-export class PlotInteractionConnector<TPlotRange>
+export class PlotInteractionConnector<TPlotRange extends IPlotRange>
     implements IPlotInteractionConnector<TPlotRange>
 {
     public constructor

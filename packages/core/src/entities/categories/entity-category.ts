@@ -16,6 +16,7 @@ import { IGraphicsComponent } from "../../rendering/graphics-components/i-graphi
 import { initializeGraphicsComponent } from "../../rendering/graphics-components/initialize-graphics-component";
 import { Plot } from "../../plot/plot";
 import { OnGraphicsComponentAdded } from "../../rendering/events/on-graphics-component-added";
+import { IPlotRange } from "../../plot/i-plot-range";
 
 /**
  * @public
@@ -30,7 +31,7 @@ export class EntityCategory<TComponentRenderer extends TUnknownComponentRenderer
 
     public constructor
     (
-        private readonly plot: IPlot<unknown, TRequiredTraits>,
+        private readonly plot: IPlot<IPlotRange, TRequiredTraits>,
         private readonly renderer: IRenderer<TComponentRenderer>,
         private readonly updateGroup: IEntityGroup<IUpdateGroupOptions<TUpdateArg>, TRequiredTraits>,
         updateHooks: ICategoryUpdateHooks<IRenderer<TComponentRenderer>, TUpdateArg>,

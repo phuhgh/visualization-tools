@@ -11,12 +11,13 @@ import { IClickableTrait } from "../../../entities/traits/i-clickable-trait";
 import { IHoverableTrait } from "../../../entities/traits/i-hoverable-trait";
 import { IHitTestableTrait } from "../../../entities/groups/i-hit-testable-trait";
 import { IQuadTreeTargetOptions } from "./i-quad-tree-target-options";
+import { IPlotRange } from "../../../plot/i-plot-range";
 
 /**
  * @public
  * Incrementally updatable entity quad tree target provider. The yield time can be configured by setting {@link IQuadTreeTargetOptions.yieldTime}.
  */
-export class QuadTreeEventTargetProvider<TPlotRange>
+export class QuadTreeEventTargetProvider<TPlotRange extends IPlotRange>
     implements IPlotEventTargetProvider<IDefaultTargets>,
                IDefaultTargets
 {

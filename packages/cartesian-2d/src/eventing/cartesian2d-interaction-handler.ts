@@ -98,7 +98,7 @@ export class Cartesian2dInteractionHandler<TTraits>
 
         this.tmpRange2d.set(plotRange.dataRange);
         this.tmpRange2d.translateBy(dd.getX(), dd.getY());
-        plotRange.updateDataRange(this.tmpRange2d, this.chart.attachPoint.canvasDims);
+        plotRange.updateDataRange(this.tmpRange2d);
 
         this.userCallbacks.onPan($event, dx, dy);
         this.chart.updateOnNextFrame(this.plot);
@@ -141,7 +141,7 @@ export class Cartesian2dInteractionHandler<TTraits>
         plotRange.userTransform.reverseTransformRange(this.tmpRange2d, this.tmpRange2d);
         this.tmpRange2d.bound(plotRange.maxBounds);
 
-        plotRange.updateDataRange(this.tmpRange2d, this.chart.attachPoint.canvasDims);
+        plotRange.updateDataRange(this.tmpRange2d);
 
         this.userCallbacks.onWheel($event, dz);
         this.chart.updateOnNextFrame(this.plot);

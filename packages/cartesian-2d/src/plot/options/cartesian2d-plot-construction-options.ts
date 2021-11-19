@@ -1,6 +1,6 @@
 import { _Production, TF32Range2d, TPickPartial, TTypedArray } from "rc-js-util";
 import { ICartesian2dPlotRange } from "../../update/update-arg/cartesian2d-plot-range";
-import { IGraphAttachPoint, IPlotArea, IPlotConstructionOptions, IReadonlyPlot, PlotArea } from "@visualization-tools/core";
+import { IGraphAttachPoint, IPlotArea, IPlotConstructionOptions, IPlotRange, IReadonlyPlot, PlotArea } from "@visualization-tools/core";
 import { EScreenUnit } from "./e-screen-unit";
 import { ICartesian2dGutterOptions } from "./i-cartesian2d-gutter-options";
 import { ICartesian2dAxisLabelConfig } from "./cartesian2d-axis-label-config";
@@ -31,7 +31,7 @@ export class CartesianPlotConstructionOptions<TArray extends TTypedArray, TRequi
     implements ICartesian2dPlotConstructionOptions<TArray, TRequiredTraits>
 {
     public updateGroup!: T2dUpdateGroup<TArray, TRequiredTraits>;
-    public createUpdateStrategy!: (plot: IReadonlyPlot<unknown, TRequiredTraits>) => TCartesianUpdateStrategy<TArray, TRequiredTraits>;
+    public createUpdateStrategy!: (plot: IReadonlyPlot<IPlotRange, TRequiredTraits>) => TCartesianUpdateStrategy<TArray, TRequiredTraits>;
     public gutterOptions!: ICartesian2dGutterOptions;
     public axisConfig!: ICartesian2dAxisLabelConfig;
     public traceOptions!: ICartesian2dTraceOptions;
