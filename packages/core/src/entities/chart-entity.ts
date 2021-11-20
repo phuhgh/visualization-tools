@@ -8,6 +8,10 @@ import { IncrementingIdentifierFactory } from "rc-js-util";
 export interface IChartEntity<TUpdateArg>
     extends TChangeTrackedTrait
 {
+    /**
+     * If true the entity should not be considered.
+     */
+    isFiltered: boolean;
     onBeforeUpdate(updateArg: TUpdateArg): void;
 }
 
@@ -19,6 +23,7 @@ export class ChartEntity<TUpdateArg>
     implements IChartEntity<TUpdateArg>
 {
     public changeId: number;
+    public isFiltered = false;
 
     public constructor
     (

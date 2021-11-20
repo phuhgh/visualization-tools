@@ -75,6 +75,12 @@ export class QuadTreeEventTargetProvider<TPlotRange extends IPlotRange>
                 }
 
                 const entity = entities[j];
+
+                if (entity.isFiltered)
+                {
+                    continue;
+                }
+
                 hitTestComponent.index(entity, updateArg, quadTree);
             }
         }
