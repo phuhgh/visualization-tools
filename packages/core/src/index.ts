@@ -1,5 +1,7 @@
 import "./globals";
 
+export { NoOpHitTestComponent } from "./eventing/hit-testing/no-op-hit-test-component";
+export { IPlotRange } from "./plot/i-plot-range";
 export { resetTransformComponents } from "./rendering/transform-components/reset-transform-components";
 export { TransformBufferProvider, ITransformProviderBufferProvider } from "./rendering/transform-components/transform-buffer-provider";
 export { EntityBufferStore, IEntityBufferStore } from "./rendering/buffers/entity-buffer-store";
@@ -90,8 +92,8 @@ export { IGraphicsComponent } from "./rendering/graphics-components/i-graphics-c
 export { IEntityUpdateArgProvider } from "./entities/i-entity-update-arg-provider";
 export { EntityComponentStore, IEntityComponentStore } from "./entities/entity-component-store";
 export { ICanvasComponentRenderer, CanvasComponentRenderer } from "./rendering/canvas/canvas-component-renderer";
-export { GlChartFactory, TGlChart } from "./chart/gl-chart-factory";
-export { CanvasChartFactory, TCanvasChart } from "./chart/canvas-chart-factory";
+export { GlChartFactory, TGlChart, IGlChartOptions } from "./chart/gl-chart-factory";
+export { CanvasChartFactory, TCanvasChart, ICanvasChartOptions} from "./chart/canvas-chart-factory";
 export { IChangeDetectionConfig } from "./chart/i-change-detection-config";
 export { IChartWideInteractionOptions } from "./templating/i-chart-wide-interaction-options";
 export { IInteractionSharedState } from "./eventing/user-interaction/i-interaction-shared-state";
@@ -217,3 +219,4 @@ export { IBuffer } from "./rendering/buffers/i-buffer";
 export { BufferLayout, TUnknownBufferLayout, IBufferLayout } from "./rendering/buffers/buffer-layout";
 export { TGlF32BufferLayout } from "./rendering/gl/buffers/t-gl-f32-buffer-layout";
 export { resetEntityBuffers } from "./rendering/buffers/reset-entity-buffers";
+export { IChartOptions } from "./chart/i-chart-options";

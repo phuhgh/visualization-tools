@@ -1,5 +1,5 @@
 import { _Array, _Debug, _Map, _Math, _Production } from "rc-js-util";
-import { EGraphicsComponentType, IGraphicsComponent, TEntityTrait, TGraphicsComponent, TUnknownComponentRenderer } from "@visualization-tools/core";
+import { EGraphicsComponentType, IGraphicsComponent, IPlotRange, TEntityTrait, TGraphicsComponent, TUnknownComponentRenderer } from "@visualization-tools/core";
 import { IScene2d } from "./i-scene2d";
 import { I2dEntityCategoryRead } from "../update-group/i2d-entity-category-read";
 import { T2dZIndexesTrait } from "../../traits/t2d-z-indexes-trait";
@@ -9,7 +9,9 @@ import { IUpdate2dGroup } from "../update-group/update-2d-group";
  * @public
  * sorts entities by z order.
  */
-export class Scene2dCategorySorted<TPlotRange, TUpdateArg, TRequiredTraits extends T2dZIndexesTrait>
+export class Scene2dCategorySorted<TPlotRange extends IPlotRange
+    , TUpdateArg
+    , TRequiredTraits extends T2dZIndexesTrait>
     implements IScene2d<TPlotRange, TUpdateArg, TRequiredTraits>
 {
     public constructor

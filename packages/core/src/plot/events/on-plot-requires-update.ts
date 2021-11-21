@@ -3,12 +3,13 @@ import { IEventService } from "../../eventing/event-service";
 import { IReadonlyPlot } from "../i-plot";
 import { Plot } from "../plot";
 import { EEntityUpdateFlag } from "../../update/e-entity-update-flag";
+import { IPlotRange } from "../i-plot-range";
 
 /**
  * @public
  * Plot requires update/redraw listener.
  */
-export type TOnPlotRequiresUpdate = TListener<"onPlotRequiresUpdate", [plot: IReadonlyPlot<unknown, unknown>, updateFlag: EEntityUpdateFlag]>;
+export type TOnPlotRequiresUpdate = TListener<"onPlotRequiresUpdate", [plot: IReadonlyPlot<IPlotRange, unknown>, updateFlag: EEntityUpdateFlag]>;
 
 /**
  * @public
@@ -21,7 +22,7 @@ export class OnPlotRequiresUpdate implements TOnPlotRequiresUpdate
 
     public constructor
     (
-        public onPlotRequiresUpdate: (plot: IReadonlyPlot<unknown, unknown>, updateFlag: EEntityUpdateFlag) => void,
+        public onPlotRequiresUpdate: (plot: IReadonlyPlot<IPlotRange, unknown>, updateFlag: EEntityUpdateFlag) => void,
     )
     {
     }
@@ -29,7 +30,7 @@ export class OnPlotRequiresUpdate implements TOnPlotRequiresUpdate
     public static registerListener
     (
         eventService: IEventService,
-        onEvent: (plot: IReadonlyPlot<unknown, unknown>, updateFlag: EEntityUpdateFlag) => void,
+        onEvent: (plot: IReadonlyPlot<IPlotRange, unknown>, updateFlag: EEntityUpdateFlag) => void,
     )
         : () => void
     {
@@ -40,7 +41,7 @@ export class OnPlotRequiresUpdate implements TOnPlotRequiresUpdate
 
     public static emit
     (
-        plot: IReadonlyPlot<unknown, unknown>,
+        plot: IReadonlyPlot<IPlotRange, unknown>,
         updateFlag: EEntityUpdateFlag,
     )
         : void

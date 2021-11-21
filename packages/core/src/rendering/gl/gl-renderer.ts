@@ -21,6 +21,7 @@ import { GraphicsComponentStore } from "../graphics-component-store";
 import { IGlBuffer } from "./buffers/i-gl-buffer";
 import { emitContextLossOnEntityGlBuffers } from "./buffers/emit-context-loss-on-entity-gl-buffers";
 import { reinitializeBufferLayouts } from "./buffers/reinitialize-buffer-layouts";
+import { IPlotRange } from "../../plot/i-plot-range";
 
 /**
  * @public
@@ -58,10 +59,11 @@ export class GlRenderer<TComponentRenderer extends TGlComponentRenderer<TGlConte
             return null;
         }
 
-        const sharedState = new GlRendererSharedState(context);
-        const factory = GlComponentRendererFactory.createOne(context, options.onCreate.requiredExtensionsToGet, localizations, sharedState);
+        const extensions = GlComponentRendererFactory.getExtensions(context, options.onCreate.requiredExtensionsToGet);
+        const sharedState = GlRendererSharedState.createOne(context, extensions, context instanceof WebGL2RenderingContext);
+        const factory = GlComponentRendererFactory.createOne(context, extensions, sharedState, localizations);
 
-        if (factory == null)
+        if (factory == null || sharedState == null)
         {
             return null;
         }
@@ -76,7 +78,7 @@ export class GlRenderer<TComponentRenderer extends TGlComponentRenderer<TGlConte
     public readonly transformComponents: ITransformComponentStore<TGl2ComponentRenderer>;
     public readonly sharedState: IGlRendererSharedState;
 
-    public onBeforePlotDraw(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void
+    public onBeforePlotDraw(plot: IReadonlyPlot<IPlotRange, unknown>, canvasDims: ICanvasDimensions): void
     {
         this.sharedState.onNewFrame();
         this.callbacks.onBeforePlotDraw(this.context, plot.plotDimensionsOBL, canvasDims);

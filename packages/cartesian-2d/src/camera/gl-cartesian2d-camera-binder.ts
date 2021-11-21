@@ -1,18 +1,24 @@
 import { ICartesian2dTransforms } from "../update/update-arg/cartesian2d-transforms";
 import { Mat3 } from "rc-js-util";
-import { T2dAbsoluteZIndexTrait } from "../traits/t2d-absolute-z-index-trait";
 import { AGlBinder, BufferLayout, emptyShader, GlFloatUniform, GlMat3Uniform, GlProgramSpecification, GlShader, mat3MultiplyVec2Shader, TGlBasicComponentRenderer, TGlF32BufferLayout } from "@visualization-tools/core";
 import { ICartesian2dUpdateArg } from "../update/update-arg/cartesian2d-update-arg";
 import { IGlCamera2dBinder } from "./i-gl-camera2d-binder";
+import { T2dAbsoluteZIndexTrait } from "../traits/t2d-absolute-z-index-trait";
 
 // FIXME: slightly different category of problem with binder (in that it's transform independent), would like a garbage free version
 /**
  * @public
  */
-export interface TGlCartesian2dUpdateArg
+export class GlCartesian2dUpdateArg
 {
-    transforms: ICartesian2dTransforms<Float32Array>;
-    changeId: number;
+    public constructor
+    (
+        public readonly transforms: ICartesian2dTransforms<Float32Array>,
+        public readonly changeId: number,
+        public readonly zIndexAbs: number,
+    )
+    {
+}
 }
 
 /**
@@ -20,7 +26,7 @@ export interface TGlCartesian2dUpdateArg
  * Provides WebGL bindings for cartesian 2d graphics components.
  */
 export interface IGlCartesian2dCameraBinder
-    extends IGlCamera2dBinder<TGlCartesian2dUpdateArg, ICartesian2dUpdateArg<Float32Array>>
+    extends IGlCamera2dBinder<GlCartesian2dUpdateArg, ICartesian2dUpdateArg<Float32Array>>
 {
 }
 
@@ -29,7 +35,7 @@ export interface IGlCartesian2dCameraBinder
  * {@inheritDoc IGlCartesian2dCameraBinder}
  */
 export class GlCartesian2dCameraBinder
-    extends AGlBinder<TGlBasicComponentRenderer, TGlCartesian2dUpdateArg, TGlF32BufferLayout>
+    extends AGlBinder<TGlBasicComponentRenderer, GlCartesian2dUpdateArg, TGlF32BufferLayout>
     implements IGlCartesian2dCameraBinder
 {
     public specification = specification;
@@ -61,9 +67,13 @@ export class GlCartesian2dCameraBinder
         this.bindings.z.initialize(componentRenderer);
     }
 
-    public getBinderData(updateArg: ICartesian2dUpdateArg<Float32Array>, renderer: TGlBasicComponentRenderer): TGlCartesian2dUpdateArg
+    public getBinderData(connector: T2dAbsoluteZIndexTrait, updateArg: ICartesian2dUpdateArg<Float32Array>, renderer: TGlBasicComponentRenderer): GlCartesian2dUpdateArg
     {
-        return { changeId: renderer.sharedState.frameCounter, transforms: updateArg.drawTransforms };
+        return new GlCartesian2dUpdateArg(
+            updateArg.drawTransforms,
+            renderer.sharedState.frameCounter,
+            connector.graphicsSettings.zIndexAbs,
+        );
     }
 
     public updatePointers(): void
@@ -71,14 +81,10 @@ export class GlCartesian2dCameraBinder
         // no action needed
     }
 
-    public setZ(entity: T2dAbsoluteZIndexTrait): void
-    {
-        this.bindings.z.setData(entity.graphicsSettings.zIndexAbs);
-    }
-
-    public updateData(updateArg: TGlCartesian2dUpdateArg): void
+    public updateData(updateArg: GlCartesian2dUpdateArg): void
     {
         this.bindings.cameraWorld.setData(updateArg.transforms.dataToInteractiveArea, updateArg.changeId);
+        this.bindings.z.setData(updateArg.zIndexAbs);
     }
 
     public bindUniforms(componentRenderer: TGlBasicComponentRenderer): void

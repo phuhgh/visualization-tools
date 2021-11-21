@@ -1,4 +1,4 @@
-import { Mat4, Vec4 } from "rc-js-util";
+import { _Debug, Mat4, Vec4 } from "rc-js-util";
 import { IGlTraceTransformBinder } from "./i-gl-cartesian2d-trace-transform-binder";
 import { AGlInstancedBinder, BufferLayout, GlBuffer, GlFloatAttribute, GlFloatBuffer, GlMat4Uniform, GlProgramSpecification, GlShader, IGlAttribute, IGlInstancedBinder, IGlProgramSpec, ILinkableBinder, ITransformBinderProvider, TChangeTrackedTrait, TGl2ComponentRenderer, TGlF32BufferLayout, TGlInstancedComponentRenderer } from "@visualization-tools/core";
 import { TGlTraceEntity } from "./t-gl-trace-entity";
@@ -205,6 +205,12 @@ export class GlCartesian2dTraceTransformBinder
     )
         : void
     {
+        DEBUG_MODE && _Debug.runBlock(() =>
+        {
+            const buffersAreDifferent = this.bindings.positionAttribute.getBuffer() !== exchangeBinder.bindings.positionAttribute.getBuffer();
+            _Debug.assert(buffersAreDifferent, "attempted to bind input to output");
+        });
+
         const bufferByteSize = entity.data.getTraceCount() * 4 * Float32Array.BYTES_PER_ELEMENT;
         exchangeBinder.bindings.positionAttribute.setSize(transformRenderer.context, bufferByteSize, usage, entity.changeId);
         exchangeBinder.bindings.positionAttribute.bindTransform(transformRenderer, 0);

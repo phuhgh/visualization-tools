@@ -50,7 +50,7 @@ debugDescribe("GlTraceGraphicsComponent", () =>
             interactionTransforms: transforms,
             plotRange: traceConnector.dataRange,
             transformedDataRange: traceConnector.dataRange,
-            userTransform: new Cartesian2dIdentityTransform<Float32Array>(),
+            userTransform: new Cartesian2dIdentityTransform(),
             plotDimensionsOTL: PlotDimensions.createOneOTL(
                 new PlotArea(
                     fullClipSpaceRange2d,

@@ -8,6 +8,7 @@ import { IClickableTrait } from "./traits/i-clickable-trait";
 import { IDraggableTrait } from "./traits/i-draggable-trait";
 import { IChartPointerEvent } from "../eventing/user-interaction/internal-events/chart-pointer-event";
 import { EEntityUpdateFlag } from "../update/e-entity-update-flag";
+import { IChartEntity } from "./chart-entity";
 
 /**
  * @public
@@ -20,12 +21,14 @@ export class ChartDataEntity<TUpdateArg, TConnector, TGcSettings extends object>
                TChangeTrackedTrait,
                IHoverableTrait,
                IClickableTrait,
-               IDraggableTrait
+               IDraggableTrait,
+               IChartEntity<TUpdateArg>
 {
     public groupMask = 0;
     // the hit test id is assigned by the hit test system
     public hitTestId = -1;
     public changeId: number;
+    public isFiltered = false;
 
     public constructor
     (

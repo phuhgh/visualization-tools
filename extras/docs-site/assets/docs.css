@@ -1,0 +1,123 @@
+.component {
+    display: flex;
+    flex: 1 1 0;
+}
+
+.minimal-component {
+    display: flex;
+    flex: 0 0 auto;
+}
+
+.flex110 {
+    flex: 1 1 0;
+}
+
+.flex-auto {
+    flex: 0 0 auto;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+.ecs-chart {
+    flex: 1 1 0;
+    min-height: 250px;
+    min-width: 250px;
+}
+
+.hide-overflow {
+    overflow: hidden;
+}
+
+.clear-padding {
+    padding: 0;
+    margin: 0;
+}
+
+.full-screen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    z-index: 100;
+}
+
+.overflow-y-hidden {
+    overflow-y: hidden;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
+}
+
+.section-padding {
+    margin: 0;
+    padding: 40px 40px 0;
+}
+
+.section-padding + .section-padding {
+    padding-top: 20px;
+}
+
+.demos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.demos > .MuiPaper-root {
+    margin: 10px;
+    flex: 1 1 0;
+}
+
+.no-decoration-link {
+    text-decoration: none;
+    color: black;
+}
+
+.content-root > :last-child {
+    padding: 10px 30px 30px 30px;
+}
+
+@media (max-width: 600px) {
+    .chart-controls {
+        justify-content: end;
+        flex-direction: row-reverse;
+        margin: 10px 20px 0 0;
+    }
+
+    .chart-controls > .MuiButton-root {
+        margin-left: 10px;
+    }
+
+    .full-screen {
+        flex-direction: column-reverse;
+    }
+}
+
+@media (min-width: 600px) {
+    .chart-controls {
+        flex-direction: column;
+        margin: 10px 10px 0 0;
+    }
+
+    .chart-controls > .MuiButton-root {
+        margin-bottom: 10px;
+    }
+
+    .full-screen {
+        flex-direction: row;
+    }
+}

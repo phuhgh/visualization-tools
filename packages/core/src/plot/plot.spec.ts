@@ -9,12 +9,12 @@ import { OnEntityAddedToGroup } from "./events/on-entity-added-to-group";
 import { debugDescribe } from "rc-js-test-util";
 import { TestCanvasPlotFactory } from "../test-utils/fakes/test-canvas-plot-factory";
 import { IPlot } from "./i-plot";
-import { TF64Range2d } from "rc-js-util/bin/src/array/typed-array/2d/range2d/range2d";
+import { IPlotRange } from "./i-plot-range";
 
 debugDescribe("=> plot", () =>
 {
     let harness: TestCanvasChartHarness;
-    let plot: IPlot<TF64Range2d, unknown>;
+    let plot: IPlot<IPlotRange, unknown>;
     const identifierFactory = new IncrementingIdentifierFactory();
 
     beforeEach(() =>

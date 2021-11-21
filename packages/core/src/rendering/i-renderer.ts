@@ -9,6 +9,7 @@ import { TExtractGcSpec } from "./component-renderer/t-extract-gc-spec";
 import { TExtractGcContext } from "./component-renderer/t-extract-gc-context";
 import { ITransformComponentStore } from "./transform-components/transform-component-store";
 import { IGraphicsComponentStore } from "./graphics-component-store";
+import { IPlotRange } from "../plot/i-plot-range";
 
 /**
  * @public
@@ -46,7 +47,7 @@ export interface IRenderer<TComponentRenderer extends TUnknownComponentRenderer>
     initializeBuffers(buffers: readonly unknown[]): void;
     destroyBuffers(buffers: readonly unknown[]): void;
 
-    onBeforePlotDraw(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void;
+    onBeforePlotDraw(plot: IReadonlyPlot<IPlotRange, unknown>, canvasDims: ICanvasDimensions): void;
     onAfterPlotDraw(): void;
 
     TComponentRenderer: TComponentRenderer;

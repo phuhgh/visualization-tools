@@ -1,0 +1,19 @@
+{
+  "name": "@visualization-tools/test-data",
+  "private": true,
+  "version": "1.0.0",
+  "main": "bin/index.js",
+  "typings": "bin/index.d.ts",
+  "scripts": {
+    "incremental-build": "tsc --build --incremental",
+    "build": "rimraf bin && tsc",
+    "lint": "echo skipping test-data",
+    "ci-build": "npm run build"
+  },
+  "dependencies": {
+    "rc-js-util": "8.18.3",
+    "tslib": "^2.3.1",
+    "@visualization-tools/core": "^1.0.0",
+    "@visualization-tools/cartesian-2d": "^1.0.0"
+  }
+}

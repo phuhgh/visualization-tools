@@ -37,6 +37,12 @@ export class EntityUpdateGrouping<TUpdateArg, TRequiredTraits>
         for (let i = 0, iEnd = entities.length; i < iEnd; ++i)
         {
             const entity = entities[i];
+
+            if (entity.isFiltered)
+            {
+                continue;
+            }
+
             const entityBufferLayout = entityBufferStore.getLayout(entity, groupId);
 
             swapBufferLayout(graphicsComponent, entityBufferLayout);

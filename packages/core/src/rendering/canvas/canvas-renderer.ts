@@ -10,6 +10,7 @@ import { IReadonlyPlot } from "../../plot/i-plot";
 import { CanvasRendererSharedState } from "./canvas-renderer-shared-state";
 import { ITransformComponentStore, TransformComponentStore } from "../transform-components/transform-component-store";
 import { GraphicsComponentStore } from "../graphics-component-store";
+import { IPlotRange } from "../../plot/i-plot-range";
 
 /**
  * @public
@@ -48,7 +49,7 @@ export class CanvasRenderer implements ICanvasRenderer
     public readonly transformComponents: ITransformComponentStore<ICanvasComponentRenderer>;
     public readonly sharedState: CanvasRendererSharedState;
 
-    public onBeforePlotDraw(plot: IReadonlyPlot<unknown, unknown>, canvasDims: ICanvasDimensions): void
+    public onBeforePlotDraw(plot: IReadonlyPlot<IPlotRange, unknown>, canvasDims: ICanvasDimensions): void
     {
         this.sharedState.onNewFrame();
         this.callbacks.onBeforePlotDraw(this.context, plot.plotDimensionsOTL, canvasDims);

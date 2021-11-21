@@ -6,4 +6,5 @@
 export interface IUserTransform
 {
     userTransformId: symbol;
+    readonly changeId: number;
 }

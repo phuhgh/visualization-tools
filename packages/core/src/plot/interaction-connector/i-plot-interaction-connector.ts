@@ -4,11 +4,12 @@ import { IEventService } from "../../eventing/event-service";
 import { ICanvasDimensions } from "../../templating/canvas-dimensions";
 import { TGetChartEventTargetProviders } from "./t-get-chart-event-target-providers";
 import { TInitialChartStateFactory } from "./t-initial-chart-state-factory";
+import { IPlotRange } from "../i-plot-range";
 
 /**
  * @public
  */
-export interface IPlotInteractionConnector<TPlotRange>
+export interface IPlotInteractionConnector<TPlotRange extends IPlotRange>
 {
     register<TTargets extends object>
     (

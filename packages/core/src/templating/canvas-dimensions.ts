@@ -31,6 +31,7 @@ export interface ICanvasDimensions
     readonly pixelToClipSize: IReadonlyMat3<Float32Array>;
 
     clone(): ICanvasDimensions;
+    updateBoundingRects(boundingRect: DOMRect): void;
 }
 
 /**
@@ -48,7 +49,7 @@ export class CanvasDimensions implements ICanvasDimensions
         public readonly dpr: number,
         public readonly cssDims: IReadonlyRange2d<Float32Array>,
         public readonly pixelDims: IReadonlyRange2d<Float32Array>,
-        public readonly boundingRect: IReadonlyRange2d<Float32Array>,
+        public readonly boundingRect: Range2d<Float32Array>,
     )
     {
         this.transforms = new CanvasTransforms(
@@ -65,6 +66,11 @@ export class CanvasDimensions implements ICanvasDimensions
         );
 
         this.pixelToClipSize = pixelDims.getRangeTransform(fullClipSpaceSize2d);
+    }
+
+    public updateBoundingRects(boundingRect: DOMRect): void
+    {
+        this.boundingRect.update(boundingRect.left, boundingRect.right, boundingRect.top, boundingRect.bottom);
     }
 
     public static createDefault(): ICanvasDimensions

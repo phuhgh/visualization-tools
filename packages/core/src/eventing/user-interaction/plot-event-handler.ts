@@ -7,11 +7,12 @@ import { ChartPointerEvent } from "./internal-events/chart-pointer-event";
 import { ICanvasDimensions } from "../../templating/canvas-dimensions";
 import { IReadonlyPlot } from "../../plot/i-plot";
 import { TAttachPointListeners } from "../../plot/interaction-connector/plot-interaction-connector";
+import { IPlotRange } from "../../plot/i-plot-range";
 
 /**
  * @internal
  */
-export class PlotEventHandler<TPlotRange>
+export class PlotEventHandler<TPlotRange extends IPlotRange>
     implements TAttachPointListeners
 {
     public constructor

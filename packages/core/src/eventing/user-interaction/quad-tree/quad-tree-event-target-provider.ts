@@ -11,12 +11,13 @@ import { IClickableTrait } from "../../../entities/traits/i-clickable-trait";
 import { IHoverableTrait } from "../../../entities/traits/i-hoverable-trait";
 import { IHitTestableTrait } from "../../../entities/groups/i-hit-testable-trait";
 import { IQuadTreeTargetOptions } from "./i-quad-tree-target-options";
+import { IPlotRange } from "../../../plot/i-plot-range";
 
 /**
  * @public
  * Incrementally updatable entity quad tree target provider. The yield time can be configured by setting {@link IQuadTreeTargetOptions.yieldTime}.
  */
-export class QuadTreeEventTargetProvider<TPlotRange>
+export class QuadTreeEventTargetProvider<TPlotRange extends IPlotRange>
     implements IPlotEventTargetProvider<IDefaultTargets>,
                IDefaultTargets
 {
@@ -56,7 +57,7 @@ export class QuadTreeEventTargetProvider<TPlotRange>
         this.entityTree.sharedTree.setTopLevel(plotDimensions);
         const entitiesByHitTester = this.interactiveGroups.hitTestable.getEntitiesByHitTester();
         const updateArg = this.interactiveGroups.hitTestable.argProvider.getUpdateArg(this.plot, canvasDims);
-        this.entityTree.update(updateArg);
+        this.entityTree.setHitTestArg(updateArg);
         const quadTree = this.entityTree;
         const yieldTime = this.options.yieldTime;
 
@@ -74,6 +75,12 @@ export class QuadTreeEventTargetProvider<TPlotRange>
                 }
 
                 const entity = entities[j];
+
+                if (entity.isFiltered)
+                {
+                    continue;
+                }
+
                 hitTestComponent.index(entity, updateArg, quadTree);
             }
         }

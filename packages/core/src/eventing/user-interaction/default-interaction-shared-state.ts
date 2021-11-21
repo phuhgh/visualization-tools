@@ -196,7 +196,7 @@ function emitSegmentChangeEvents
 
 function emitClickEvents
 (
-    targets: HitTestResult<unknown, IClickableTrait>[],
+    targets: readonly HitTestResult<unknown, IClickableTrait>[],
     chartEvent: IChartPointerEvent<PointerEvent>,
 )
     : EEntityUpdateFlag
@@ -218,7 +218,7 @@ function emitClickEvents
 
 function emitDblClickEvents
 (
-    targets: HitTestResult<unknown, IClickableTrait>[],
+    targets: readonly HitTestResult<unknown, IClickableTrait>[],
     chartEvent: IChartPointerEvent<PointerEvent>,
 )
     : EEntityUpdateFlag

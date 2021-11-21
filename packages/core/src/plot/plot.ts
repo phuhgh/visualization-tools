@@ -19,12 +19,13 @@ import { OnEntityRemoved } from "./events/on-entity-removed";
 import { OnEntityAdded } from "./events/on-entity-added";
 import { OnEntityAddedToGroup } from "./events/on-entity-added-to-group";
 import { OnEntityRemovedFromGroup } from "./events/on-entity-removed-from-group";
+import { IPlotRange } from "./i-plot-range";
 
 /**
  * @public
  * {@inheritDoc IPlot}
  */
-export class Plot<TPlotRange, TRequiredTraits>
+export class Plot<TPlotRange extends IPlotRange, TRequiredTraits>
     implements IPlot<TPlotRange, TRequiredTraits>
 {
     public readonly attachPoint: IGraphAttachPoint;
@@ -51,9 +52,9 @@ export class Plot<TPlotRange, TRequiredTraits>
         this.updateStrategy = arg.plotOptions.createUpdateStrategy(this, arg.plotOptions.updateGroup);
     }
 
-    public static getChartEventService(plot: IReadonlyPlot<unknown, unknown>): IEventService
+    public static getChartEventService(plot: IReadonlyPlot<IPlotRange, unknown>): IEventService
     {
-        return (plot as Plot<unknown, unknown>).chartEventService;
+        return (plot as Plot<IPlotRange, unknown>).chartEventService;
     }
 
     public onCanvasResized = (): void =>

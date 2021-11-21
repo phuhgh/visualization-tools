@@ -2,6 +2,7 @@ import { IReadonlyPlot } from "../i-plot";
 import { TListener } from "rc-js-util";
 import { TEntityTrait } from "../../entities/traits/t-entity-trait";
 import { IEntityGroup } from "../../entities/groups/a-entity-group";
+import { IPlotRange } from "../i-plot-range";
 
 /**
  * @public
@@ -37,7 +38,7 @@ export class OnEntityAddedToGroup<TTraits>
 
     public static registerListener<TRequiredTraits>
     (
-        plot: IReadonlyPlot<unknown, TRequiredTraits>,
+        plot: IReadonlyPlot<IPlotRange, TRequiredTraits>,
         onEvent: (...args: TEntityAddedToGroupArgs<TRequiredTraits>) => void,
     )
         : () => void
@@ -49,7 +50,7 @@ export class OnEntityAddedToGroup<TTraits>
 
     public static registerOneTimeListener<TRequiredTraits>
     (
-        plot: IReadonlyPlot<unknown, TRequiredTraits>,
+        plot: IReadonlyPlot<IPlotRange, TRequiredTraits>,
         onEvent: (...args: TEntityAddedToGroupArgs<TRequiredTraits>) => void,
     )
         : () => void
@@ -61,7 +62,7 @@ export class OnEntityAddedToGroup<TTraits>
 
     public static emit<TGroupTraits, TRequiredTraits>
     (
-        plot: IReadonlyPlot<unknown, TRequiredTraits>,
+        plot: IReadonlyPlot<IPlotRange, TRequiredTraits>,
         entity: TEntityTrait<unknown, TGroupTraits & TRequiredTraits>,
         group: IEntityGroup<unknown, TGroupTraits>,
     )

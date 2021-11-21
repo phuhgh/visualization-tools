@@ -103,8 +103,7 @@ export class GlCartesian2dAxisGraphicsComponent
     )
         : void
     {
-        this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(this.cameraBinder.getBinderData(updateArg, componentRenderer), componentRenderer);
+        this.cameraBinder.update(this.cameraBinder.getBinderData(entity, updateArg, componentRenderer), componentRenderer);
 
         this.traceBinder.updateData(entity);
         this.traceBinder.bindInstanced(componentRenderer, 1);

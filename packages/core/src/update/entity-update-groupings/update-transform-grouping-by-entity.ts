@@ -51,6 +51,11 @@ export class UpdateTransformGroupingByEntity<TUpdateArg, TRequiredTraits>
         {
             const entity = entities[i];
 
+            if (entity.isFiltered)
+            {
+                continue;
+            }
+
             for (let j = 0, jEnd = graphicsComponents.length; j < jEnd; ++j)
             {
                 const graphicsComponent = graphicsComponents[j];

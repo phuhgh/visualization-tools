@@ -1,5 +1,6 @@
 import { IReadonlyPlot } from "../plot/i-plot";
 import { IInteractionHandlerUpdater, InteractionHandlerUpdater } from "./interaction-handler-updater";
+import { IPlotRange } from "../plot/i-plot-range";
 
 /**
  * @public
@@ -7,7 +8,7 @@ import { IInteractionHandlerUpdater, InteractionHandlerUpdater } from "./interac
  */
 export interface IFrameProvider
 {
-    updateOnNextFrame(plot: IReadonlyPlot<unknown, unknown>, updateInteractionHandler: boolean): void;
+    updateOnNextFrame(plot: IReadonlyPlot<IPlotRange, unknown>, updateInteractionHandler: boolean): void;
 }
 
 /**
@@ -18,8 +19,8 @@ export class FrameProvider implements IFrameProvider
 {
     public constructor
     (
-        private readonly drawCallback: (plot: IReadonlyPlot<unknown, unknown>) => void,
-        private readonly updateInteractionHandlersCallback: (plot: IReadonlyPlot<unknown, unknown>) => IterableIterator<void>,
+        private readonly drawCallback: (plot: IReadonlyPlot<IPlotRange, unknown>) => void,
+        private readonly updateInteractionHandlersCallback: (plot: IReadonlyPlot<IPlotRange, unknown>) => IterableIterator<void>,
         rollupTime: number,
         private readonly $window: Window = window,
     )
@@ -27,7 +28,7 @@ export class FrameProvider implements IFrameProvider
         this.interactionStateUpdater = new InteractionHandlerUpdater(this.updateInteractionHandlersCallback, rollupTime);
     }
 
-    public updateOnNextFrame(plot: IReadonlyPlot<unknown, unknown>, updateInteractionHandler: boolean): void
+    public updateOnNextFrame(plot: IReadonlyPlot<IPlotRange, unknown>, updateInteractionHandler: boolean): void
     {
         this.plotsToUpdate.add(plot);
 
@@ -78,8 +79,8 @@ export class FrameProvider implements IFrameProvider
         this.interactionHandlersToUpdate.clear();
     };
 
-    private plotsToUpdate = new Set<IReadonlyPlot<unknown, unknown>>();
-    private interactionHandlersToUpdate = new Set<IReadonlyPlot<unknown, unknown>>();
+    private plotsToUpdate = new Set<IReadonlyPlot<IPlotRange, unknown>>();
+    private interactionHandlersToUpdate = new Set<IReadonlyPlot<IPlotRange, unknown>>();
     private nextFrame: number | null = null;
     private readonly interactionStateUpdater: IInteractionHandlerUpdater;
 }

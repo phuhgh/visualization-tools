@@ -4,6 +4,7 @@ import { IReadonlyPlot } from "../i-plot";
 import { IEventService } from "../../eventing/event-service";
 import { IChartComponent } from "../../chart/chart-component";
 import { TUnknownRenderer } from "../../rendering/t-unknown-renderer";
+import { IPlotRange } from "../i-plot-range";
 
 /**
  * @public
@@ -37,7 +38,7 @@ export class OnEntityRemoved<TRequiredTraits>
 
     public static registerListener<TRequiredTraits>
     (
-        owner: IReadonlyPlot<unknown, TRequiredTraits> | IChartComponent<TUnknownRenderer>,
+        owner: IReadonlyPlot<IPlotRange, TRequiredTraits> | IChartComponent<TUnknownRenderer>,
         onEvent: (...args: TEntityRemovedArgs<TRequiredTraits>) => void,
     )
         : () => void
@@ -49,7 +50,7 @@ export class OnEntityRemoved<TRequiredTraits>
 
     public static registerOneTimeListener<TRequiredTraits>
     (
-        owner: IReadonlyPlot<unknown, TRequiredTraits> | IChartComponent<TUnknownRenderer>,
+        owner: IReadonlyPlot<IPlotRange, TRequiredTraits> | IChartComponent<TUnknownRenderer>,
         onEvent: (...args: TEntityRemovedArgs<TRequiredTraits>) => void,
     )
         : () => void

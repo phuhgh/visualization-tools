@@ -112,7 +112,7 @@ class GlTestGraphicsComponent
 
         const ctx = componentRenderer.context;
         this.testDataAttribute.bindArray(componentRenderer);
-        this.cameraBinder.update({ transforms: transforms, changeId: componentRenderer.sharedState.frameCounter }, componentRenderer);
+        this.cameraBinder.update({ transforms: transforms, changeId: componentRenderer.sharedState.frameCounter, zIndexAbs: 0 }, componentRenderer);
 
         ctx.drawArrays(ctx.TRIANGLES, 0, entity.data.length / this.testDataAttribute.componentsPerVertex);
     }

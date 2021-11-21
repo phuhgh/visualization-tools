@@ -28,6 +28,11 @@ export interface IGraphAttachPoint
     resizeCanvas(): ICanvasDimensions;
     addHiddenElement<TKey extends keyof HTMLElementTagNameMap>(className: string, tagName: TKey): HTMLElementTagNameMap[TKey];
     removeHiddenElement(className: string): void;
+    /**
+     * Interaction handlers depend on the position of the element on the screen to determine the relative position of the
+     * cursor. This updates {@link ICanvasDimensions.boundingRect} on the current canvasDims.
+     */
+    updateBoundingRects(): void;
 }
 
 /**
@@ -64,14 +69,14 @@ export class GraphAttachPoint
 
         const w = this.canvasElement.clientWidth | 0;
         const h = this.canvasElement.clientHeight | 0;
+        const dpr = this.$window.devicePixelRatio;
 
-        if (this.canvasDims.cssDims.getXMax() === w && this.canvasDims.cssDims.getYMax() === h)
+        if (this.canvasDims.cssDims.getXMax() === w && this.canvasDims.cssDims.getYMax() === h && dpr === this.canvasDims.dpr)
         {
             return this.canvasDims;
         }
 
         // update dims
-        const dpr = this.$window.devicePixelRatio;
         const boundingRect = this.canvasElement.getBoundingClientRect();
         this.canvasDims = new CanvasDimensions(
             dpr,
@@ -240,6 +245,12 @@ export class GraphAttachPoint
 
             return () => this.canvasElement.removeEventListener("pointermove", onEvent);
         });
+    }
+
+    public updateBoundingRects(): void
+    {
+        const boundingRect = this.canvasElement.getBoundingClientRect();
+        this.canvasDims.updateBoundingRects(boundingRect);
     }
 
     private hiddenElements: IDictionary<Element | undefined> = {};

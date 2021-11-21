@@ -2,11 +2,12 @@ import { IEntityGroup } from "../entities/groups/a-entity-group";
 import { TF32Range2d } from "rc-js-util";
 import { IReadonlyPlot } from "./i-plot";
 import { IPlotUpdateStrategy } from "../update/i-plot-update-strategy";
+import { IPlotRange } from "./i-plot-range";
 
 /**
  * @public
  */
-export interface IPlotConstructionOptions<TPlotRange
+export interface IPlotConstructionOptions<TPlotRange extends IPlotRange
     , TUpdateGroup extends IEntityGroup<unknown, TRequiredTraits>
     , TRequiredTraits>
 {

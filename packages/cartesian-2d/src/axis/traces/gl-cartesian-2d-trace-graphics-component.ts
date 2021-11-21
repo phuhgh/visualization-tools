@@ -98,8 +98,7 @@ export class GlCartesian2dTraceGraphicsComponent
         : void
     {
         // update dependencies
-        this.cameraBinder.setZ(entity);
-        this.cameraBinder.update(this.cameraBinder.getBinderData(updateArg, componentRenderer), componentRenderer);
+        this.cameraBinder.update(this.cameraBinder.getBinderData(entity, updateArg, componentRenderer), componentRenderer);
         this.traceBinder.updateInstanced(entity, componentRenderer, 1);
 
         // draw

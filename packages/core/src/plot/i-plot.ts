@@ -13,12 +13,13 @@ import { TInitialChartStateFactory } from "./interaction-connector/t-initial-cha
 import { IDefaultTargets } from "../eventing/user-interaction/i-default-targets";
 import { IGraphAttachPoint } from "../templating/graph-attach-point";
 import { IIdentifierFactory } from "rc-js-util";
+import { IPlotRange } from "./i-plot-range";
 
 /**
  * @public
  * Basic drawing unit to which entities and behaviors can be attached.
  */
-export interface IPlot<TPlotRange, TRequiredTraits>
+export interface IPlot<TPlotRange extends IPlotRange, TRequiredTraits>
     extends IReadonlyPlot<TPlotRange, TRequiredTraits>,
             IWritablePlot<TRequiredTraits>,
             TOnCanvasResized
@@ -29,7 +30,7 @@ export interface IPlot<TPlotRange, TRequiredTraits>
  * @public
  * Non-mutative methods of a plot.
  */
-export interface IReadonlyPlot<TPlotRange, TRequiredTraits>
+export interface IReadonlyPlot<TPlotRange extends IPlotRange, TRequiredTraits>
 {
     readonly plotName: string | null;
     readonly plotRange: Readonly<TPlotRange>;

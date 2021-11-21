@@ -1,5 +1,5 @@
-import { T2dAbsoluteZIndexTrait } from "../traits/t2d-absolute-z-index-trait";
 import { IGlBinder, TGlBasicComponentRenderer, TGlF32BufferLayout } from "@visualization-tools/core";
+import { T2dAbsoluteZIndexTrait } from "../traits/t2d-absolute-z-index-trait";
 
 /**
  * @public
@@ -8,9 +8,8 @@ import { IGlBinder, TGlBasicComponentRenderer, TGlF32BufferLayout } from "@visua
 export interface IGlCamera2dBinder<TConnector, TUpdateArg>
     extends IGlBinder<TGlBasicComponentRenderer, TConnector, TGlF32BufferLayout>
 {
-    setZ(entity: T2dAbsoluteZIndexTrait): void;
     /**
      * Get the parameter for setData from the plot's update arg.
      */
-    getBinderData(updateArg: TUpdateArg, renderer: TGlBasicComponentRenderer): TConnector;
+    getBinderData(entity: T2dAbsoluteZIndexTrait, updateArg: TUpdateArg, renderer: TGlBasicComponentRenderer): TConnector;
 }

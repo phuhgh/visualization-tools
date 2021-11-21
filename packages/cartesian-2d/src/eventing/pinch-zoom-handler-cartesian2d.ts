@@ -48,7 +48,7 @@ export class PinchZoomHandlerCartesian2d<TArray extends TTypedArray>
         this.dataRangeTmp.scaleRelativeTo(this.prevWidth / distanceBetweenPoints, this.scaleAbout, this.dataRangeTmp);
         this.dataRangeTmp.translateBy(-dd[0] * this.canvasDims.dpr, -dd[1] * this.canvasDims.dpr);
 
-        this.plot.plotRange.updateDataRange(this.dataRangeTmp, this.canvasDims);
+        this.plot.plotRange.updateDataRange(this.dataRangeTmp);
         this.prevWidth = distanceBetweenPoints;
     }
 

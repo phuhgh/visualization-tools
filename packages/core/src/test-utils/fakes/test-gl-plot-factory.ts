@@ -1,4 +1,4 @@
-import { Range2d, TF32Range2d } from "rc-js-util";
+import { Range2d } from "rc-js-util";
 import { IEntityGroup } from "../../entities/groups/a-entity-group";
 import { IPlot } from "../../plot/i-plot";
 import { IPlotConstructionOptions } from "../../plot/i-plot-construction-options";
@@ -9,6 +9,7 @@ import { IChartComponent } from "../../chart/chart-component";
 import { IGlRenderer } from "../../rendering/gl/gl-renderer";
 import { TGl2ComponentRenderer } from "../../rendering/gl/component-renderer/t-gl2-component-renderer";
 import { getTestGlOptions } from "./get-test-gl-options";
+import { ITestPlotRange } from "./i-test-plot-range";
 
 /**
  * @internal
@@ -18,9 +19,9 @@ export class TestGlPlotFactory
     public static createOne
     (
         chart: IChartComponent<IGlRenderer<TGl2ComponentRenderer>>,
-        plotOptions: IPlotConstructionOptions<TF32Range2d, IEntityGroup<unknown, unknown>, unknown> = getTestGlOptions(),
+        plotOptions: IPlotConstructionOptions<ITestPlotRange<Float32Array>, IEntityGroup<unknown, unknown>, unknown> = getTestGlOptions(),
     )
-        : IPlot<TF32Range2d, unknown>
+        : IPlot<ITestPlotRange<Float32Array>, unknown>
     {
         const halfCs = Range2d.f32.factory.createOne(-1, 0, -1, 0);
         return new Plot(new PlotCtorArg(chart, plotOptions, new PlotArea(halfCs, halfCs.slice())));

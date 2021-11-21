@@ -6,7 +6,7 @@ import { IUserTransform } from "@visualization-tools/core";
  * @public
  * A user transform to apply before the screen space transform. By default this is identity.
  */
-export interface ICartesian2dUserTransform<TArray extends TTypedArray> extends IUserTransform
+export interface ICartesian2dUserTransform extends IUserTransform
 {
     readonly transformId: ECartesian2dUserTransform;
     readonly xTransformEnabled: boolean;
@@ -20,28 +20,28 @@ export interface ICartesian2dUserTransform<TArray extends TTypedArray> extends I
     reverseX(x: number): number;
     reverseY(y: number): number;
 
-    forwardTransformRange
+    forwardTransformRange<TArray extends TTypedArray>
     (
         range: IReadonlyRange2d<TArray>,
         result?: Range2d<TArray>,
     )
         : Range2d<TArray>;
 
-    forwardTransformPoint
+    forwardTransformPoint<TArray extends TTypedArray>
     (
         point: IReadonlyVec2<TArray>,
         result?: Vec2<TArray>,
     )
         : Vec2<TArray>;
 
-    reverseTransformRange
+    reverseTransformRange<TArray extends TTypedArray>
     (
         range: IReadonlyRange2d<TArray>,
         result?: Range2d<TArray>,
     )
         : Range2d<TArray>;
 
-    reverseTransformPoint
+    reverseTransformPoint<TArray extends TTypedArray>
     (
         point: IReadonlyVec2<TArray>,
         result?: Vec2<TArray>,

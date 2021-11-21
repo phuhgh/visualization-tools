@@ -8,5 +8,5 @@ import { IHitTestableTrait } from "../../entities/groups/i-hit-testable-trait";
  */
 export interface IPointerEventHitTargetProvider<TUpdateArg, TTraits extends IHitTestableTrait>
 {
-    hitTestPlot(pointerEvent: IChartPointerEvent<MouseEvent>): HitTestResult<TUpdateArg, TTraits>[];
+    hitTestPlot(pointerEvent: IChartPointerEvent<MouseEvent>): readonly HitTestResult<TUpdateArg, TTraits>[];
 }

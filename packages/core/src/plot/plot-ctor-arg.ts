@@ -3,12 +3,13 @@ import { IPlotArea } from "./i-plot-area";
 import { IEntityGroup } from "../entities/groups/a-entity-group";
 import { IPlotConstructionOptions } from "./i-plot-construction-options";
 import { TUnknownRenderer } from "../rendering/t-unknown-renderer";
+import { IPlotRange } from "./i-plot-range";
 
 /**
  * @public
  * Default plot construction args.
  */
-export interface IPlotCtorArg<TPlotRange
+export interface IPlotCtorArg<TPlotRange extends IPlotRange
     , TUpdateGroup extends IEntityGroup<unknown, TRequiredTraits>
     , TRequiredTraits>
 {
@@ -21,7 +22,7 @@ export interface IPlotCtorArg<TPlotRange
  * @public
  * {@inheritDoc IPlotCtorArg}
  */
-export class PlotCtorArg<TPlotRange
+export class PlotCtorArg<TPlotRange extends IPlotRange
     , TUpdateGroup extends IEntityGroup<unknown, TRequiredTraits>
     , TRequiredTraits>
     implements IPlotCtorArg<TPlotRange, TUpdateGroup, TRequiredTraits>

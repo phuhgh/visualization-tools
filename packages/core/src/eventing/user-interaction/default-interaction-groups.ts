@@ -5,12 +5,13 @@ import { IInteractionGroup, InteractionGroup } from "../../entities/groups/inter
 import { IDraggableTrait } from "../../entities/traits/i-draggable-trait";
 import { IHoverableTrait } from "../../entities/traits/i-hoverable-trait";
 import { IClickableTrait } from "../../entities/traits/i-clickable-trait";
+import { IPlotRange } from "../../plot/i-plot-range";
 
 /**
  * @public
  * A set of interaction groups that should meet most use cases.
  */
-export interface IDefaultInteractionGroups<TPlotRange, TUpdateArg, TStore>
+export interface IDefaultInteractionGroups<TPlotRange extends IPlotRange, TUpdateArg, TStore>
 {
     readonly hitTestable: HitTestableGroup<TPlotRange, TUpdateArg, TStore>;
     readonly draggable: IInteractionGroup<TUpdateArg, TStore, IDraggableTrait>;
@@ -22,7 +23,7 @@ export interface IDefaultInteractionGroups<TPlotRange, TUpdateArg, TStore>
  * @public
  * {@inheritDoc IDefaultInteractionGroups}
  */
-export class DefaultInteractionGroups<TPlotRange, TUpdateArg, TRequiredTraits, TStore>
+export class DefaultInteractionGroups<TPlotRange extends IPlotRange, TUpdateArg, TRequiredTraits, TStore>
     implements IDefaultInteractionGroups<TPlotRange, TUpdateArg, TStore>
 {
     public readonly hitTestable: HitTestableGroup<TPlotRange, TUpdateArg, TStore>;

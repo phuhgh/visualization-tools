@@ -48,11 +48,7 @@ export class Cartesian2dPlotSharedQuadTree<TArray extends TTypedArray, TRequired
         this.configureListeners(entityTree);
 
         this.plot.setInteractionHandler(
-            new PlotInteractionConnector(
-                () =>
-                {
-                    return new Cartesian2dInteractionHandler(chart, this.plot, listeners);
-                }),
+            new PlotInteractionConnector(() => new Cartesian2dInteractionHandler(chart, this.plot, listeners)),
             () => new QuadTreeEventTargetProvider(entityTree, this.plot, this.interactionGroups, this.options),
             getChartInitialState,
         );
