@@ -20,4 +20,12 @@
 </div>
 </body>
 
+<script>
+    // slightly vary the color each load, try to avoid stuck pixels...
+    const r = Math.random() * 10;
+    const g = Math.random() * 10;
+    const b = Math.random() * 10;
+    document.body.style.background = `rgba(${255 - r}, ${255 - g}, ${255 - b}, 1)`
+</script>
+
 </html>

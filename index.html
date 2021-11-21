@@ -1,0 +1,48 @@
+<!doctype html><html><head><meta charset="utf-8"><title></title><meta name="viewport" content="width=device-width,initial-scale=1"/><style>body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            min-width: 320px;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #app-loading {
+            align-self: center;
+            flex-grow: 0.62;
+        }
+
+        @keyframes spinner-grow {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .app-loading-spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            vertical-align: text-bottom;
+            background-color: currentColor;
+            border-radius: 50%;
+            opacity: 0;
+            animation: spinner-grow .75s linear infinite;
+        }
+
+        .row-component {
+            display: flex;
+            flex: 1 1 0px;
+            max-width: 100%;
+            flex-direction: row;
+        }
+
+        .hidden {
+            display: none;
+        }</style><link rel="stylesheet" href="docs.css"/><link rel="stylesheet" href="chart.css"/><script>let DEBUG_MODE = true;
+        let DEBUG_VERBOSE = true;</script><script defer="defer" src="main.js"></script></head><body><div id="app-loading"><div class="row-component" style="justify-content: space-evenly;"><div class="app-loading-spinner" style="color: #007bff" role="status"></div><div class="app-loading-spinner" style="color: #28a745" role="status"></div><div class="app-loading-spinner" style="color: #dc3545" role="status"></div><div class="app-loading-spinner" style="color: #ffc107" role="status"></div></div></div></body></html>

@@ -26,18 +26,3 @@ body {
 .ecs-chart {
     flex: 1 1 0px;
 }
-
-.modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.ecs-canvas {
-    border: 1px solid;
-}
-
-#gl-chart, #canvas-chart {
-    /*background: red;*/
-}
