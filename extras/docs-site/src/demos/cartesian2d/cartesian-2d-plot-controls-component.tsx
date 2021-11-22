@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { _Array, TTypedArrayCtor } from "rc-js-util";
 import { TDemoEvents } from "../events/t-demo-events";
 import { MinimizeDemoEvent } from "../events/minimize-demo-event";
@@ -43,6 +43,8 @@ export function Cartesian2dPlotControlsComponent<TRenderer extends TUnknownRende
     : JSX.Element
 {
     const [drawerOpenState, setDrawerOpenState] = useState<boolean>(false);
+    const selectionRef = useRef(props.selection);
+    selectionRef.current = props.selection;
     const isLogX = props.plotOptions.options.plotRange.userTransform.xTransformEnabled;
     const isLogY = props.plotOptions.options.plotRange.userTransform.yTransformEnabled;
     const emitProxyCommand = ($event: TPlotCommands<IPlotRange, TTraits>) => props.emitEvent(new ProxyPlotCommand($event));
@@ -54,7 +56,7 @@ export function Cartesian2dPlotControlsComponent<TRenderer extends TUnknownRende
         {
             const onRowClicked = () =>
             {
-                const newSelection = new Set(props.selection);
+                const newSelection = new Set(selectionRef.current);
                 const added: TTraits[] = [];
                 const removed: TTraits[] = [];
 

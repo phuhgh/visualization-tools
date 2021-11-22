@@ -76,7 +76,7 @@ export function IndexComponent(props: IIndexComponentProps): React.ReactElement
 
             <section className="clear-padding section-padding">
                 <Typography variant="h6" component="div">Architecture</Typography>
-                <Typography variant="body1" sx={{ mb: 1.5 }}>
+                <Typography variant="body1" component="div" sx={{ mb: 1.5 }}>
                     Visualization tools is at its core an entity component system, making it highly composable. It has
                     been designed to scale with hardware by mixing load between the CPU and GPU, and allows for
                     extension with C++ plugins for performance critical sections. Various render targets are supported:
@@ -86,14 +86,14 @@ export function IndexComponent(props: IIndexComponentProps): React.ReactElement
                         <ListItem disableGutters><ArrowRight/> WebGPU - WIP</ListItem>
                     </List>
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 1.5 }}>
+                <Typography variant="body1" component="div" sx={{ mb: 1.5 }}>
                     Visualization tools comes with numerous update strategies to maximize performance for various use
                     cases, such as grouped by component or by entity. It supports both buffer per entity and automatic
                     sharing of buffers between graphics components to minimize redundant compute and IO. The default
                     interaction handler is a quad tree written in C++ which is incrementally updated to avoid blocking
                     the UI.
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 1.5 }}>
+                <Typography variant="body1" component="div" sx={{ mb: 1.5 }}>
                     Visualization tools has been designed for integration in applications, it makes minimal assumptions
                     about intended use, and avoids performing any work unless instructed to do so.
                 </Typography>
