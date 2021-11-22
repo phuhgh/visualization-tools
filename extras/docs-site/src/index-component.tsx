@@ -46,7 +46,7 @@ export function IndexComponent(props: IIndexComponentProps): React.ReactElement
 
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6" component="div">Visualization Tools </Typography>
+                    <Typography variant="h6" component="div" className="flex110">Visualization Tools </Typography>
                     <IconButton size="large"
                                 edge="end"
                                 href="https://github.com/phuhgh/visualization-tools/"
