@@ -126,6 +126,7 @@ function usePlot
         initialRange: initialRange,
         onPlotCreated: (plot, chart) =>
         {
+            plot.dataCategory.setBufferPerEntity(true);
             const plotInteractionHandler = new Cartesian2dPlotSharedQuadTree(plot, { yieldTime: 16 });
             plotInteractionHandler.setQuadTreeInteractionHandler(emscriptenModule, chart);
 
