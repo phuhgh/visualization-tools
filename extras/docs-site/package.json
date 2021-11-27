@@ -10,7 +10,7 @@
     "build:ts": "webpack build --config webpack.config.js --mode=production"
   },
   "dependencies": {
-    "rc-js-util": "8.18.3",
+    "rc-js-util": "8.19.0",
     "tslib": "^2.3.1",
     "@visualization-tools/core": "^1.0.0",
     "@visualization-tools/cartesian-2d": "^1.0.0",

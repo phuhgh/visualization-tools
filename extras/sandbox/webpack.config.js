@@ -79,14 +79,14 @@ module.exports = {
                     to: ""
                 },
                 {
-                    from: "cpp/**/*",
-                    to: "",
-                }
+                    from: "src/test-page/test-data/SKUA_DATA.bin",
+                    to: "test-data/SKUA_DATA.bin"
+                },
             ],
         }),
     ],
     devServer: {
-        contentBase: [path.join(__dirname, "bin", "pack"), __dirname],
+        static: [path.join(__dirname, "bin", "pack"), __dirname],
         port: 3000,
     }
 };

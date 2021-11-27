@@ -27,8 +27,8 @@ dependencies:
   karma-jasmine: 4.0.1_karma@6.3.9
   karma-webpack: 5.0.0_webpack@5.64.2
   raw-loader: 4.0.2_webpack@5.64.2
-  rc-js-test-util: 2.0.0_rc-js-util@8.18.3
-  rc-js-util: 8.18.3
+  rc-js-test-util: 2.0.0_rc-js-util@8.19.0
+  rc-js-util: 8.19.0
   rc-lint-rules: 5.4.1_typescript@4.5.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -3760,9 +3760,9 @@ packages:
       webpack: ^4.0.0 || ^5.0.0
     resolution:
       integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==
-  /rc-js-test-util/2.0.0_rc-js-util@8.18.3:
+  /rc-js-test-util/2.0.0_rc-js-util@8.19.0:
     dependencies:
-      rc-js-util: 8.18.3
+      rc-js-util: 8.19.0
     dev: false
     peerDependencies:
       rc-js-util: ^8.3.1
@@ -3772,14 +3772,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-f+xU8DylX6biGe/zSxbl+0nqcF+9Xa978EVpWo7hHaSpOX8vlBnEgzv7pYKl7lQZrDTUhyG85o3+m1bh3d2uWw==
-  /rc-js-util/8.18.3:
+  /rc-js-util/8.19.0:
     dependencies:
       rc-js-util-globals: 6.0.1
       tslib: 2.3.1
     dev: false
     hasBin: true
     resolution:
-      integrity: sha512-/HhNDZKm4ifJLgaky5Jz7EjZo//fntvJeYrn/o/h6SuWGw553VELxEIgm9uVWuS6YOUwEg87cGpaWOwP8HGWgw==
+      integrity: sha512-oQ25fHmbKKunPoxR2jBeNxjaJdcOrPE3bpJThX2BEiOcW5+PFYhFwclKTjYMO0AfZiJpfevcNb2dhfr+d6afAQ==
   /rc-lint-rules/5.4.1_typescript@4.5.2:
     dependencies:
       '@typescript-eslint/eslint-plugin': 4.33.0_d00b196ac5df1286ea7e45797bebddbc
@@ -5068,8 +5068,8 @@ packages:
       karma-chrome-launcher: 3.1.0
       karma-jasmine: 4.0.1_karma@6.3.9
       karma-webpack: 5.0.0_webpack@5.64.2
-      rc-js-test-util: 2.0.0_rc-js-util@8.18.3
-      rc-js-util: 8.18.3
+      rc-js-test-util: 2.0.0_rc-js-util@8.19.0
+      rc-js-util: 8.19.0
       rc-lint-rules: 5.4.1_typescript@4.5.2
       rimraf: 3.0.2
       ts-loader: 9.2.6_typescript@4.5.2+webpack@5.64.2
@@ -5082,7 +5082,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-OuHsvKGGCwHy+vjFdOBzid4jCe2b8IPLWDV3F4oP0CaC+VIKOn+BtsVT80esBwt6l5pw12O07OGPj3t/PTpJXQ==
+      integrity: sha512-4QMTFiJr2RwotSwTZBS9oUE2eOeVj8Ft69NMqVOW7SYJOKq/m+1LJUMv+qN+0tTmz9qWQE6vGWxN8pWjjWYrrA==
       tarball: file:projects/cartesian-2d.tgz
     version: 0.0.0
   file:projects/core.tgz_webpack-cli@4.9.1:
@@ -5100,8 +5100,8 @@ packages:
       karma-chrome-launcher: 3.1.0
       karma-jasmine: 4.0.1_karma@6.3.9
       karma-webpack: 5.0.0_webpack@5.64.2
-      rc-js-test-util: 2.0.0_rc-js-util@8.18.3
-      rc-js-util: 8.18.3
+      rc-js-test-util: 2.0.0_rc-js-util@8.19.0
+      rc-js-util: 8.19.0
       rc-lint-rules: 5.4.1_typescript@4.5.2
       rimraf: 3.0.2
       ts-loader: 9.2.6_typescript@4.5.2+webpack@5.64.2
@@ -5114,7 +5114,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-Vjfu2affnsHME7aUvoeUviHrNGi/NYwD/M9P7aIoTMoJdyGagUMGWy31qiPiRLIIDNvpQ7+5g6UJNzzADBqiRQ==
+      integrity: sha512-oea8YDAiu8zp1eFzq/wf96TOpoaiIIKxH/PD5qYkUn3LinZmCTRjMdO1tkY+b+k+ldBnizjj6QZFsFeQbdGBzQ==
       tarball: file:projects/core.tgz
     version: 0.0.0
   file:projects/docs-site.tgz:
@@ -5129,8 +5129,8 @@ packages:
       html-loader: 3.0.1_webpack@5.64.2
       html-webpack-plugin: 5.5.0_webpack@5.64.2
       raw-loader: 4.0.2_webpack@5.64.2
-      rc-js-test-util: 2.0.0_rc-js-util@8.18.3
-      rc-js-util: 8.18.3
+      rc-js-test-util: 2.0.0_rc-js-util@8.19.0
+      rc-js-util: 8.19.0
       rc-lint-rules: 5.4.1_typescript@4.5.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -5146,7 +5146,7 @@ packages:
     dev: false
     name: '@rush-temp/docs-site'
     resolution:
-      integrity: sha512-KtOFqyTJkUNdfjIWihcpSzb01+NQqvdrVeazLjYnpOL90uBK831F9gx5IeTgVdNzwm9vrrT7Xy6Gdo87t1jpug==
+      integrity: sha512-kXR5DL4tiC8q6gLGM3gs9rftAQn+aP5+l5snpZR6uOuLDS4xdXgn+verxcOOFWiVPze4cei29cYsaiz5K6YslQ==
       tarball: file:projects/docs-site.tgz
     version: 0.0.0
   file:projects/sandbox.tgz:
@@ -5155,7 +5155,7 @@ packages:
       html-loader: 3.0.1_webpack@5.64.2
       html-webpack-plugin: 5.5.0_webpack@5.64.2
       raw-loader: 4.0.2_webpack@5.64.2
-      rc-js-util: 8.18.3
+      rc-js-util: 8.19.0
       rimraf: 3.0.2
       ts-loader: 9.2.6_typescript@4.5.2+webpack@5.64.2
       tslib: 2.3.1
@@ -5167,19 +5167,20 @@ packages:
     dev: false
     name: '@rush-temp/sandbox'
     resolution:
-      integrity: sha512-Bjfumv9QRxs0k46IcFanp//yS5rnX+RZVTfxLRESVSxfZbx3ZfV2lc2Dr9UBypucd5Y+RUvpeT4F7KrU0u7y6Q==
+      integrity: sha512-otiYnGly3TZFGKt8kGt6ezDm83vaspQ5Y7F/IgNCdE0pRY7+UNcbuMayaWg+BAOGBslzveS54lNUWzzD3QJKNA==
       tarball: file:projects/sandbox.tgz
     version: 0.0.0
   file:projects/test-data.tgz:
     dependencies:
-      rc-js-util: 8.18.3
+      rc-js-util: 8.19.0
       tslib: 2.3.1
     dev: false
     name: '@rush-temp/test-data'
     resolution:
-      integrity: sha512-ycOizfBf0/Zr/tkWg2gCIOsh4TUDhRp7bZAVvIViQdE75Yl3xxOkecqL96M8oZ2FtUmkE1l16bBhxMefbj8y2Q==
+      integrity: sha512-iRIculbdty7bdkI36bI9m28MKnZVGssR0uZgo+/aln5nh3qiZeJ9DUlPV0kvRzrEAWvwloyIEzNKE2LGCk0Wdg==
       tarball: file:projects/test-data.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@emotion/react': ^11.6.0
   '@emotion/styled': ^11.6.0
@@ -5210,7 +5211,7 @@ specifiers:
   karma-webpack: ^5.0.0
   raw-loader: ^4.0.2
   rc-js-test-util: ^2.0.0
-  rc-js-util: 8.18.3
+  rc-js-util: 8.19.0
   rc-lint-rules: ^5.3.0
   react: ^17.0.2
   react-dom: ^17.0.2
